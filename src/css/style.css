@@ -1,1 +1,76 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap");/*# sourceMappingURL=style.css.map */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  list-style: none;
+  text-decoration: none;
+  font-family: "DM Sans", sans-serif;
+}
+
+.margin50 {
+  margin: 50px 0;
+}
+
+.padding50 {
+  padding: 50px 0;
+}
+
+.Sidebar {
+  width: 100px;
+  position: relative;
+  background-color: #0D5F50;
+  height: 100vh;
+  padding: 20px;
+}
+.Sidebar .logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.Sidebar .logo img {
+  width: 80%;
+}
+.Sidebar .Top,
+.Sidebar .Last {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.Sidebar .Top ul,
+.Sidebar .Last ul {
+  padding: 0;
+  margin: 0;
+}
+.Sidebar .Top ul img,
+.Sidebar .Last ul img {
+  width: 50%;
+}
+.Sidebar .Top ul li,
+.Sidebar .Last ul li {
+  cursor: pointer;
+  padding: 13px 10px;
+}
+.Sidebar .Top ul li:hover,
+.Sidebar .Last ul li:hover {
+  background: linear-gradient(90deg, #52D4BE 0%, #BFC21B 100%);
+  border-radius: 10px;
+}
+.Sidebar .Last {
+  vertical-align: bottom;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+}
+.Sidebar .Last img {
+  width: 50% !important;
+}
+
+.ActiveForm {
+  display: flex;
+}/*# sourceMappingURL=style.css.map */

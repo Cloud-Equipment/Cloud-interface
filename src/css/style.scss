@@ -1,1 +1,112 @@
+// ================================================================
+// FONT IMPORT
+// ================================================================
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap');
+
+// ================================================================
+// GENERAL
+// ================================================================
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    list-style: none;
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+}
+
+// ================================================================
+// COLOR VARIABLE
+// ================================================================
+
+$white: #fff;
+$black: #000;
+$grey: #63778A80;
+$secondary: #0D5F50;
+$secondaryLight: #54D4BD;
+$mix: linear-gradient(90deg, #52D4BE 0%, #BFC21B 100%);
+
+
+// ================================================================
+// MAGIN - PADDDING
+// ================================================================
+
+.margin50 {
+    margin: 50px 0;
+}
+
+.padding50 {
+    padding: 50px 0;
+}
+
+// ================================================================
+
+// ================================================================
+// SIDEBAR
+// ================================================================
+
+.Sidebar {
+    width: 100px;
+    position: relative;
+    background-color: $secondary;
+    height: 100vh;
+    padding: 20px;
+
+    .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        img {
+            width: 80%;
+        }
+    }
+    .Top,
+    .Last {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        ul{
+            padding: 0;
+            margin: 0;
+            img {
+                width: 50%;
+            }
+            li{
+                // margin: 15px 0;
+                cursor: pointer;
+                padding: 13px 10px;
+                &:hover{
+                    background: $mix;
+                    border-radius: 10px;
+                }
+            }
+        }
+    }
+    .Last{
+        vertical-align: bottom;
+        // padding: 20px;
+       position: absolute;
+       bottom: 20px;
+    //    text-align: center;
+    //    flo
+    left: 20px;
+       right: 20px;
+    img {
+        width: 50% !important;
+    }
+    }
+}
+
+// ================================================================
+// ACTIVE FORM
+// ================================================================
+.ActiveForm{
+    display: flex;
+}
