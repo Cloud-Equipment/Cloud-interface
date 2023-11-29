@@ -71,6 +71,12 @@
   width: 50% !important;
 }
 
+.Navbar {
+  background-color: #fff;
+  max-height: 95px;
+  padding: 10px 30px;
+}
+
 .ActiveForm {
   display: flex;
 }/*# sourceMappingURL=style.css.map */
