@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;600;700&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -19,56 +20,124 @@
 }
 
 .Sidebar {
-  width: 100px;
+  width: 230px;
   position: relative;
   background-color: #0D5F50;
   height: 100vh;
-  padding: 20px;
+  padding: 50px 20px;
+  color: #fff;
 }
-.Sidebar .logo {
+.Sidebar .facility {
   display: flex;
   align-items: center;
+  color: #fff;
   justify-content: center;
-  flex-direction: column;
+  padding-left: 10px;
 }
-.Sidebar .logo img {
-  width: 80%;
+.Sidebar .facility p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 22px;
+  font-weight: 500;
+  font-family: "Inter", sans-serif;
 }
-.Sidebar .Top,
-.Sidebar .Last {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+.Sidebar .facility img {
+  width: 50px;
+  margin-right: 10px;
 }
-.Sidebar .Top ul,
-.Sidebar .Last ul {
+.Sidebar .Icons {
+  margin-top: 30px;
+}
+.Sidebar .header {
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  padding-left: 10px;
+  font-family: "Inter", sans-serif;
+}
+.Sidebar .Top ul {
+  margin: 0;
   padding: 0;
+}
+.Sidebar .Top ul li {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+}
+.Sidebar .Top ul li p {
+  margin: 0;
+  margin-left: 10px;
+  font-size: 15px;
+  font-family: "Inter", sans-serif;
+}
+.Sidebar .Top ul li img {
+  width: 24px;
+}
+.Sidebar .Top ul li:hover {
+  background-color: rgba(255, 255, 255, 0.5019607843);
+  border-radius: 12px;
+}
+.Sidebar .Last {
+  margin-top: 30px;
+}
+.Sidebar .Last .message-header {
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Inter", sans-serif;
+}
+.Sidebar .Last .message-header p {
   margin: 0;
 }
-.Sidebar .Top ul img,
-.Sidebar .Last ul img {
-  width: 50%;
+.Sidebar .Last .message-header img {
+  width: 24px;
 }
-.Sidebar .Top ul li,
+.Sidebar .Last .message-header .img {
+  position: relative;
+}
+.Sidebar .Last .message-header .img .roundball {
+  background-color: #7FBA7A;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.Sidebar .Last ul {
+  margin: 0;
+  padding: 0;
+}
 .Sidebar .Last ul li {
+  display: flex;
+  align-items: center;
+  padding: 15px;
   cursor: pointer;
-  padding: 13px 10px;
 }
-.Sidebar .Top ul li:hover,
-.Sidebar .Last ul li:hover {
-  background: linear-gradient(90deg, #52D4BE 0%, #BFC21B 100%);
-  border-radius: 10px;
+.Sidebar .Last ul li p {
+  margin: 0;
+  margin-left: 10px;
+  font-size: 15px;
+  font-family: "Inter", sans-serif;
 }
-.Sidebar .Last {
-  vertical-align: bottom;
+.Sidebar .Last ul li img {
+  width: 30px;
+}
+.Sidebar .Last ul li .img {
+  position: relative;
+}
+.Sidebar .Last ul li .img .roundball {
   position: absolute;
-  bottom: 20px;
-  left: 20px;
-  right: 20px;
-}
-.Sidebar .Last img {
-  width: 50% !important;
+  bottom: 0px;
+  right: 0px;
+  padding: 4px;
+  border-radius: 50%;
+  background-color: #7FBA7A;
+  color: white;
 }
 
 .Navbar {
