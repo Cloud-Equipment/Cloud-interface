@@ -20,6 +20,16 @@
   padding: 50px 0;
 }
 
+.divider {
+  border-bottom: 0px solid rgb(234, 236, 240);
+  width: 100%;
+}
+
+.dividerTwo {
+  border-bottom: 2px solid rgb(234, 236, 240);
+  width: 100%;
+}
+
 .roundball {
   position: absolute;
   bottom: 0px;
@@ -311,11 +321,6 @@
 
 .ActiveForm {
   display: flex;
-  height: 110vh;
-  overflow: hidden;
-}
-.ActiveForm .Overflow {
-  overflow: scroll;
 }
 
 .ActiveBanner {
@@ -350,4 +355,175 @@
   line-height: 62px;
   letter-spacing: 0px;
   text-align: center;
+}
+
+.ActiveOutline {
+  background: rgb(255, 255, 255);
+  padding: 30px;
+}
+
+.ActiveFormSection {
+  background-color: #fff;
+  box-shadow: 0px 4px 40px 0px rgba(13, 149, 137, 0.1);
+}
+.ActiveFormSection .relative {
+  height: 70px;
+  border-bottom: 3px solid rgb(234, 236, 240);
+  position: relative;
+}
+.ActiveFormSection .headers {
+  position: absolute;
+  right: 20px;
+  height: 100px;
+}
+.ActiveFormSection .headers .report {
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.04);
+  border-radius: 5px;
+  background-color: #0D5F50;
+  width: 150px;
+  padding: 7px 15px;
+  text-align: right;
+  right: 20px;
+}
+.ActiveFormSection .headers .report p {
+  margin: 0 !important;
+  color: #fff;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  margin-left: 10px;
+}
+.ActiveFormSection .headers .report img {
+  width: 20px;
+  margin-right: 10px;
+}
+.ActiveFormSection .headers .date {
+  display: flex;
+  align-items: center;
+}
+.ActiveFormSection .headers .date p {
+  margin: 0 5px;
+  font-size: 12px;
+  font-weight: 300;
+  color: rgb(102, 112, 133);
+}
+.ActiveFormSection .headers .date img {
+  width: 20px;
+  margin-right: 10px;
+}
+.ActiveFormSection .form .sett {
+  padding-top: 20px;
+}
+.ActiveFormSection .form .sett .formss {
+  cursor: pointer;
+  margin: 10px 0;
+  position: relative;
+}
+.ActiveFormSection .form .sett .formss:hover .testDropdown {
+  display: block !important;
+}
+.ActiveFormSection .form .sett .formss .label {
+  font-size: 15px;
+  margin-bottom: 3px;
+  font-weight: 300;
+}
+.ActiveFormSection .form .sett .formss .inputt {
+  border: 1px solid rgba(99, 119, 138, 0.5);
+  border-radius: 10px;
+  height: 45px;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+}
+.ActiveFormSection .form .sett .formss .inputt::-moz-placeholder {
+  color: rgba(99, 119, 138, 0.5) !important;
+}
+.ActiveFormSection .form .sett .formss .inputt::placeholder,
+.ActiveFormSection .form .sett .formss .inputt .placeholder {
+  color: rgba(99, 119, 138, 0.5) !important;
+}
+.ActiveFormSection .form .sett .formss .inputt p {
+  margin: 0;
+  color: rgba(99, 119, 138, 0.5) !important;
+  font-weight: 300;
+  font-size: 13px;
+}
+.ActiveFormSection .form .sett .formss .inputt img {
+  width: 12px;
+}
+.ActiveFormSection .form .sett .testDropdown {
+  background-color: #fff;
+  width: 100%;
+  display: none;
+  border-radius: 5px;
+  position: absolute;
+  border: 1px;
+  gap: 8px;
+  border: 1px solid rgb(230, 232, 236);
+  box-shadow: 0px 4px 16px 0px rgba(20, 25, 26, 0.08);
+}
+.ActiveFormSection .form .sett .testDropdown img {
+  width: 12px;
+}
+.ActiveFormSection .form .sett .testDropdown .header {
+  padding: 7px 15px;
+  border-bottom: 1px solid rgb(230, 232, 236);
+}
+.ActiveFormSection .form .sett .testDropdown .header p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 300;
+}
+.ActiveFormSection .form .sett .testDropdown .each {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 15px;
+  cursor: pointer;
+}
+.ActiveFormSection .form .sett .testDropdown .each input {
+  width: 15px;
+  height: 15px;
+}
+.ActiveFormSection .form .sett .testDropdown .each p,
+.ActiveFormSection .form .sett .testDropdown .each label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 300;
+}
+.ActiveFormSection .form .sett .testDropdown .each .amount {
+  display: flex;
+  align-items: center;
+}
+.ActiveFormSection .form .sett .testDropdown .each .form-check-input:checked {
+  background-color: #54D4BD !important;
+  border-color: #54D4BD !important;
+}
+.ActiveFormSection .form .sett .testDropdown .each:hover {
+  background: rgb(238, 255, 252);
+}
+.ActiveFormSection .form .sett .testDropdown .each:hover .form-check-input {
+  background-color: rgb(238, 255, 252);
+  border: 1px solid #54D4BD;
+  --bs-form-check-bg: white !important;
+}
+.ActiveFormSection .form .deduction {
+  margin: 30px 0;
+}
+.ActiveFormSection .form .deduction h2 {
+  font-size: 23px;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  margin: 0;
+}
+.ActiveFormSection .form .deduction p {
+  font-size: 15px;
+  margin-bottom: 2px;
+  color: rgb(102, 112, 133);
+  font-family: "DM Sans", sans-serif;
+  font-weight: 300;
 }/*# sourceMappingURL=style.css.map */

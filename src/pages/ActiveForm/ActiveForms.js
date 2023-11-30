@@ -5,6 +5,7 @@ import Footer from '../../components/Footer'
 import Banner from './Banner'
 import { calculateHeight } from '../../utils/utils'
 import Partners from '../../components/Partners'
+import Form from './Form'
 
 function ActiveForms() {
   const number = 95
@@ -18,14 +19,18 @@ function ActiveForms() {
         </div>
         <div className="">
           <Navbar />
-          <div className="Overflow" style={{ height: height }}>
+          <div className="Overflow">
             <Banner />
-          
+            <div className="ActiveOutline">
+              <div className="container">
+                <Form />
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <Partners />
-            <Footer />
+      <Footer />
     </div>
   )
 }
