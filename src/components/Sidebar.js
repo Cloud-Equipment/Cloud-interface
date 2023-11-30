@@ -1,6 +1,5 @@
 import React from 'react'
 import { SidebarIcon } from '../data/data'
-// import Logo from '../Assets/IconAndLogo/Screenshot 2023-04-08 at 20.20 1.png'
 
 function Sidebar() {
     return (

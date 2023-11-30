@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,500;6..12,600;6..12,700&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -19,11 +20,21 @@
   padding: 50px 0;
 }
 
+.roundball {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  padding: 4px;
+  border-radius: 50%;
+  background-color: #7FBA7A;
+  color: white;
+}
+
 .Sidebar {
   width: 230px;
   position: relative;
   background-color: #0D5F50;
-  height: 100vh;
+  height: 110vh;
   padding: 50px 20px;
   color: #fff;
 }
@@ -130,22 +141,212 @@
 .Sidebar .Last ul li .img {
   position: relative;
 }
-.Sidebar .Last ul li .img .roundball {
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  padding: 4px;
-  border-radius: 50%;
-  background-color: #7FBA7A;
-  color: white;
-}
 
 .Navbar {
   background-color: #fff;
   max-height: 95px;
   padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+.Navbar .title h2 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 31px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.Navbar .together {
+  display: flex;
+  align-items: center;
+}
+.Navbar .together .details {
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 20px 70px 0px rgba(86, 89, 146, 0.1);
+  padding: 7px 10px;
+  left: 1004px;
+  border-radius: 10px;
+}
+.Navbar .together .details img {
+  width: 40px;
+}
+.Navbar .together .details .img {
+  position: relative;
+}
+.Navbar .together .details .roundballSecondary {
+  position: absolute;
+  bottom: 5px;
+  right: 2px;
+  padding: 5px;
+  border-radius: 50%;
+  background-color: #0D5F50;
+  color: white;
+}
+.Navbar .together .details h3 {
+  margin: 0;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 25px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.Navbar .together .details p {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin: 0;
+}
+.Navbar .together .utils {
+  display: flex;
+  align-items: center;
+  margin-left: 50px;
+}
+.Navbar .together .utils img {
+  width: 21px;
+}
+.Navbar .together .utils .prof {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.Navbar .together .utils .prof:hover .profile {
+  display: block !important;
+}
+.Navbar .together .utils .bord {
+  box-shadow: 0px 4px 15px 0px rgba(216, 210, 252, 0.64);
+  padding: 7px;
+  border-radius: 13px;
+  margin: 0 7px;
+  cursor: pointer;
+}
+.Navbar .together .utils .profile {
+  display: none;
+  position: absolute;
+  top: 41px;
+  right: -10px;
+  cursor: pointer;
+  width: 180px;
+  border-radius: 8px;
+  border: 1px solid rgb(242, 244, 247);
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08);
+}
+.Navbar .together .utils .profile .dot {
+  display: flex;
+  align-items: center;
+}
+.Navbar .together .utils .profile .dot p {
+  margin: 0;
+}
+.Navbar .together .utils .profile .dot img {
+  margin: 0 10px;
+  width: 20px;
+}
+
+.Partners {
+  background-color: rgb(245, 245, 245);
+  padding: 20px 50px;
+}
+.Partners .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.Partners .container img {
+  width: 130px;
+  margin: 10px;
+}
+
+.Footer {
+  background: rgb(66, 82, 107);
+  padding: 50px 30px;
+  padding-bottom: 0;
+}
+.Footer .cloud img {
+  width: 150px;
+}
+.Footer .cloud p {
+  color: rgb(255, 255, 255);
+  font-weight: 300;
+}
+.Footer .cloud .social {
+  background-color: #54D4BD;
+  display: flex;
+  align-items: center;
+}
+.Footer .cloud .social p {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #000;
+}
+.Footer .cloud .social .each {
+  display: flex;
+  align-items: center;
+}
+.Footer .cloud .social .each img {
+  width: 20px;
+  margin: 0 5px;
+}
+.Footer ul {
+  margin: 0;
+  padding: 0;
+}
+.Footer ul li {
+  color: #fff;
+  margin: 5px;
+  font-size: 14px;
 }
 
 .ActiveForm {
   display: flex;
+  height: 110vh;
+  overflow: hidden;
+}
+.ActiveForm .Overflow {
+  overflow: scroll;
+}
+
+.ActiveBanner {
+  height: 250px;
+  background-position: center;
+  background-size: cover;
+  padding: 50px 0;
+  background-image: url(../Assets/ActivitiesForm/Mask\ group.png);
+}
+.ActiveBanner .arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ActiveBanner .arrow p {
+  margin: 0;
+}
+.ActiveBanner .arrow img {
+  width: 65px;
+}
+.ActiveBanner .text {
+  font-family: "Playfair Display";
+}
+.ActiveBanner .text p {
+  color: rgb(64, 72, 79);
+  font-size: 15px;
+}
+.ActiveBanner .text h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 46px;
+  font-weight: 700;
+  line-height: 62px;
+  letter-spacing: 0px;
+  text-align: center;
 }/*# sourceMappingURL=style.css.map */
