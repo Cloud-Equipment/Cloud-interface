@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Logo from '../Assets/IconAndLogo/Screenshot 2023-04-08 at 20.20 1.png'
 import Notification from '../Assets/IconAndLogo/mdi_bell-notification-outline.png'
 import User from '../Assets/IconAndLogo/user 1.png'
