@@ -355,7 +355,7 @@ $playfair: 'Playfair Display', serif;
 // ================================================================
 .Partners {
     background-color: rgba(245, 245, 245, 1);
-    padding: 20px 50px;
+    padding: 20px 0px;
 
     .container {
         display: flex;
@@ -392,6 +392,7 @@ $playfair: 'Playfair Display', serif;
             background-color: $secondaryLight;
             display: flex;
             align-items: center;
+            flex-wrap: wrap-reverse;
             p{
                 margin-bottom: 5px;
                 font-size: 14px;

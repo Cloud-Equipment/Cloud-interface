@@ -9,7 +9,7 @@ function Footer() {
             <div className="Footer">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-6 mb-3">
                             <div className="cloud">
                                 <img src={Cloud} alt="" />
                                 <p className='mt-4'>We are always open to discuss your project and improve your online presence.</p>
@@ -34,7 +34,7 @@ function Footer() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-2">
+                        <div className="col-md-2 mb-3">
                             <ul>
                                 <li><b>COMPANY</b></li>
                                 <li>Our Story</li>
@@ -44,7 +44,7 @@ function Footer() {
                                 <li>Press</li>
                             </ul>
                         </div>
-                        <div className="col-md-2">
+                        <div className="col-md-2 mb-3">
                             <ul>
                                 <li><b>LEGAL</b></li>
                                 <li>Legal</li>
@@ -53,7 +53,7 @@ function Footer() {
                                 <li>Disclaimer</li>
                             </ul>
                         </div>
-                        <div className="col-md-2">
+                        <div className="col-md-2 mb-3">
                             <ul>
                                 <li><b>RESOURCES</b></li>
                                 <li>For Investors</li>

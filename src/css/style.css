@@ -255,7 +255,7 @@
 
 .Partners {
   background-color: rgb(245, 245, 245);
-  padding: 20px 50px;
+  padding: 20px 0px;
 }
 .Partners .container {
   display: flex;
@@ -284,6 +284,7 @@
   background-color: #54D4BD;
   display: flex;
   align-items: center;
+  flex-wrap: wrap-reverse;
 }
 .Footer .cloud .social p {
   margin-bottom: 5px;
