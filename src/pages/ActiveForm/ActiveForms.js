@@ -6,6 +6,7 @@ import Banner from './Banner'
 import { calculateHeight } from '../../utils/utils'
 import Partners from '../../components/Partners'
 import Form from './Form'
+// import Chat from '../../Assets/IconAndLogo/CHAT.png'
 
 function ActiveForms() {
   const number = 95
@@ -14,6 +15,7 @@ function ActiveForms() {
   return (
     <div>
       <div className="ActiveForm">
+        {/* <img src={Chat} alt="" className='chat' /> */}
         <div className="">
           <Sidebar />
         </div>
