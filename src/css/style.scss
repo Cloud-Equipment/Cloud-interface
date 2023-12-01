@@ -152,11 +152,93 @@ $dark: rgba(0, 41, 102, 1);
     }
 
     .Top {
+        .accordion {
+            border: none !important;
+            background: transparent !important;
+            padding: 0;
+            color: red !important;
+            --bs-accordion-color: rgba(255, 255, 255, 0.56) !important;
+            --bs-accordion-bg: transparent !important;
+            --bs-accordion-border-color: none !important;
+            --bs-accordion-transition: none !important;
+
+            .accordion-button {
+                background: $secondary !important;
+                border: none !important;
+                padding: 0;
+
+                p {
+                    color: white !important;
+                }
+
+                &:hover {
+                    background-color: #FFFFFF80 !important;
+                    border-radius: 12px !important;
+                }
+
+                &:focus {
+                    border-color: none !important;
+                    box-shadow: none !important;
+
+                    p {
+                        color: white !important;
+                    }
+                }
+            }
+
+            .accordion-collapse {
+                background-color: $secondary !important;
+                border: none !important;
+
+                .accordion-body {
+                    border: none !important;
+                    text-align: left;
+                    padding-left: 30px;
+                    padding-top: 0px;
+                    div{
+                        display: flex;
+                        align-items: center;
+                        p{
+                            margin: 5px;
+                            font-size: 15px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .eachss {
+            display: flex;
+            align-items: center;
+            padding: 15px !important;
+            cursor: pointer;
+
+            p {
+                margin: 0;
+                margin-left: 10px;
+                font-size: 15px;
+                font-family: 'Inter', sans-serif;
+            }
+
+            img {
+                width: 24px;
+            }
+
+            // .img {
+            //     width: 35px !important;
+            // }
+
+            // &:hover {
+            //     background-color: #FFFFFF80 !important;
+            //     border-radius: 12px !important;
+            // }
+        }
+
         ul {
             margin: 0;
             padding: 0;
 
-            li {
+            .eachs {
                 display: flex;
                 align-items: center;
                 padding: 15px;
@@ -219,6 +301,14 @@ $dark: rgba(0, 41, 102, 1);
             }
 
         }
+
+        .li {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            cursor: pointer;
+        }
+
 
         ul {
             margin: 0;
@@ -301,10 +391,12 @@ $dark: rgba(0, 41, 102, 1);
                 background-color: $secondary;
                 color: white;
             }
-            .arrow{
-                img{
+
+            .arrow {
+                img {
                     width: 21px;
                 }
+
                 &:hover {
                     .profile {
                         display: block !important;
@@ -332,6 +424,7 @@ $dark: rgba(0, 41, 102, 1);
                 text-align: left;
                 margin: 0;
             }
+
             .profile {
                 display: none;
                 position: absolute;
@@ -948,6 +1041,7 @@ $dark: rgba(0, 41, 102, 1);
     padding: 40px;
     background-color: white !important;
     width: 85%;
+
     .Request {
         background-image: url(../Assets/IconAndLogo/Vector.png);
         background-position: right;
@@ -957,15 +1051,18 @@ $dark: rgba(0, 41, 102, 1);
         background-color: rgba(238, 255, 252, 1);
         text-align: left;
         padding: 20px 30px;
-        h2{
+
+        h2 {
             font-family: $playfair;
             font-size: 25px;
             color: $dark;
         }
-        p{
+
+        p {
             font-size: 14px;
             color: $dark;
         }
+
         button {
             color: $white;
             background-color: rgba(84, 212, 188, 0.559);

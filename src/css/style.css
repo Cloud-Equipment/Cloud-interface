@@ -101,26 +101,88 @@
   padding-left: 10px;
   font-family: "Inter", sans-serif;
 }
-.Sidebar .Top ul {
-  margin: 0;
+.Sidebar .Top .accordion {
+  border: none !important;
+  background: transparent !important;
+  padding: 0;
+  color: red !important;
+  --bs-accordion-color: rgba(255, 255, 255, 0.56) !important;
+  --bs-accordion-bg: transparent !important;
+  --bs-accordion-border-color: none !important;
+  --bs-accordion-transition: none !important;
+}
+.Sidebar .Top .accordion .accordion-button {
+  background: #0D5F50 !important;
+  border: none !important;
   padding: 0;
 }
-.Sidebar .Top ul li {
+.Sidebar .Top .accordion .accordion-button p {
+  color: white !important;
+}
+.Sidebar .Top .accordion .accordion-button:hover {
+  background-color: rgba(255, 255, 255, 0.5019607843) !important;
+  border-radius: 12px !important;
+}
+.Sidebar .Top .accordion .accordion-button:focus {
+  border-color: none !important;
+  box-shadow: none !important;
+}
+.Sidebar .Top .accordion .accordion-button:focus p {
+  color: white !important;
+}
+.Sidebar .Top .accordion .accordion-collapse {
+  background-color: #0D5F50 !important;
+  border: none !important;
+}
+.Sidebar .Top .accordion .accordion-collapse .accordion-body {
+  border: none !important;
+  text-align: left;
+  padding-left: 30px;
+  padding-top: 0px;
+}
+.Sidebar .Top .accordion .accordion-collapse .accordion-body div {
   display: flex;
   align-items: center;
-  padding: 15px;
+}
+.Sidebar .Top .accordion .accordion-collapse .accordion-body div p {
+  margin: 5px;
+  font-size: 15px;
+}
+.Sidebar .Top .eachss {
+  display: flex;
+  align-items: center;
+  padding: 15px !important;
   cursor: pointer;
 }
-.Sidebar .Top ul li p {
+.Sidebar .Top .eachss p {
   margin: 0;
   margin-left: 10px;
   font-size: 15px;
   font-family: "Inter", sans-serif;
 }
-.Sidebar .Top ul li img {
+.Sidebar .Top .eachss img {
   width: 24px;
 }
-.Sidebar .Top ul li:hover {
+.Sidebar .Top ul {
+  margin: 0;
+  padding: 0;
+}
+.Sidebar .Top ul .eachs {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+}
+.Sidebar .Top ul .eachs p {
+  margin: 0;
+  margin-left: 10px;
+  font-size: 15px;
+  font-family: "Inter", sans-serif;
+}
+.Sidebar .Top ul .eachs img {
+  width: 24px;
+}
+.Sidebar .Top ul .eachs:hover {
   background-color: rgba(255, 255, 255, 0.5019607843);
   border-radius: 12px;
 }
@@ -152,6 +214,12 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
+}
+.Sidebar .Last .li {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
 }
 .Sidebar .Last ul {
   margin: 0;

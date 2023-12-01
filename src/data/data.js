@@ -1,7 +1,9 @@
 // SIDEBAR
-import icon1 from '../Assets/IconAndLogo/6.png'
-import icon2 from '../Assets/IconAndLogo/02.png'
-import icon3 from '../Assets/IconAndLogo/03.png'
+import icon1 from '../Assets/IconAndLogo/01 2.png'
+import icon2 from '../Assets/IconAndLogo/uil_analytics.png'
+import icon3 from '../Assets/IconAndLogo/tabler_user-cog.png'
+import icon4 from '../Assets/IconAndLogo/Group 2.png'
+import icon5 from '../Assets/IconAndLogo/tabler_logout 2.png'
 import cross from '../Assets/IconAndLogo/Plus.png'
 import UserImg from '../Assets/IconAndLogo/Pic.png'
 import FacilityLogo from '../Assets/IconAndLogo/Pic copy.png'
@@ -23,6 +25,8 @@ const SidebarIcon = {
     "icon1": icon1,
     "icon2": icon2,
     "icon3": icon3,
+    "icon4": icon4,
+    "icon5": icon5,
     "UserImg": UserImg,
     "cross": cross,
 }

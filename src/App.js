@@ -1,4 +1,5 @@
 import './css/style.css';
+import './index.css';
 import ActiveForms from './pages/ActiveForm/ActiveForms';
 
 function App() {
