@@ -219,11 +219,11 @@ function Form() {
                                     </div>
                                     <div className="">
                                         <div className="">
-                                            <p className='f25'>Total:</p>
+                                            <p className='f20'>Total:</p>
                                         </div>
                                         <div className="amount">
                                             <img src={Naira} alt="" />
-                                            <p className='f25'>1,000.00</p>
+                                            <p className='f20'>1,000.00</p>
                                         </div>
                                     </div>
                                 </div>

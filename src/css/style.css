@@ -46,8 +46,8 @@
   font-weight: 300;
 }
 
-.f25 {
-  font-size: 25px !important;
+.f20 {
+  font-size: 20px !important;
 }
 
 .f15 {
@@ -68,7 +68,7 @@
   width: 230px;
   position: relative;
   background-color: #0D5F50;
-  height: 110vh;
+  height: 100vh;
   padding: 50px 20px;
   color: #fff;
 }
@@ -429,7 +429,7 @@
   align-items: center;
 }
 .Footer .cloud .social .each img {
-  width: 20px;
+  width: 15px;
   margin: 0 5px;
 }
 .Footer ul {
@@ -445,6 +445,11 @@
 .ActiveForm {
   display: flex;
   background: #F5FAFA;
+  height: 100vh;
+  overflow: hidden;
+}
+.ActiveForm .Overflow {
+  overflow: scroll;
 }
 
 .ActiveBanner {

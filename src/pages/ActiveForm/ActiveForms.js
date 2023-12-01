@@ -3,14 +3,14 @@ import Sidebar from '../../components/Sidebar'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import Banner from './Banner'
-// import { calculateHeight } from '../../utils/utils'
+import { calculateHeight } from '../../utils/utils'
 import Partners from '../../components/Partners'
 import Form from './Form'
 // import Chat from '../../Assets/IconAndLogo/CHAT.png'
 
 function ActiveForms() {
-  // const number = 95
-  // let height = calculateHeight(number)
+  const number = 195
+  let height = calculateHeight(number)
 
   return (
     <div>
@@ -21,18 +21,19 @@ function ActiveForms() {
         </div>
         <div className="">
           <Navbar />
-          <div className="Overflow">
+          <div className="Overflow" style={{height:height}}>
             <Banner />
             <div className="ActiveOutline">
               <div className="container">
                 <Form />
               </div>
             </div>
+            <Partners />
+            <Footer />
           </div>
         </div>
       </div>
-      <Partners />
-      <Footer />
+
     </div>
   )
 }
