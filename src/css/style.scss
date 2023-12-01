@@ -48,6 +48,10 @@ $dark: rgba(0, 41, 102, 1);
     margin: 50px 0;
 }
 
+.margin70 {
+    margin: 70px 0;
+}
+
 .margin40 {
     margin: 40px 0;
 }
@@ -196,10 +200,12 @@ $dark: rgba(0, 41, 102, 1);
                     text-align: left;
                     padding-left: 30px;
                     padding-top: 0px;
-                    div{
+
+                    div {
                         display: flex;
                         align-items: center;
-                        p{
+
+                        p {
                             margin: 5px;
                             font-size: 15px;
                         }
@@ -350,6 +356,9 @@ $dark: rgba(0, 41, 102, 1);
     display: flex;
     align-items: center;
     width: 100%;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
     justify-content: space-between;
 
     .title {
@@ -600,14 +609,14 @@ $dark: rgba(0, 41, 102, 1);
     // display: flex;
     background: #F5FAFA;
     // position: relative;
-    height: 100vh;
-    
+    // height: 100vh;
     overflow: hidden;
 
     .Overflow {
         overflow: scroll;
     }
-    .All{
+
+    .All {
         margin-left: 230px;
     }
 }

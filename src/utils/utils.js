@@ -1,5 +1,5 @@
 const calculateHeight =(pixels)=>{
-    const h = window.screen.availHeight - pixels
+    const h = window.screen.availHeight + pixels
     const height = h + 'px'
     return height
 }

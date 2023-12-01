@@ -16,6 +16,10 @@
   margin: 50px 0;
 }
 
+.margin70 {
+  margin: 70px 0;
+}
+
 .margin40 {
   margin: 40px 0;
 }
@@ -252,6 +256,9 @@
   display: flex;
   align-items: center;
   width: 100%;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
   justify-content: space-between;
 }
 .Navbar .title h2 {
@@ -445,7 +452,6 @@
 
 .ActiveForm {
   background: #F5FAFA;
-  height: 100vh;
   overflow: hidden;
 }
 .ActiveForm .Overflow {

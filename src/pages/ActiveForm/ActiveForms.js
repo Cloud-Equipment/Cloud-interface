@@ -21,7 +21,7 @@ function ActiveForms() {
         </div>
         <div className="All">
           <Navbar />
-          <div className="Overflow" style={{height:height}}>
+          <div className="Overflow">
             <Banner />
             <div className="ActiveOutline">
               <div className="container">
@@ -29,7 +29,7 @@ function ActiveForms() {
               </div>
             </div>
             <Partners />
-            <Footer />
+              <Footer />
           </div>
         </div>
       </div>

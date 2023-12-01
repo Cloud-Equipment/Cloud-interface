@@ -5,6 +5,7 @@ function Banner() {
     return (
         <div>
             <center>
+                <div className="margin70"></div>
                 <div className="ActiveBanner">
                     <div className="arrow">
                         <img src={Arrow} alt="" />
