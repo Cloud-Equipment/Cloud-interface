@@ -23,7 +23,7 @@ function Form() {
                             <p>24th November, 2023 </p>
                             <p>12:36.27</p>
                         </div>
-                        <div className="report mt-1">
+                        <div className="report mt-1 ms-5">
                             <img src={Img1} alt="" />
                             <p className=''>View Report</p>
                         </div>

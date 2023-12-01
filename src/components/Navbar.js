@@ -16,6 +16,12 @@ function Navbar() {
                     <h2>Dashboard</h2>
                 </div>
                 <div className="together">
+
+                    <div className="utils">
+                        <div className="bord">
+                            <img src={Notification} alt="" />
+                        </div>
+                    </div>
                     <div className="details">
                         <div className="img">
                             <img className='' src={Logo} alt="" />
@@ -25,27 +31,17 @@ function Navbar() {
                             <h3>Emma Taylor</h3>
                             <p>Agape Diagnostic Center</p>
                         </div>
-                    </div>
-                    <div className="utils">
-                        <div className="bord">
-                            <img src={Notification} alt="" />
-                        </div>
-                        <div className="prof bord">
-                            <div className="">
-                                <img src={User} alt="" />
-                            </div>
-                            <div className="ms-2">
-                                <img src={Arrow} alt="" />
-                            </div>
+                        <div className="arrow ms-5">
+                            <img src={Arrow} alt="" />
                             <div className="profile ">
-                            <p>MY PROFILE</p>
-                            <div className="dot">
-                                <img src={Dot} alt="" />
-                                <p>Log out</p>
+                                <p>MY PROFILE</p>
+                                <div className="mt-3 dot">
+                                    <img src={Dot} alt="" />
+                                    <p>Log out</p>
+                                </div>
                             </div>
                         </div>
-                        </div>
-                      
+
                     </div>
                 </div>
             </div>
