@@ -9,7 +9,7 @@ import Form from './Form'
 // import Chat from '../../Assets/IconAndLogo/CHAT.png'
 
 function ActiveForms() {
-  const number = 195
+  const number = 95
   let height = calculateHeight(number)
 
   return (
@@ -19,7 +19,7 @@ function ActiveForms() {
         <div className="">
           <Sidebar />
         </div>
-        <div className="">
+        <div className="All">
           <Navbar />
           <div className="Overflow" style={{height:height}}>
             <Banner />

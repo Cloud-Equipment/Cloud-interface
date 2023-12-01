@@ -110,10 +110,11 @@ $dark: rgba(0, 41, 102, 1);
 
 .Sidebar {
     width: 230px;
-    position: relative;
+    position: fixed;
     background-color: $secondary;
     height: 100vh;
     padding: 50px 20px;
+    overflow: auto;
     color: $white;
 
     .facility {
@@ -596,14 +597,18 @@ $dark: rgba(0, 41, 102, 1);
 // ACTIVE FORM
 // ================================================================
 .ActiveForm {
-    display: flex;
+    // display: flex;
     background: #F5FAFA;
     // position: relative;
     height: 100vh;
+    
     overflow: hidden;
 
     .Overflow {
         overflow: scroll;
+    }
+    .All{
+        margin-left: 230px;
     }
 }
 
