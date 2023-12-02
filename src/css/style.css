@@ -74,7 +74,7 @@
   background-color: #0D5F50;
   height: 100vh;
   padding: 50px 20px;
-  overflow: auto;
+  overflow: scroll;
   color: #fff;
 }
 .Sidebar .facility {

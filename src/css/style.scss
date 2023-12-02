@@ -118,7 +118,7 @@ $dark: rgba(0, 41, 102, 1);
     background-color: $secondary;
     height: 100vh;
     padding: 50px 20px;
-    overflow: auto;
+    overflow: scroll;
     color: $white;
 
     .facility {
