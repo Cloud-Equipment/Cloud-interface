@@ -104,10 +104,78 @@ $dark: rgba(0, 41, 102, 1);
     color: white;
 }
 
+.light-button{
+    font-size: 13px;
+    color: $secondaryLight;
+    padding: 7px 15px;
+    border-radius: 6px;
+    margin: 0 5px;
+    outline: none;
+    border: 1px solid $secondaryLight;
+    background: transparent;
+    img{
+        width: 20px;
+        margin-right: 5px;
+    }
+    &:hover{
+        background: $secondaryLight;
+        color: $white !important;
+    }
+}
+
+.dark-button{
+    font-size: 13px;
+    color: $white;
+    padding: 7px 15px;
+    border-radius: 6px;
+    outline: none;
+    margin: 0 5px;
+    border: none;
+    background-color: $secondaryLight;
+    img{
+        width: 20px;
+        margin-right: 5px;
+    }
+    &:hover{
+        background: rgb(73, 186, 165);
+    }
+}
+
 
 
 // ================================================================
-
+// ================================================================
+// PAGE NAVBAR
+// ================================================================
+.NavbarPage{
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    justify-content: space-between;
+    background-color: $white;
+    .logo{
+        img{
+            width: 200px;
+        }
+    }
+    .middle{
+        ul{
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            li{
+                font-weight: 300;
+                font-size: 15px;
+                margin: 0 15px ;
+                cursor: pointer;
+                &:hover{
+                    color: $secondaryLight;
+                }
+            }
+        }
+    }
+}
 // ================================================================
 // SIDEBAR
 // ================================================================

@@ -1,12 +1,13 @@
+import { Routes } from './config/routes';
 import './css/style.css';
 import './index.css';
-import ActiveForms from './pages/ActiveForm/ActiveForms';
+import { BrowserRouter } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <ActiveForms />
-    </div>
+    <BrowserRouter>
+      <Routes />
+    </BrowserRouter>
   );
 }
 
