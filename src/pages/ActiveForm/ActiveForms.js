@@ -13,10 +13,10 @@ function ActiveForms() {
     <div>
       <div className="ActiveForm">
         {/* <img src={Chat} alt="" className='chat' /> */}
-        <div className="">
+        <div className="left">
           <Sidebar />
         </div>
-        <div className="All">
+        <div className="right">
           <Navbar />
           <div className="Overflow">
             <Banner />

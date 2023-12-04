@@ -64,7 +64,7 @@ $dark: rgba(0, 41, 102, 1);
     padding: 50px 0;
 }
 
-.w-100{
+.w-100 {
     width: 100%;
 }
 
@@ -108,7 +108,7 @@ $dark: rgba(0, 41, 102, 1);
     color: white;
 }
 
-.light-button{
+.light-button {
     font-size: 14px;
     color: $secondaryLight;
     padding: 7px 15px;
@@ -117,17 +117,19 @@ $dark: rgba(0, 41, 102, 1);
     outline: none;
     border: 1px solid $secondaryLight;
     background: transparent;
-    img{
+
+    img {
         width: 20px;
         margin-right: 5px;
     }
-    &:hover{
+
+    &:hover {
         background: $secondaryLight;
         color: $white !important;
     }
 }
 
-.dark-button{
+.dark-button {
     font-size: 14px;
     color: $white;
     padding: 7px 15px;
@@ -136,11 +138,13 @@ $dark: rgba(0, 41, 102, 1);
     margin: 0 5px;
     border: none;
     background-color: $secondaryLight;
-    img{
+
+    img {
         width: 20px;
         margin-right: 5px;
     }
-    &:hover{
+
+    &:hover {
         background: rgb(73, 186, 165);
     }
 }
@@ -152,29 +156,33 @@ $dark: rgba(0, 41, 102, 1);
 // ================================================================
 // PAGE NAVBAR
 // ================================================================
-.NavbarPage{
+.NavbarPage {
     display: flex;
     align-items: center;
     padding: 17px 0;
     justify-content: space-between;
     background-color: $white;
-    .logo{
-        img{
+
+    .logo {
+        img {
             width: 200px;
         }
     }
-    .middle{
-        ul{
+
+    .middle {
+        ul {
             padding: 0;
             margin: 0;
             display: flex;
             align-items: center;
-            li{
+
+            li {
                 font-weight: 300;
                 font-size: 15px;
-                margin: 0 15px ;
+                margin: 0 15px;
                 cursor: pointer;
-                &:hover{
+
+                &:hover {
                     color: $secondaryLight;
                 }
             }
@@ -186,27 +194,30 @@ $dark: rgba(0, 41, 102, 1);
 // SIDEBAR
 // ================================================================
 
-.LeftBanner{
+.LeftBanner {
     background-image: linear-gradient(89.31deg, #042620 13.27%, rgba(0, 10, 8, 0.6) 94%),
-    url(../Assets/Authentication/image\ 8.png);
+        url(../Assets/Authentication/image\ 8.png);
     height: 91vh;
     background-size: cover;
     background-repeat: no-repeat;
     position: relative;
     padding: 20px;
     background-position: center;
-    .text{
+
+    .text {
         position: absolute;
         bottom: 50px;
         color: $white;
         left: 50px;
         right: 50px;
         font-family: $nuno;
-        h1{
+
+        h1 {
             font-family: $nuno;
             font-weight: 800;
+
             // font-size: 20px;
-            span{
+            span {
                 color: $secondaryLight;
             }
         }
@@ -220,50 +231,58 @@ $dark: rgba(0, 41, 102, 1);
 // ================================================================
 // LOGIN
 // ================================================================
-.Login{
+.Login {
     overflow: hidden;
     height: 100vh;
-    .outer{
-        padding:  50px 80px;
+
+    .outer {
+        padding: 50px 80px;
     }
-    .LoginForm{
+
+    .LoginForm {
         background: $white;
         box-shadow: 0px 4px 25px 0px rgba(2, 24, 20, 0.25);
-        padding:  30px 40px;
+        padding: 30px 40px;
         font-family: $nuno;
-      
-        .header{
-            h3{
+
+        .header {
+            h3 {
                 font-weight: 600;
                 font-family: $nuno;
             }
-            img{
+
+            img {
                 width: 30px;
             }
         }
-        form{
-            label{
+
+        form {
+            label {
                 font-size: 13px;
                 font-weight: 500;
                 margin-left: 5px;
                 font-family: $nuno;
                 margin-bottom: 2px;
             }
-            input{
+
+            input {
                 height: 50px;
                 width: 100%;
-                border: 2px solid  rgba(143, 154, 163, 1);
+                border: 2px solid rgba(143, 154, 163, 1);
                 border-radius: 8px;
                 padding: 3px 10px;
-                &::placeholder{
+
+                &::placeholder {
                     font-size: 14px;
                 }
             }
+
             .form-control {
                 color: red !important;
                 border: none !important;
             }
-            span{
+
+            span {
                 font-size: 14px;
                 color: $secondaryLight;
             }
@@ -272,13 +291,19 @@ $dark: rgba(0, 41, 102, 1);
 }
 
 .Sidebar {
-    width: 230px;
+    width: 20%;
     position: fixed;
     background-color: $secondary;
     height: 100vh;
     padding: 50px 20px;
     overflow: scroll;
     color: $white;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 
     .facility {
         display: flex;
@@ -357,7 +382,7 @@ $dark: rgba(0, 41, 102, 1);
                 .accordion-body {
                     border: none !important;
                     text-align: left;
-                  
+
                     padding-top: 0px;
                     padding: 0;
                     padding-left: 20px;
@@ -370,7 +395,8 @@ $dark: rgba(0, 41, 102, 1);
                             margin: 5px;
                             cursor: pointer;
                             font-size: 13px;
-                            &:hover{
+
+                            &:hover {
                                 color: white !important;
                             }
                         }
@@ -520,8 +546,7 @@ $dark: rgba(0, 41, 102, 1);
     padding: 10px 30px;
     display: flex;
     align-items: center;
-    width: 100%;
-    overflow: hidden;
+    width: 79%;
     position: fixed;
     top: 0;
     justify-content: space-between;
@@ -546,7 +571,6 @@ $dark: rgba(0, 41, 102, 1);
             align-items: center;
             box-shadow: 0px 20px 70px 0px rgba(86, 89, 146, 0.1);
             padding: 7px 10px;
-            left: 1004px;
             border-radius: 10px;
 
             img {
@@ -771,18 +795,25 @@ $dark: rgba(0, 41, 102, 1);
 // ACTIVE FORM
 // ================================================================
 .ActiveForm {
-    // display: flex;
+    display: flex;
     background: #F5FAFA;
     // position: relative;
     // height: 100vh;
-    overflow: hidden;
+    // overflow: hidden;
 
     .Overflow {
         overflow: scroll;
     }
 
-    .All {
-        margin-left: 230px;
+    // .All {
+    //     margin-left:  21%;
+    // }
+    .left {
+        width: 20%;
+    }
+
+    .right {
+        width: 80%;
     }
 }
 
@@ -1123,7 +1154,6 @@ $dark: rgba(0, 41, 102, 1);
 
                 .PhoneInputCountrySelect {
                     padding: 10px;
-                    background-color: red;
                 }
 
                 .PhoneInputInput {

@@ -95,7 +95,7 @@ function Sidebar() {
                                     <span className='roundball'></span>
                                 </div>
                                 <div className="">
-                                    <p>Erik Gunsel</p>
+                                    <p>Support</p>
                                 </div>
                             </li>
                         </ul>

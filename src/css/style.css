@@ -210,13 +210,18 @@
 }
 
 .Sidebar {
-  width: 230px;
+  width: 20%;
   position: fixed;
   background-color: #0D5F50;
   height: 100vh;
   padding: 50px 20px;
   overflow: scroll;
   color: #fff;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.Sidebar::-webkit-scrollbar {
+  display: none;
 }
 .Sidebar .facility {
   display: flex;
@@ -401,8 +406,7 @@
   padding: 10px 30px;
   display: flex;
   align-items: center;
-  width: 100%;
-  overflow: hidden;
+  width: 79%;
   position: fixed;
   top: 0;
   justify-content: space-between;
@@ -424,7 +428,6 @@
   align-items: center;
   box-shadow: 0px 20px 70px 0px rgba(86, 89, 146, 0.1);
   padding: 7px 10px;
-  left: 1004px;
   border-radius: 10px;
 }
 .Navbar .together .details img {
@@ -597,14 +600,17 @@
 }
 
 .ActiveForm {
+  display: flex;
   background: #F5FAFA;
-  overflow: hidden;
 }
 .ActiveForm .Overflow {
   overflow: scroll;
 }
-.ActiveForm .All {
-  margin-left: 230px;
+.ActiveForm .left {
+  width: 20%;
+}
+.ActiveForm .right {
+  width: 80%;
 }
 
 .ActiveBanner {
@@ -878,7 +884,6 @@
 }
 .ActiveFormSection .form .phone .PhoneInput .PhoneInputCountrySelect {
   padding: 10px;
-  background-color: red;
 }
 .ActiveFormSection .form .phone .PhoneInput .PhoneInputInput {
   border: none;

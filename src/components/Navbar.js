@@ -4,19 +4,18 @@ import Notification from '../Assets/IconAndLogo/mdi_bell-notification-outline.pn
 // import User from '../Assets/IconAndLogo/user 1.png'
 import Arrow from '../Assets/IconAndLogo/arrow-down.png'
 import Dot from '../Assets/IconAndLogo/Aitime.png'
-import { calculateWeight } from '../utils/utils'
+// import { calculateWeight } from '../utils/utils'
 
 function Navbar() {
-    const number = 230
-    let width = calculateWeight(number)
+    // const number = 230
+    // let width = calculateWeight(number)
     return (
         <div>
-            <div className="Navbar" style={{ width: width }}>
+            <div className="Navbar" >
                 <div className="title">
                     <h2>Dashboard</h2>
                 </div>
                 <div className="together">
-
                     <div className="utils">
                         <div className="bord">
                             <img src={Notification} alt="" />
