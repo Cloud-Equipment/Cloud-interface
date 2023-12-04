@@ -64,6 +64,10 @@ $dark: rgba(0, 41, 102, 1);
     padding: 50px 0;
 }
 
+.w-100{
+    width: 100%;
+}
+
 // ================================================================
 // FOR ALL STYLES
 // ================================================================
@@ -105,7 +109,7 @@ $dark: rgba(0, 41, 102, 1);
 }
 
 .light-button{
-    font-size: 13px;
+    font-size: 14px;
     color: $secondaryLight;
     padding: 7px 15px;
     border-radius: 6px;
@@ -124,7 +128,7 @@ $dark: rgba(0, 41, 102, 1);
 }
 
 .dark-button{
-    font-size: 13px;
+    font-size: 14px;
     color: $white;
     padding: 7px 15px;
     border-radius: 6px;
@@ -151,7 +155,7 @@ $dark: rgba(0, 41, 102, 1);
 .NavbarPage{
     display: flex;
     align-items: center;
-    padding: 15px 0;
+    padding: 17px 0;
     justify-content: space-between;
     background-color: $white;
     .logo{
@@ -197,6 +201,7 @@ $dark: rgba(0, 41, 102, 1);
         color: $white;
         left: 50px;
         right: 50px;
+        font-family: $nuno;
         h1{
             font-family: $nuno;
             font-weight: 800;
@@ -217,6 +222,53 @@ $dark: rgba(0, 41, 102, 1);
 // ================================================================
 .Login{
     overflow: hidden;
+    height: 100vh;
+    .outer{
+        padding:  50px 80px;
+    }
+    .LoginForm{
+        background: $white;
+        box-shadow: 0px 4px 25px 0px rgba(2, 24, 20, 0.25);
+        padding:  30px 40px;
+        font-family: $nuno;
+      
+        .header{
+            h3{
+                font-weight: 600;
+                font-family: $nuno;
+            }
+            img{
+                width: 30px;
+            }
+        }
+        form{
+            label{
+                font-size: 13px;
+                font-weight: 500;
+                margin-left: 5px;
+                font-family: $nuno;
+                margin-bottom: 2px;
+            }
+            input{
+                height: 50px;
+                width: 100%;
+                border: 2px solid  rgba(143, 154, 163, 1);
+                border-radius: 8px;
+                padding: 3px 10px;
+                &::placeholder{
+                    font-size: 14px;
+                }
+            }
+            .form-control {
+                color: red !important;
+                border: none !important;
+            }
+            span{
+                font-size: 14px;
+                color: $secondaryLight;
+            }
+        }
+    }
 }
 
 .Sidebar {
@@ -308,7 +360,7 @@ $dark: rgba(0, 41, 102, 1);
                   
                     padding-top: 0px;
                     padding: 0;
-                    padding-left: 30px;
+                    padding-left: 20px;
 
                     div {
                         display: flex;
@@ -317,7 +369,7 @@ $dark: rgba(0, 41, 102, 1);
                         p {
                             margin: 5px;
                             cursor: pointer;
-                            font-size: 12px;
+                            font-size: 13px;
                             &:hover{
                                 color: white !important;
                             }

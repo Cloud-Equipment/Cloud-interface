@@ -32,6 +32,10 @@
   padding: 50px 0;
 }
 
+.w-100 {
+  width: 100%;
+}
+
 .divider {
   border-bottom: 0px solid rgb(234, 236, 240);
   width: 100%;
@@ -69,7 +73,7 @@
 }
 
 .light-button {
-  font-size: 13px;
+  font-size: 14px;
   color: #54D4BD;
   padding: 7px 15px;
   border-radius: 6px;
@@ -88,7 +92,7 @@
 }
 
 .dark-button {
-  font-size: 13px;
+  font-size: 14px;
   color: #fff;
   padding: 7px 15px;
   border-radius: 6px;
@@ -108,7 +112,7 @@
 .NavbarPage {
   display: flex;
   align-items: center;
-  padding: 15px 0;
+  padding: 17px 0;
   justify-content: space-between;
   background-color: #fff;
 }
@@ -146,6 +150,7 @@
   color: #fff;
   left: 50px;
   right: 50px;
+  font-family: "Nunito Sans", sans-serif;
 }
 .LeftBanner .text h1 {
   font-family: "Nunito Sans", sans-serif;
@@ -157,6 +162,51 @@
 
 .Login {
   overflow: hidden;
+  height: 100vh;
+}
+.Login .outer {
+  padding: 50px 80px;
+}
+.Login .LoginForm {
+  background: #fff;
+  box-shadow: 0px 4px 25px 0px rgba(2, 24, 20, 0.25);
+  padding: 30px 40px;
+  font-family: "Nunito Sans", sans-serif;
+}
+.Login .LoginForm .header h3 {
+  font-weight: 600;
+  font-family: "Nunito Sans", sans-serif;
+}
+.Login .LoginForm .header img {
+  width: 30px;
+}
+.Login .LoginForm form label {
+  font-size: 13px;
+  font-weight: 500;
+  margin-left: 5px;
+  font-family: "Nunito Sans", sans-serif;
+  margin-bottom: 2px;
+}
+.Login .LoginForm form input {
+  height: 50px;
+  width: 100%;
+  border: 2px solid rgb(143, 154, 163);
+  border-radius: 8px;
+  padding: 3px 10px;
+}
+.Login .LoginForm form input::-moz-placeholder {
+  font-size: 14px;
+}
+.Login .LoginForm form input::placeholder {
+  font-size: 14px;
+}
+.Login .LoginForm form .form-control {
+  color: red !important;
+  border: none !important;
+}
+.Login .LoginForm form span {
+  font-size: 14px;
+  color: #54D4BD;
 }
 
 .Sidebar {
@@ -235,7 +285,7 @@
   text-align: left;
   padding-top: 0px;
   padding: 0;
-  padding-left: 30px;
+  padding-left: 20px;
 }
 .Sidebar .Top .accordion .accordion-collapse .accordion-body div {
   display: flex;
@@ -244,7 +294,7 @@
 .Sidebar .Top .accordion .accordion-collapse .accordion-body div p {
   margin: 5px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 13px;
 }
 .Sidebar .Top .accordion .accordion-collapse .accordion-body div p:hover {
   color: white !important;
