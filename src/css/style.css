@@ -108,7 +108,7 @@
 .NavbarPage {
   display: flex;
   align-items: center;
-  padding: 10px 0;
+  padding: 15px 0;
   justify-content: space-between;
   background-color: #fff;
 }
@@ -129,6 +129,34 @@
 }
 .NavbarPage .middle ul li:hover {
   color: #54D4BD;
+}
+
+.LeftBanner {
+  background-image: linear-gradient(89.31deg, #042620 13.27%, rgba(0, 10, 8, 0.6) 94%), url(../Assets/Authentication/image\ 8.png);
+  height: 91vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  padding: 20px;
+  background-position: center;
+}
+.LeftBanner .text {
+  position: absolute;
+  bottom: 50px;
+  color: #fff;
+  left: 50px;
+  right: 50px;
+}
+.LeftBanner .text h1 {
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 800;
+}
+.LeftBanner .text h1 span {
+  color: #54D4BD;
+}
+
+.Login {
+  overflow: hidden;
 }
 
 .Sidebar {
