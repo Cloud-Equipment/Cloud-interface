@@ -49,6 +49,18 @@ function Sidebar() {
                                                         <p> - </p>
                                                         <p className='ms-2'>Manage Facility</p>
                                                     </div>
+                                                       <div className="">
+                                                        <p> - </p>
+                                                        <p className='ms-2'>Discount Management</p>
+                                                    </div>
+                                                    <div className="">
+                                                        <p> - </p>
+                                                        <p className='ms-2'>Price Management</p>
+                                                    </div>
+                                                    <div className="">
+                                                        <p> - </p>
+                                                        <p className='ms-2'>Service Management</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

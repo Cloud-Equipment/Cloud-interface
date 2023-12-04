@@ -142,8 +142,9 @@
 .Sidebar .Top .accordion .accordion-collapse .accordion-body {
   border: none !important;
   text-align: left;
-  padding-left: 30px;
   padding-top: 0px;
+  padding: 0;
+  padding-left: 30px;
 }
 .Sidebar .Top .accordion .accordion-collapse .accordion-body div {
   display: flex;
@@ -151,7 +152,11 @@
 }
 .Sidebar .Top .accordion .accordion-collapse .accordion-body div p {
   margin: 5px;
-  font-size: 15px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.Sidebar .Top .accordion .accordion-collapse .accordion-body div p:hover {
+  color: white !important;
 }
 .Sidebar .Top .eachss {
   display: flex;
@@ -162,7 +167,7 @@
 .Sidebar .Top .eachss p {
   margin: 0;
   margin-left: 10px;
-  font-size: 15px;
+  font-size: 13px;
   font-family: "Inter", sans-serif;
 }
 .Sidebar .Top .eachss img {
@@ -181,7 +186,7 @@
 .Sidebar .Top ul .eachs p {
   margin: 0;
   margin-left: 10px;
-  font-size: 15px;
+  font-size: 13px;
   font-family: "Inter", sans-serif;
 }
 .Sidebar .Top ul .eachs img {
