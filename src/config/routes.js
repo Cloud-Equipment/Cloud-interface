@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
-import { ActiveForms, Login } from '../pages';
+import { ActiveForms, Auth, Login } from '../pages';
+import Report from '../pages/Report/Report';
 
 
 export const Routes = () => {
@@ -12,6 +13,14 @@ export const Routes = () => {
     {
         path: '/login',
         element: <Login />
+    },
+    {
+        path: '/verify',
+        element: < Auth/>
+    },
+    {
+        path: '/reports',
+        element: < Report/>
     }
   ]);
 };
