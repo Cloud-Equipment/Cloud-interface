@@ -20,6 +20,10 @@
   margin: 70px 0;
 }
 
+.margin75 {
+  margin: 75px 0;
+}
+
 .margin40 {
   margin: 40px 0;
 }
@@ -32,8 +36,24 @@
   padding: 50px 0;
 }
 
+.padding20 {
+  padding: 20px 0;
+}
+
 .w-100 {
   width: 100%;
+}
+
+.m-30 {
+  margin: 30px;
+}
+
+.p-30 {
+  margin: 30px;
+}
+
+.h-50 {
+  height: 50px;
 }
 
 .divider {
@@ -64,6 +84,11 @@
 
 .f15 {
   font-size: 15px !important;
+}
+
+.flexDiv {
+  display: flex;
+  align-items: center;
 }
 
 .roundball {
@@ -180,6 +205,52 @@
 }
 .LeftBanner .text h1 span {
   color: #54D4BD;
+}
+
+.NameHeader h2 {
+  color: #0D5F50;
+  font-size: 27px;
+  font-family: "Nunito Sans", sans-serif;
+  margin: 0;
+}
+.NameHeader h2 span {
+  font-weight: 600;
+}
+.NameHeader p {
+  font-size: 15px;
+  font-weight: 300;
+  margin: 0;
+}
+
+.ReportHeader {
+  position: relative;
+  height: 70px;
+}
+.ReportHeader .NewReport {
+  position: absolute;
+  right: 0px;
+  top: 20px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.04);
+  border-radius: 5px;
+  background-color: #0D5F50;
+  width: 150px;
+  padding: 7px 15px;
+  text-align: right;
+  right: 20px;
+}
+.ReportHeader .NewReport p {
+  margin: 0 !important;
+  color: #fff;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  margin-left: 10px;
+}
+.ReportHeader .NewReport img {
+  width: 20px;
+  margin-right: 10px;
 }
 
 .Login {
@@ -793,6 +864,174 @@
 .Report {
   margin: 0;
 }
+.Report .WhiteCard {
+  background-color: #fff;
+  border-radius: 18px;
+  padding: 20px 30px;
+  box-shadow: 0px 4px 15px 0px rgba(216, 210, 252, 0.15);
+}
+.Report .WhiteCard .header h2 {
+  font-size: 18px;
+  font-family: "Nunito Sans", sans-serif;
+}
+.Report .WhiteCard p {
+  margin: 0;
+}
+.Report .WhiteCard .Check {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.Report .WhiteCard .Check .search {
+  width: 45%;
+  padding: 0 13px;
+  border: 0.5px solid rgb(250, 250, 250);
+  background: linear-gradient(0deg, #F8F8FA, #F8F8FA);
+  border-radius: 30px;
+}
+.Report .WhiteCard .Check .search input {
+  width: 100%;
+  border: none;
+  height: 45px;
+  background: transparent;
+  margin-right: 10px;
+}
+.Report .WhiteCard .Check .search input::-moz-placeholder {
+  color: rgb(158, 158, 158);
+  font-size: 14px;
+}
+.Report .WhiteCard .Check .search input::placeholder {
+  color: rgb(158, 158, 158);
+  font-size: 14px;
+}
+.Report .WhiteCard .Check .search img {
+  cursor: pointer;
+  width: 20px;
+}
+.Report .WhiteCard .Check .sort {
+  padding: 4px 13px;
+  border: 0.5px solid rgb(250, 250, 250);
+  background: linear-gradient(0deg, #F8F8FA, #F8F8FA);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+}
+.Report .WhiteCard .Check .sort p {
+  font-size: 13px;
+  font-weight: 300;
+  margin: 0;
+}
+.Report .WhiteCard .Check .sort select {
+  border: none;
+  font-size: 14px;
+  outline: none !important;
+  background: linear-gradient(0deg, #F8F8FA, #F8F8FA);
+}
+.Report .WhiteCard .Check .sort .form-select {
+  transition: none;
+  outline: none;
+}
+.Report .WhiteCard .Check .sort .form-select:focus {
+  border-color: transparent !important;
+  outline: 0;
+  box-shadow: none !important;
+}
+.Report .WhiteCard .Check .filter,
+.Report .WhiteCard .Check .export {
+  padding: 4px 10px;
+}
+.Report .WhiteCard .Check .filter img,
+.Report .WhiteCard .Check .export img {
+  width: 13px;
+  margin-right: 10px;
+}
+.Report .WhiteCard .Check .filter p,
+.Report .WhiteCard .Check .export p {
+  font-size: 14px;
+}
+.Report .WhiteCard .Check .filter {
+  border: 1px solid rgb(220, 220, 228);
+  border-radius: 4px;
+}
+.Report .WhiteCard .Check .export {
+  background-color: #54D4BD;
+  color: white;
+  border-radius: 4px;
+}
+.Report .WhiteCard .reportTable {
+  border: 1px solid rgb(229, 229, 229);
+  background: linear-gradient(0deg, #F8F8FA, #F8F8FA);
+  padding: 15px;
+  border-radius: 10px 15px;
+}
+.Report .WhiteCard .reportTable .header h2 {
+  font-size: 14px;
+  font-family: "Nunito Sans", sans-serif;
+}
+.Report .WhiteCard .reportTable table thead {
+  background: rgb(238, 255, 252);
+}
+.Report .WhiteCard .reportTable table thead th {
+  font-size: 14px;
+  padding: 10px 15px;
+  font-weight: 400;
+}
+.Report .WhiteCard .reportTable table tbody th {
+  font-size: 13px;
+  padding: 10px 15px;
+  font-weight: 300;
+}
+.Report .WhiteCard .reportTable table tbody td {
+  font-size: 13px;
+  font-weight: 300;
+  padding: 10px 15px;
+}
+.Report .WhiteCard .reportTable table tbody tr {
+  margin-top: 15px;
+  border-bottom: 1px solid rgb(225, 225, 225);
+  background-color: rgb(255, 255, 255);
+}
+.Report .WhiteCard .reportTable table img {
+  width: 10px;
+  margin-right: 5px;
+}
+.Report .WhiteCard .reportTable table .dot {
+  position: relative;
+  cursor: pointer;
+}
+.Report .WhiteCard .reportTable table .dot img {
+  width: 3px;
+  margin: 0;
+  position: relative;
+}
+.Report .WhiteCard .reportTable table .dot:hover div {
+  display: block;
+}
+.Report .WhiteCard .reportTable table .dot .firstDiv {
+  display: none;
+  position: absolute;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid rgb(225, 225, 225);
+  padding: 10px 15px;
+  right: -40px;
+  border-radius: 5px;
+}
+.Report .WhiteCard .reportTable table .dot .firstDiv .flex {
+  display: flex;
+  align-items: center;
+}
+.Report .WhiteCard .reportTable table .dot .firstDiv:hover {
+  background-color: #54D4BD;
+}
+.Report .WhiteCard .reportTable table .dot .firstDiv img {
+  width: 30px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+.Report .WhiteCard .reportTable table .dot .firstDiv span {
+  font-size: 15px;
+}
 
 .Footer {
   background: rgb(66, 82, 107);
@@ -898,29 +1137,6 @@
   position: absolute;
   right: 0px;
   height: 100px;
-}
-.ActiveFormSection .headers .report {
-  display: flex;
-  align-items: center;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.04);
-  border-radius: 5px;
-  background-color: #0D5F50;
-  width: 150px;
-  padding: 7px 15px;
-  text-align: right;
-  right: 20px;
-}
-.ActiveFormSection .headers .report p {
-  margin: 0 !important;
-  color: #fff;
-  font-family: "Nunito Sans", sans-serif;
-  font-size: 12px;
-  font-weight: 300;
-  margin-left: 10px;
-}
-.ActiveFormSection .headers .report img {
-  width: 20px;
-  margin-right: 10px;
 }
 .ActiveFormSection .headers .date {
   display: flex;

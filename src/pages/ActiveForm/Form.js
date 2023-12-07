@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Img1 from '../../Assets/IconAndLogo/Vector 2.png'
 import Img2 from '../../Assets/IconAndLogo/iconamoon_clock-light.png'
 import Naira from '../../Assets/IconAndLogo/fa6-solid_naira-sign.png'
 import RedNaira from '../../Assets/IconAndLogo/Vector (1).png'
@@ -7,6 +6,7 @@ import Arrow from '../../Assets/IconAndLogo/arrow-down.png'
 import Int from '../../Assets/IconAndLogo/Group.png'
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
+import NewReport from '../../components/NewReport'
 
 function Form() {
 
@@ -23,10 +23,11 @@ function Form() {
                             <p>24th November, 2023 </p>
                             <p>12:36.27</p>
                         </div>
-                        <div className="report mt-1 ms-5">
-                            <img src={Img1} alt="" />
-                            <p className=''>View Report</p>
-                        </div>
+                    </div>
+                    <div className="">
+                        <NewReport
+                            Type="View"
+                        />
                     </div>
                 </div>
                 <div className="divider"></div>
@@ -247,9 +248,9 @@ function Form() {
                 <div className="bg-white">
                     <div className="Request">
                         <div className="col-md-8">
-                        <h2>Request Medical Equipment from us</h2>
-                        <p>Does your facility requires new medical equipment at Zero or minimal cost. </p>
-                        <button className='mt-2'>Request Equipment</button>
+                            <h2>Request Medical Equipment from us</h2>
+                            <p>Does your facility requires new medical equipment at Zero or minimal cost. </p>
+                            <button className='mt-2'>Request Equipment</button>
                         </div>
                     </div>
                 </div>
