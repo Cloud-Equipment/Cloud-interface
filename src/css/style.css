@@ -1047,11 +1047,11 @@
   margin: 0;
 }
 .Report .WhiteCard .reportTable .perPage img {
-  width: 15px;
+  width: 12px;
 }
 .Report .WhiteCard .reportTable .perPage .bord {
   border: 1px solid rgb(129, 129, 129) !important;
-  padding: 5px 10px;
+  padding: 3px 10px;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -1063,7 +1063,7 @@
   align-items: center;
 }
 .Report .WhiteCard .reportTable .perPage .LeftRight img {
-  width: 9px;
+  width: 6px;
 }
 .Report .WhiteCard .data p {
   font-size: 14px;
