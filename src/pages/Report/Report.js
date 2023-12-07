@@ -11,6 +11,10 @@ import Icon3 from '../../Assets/IconAndLogo/Group 3.png'
 import Icon4 from '../../Assets/IconAndLogo/state-layer.png'
 import Icon5 from '../../Assets/IconAndLogo/Group 5.png'
 import Icon6 from '../../Assets/IconAndLogo/fa6-solid_naira-sign.png'
+import Left from '../../Assets/IconAndLogo/primary (1).png'
+import Right from '../../Assets/IconAndLogo/primary (2).png'
+import Down from '../../Assets/IconAndLogo/primary.png'
+
 
 
 
@@ -145,6 +149,29 @@ function Report() {
                                             </tbody>
                                         </table>
                                     </div>
+                                    <div className="perPage mt-3">
+                                       <div className="abs">
+                                       <div className="ms-2 me-2">
+                                            <p>Items per page</p>
+                                        </div>
+                                        <div className="bord ms-2 me-2 flexDiv">
+                                            <p className='me-2'>8</p>
+                                            <img src={Down} alt="" />
+                                        </div>
+                                        <div className="LeftRight ms-2 me-2">
+                                            <div className="bord ms-2 me-2">
+                                                <img src={Left} alt="" />
+                                            </div>
+                                            <div className="bord ms-2 me-2">
+                                                <img src={Right} alt="" />
+                                            </div>
+                                        </div>
+                                       </div>
+                                    </div>
+                                </div>
+                                <div className="margin50"></div>
+                                <div className="data">
+                                    <p>Showing 10 from 160 data</p>
                                 </div>
                             </div>
                         </div>

@@ -962,6 +962,7 @@
   border: 1px solid rgb(229, 229, 229);
   background: linear-gradient(0deg, #F8F8FA, #F8F8FA);
   padding: 15px;
+  position: relative;
   border-radius: 10px 15px;
 }
 .Report .WhiteCard .reportTable .header h2 {
@@ -1031,6 +1032,42 @@
 }
 .Report .WhiteCard .reportTable table .dot .firstDiv span {
   font-size: 15px;
+}
+.Report .WhiteCard .reportTable .perPage {
+  height: 30px;
+  font-size: 14px;
+}
+.Report .WhiteCard .reportTable .perPage .abs {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 10px;
+}
+.Report .WhiteCard .reportTable .perPage p {
+  margin: 0;
+}
+.Report .WhiteCard .reportTable .perPage img {
+  width: 15px;
+}
+.Report .WhiteCard .reportTable .perPage .bord {
+  border: 1px solid rgb(129, 129, 129) !important;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.Report .WhiteCard .reportTable .perPage .bord:hover {
+  background: rgb(238, 255, 252);
+}
+.Report .WhiteCard .reportTable .perPage .LeftRight {
+  display: flex;
+  align-items: center;
+}
+.Report .WhiteCard .reportTable .perPage .LeftRight img {
+  width: 9px;
+}
+.Report .WhiteCard .data p {
+  font-size: 14px;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .Footer {
