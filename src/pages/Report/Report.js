@@ -14,20 +14,38 @@ import Icon6 from '../../Assets/IconAndLogo/fa6-solid_naira-sign.png'
 import Left from '../../Assets/IconAndLogo/primary (1).png'
 import Right from '../../Assets/IconAndLogo/primary (2).png'
 import Down from '../../Assets/IconAndLogo/primary.png'
-
-
-
+import Img1 from '../../Assets/IconAndLogo/Frame 2755.png'
+// import Modal from '../../components/Modal'
 
 function Report() {
+
     return (
         <div>
+
             <div className="Report">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body EditBodyReport">
+                                <center>
+                                    <img src={Img1} alt="" />
+                                    <p>Are you sure you want to Edit this entry?</p>
+                                    <div className="buttonss">
+                                        <button type="button" class="btn cancel" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn success">Yes, edit</button>
+                                    </div>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <LayoutWithSidebar >
                     <div className="Report">
                         <NavbarTwo
                             header="Report"
                         />
                         <div className="margin75"></div>
+
                         <div className="p-30">
                             <div className="padding20"></div>
                             <NameHeader
@@ -107,12 +125,14 @@ function Report() {
                                                     <td>
                                                         <div className="dot">
                                                             <img className='' src={Icon5} alt="" />
-                                                            <div className="firstDiv">
-                                                                <div className="flex">
-                                                                <img src={Icon4} alt="" />
-                                                                <span>Edit</span>
+                                                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                                <div className="firstDiv">
+                                                                    <div className="flex">
+                                                                        <img src={Icon4} alt="" />
+                                                                        <span>Edit</span>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
+                                                            </button>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -138,10 +158,13 @@ function Report() {
                                                         <div className="dot">
                                                             <img className='' src={Icon5} alt="" />
                                                             <div className="firstDiv">
-                                                                <div className="flex">
-                                                                <img src={Icon4} alt="" />
-                                                                <span>Edit</span>
-                                                                </div>
+                                                                <button type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+
+                                                                    <div className="flex">
+                                                                        <img src={Icon4} alt="" />
+                                                                        <span>Edit</span>
+                                                                    </div>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -150,23 +173,23 @@ function Report() {
                                         </table>
                                     </div>
                                     <div className="perPage mt-3">
-                                       <div className="abs">
-                                       <div className="ms-2 me-2">
-                                            <p>Items per page</p>
-                                        </div>
-                                        <div className="bord ms-2 me-2 flexDiv">
-                                            <p className='me-2'>8</p>
-                                            <img src={Down} alt="" />
-                                        </div>
-                                        <div className="LeftRight ms-2 me-2">
-                                            <div className="bord ms-2 me-2">
-                                                <img src={Left} alt="" />
+                                        <div className="abs">
+                                            <div className="ms-2 me-2">
+                                                <p>Items per page</p>
                                             </div>
-                                            <div className="bord ms-2 me-2">
-                                                <img src={Right} alt="" />
+                                            <div className="bord ms-2 me-2 flexDiv">
+                                                <p className='me-2'>8</p>
+                                                <img src={Down} alt="" />
+                                            </div>
+                                            <div className="LeftRight ms-2 me-2">
+                                                <div className="bord ms-2 me-2">
+                                                    <img src={Left} alt="" />
+                                                </div>
+                                                <div className="bord ms-2 me-2">
+                                                    <img src={Right} alt="" />
+                                                </div>
                                             </div>
                                         </div>
-                                       </div>
                                     </div>
                                 </div>
                                 <div className="margin50"></div>
