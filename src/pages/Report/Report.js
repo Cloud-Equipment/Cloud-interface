@@ -14,8 +14,8 @@ import Icon6 from '../../Assets/IconAndLogo/fa6-solid_naira-sign.png'
 import Left from '../../Assets/IconAndLogo/primary (1).png'
 import Right from '../../Assets/IconAndLogo/primary (2).png'
 import Down from '../../Assets/IconAndLogo/primary.png'
-import Img1 from '../../Assets/IconAndLogo/Frame 2755.png'
-import Form from '../ActiveForm/Form'
+// import Img1 from '../../Assets/IconAndLogo/Frame 2755.png'
+// import Form from '../ActiveForm/Form'
 // import Modal from '../../components/Modal'
 
 function Report() {
@@ -24,7 +24,7 @@ function Report() {
         <div>
 
             <div className="Report">
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                {/* <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-body EditBodyReport">
@@ -44,11 +44,11 @@ function Report() {
                     <div class="modal-dialog modal-xl ">
                         <div class="modal-content">
                             <div class="modal-body EditBodyReport">
-                               <Form />
+                                <Form />
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <LayoutWithSidebar >
                     <div className="Report">
                         <NavbarTwo
@@ -135,14 +135,19 @@ function Report() {
                                                     <td>
                                                         <div className="dot">
                                                             <img className='' src={Icon5} alt="" />
-                                                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                                <div className="firstDiv">
-                                                                    <div className="flex">
-                                                                        <img src={Icon4} alt="" />
-                                                                        <span>Edit</span>
-                                                                    </div>
+                                                            <div className="firstDiv">
+                                                                <div className="flex">
+                                                                    <img src={Icon4} alt="" />
+                                                                    <span>Confirm Test</span>
                                                                 </div>
-                                                            </button>
+                                                                <div className="flex">
+                                                                    <img src={Icon4} alt="" />
+                                                                    <span>Upload Result</span>
+                                                                </div>
+                                                                {/* <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                                   
+                                                                </button> */}
+                                                            </div>
                                                         </div>
                                                     </td>
 
@@ -195,12 +200,17 @@ function Report() {
                                                         <div className="dot">
                                                             <img className='' src={Icon5} alt="" />
                                                             <div className="firstDiv">
-                                                                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                                    <div className="flex">
-                                                                        <img src={Icon4} alt="" />
-                                                                        <span>Edit</span>
-                                                                    </div>
-                                                                </button>
+                                                                <div className="flex">
+                                                                    <img src={Icon4} alt="" />
+                                                                    <span>Confirm Test</span>
+                                                                </div>
+                                                                <div className="flex">
+                                                                    <img src={Icon4} alt="" />
+                                                                    <span>Upload Result</span>
+                                                                </div>
+                                                                {/* <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                                   
+                                                                </button> */}
                                                             </div>
                                                         </div>
                                                     </td>

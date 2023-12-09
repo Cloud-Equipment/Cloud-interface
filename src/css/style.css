@@ -1076,16 +1076,17 @@
   cursor: pointer;
   background-color: white;
   border: 1px solid rgb(225, 225, 225);
-  padding: 10px 15px;
   right: -40px;
+  width: 175px;
   border-radius: 5px;
   z-index: 1;
 }
 .Report .WhiteCard .reportTable table .dot .firstDiv .flex {
   display: flex;
+  padding: 10px 15px;
   align-items: center;
 }
-.Report .WhiteCard .reportTable table .dot .firstDiv:hover {
+.Report .WhiteCard .reportTable table .dot .firstDiv .flex:hover {
   background: rgb(238, 255, 252);
 }
 .Report .WhiteCard .reportTable table .dot .firstDiv img {
@@ -1094,7 +1095,8 @@
   border-radius: 50%;
 }
 .Report .WhiteCard .reportTable table .dot .firstDiv span {
-  font-size: 15px;
+  font-size: 14px;
+  font-family: "DM Sans", sans-serif;
 }
 .Report .WhiteCard .reportTable .perPage {
   height: 30px;

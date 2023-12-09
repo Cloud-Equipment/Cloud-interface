@@ -1360,17 +1360,20 @@ $dark: rgba(0, 41, 102, 1);
                     cursor: pointer;
                     background-color: white;
                     border: 1px solid rgba(225, 225, 225, 1);
-                    padding: 10px 15px;
+                    
                     right: -40px;
+                    width: 175px;
                     border-radius: 5px;
                     z-index: 1;
                     .flex{
                         display: flex;
+                        padding: 10px 15px;
                         align-items: center;
+                        &:hover{
+                            background: rgba(238, 255, 252, 1);
+                        }
                     }
-                    &:hover{
-                        background: rgba(238, 255, 252, 1);
-                    }
+                   
                     img{
                         width: 30px;
                         margin-right: 10px;
@@ -1378,7 +1381,8 @@ $dark: rgba(0, 41, 102, 1);
                        
                     }
                     span{
-                        font-size: 15px;
+                        font-size: 14px;
+                        font-family: $dm;
                     }
                    }
                 }
