@@ -15,6 +15,7 @@ import Left from '../../Assets/IconAndLogo/primary (1).png'
 import Right from '../../Assets/IconAndLogo/primary (2).png'
 import Down from '../../Assets/IconAndLogo/primary.png'
 import Img1 from '../../Assets/IconAndLogo/Frame 2755.png'
+import Form from '../ActiveForm/Form'
 // import Modal from '../../components/Modal'
 
 function Report() {
@@ -32,9 +33,18 @@ function Report() {
                                     <p>Are you sure you want to Edit this entry?</p>
                                     <div className="buttonss">
                                         <button type="button" class="btn cancel" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn success">Yes, edit</button>
+                                        <button type="button" class="btn success" data-bs-toggle="modal" data-bs-target="#edit">Yes, edit</button>
                                     </div>
                                 </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                    <div class="modal-dialog modal-xl ">
+                        <div class="modal-content">
+                            <div class="modal-body EditBodyReport">
+                               <Form />
                             </div>
                         </div>
                     </div>
@@ -105,7 +115,7 @@ function Report() {
                                             </thead>
                                             <tbody>
                                                 <tr className=''>
-                                                    <th scope="row">
+                                                    <th scope="">
                                                         <div className="flexDiv">
                                                             <img src={Icon3} alt="" />
                                                             <span>001</span>
@@ -135,7 +145,34 @@ function Report() {
                                                             </button>
                                                         </div>
                                                     </td>
+
                                                 </tr>
+                                                {/* <div className="downtr">
+                                                    <ul>
+                                                        <li className='flexDivSpace'>
+                                                            <div className=""> <span>Add:</span></div>
+                                                            <div className="flexDiv">
+                                                                <span>Kidney Scan</span>
+                                                                <div className="flexDiv">
+                                                                    <img src={Icon6} alt="" />
+                                                                    <span>1,500.00</span>
+                                                                </div>
+                                                            </div>
+
+                                                        </li>
+                                                        <li className='flexDivSpace'>
+                                                            <div className=""> <span>Remove:</span></div>
+                                                            <div className="flexDiv">
+                                                                <p className=''>Cholesterol - Test - 500 </p>
+                                                                <div className="flexDiv">
+                                                                    <img src={Icon6} alt="" />
+                                                                    <span>2,000.00</span>
+                                                                </div>
+                                                            </div>
+
+                                                        </li>
+                                                    </ul>
+                                                </div> */}
                                                 <tr>
                                                     <th scope="row">
                                                         <div className="flexDiv">
@@ -151,15 +188,14 @@ function Report() {
                                                     <td>
                                                         <div className="flexDiv">
                                                             <img className='naira' src={Icon6} alt="" />
-                                                            <span>1,000.00</span>
+                                                            <span>1,500.00</span>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div className="dot">
                                                             <img className='' src={Icon5} alt="" />
                                                             <div className="firstDiv">
-                                                                <button type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">
-
+                                                                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                                     <div className="flex">
                                                                         <img src={Icon4} alt="" />
                                                                         <span>Edit</span>
@@ -200,8 +236,8 @@ function Report() {
                         </div>
                     </div>
                 </LayoutWithSidebar>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 
