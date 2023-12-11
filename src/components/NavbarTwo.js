@@ -32,7 +32,7 @@ function NavbarTwo(props) {
                             <div className="profile ">
                                 <p className='p-3 pb-0 fw6'>MY PROFILE</p>
                                 <Link to="/login">
-                                    <div className="mt-3 dot">
+                                    <div className="mt-1 dot">
                                         <img src={Dot} alt="" />
                                         <p>Log out</p>
                                     </div>

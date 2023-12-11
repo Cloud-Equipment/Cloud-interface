@@ -2,6 +2,7 @@ import React from 'react';
 import { useRoutes } from 'react-router-dom';
 import { ActiveForms, Auth, Login } from '../pages';
 import Report from '../pages/Report/Report';
+import ManageUser from '../pages/ManageUsers/ManageUser';
 
 
 export const Routes = () => {
@@ -21,6 +22,10 @@ export const Routes = () => {
     {
         path: '/reports',
         element: < Report/>
+    },
+    {
+        path: '/manage-user',
+        element: < ManageUser/>
     }
   ]);
 };

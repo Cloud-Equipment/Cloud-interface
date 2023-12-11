@@ -2,6 +2,7 @@ import React from 'react'
 import { SidebarIcon } from '../data/data'
 import { Link } from 'react-router-dom'
 
+
 function Sidebar() {
     return (
         <div>
@@ -44,10 +45,12 @@ function Sidebar() {
                                             </h2>
                                             <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                                                 <div class="accordion-body">
+                                                    <Link to="/manage-user">
                                                     <div className="">
                                                         <p> - </p>
                                                         <p className='ms-2'>Manage User</p>
                                                     </div>
+                                                    </Link>
                                                     <div className="">
                                                         <p> - </p>
                                                         <p className='ms-2'>Manage Facility</p>
@@ -59,10 +62,6 @@ function Sidebar() {
                                                     <div className="">
                                                         <p> - </p>
                                                         <p className='ms-2'>Price Management</p>
-                                                    </div>
-                                                    <div className="">
-                                                        <p> - </p>
-                                                        <p className='ms-2'>Service Management</p>
                                                     </div>
                                                 </div>
                                             </div>
