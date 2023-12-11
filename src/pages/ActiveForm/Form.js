@@ -43,13 +43,13 @@ function Form() {
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="discount">
-                                        <label htmlFor="discount" className='fw3'>User ID</label>
+                                        <label htmlFor="discount" className='fw3'>User ID</label> <br />
                                         <input type="text" name="" id="discount" placeholder='AGA/453|' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="discount">
-                                        <label htmlFor="discount" className='fw3'>Patient Name</label>
+                                        <label htmlFor="discount" className='fw3'>Patient Name</label>  <br />
                                         <input type="text" name="" id="discount" placeholder='Adepoju Deborah ' />
                                     </div>
                                 </div>
@@ -60,13 +60,13 @@ function Form() {
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="discount">
-                                        <label htmlFor="discount" className='fw3'>Patient Mobile Number</label>
+                                        <label htmlFor="discount" className='fw3'>Patient Mobile Number</label>  <br />
                                         <input type="number" name="" id="discount" placeholder='+234 08143626356' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="discount">
-                                        <label htmlFor="discount" className='fw3'>Referrer’s Email Address</label>
+                                        <label htmlFor="discount" className='fw3'>Referrer’s Email Address</label>  <br />
                                         <input type="email" name="" id="discount" placeholder='Enter Referrer Email Address' />
                                     </div>
                                 </div>
@@ -76,7 +76,7 @@ function Form() {
                         <div className="Rebate">
                             <div className="row">
                                 <div className="col-md-6">
-                                    <label htmlFor="discount" className='fw3'>Gender</label>
+                                    <label htmlFor="discount" className='fw3'>Gender</label>  <br />
                                     <select class="form-select" aria-label="Default select example">
                                         <option selected ><span>Select Gender</span></option>
                                         <option value="2" >Male </option>
@@ -85,7 +85,7 @@ function Form() {
                                     </select>
                                 </div>
                                 <div className="col-md-6">
-                                    <label htmlFor="discount" className='fw3'>Age of the Patient</label>
+                                    <label htmlFor="discount" className='fw3'>Age of the Patient</label>  <br />
                                     <select class="form-select" aria-label="Default select example">
                                         <option selected ><span>Select Patient  age</span></option>
                                         <option value="2" >Less than 1year </option>
@@ -100,13 +100,13 @@ function Form() {
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="discount">
-                                        <label htmlFor="discount" className='fw3'>Address</label>
+                                        <label htmlFor="discount" className='fw3'>Address</label>  <br />
                                         <input type="text" name="" id="discount" placeholder='No 24, W. F. Kumuyi Street,' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="formss">
-                                        <label htmlFor="Defaultselectexample" className='label'>Procedure category</label>
+                                        <label htmlFor="Defaultselectexample" className='label'>Procedure category</label>  <br />
                                         <div className="inputt">
                                             <p>Select Procedure/Test</p>
                                             <img src={Arrow} alt="" />
@@ -151,7 +151,7 @@ function Form() {
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="formss">
-                                        <label htmlFor="Defaultselectexample" className='label'>Procedures</label>
+                                        <label htmlFor="Defaultselectexample" className='label'>Procedures</label>  <br />
                                         <div className="inputt">
                                             <p>Select Procedure/Test</p>
                                             <img src={Arrow} alt="" />
@@ -211,7 +211,7 @@ function Form() {
                                 </div>
                                 <div className="col-md-6">
                                     <div className="discount">
-                                        <label htmlFor="discount" className='fw3'>Discount Code</label>
+                                        <label htmlFor="discount" className='fw3'>Discount Code</label>  <br />
                                         <input type="text" name="" id="discount" placeholder='Enter code' />
                                     </div>
                                     <div className="int">
@@ -226,13 +226,13 @@ function Form() {
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="discount">
-                                        <label htmlFor="discount" className='fw3'>Rebate Paid </label>
+                                        <label htmlFor="discount" className='fw3'>Rebate Paid </label>  <br />
                                         <input type="text" name="" id="discount" placeholder='Enter Amount of Rebate Paid' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="discount">
-                                        <label htmlFor="discount" className='fw3'>Referrers Name</label>
+                                        <label htmlFor="discount" className='fw3'>Referrers Name</label>  <br />
                                         <input type="text" name="" id="discount" placeholder='Enter Referee Name' />
                                     </div>
                                 </div>
@@ -243,13 +243,13 @@ function Form() {
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="discount">
-                                        <label htmlFor="discount" className='fw3'>Referrer’s Hospital/Laboratory</label>
+                                        <label htmlFor="discount" className='fw3'>Referrer’s Hospital/Laboratory</label>  <br />
                                         <input type="text" name="" id="discount" placeholder='Enter Laboratory Name' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="discount">
-                                        <label htmlFor="discount" className='fw3'>Referrer’s Email Address</label>
+                                        <label htmlFor="discount" className='fw3'>Referrer’s Email Address</label>  <br />
                                         <input type="text" name="" id="discount" placeholder='Enter Referrer Email Address' />
                                     </div>
                                 </div>
@@ -258,7 +258,7 @@ function Form() {
                         <div className="margin30"></div>
                         <div className="phone">
                             <div className="col-md-6">
-                                <label htmlFor="discount" className='fw3'>Referrer’s Phone Number</label>
+                                <label htmlFor="discount" className='fw3'>Referrer’s Phone Number</label>  <br />
                                 <PhoneInput
                                     placeholder="Enter phone number"
                                     value={value}

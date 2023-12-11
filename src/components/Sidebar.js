@@ -1,5 +1,6 @@
 import React from 'react'
 import { SidebarIcon } from '../data/data'
+import { Link } from 'react-router-dom'
 
 function Sidebar() {
     return (
@@ -25,7 +26,9 @@ function Sidebar() {
                                     <div className="">
                                         <img src={SidebarIcon.icon2} alt="" />
                                     </div>
+                                    <Link to="/reports">
                                     <div className=""><p>Report</p></div>
+                                    </Link>
 
                                 </li>
                                 <li class="" >

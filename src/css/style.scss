@@ -492,7 +492,7 @@ $dark: rgba(0, 41, 102, 1);
 }
 
 .Sidebar {
-    width: 20%;
+    width: 19%;
     position: fixed;
     background-color: $secondary;
     height: 100vh;
@@ -510,7 +510,7 @@ $dark: rgba(0, 41, 102, 1);
         display: flex;
         align-items: center;
         color: $white;
-        justify-content: center;
+        // justify-content: center;
         padding-left: 10px;
 
         p {
@@ -654,6 +654,8 @@ $dark: rgba(0, 41, 102, 1);
                 p {
                     margin: 0;
                     margin-left: 10px;
+                    color: $white;
+                    text-decoration: none;
                     font-size: 13px;
                     font-family: 'Inter', sans-serif;
                 }
@@ -1520,11 +1522,11 @@ $dark: rgba(0, 41, 102, 1);
     background: rgba(246, 249, 248, 1);
 
     .left {
-        width: 20%;
+        width: 19%;
     }
 
     .right {
-        width: 80%;
+        width: 81%;
     }
 }
 

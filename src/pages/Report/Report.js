@@ -100,7 +100,7 @@ function Report() {
                                         <h2>All Report</h2>
                                     </div>
                                     <div className="">
-                                        <table>
+                                        <table className='w-100'>
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Date & Time</th>
