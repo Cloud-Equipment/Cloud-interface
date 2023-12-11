@@ -82,6 +82,10 @@
   font-weight: 300;
 }
 
+.fw6 {
+  font-weight: 600 !important;
+}
+
 .f20 {
   font-size: 20px !important;
 }
@@ -500,6 +504,9 @@
   padding: 15px;
   cursor: pointer;
 }
+.Sidebar .Top ul .eachs a {
+  text-decoration: none;
+}
 .Sidebar .Top ul .eachs p {
   margin: 0;
   margin-left: 10px;
@@ -649,24 +656,34 @@
   top: 41px;
   right: 10px;
   cursor: pointer;
-  width: 180px;
+  width: 150px;
   border-radius: 8px;
   border: 1px solid rgb(242, 244, 247);
   background-color: #fff;
-  padding: 20px;
   box-shadow: 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
   box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08);
+}
+.Navbar .together .details .profile a {
+  text-decoration: none;
 }
 .Navbar .together .details .profile .dot {
   display: flex;
   align-items: center;
+  padding: 15px 20px;
 }
 .Navbar .together .details .profile .dot p {
   margin: 0;
+  color: #000;
+}
+.Navbar .together .details .profile .dot a {
+  text-decoration: none;
 }
 .Navbar .together .details .profile .dot img {
   margin: 0 10px;
   width: 20px;
+}
+.Navbar .together .details .profile .dot:hover {
+  background-color: rgb(238, 255, 252);
 }
 .Navbar .together .utils {
   display: flex;
@@ -690,31 +707,6 @@
   border-radius: 13px;
   margin: 0 7px;
   cursor: pointer;
-}
-.Navbar .together .utils .profile {
-  display: none;
-  position: absolute;
-  top: 41px;
-  right: -10px;
-  cursor: pointer;
-  width: 180px;
-  border-radius: 8px;
-  border: 1px solid rgb(242, 244, 247);
-  background-color: #fff;
-  padding: 20px;
-  box-shadow: 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
-  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08);
-}
-.Navbar .together .utils .profile .dot {
-  display: flex;
-  align-items: center;
-}
-.Navbar .together .utils .profile .dot p {
-  margin: 0;
-}
-.Navbar .together .utils .profile .dot img {
-  margin: 0 10px;
-  width: 20px;
 }
 
 .NavbarTwo {
@@ -794,24 +786,34 @@
   top: 41px;
   right: 10px;
   cursor: pointer;
-  width: 180px;
+  width: 150px;
   border-radius: 8px;
   border: 1px solid rgb(242, 244, 247);
   background-color: #fff;
-  padding: 20px;
   box-shadow: 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
   box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08);
+}
+.NavbarTwo .together .details .profile a {
+  text-decoration: none;
 }
 .NavbarTwo .together .details .profile .dot {
   display: flex;
   align-items: center;
+  padding: 15px 20px;
 }
 .NavbarTwo .together .details .profile .dot p {
   margin: 0;
+  color: #000;
+}
+.NavbarTwo .together .details .profile .dot a {
+  text-decoration: none;
 }
 .NavbarTwo .together .details .profile .dot img {
   margin: 0 10px;
   width: 20px;
+}
+.NavbarTwo .together .details .profile .dot:hover {
+  background-color: rgb(238, 255, 252);
 }
 .NavbarTwo .together .utils {
   display: flex;
@@ -835,31 +837,6 @@
   border-radius: 13px;
   margin: 0 7px;
   cursor: pointer;
-}
-.NavbarTwo .together .utils .profile {
-  display: none;
-  position: absolute;
-  top: 41px;
-  right: -10px;
-  cursor: pointer;
-  width: 180px;
-  border-radius: 8px;
-  border: 1px solid rgb(242, 244, 247);
-  background-color: #fff;
-  padding: 20px;
-  box-shadow: 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
-  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08);
-}
-.NavbarTwo .together .utils .profile .dot {
-  display: flex;
-  align-items: center;
-}
-.NavbarTwo .together .utils .profile .dot p {
-  margin: 0;
-}
-.NavbarTwo .together .utils .profile .dot img {
-  margin: 0 10px;
-  width: 20px;
 }
 
 .Partners {

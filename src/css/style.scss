@@ -38,6 +38,7 @@ $inter: 'Inter', sans-serif;
 $playfair: 'Playfair Display', serif;
 $borderbottom: 3px solid rgba(234, 236, 240, 1);
 $dark: rgba(0, 41, 102, 1);
+$lightSecondary: rgba(238, 255, 252, 1);
 
 
 // ================================================================
@@ -118,6 +119,11 @@ $dark: rgba(0, 41, 102, 1);
 .fw3 {
     font-weight: 300;
 }
+
+.fw6 {
+    font-weight: 600 !important;
+}
+
 
 .f20 {
     font-size: 20px !important;
@@ -650,13 +656,16 @@ $dark: rgba(0, 41, 102, 1);
                 align-items: center;
                 padding: 15px;
                 cursor: pointer;
-
+                a{
+                    text-decoration: none;
+                }
                 p {
                     margin: 0;
                     margin-left: 10px;
                     color: $white;
                     text-decoration: none;
                     font-size: 13px;
+                    
                     font-family: 'Inter', sans-serif;
                 }
 
@@ -842,25 +851,33 @@ $dark: rgba(0, 41, 102, 1);
                 top: 41px;
                 right: 10px;
                 cursor: pointer;
-                width: 180px;
+                width: 150px;
                 border-radius: 8px;
                 border: 1px solid rgba(242, 244, 247, 1);
                 background-color: $white;
-                padding: 20px;
                 box-shadow: 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
                 box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08);
-
+                a{
+                    text-decoration: none;
+                }
                 .dot {
                     display: flex;
                     align-items: center;
-
+                    padding: 15px 20px;
                     p {
                         margin: 0;
+                        color: $black;
+                    }
+                    a{
+                        text-decoration: none;
                     }
 
                     img {
                         margin: 0 10px;
                         width: 20px;
+                    }
+                    &:hover{
+                        background-color: $lightSecondary;
                     }
                 }
             }
@@ -895,34 +912,6 @@ $dark: rgba(0, 41, 102, 1);
                 cursor: pointer;
             }
 
-            .profile {
-                display: none;
-                position: absolute;
-                top: 41px;
-                right: -10px;
-                cursor: pointer;
-                width: 180px;
-                border-radius: 8px;
-                border: 1px solid rgba(242, 244, 247, 1);
-                background-color: $white;
-                padding: 20px;
-                box-shadow: 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
-                box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08);
-
-                .dot {
-                    display: flex;
-                    align-items: center;
-
-                    p {
-                        margin: 0;
-                    }
-
-                    img {
-                        margin: 0 10px;
-                        width: 20px;
-                    }
-                }
-            }
         }
     }
 }
@@ -1019,25 +1008,32 @@ $dark: rgba(0, 41, 102, 1);
                 top: 41px;
                 right: 10px;
                 cursor: pointer;
-                width: 180px;
+                width: 150px;
                 border-radius: 8px;
                 border: 1px solid rgba(242, 244, 247, 1);
                 background-color: $white;
-                padding: 20px;
                 box-shadow: 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
                 box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08);
-
+                a{
+                    text-decoration: none;
+                }
                 .dot {
                     display: flex;
                     align-items: center;
-
+                    padding: 15px 20px;
                     p {
                         margin: 0;
+                        color: $black;
                     }
-
+                    a{
+                        text-decoration: none;
+                    }
                     img {
                         margin: 0 10px;
                         width: 20px;
+                    }
+                    &:hover{
+                        background-color: $lightSecondary;
                     }
                 }
             }
@@ -1070,35 +1066,6 @@ $dark: rgba(0, 41, 102, 1);
                 border-radius: 13px;
                 margin: 0 7px;
                 cursor: pointer;
-            }
-
-            .profile {
-                display: none;
-                position: absolute;
-                top: 41px;
-                right: -10px;
-                cursor: pointer;
-                width: 180px;
-                border-radius: 8px;
-                border: 1px solid rgba(242, 244, 247, 1);
-                background-color: $white;
-                padding: 20px;
-                box-shadow: 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
-                box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08);
-
-                .dot {
-                    display: flex;
-                    align-items: center;
-
-                    p {
-                        margin: 0;
-                    }
-
-                    img {
-                        margin: 0 10px;
-                        width: 20px;
-                    }
-                }
             }
         }
     }

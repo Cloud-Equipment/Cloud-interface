@@ -3,6 +3,7 @@ import Logo from '../Assets/IconAndLogo/Screenshot 2023-04-08 at 20.20 1.png'
 import Notification from '../Assets/IconAndLogo/mdi_bell-notification-outline.png'
 import Arrow from '../Assets/IconAndLogo/arrow-down.png'
 import Dot from '../Assets/IconAndLogo/Aitime.png'
+import { Link } from 'react-router-dom'
 
 function NavbarTwo(props) {
     return (
@@ -29,11 +30,14 @@ function NavbarTwo(props) {
                         <div className="arrow ms-5">
                             <img src={Arrow} alt="" />
                             <div className="profile ">
-                                <p>MY PROFILE</p>
-                                <div className="mt-3 dot">
-                                    <img src={Dot} alt="" />
-                                    <p>Log out</p>
-                                </div>
+                                <p className='p-3 pb-0 fw6'>MY PROFILE</p>
+                                <Link to="/login">
+                                    <div className="mt-3 dot">
+                                        <img src={Dot} alt="" />
+                                        <p>Log out</p>
+                                    </div>
+                                </Link>
+
                             </div>
                         </div>
 
