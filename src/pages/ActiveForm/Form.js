@@ -33,11 +33,125 @@ function Form() {
                 <div className="divider"></div>
                 <div className="form">
                     <form action="">
+                        <div className="deduction">
+                            <h2>Patient Details</h2>
+                            <p>You are to fill in the patient Basic Information</p>
+                            <div className="dividerTwo"></div>
+                        </div>
+
+                        <div className="Rebate">
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <div className="discount">
+                                        <label htmlFor="discount" className='fw3'>User ID</label>
+                                        <input type="text" name="" id="discount" placeholder='AGA/453|' />
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="discount">
+                                        <label htmlFor="discount" className='fw3'>Patient Name</label>
+                                        <input type="text" name="" id="discount" placeholder='Adepoju Deborah ' />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="margin30"></div>
+                        <div className="Rebate">
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <div className="discount">
+                                        <label htmlFor="discount" className='fw3'>Patient Mobile Number</label>
+                                        <input type="number" name="" id="discount" placeholder='+234 08143626356' />
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="discount">
+                                        <label htmlFor="discount" className='fw3'>Referrer’s Email Address</label>
+                                        <input type="email" name="" id="discount" placeholder='Enter Referrer Email Address' />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="margin30"></div>
+                        <div className="Rebate">
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <label htmlFor="discount" className='fw3'>Gender</label>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected ><span>Select Gender</span></option>
+                                        <option value="2" >Male </option>
+                                        <option value="3">Female</option>
+                                        <option value="3">Other</option>
+                                    </select>
+                                </div>
+                                <div className="col-md-6">
+                                    <label htmlFor="discount" className='fw3'>Age of the Patient</label>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected ><span>Select Patient  age</span></option>
+                                        <option value="2" >Less than 1year </option>
+                                        <option value="3">1 Year</option>
+                                        <option value="3">2 Years</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="margin30"></div>
+                        <div className="Rebate">
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <div className="discount">
+                                        <label htmlFor="discount" className='fw3'>Address</label>
+                                        <input type="text" name="" id="discount" placeholder='No 24, W. F. Kumuyi Street,' />
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="formss">
+                                        <label htmlFor="Defaultselectexample" className='label'>Procedure category</label>
+                                        <div className="inputt">
+                                            <p>Select Procedure/Test</p>
+                                            <img src={Arrow} alt="" />
+                                        </div>
+                                        <div className="testDropdown">
+                                            <div className="header">
+                                                <p>Select from the category</p>
+                                            </div>
+                                            <div className="each">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                        Cholesterol Profile
+                                                    </label>
+                                                </div>
+                                                <div className="amount">
+                                                    <img src={Naira} alt="" />
+                                                    <p>500.00</p>
+                                                </div>
+                                            </div>
+                                            <div className="each">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaults" />
+                                                    <label class="form-check-label" for="flexCheckDefaults">
+                                                        Liver Test
+                                                    </label>
+                                                </div>
+                                                <div className="amount">
+                                                    <img src={Naira} alt="" />
+                                                    <p>1000.00</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
                         <div className="sett">
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="formss">
-                                        <label htmlFor="Defaultselectexample" className='label'>Procedure/Test Ordered</label>
+                                        <label htmlFor="Defaultselectexample" className='label'>Procedures</label>
                                         <div className="inputt">
                                             <p>Select Procedure/Test</p>
                                             <img src={Arrow} alt="" />
@@ -73,44 +187,7 @@ function Form() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-6">
-                                    <div className="formss">
-                                        <label htmlFor="Defaultselectexample" className='label'>Age of the Patient</label>
-                                        <div className="inputt">
-                                            <p>Select Patient  age</p>
-                                            <img src={Arrow} alt="" />
-                                        </div>
-                                        <div className="testDropdown">
-                                            <div className="header">
-                                                <p>Select one option...</p>
-                                            </div>
-                                            <div className="each">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultt" />
-                                                    <label class="form-check-label" for="flexCheckDefaultt">
-                                                        Cholesterol Profile
-                                                    </label>
-                                                </div>
-                                                <div className="amount">
-                                                    <img src={Naira} alt="" />
-                                                    <p>500.00</p>
-                                                </div>
-                                            </div>
-                                            <div className="each">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultts" />
-                                                    <label class="form-check-label" for="flexCheckDefaultts">
-                                                        Liver Test
-                                                    </label>
-                                                </div>
-                                                <div className="amount">
-                                                    <img src={Naira} alt="" />
-                                                    <p>1000.00</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                         <div className="deduction">
