@@ -11,6 +11,7 @@ import Icon5 from '../../Assets/IconAndLogo/Group 5.png'
 import Left from '../../Assets/IconAndLogo/primary (1).png'
 import Right from '../../Assets/IconAndLogo/primary (2).png'
 import Down from '../../Assets/IconAndLogo/primary.png'
+import Img1 from '../../Assets/IconAndLogo/Frame 2755.png'
 
 function ManageUser() {
     return (
@@ -18,13 +19,31 @@ function ManageUser() {
             <div>
 
                 <div className="ManageUsers">
-                    {/* <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    {/* ENABLE MODAL */}
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog modal-dialog-centered">
                             <div class="modal-content">
-                                <div class="modal-body EditBodyReport">
+                                <div class="modal-body EnableModal">
                                     <center>
                                         <img src={Img1} alt="" />
-                                        <p>Are you sure you want to Edit this entry?</p>
+                                        <p>You currently do not have 2FA enabled on your account. Enable 2FA now to continue</p>
+                                        <div className="buttonss">
+                                            <button type="button" class="btn cancel" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="button" class="btn success" data-bs-toggle="modal" data-bs-target="#edit">Enable 2FA</button>
+                                        </div>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* DISABLE USER MODAL */}
+                    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body EnableModal">
+                                    <center>
+                                        <img src={Img1} alt="" />
+                                        <p>Are you sure you want to disable this user? User won’t have access to the platform again.</p>
                                         <div className="buttonss">
                                             <button type="button" class="btn cancel" data-bs-dismiss="modal">Cancel</button>
                                             <button type="button" class="btn success" data-bs-toggle="modal" data-bs-target="#edit">Yes, edit</button>
@@ -34,15 +53,29 @@ function ManageUser() {
                             </div>
                         </div>
                     </div>
-                    <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-                        <div class="modal-dialog modal-xl ">
+                    {/* INVITE USER */}
+                    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog modal-dialog-centered">
                             <div class="modal-content">
-                                <div class="modal-body EditBodyReport">
-                                    <Form />
+                                <div class="modal-body InviteModal p-5">
+                                    <h3 className='mb-3 f20'>Invite team members</h3>
+                                    <div className="mb-3">
+                                        <label htmlFor="discount" className=' fw3'>Referrer’s Email Address</label>  <br />
+                                        <input type="email" className='inputts' name="" id="discount" placeholder='Enter Referrer Email Address' />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="discount" className='fw3'>Choose Role</label>  <br />
+                                        <select class="form-select inputts selectHolder" aria-label="Default select example">
+                                            <option selected ><span>Choose Role</span></option>
+                                        </select>
+                                    </div>
+                                    <div className="pt-3">
+                                        <button type="button" class="btn dark-button  w-100 m-0 f17 Dm" data-bs-toggle="modal" data-bs-target="#edit">Invite Team Member</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div> */}
+                    </div>
                     <LayoutWithSidebar >
                         <div className="ManageUser">
                             <NavbarTwo
@@ -51,9 +84,11 @@ function ManageUser() {
                             <div className="margin75"></div>
                             <div className="AllManageBtn pt-5 pb-5">
                                 <div className="manageButtons">
-                                    <button className='secondaryButtonBackground'>Invite User</button>
+                                    <button class='btn secondaryButtonBackground' type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2">Invite User</button>
                                     <button className='secondaryButtonBorder'>Manage Roles</button>
-                                    <button className='secondaryButtonNoBg'>Enforce 2FA</button>
+                                    <button type="button" class="btn secondaryButtonNoBg" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        Enforce 2FA
+                                    </button>
                                 </div>
                             </div>
                             <div className="p-30">
@@ -88,7 +123,7 @@ function ManageUser() {
                                             <p>Export</p>
                                         </div>
                                     </div>
-                                    <div className="reportTable">
+                                    <div className="USERSTable">
                                         <div className="header mb-3">
                                             <h2>Team members - 5</h2>
                                         </div>
@@ -126,11 +161,15 @@ function ManageUser() {
                                                                 <div className="firstDiv">
                                                                     <div className="flex">
                                                                         {/* <img src={Icon4} alt="" /> */}
-                                                                        <span>Disable User</span>
+                                                                        <span type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                                                                            Disable User
+                                                                        </span>
                                                                     </div>
                                                                     <div className="flex">
                                                                         {/* <img src={Icon4} alt="" /> */}
-                                                                        <span>Enable 2FA</span>
+                                                                        <span type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                                            Enforce 2FA
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -156,11 +195,15 @@ function ManageUser() {
                                                                 <div className="firstDiv">
                                                                     <div className="flex">
                                                                         {/* <img src={Icon4} alt="" /> */}
-                                                                        <span>Disable User</span>
+                                                                        <span type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                                                                            Disable User
+                                                                        </span>
                                                                     </div>
                                                                     <div className="flex">
                                                                         {/* <img src={Icon4} alt="" /> */}
-                                                                        <span>Enable 2FA</span>
+                                                                        <span type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                                            Enforce 2FA
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                             </div>

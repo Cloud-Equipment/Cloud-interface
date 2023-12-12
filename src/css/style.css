@@ -94,6 +94,18 @@
   font-size: 15px !important;
 }
 
+.f18 {
+  font-size: 18px !important;
+}
+
+.f17 {
+  font-size: 17px !important;
+}
+
+.Dm {
+  font-family: "DM Sans", sans-serif;
+}
+
 .flexDiv {
   display: flex;
   align-items: center;
@@ -157,6 +169,7 @@
 }
 .dark-button:hover {
   background: rgb(73, 186, 165);
+  color: #fff;
 }
 
 .dark-button100 {
@@ -195,6 +208,7 @@
 }
 .secondaryButtonBackground:hover {
   background: #0c5648;
+  color: #fff;
 }
 
 .secondaryButtonBorder {
@@ -236,6 +250,39 @@
 .secondaryButtonNoBg:hover {
   background: #0D5F50;
   color: #fff;
+}
+
+.selectHolder {
+  font-size: 14px;
+  color: rgba(99, 119, 138, 0.5) !important;
+}
+
+.inputts {
+  border: 1px solid rgba(99, 119, 138, 0.5);
+  border-radius: 8px;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+}
+.inputts::-moz-placeholder {
+  font-size: 14px;
+  color: rgba(99, 119, 138, 0.5) !important;
+}
+.inputts::placeholder {
+  font-size: 14px;
+  color: rgba(99, 119, 138, 0.5) !important;
+}
+.inputts p {
+  margin: 0;
+  color: rgba(99, 119, 138, 0.5) !important;
+  font-weight: 300;
+  font-size: 13px;
+}
+.inputts img {
+  width: 12px;
 }
 
 .NavbarPage {
@@ -1199,17 +1246,27 @@
   position: absolute;
   right: 4%;
 }
-.ManageUsers .EditBodyReport {
-  padding: 30px 0;
+.ManageUsers .EnableModal {
+  padding: 30px 40px;
 }
-.ManageUsers .EditBodyReport p {
-  margin: 15px 0;
+.ManageUsers .EnableModal p {
+  margin: 17px 0;
   font-size: 15px;
 }
-.ManageUsers .EditBodyReport .buttonss {
+.ManageUsers .EnableModal img {
+  width: 15%;
+  margin-right: 5px;
+}
+.ManageUsers .InviteModal h3 {
+  font-family: "DM Sans", sans-serif;
+}
+.ManageUsers .InviteModal label {
+  font-size: 14px;
+}
+.ManageUsers .buttonss {
   margin: 0 15px;
 }
-.ManageUsers .EditBodyReport .buttonss .success {
+.ManageUsers .buttonss .success {
   font-size: 14px;
   color: #54D4BD;
   padding: 7px 15px;
@@ -1220,15 +1277,11 @@
   background-color: transparent;
   border: 1px solid #54D4BD;
 }
-.ManageUsers .EditBodyReport .buttonss .success img {
-  width: 20px;
-  margin-right: 5px;
-}
-.ManageUsers .EditBodyReport .buttonss .success:hover {
+.ManageUsers .buttonss .success:hover {
   background: #54D4BD;
   color: #fff;
 }
-.ManageUsers .EditBodyReport .buttonss .cancel {
+.ManageUsers .buttonss .cancel {
   font-size: 14px;
   color: #000;
   padding: 7px 15px;
@@ -1238,11 +1291,7 @@
   border: none;
   background-color: transparent;
 }
-.ManageUsers .EditBodyReport .buttonss .cancel img {
-  width: 20px;
-  margin-right: 5px;
-}
-.ManageUsers .EditBodyReport .buttonss .cancel:hover {
+.ManageUsers .buttonss .cancel:hover {
   background: #54D4BD;
   color: #fff;
 }
@@ -1341,57 +1390,57 @@
   color: white;
   border-radius: 4px;
 }
-.ManageUsers .WhiteCard .reportTable {
+.ManageUsers .WhiteCard .USERSTable {
   border: 1px solid rgb(229, 229, 229);
   background: linear-gradient(0deg, #F8F8FA, #F8F8FA);
   padding: 15px;
   position: relative;
   border-radius: 10px 15px;
 }
-.ManageUsers .WhiteCard .reportTable .header h2 {
+.ManageUsers .WhiteCard .USERSTable .header h2 {
   font-size: 14px;
   font-family: "Nunito Sans", sans-serif;
 }
-.ManageUsers .WhiteCard .reportTable table thead {
+.ManageUsers .WhiteCard .USERSTable table thead {
   background: rgb(238, 255, 252);
 }
-.ManageUsers .WhiteCard .reportTable table thead th {
+.ManageUsers .WhiteCard .USERSTable table thead th {
   font-size: 13px;
   padding: 10px 15px;
   font-weight: 400;
 }
-.ManageUsers .WhiteCard .reportTable table tbody th {
+.ManageUsers .WhiteCard .USERSTable table tbody th {
   font-size: 12px;
   padding: 10px 15px;
   font-weight: 300;
 }
-.ManageUsers .WhiteCard .reportTable table tbody td {
+.ManageUsers .WhiteCard .USERSTable table tbody td {
   font-size: 12px;
   font-weight: 300;
   padding: 10px 15px;
 }
-.ManageUsers .WhiteCard .reportTable table tbody tr {
+.ManageUsers .WhiteCard .USERSTable table tbody tr {
   margin-top: 15px;
   border-bottom: 1px solid rgb(225, 225, 225);
   background-color: rgb(255, 255, 255);
 }
-.ManageUsers .WhiteCard .reportTable table img {
+.ManageUsers .WhiteCard .USERSTable table img {
   width: 10px;
   margin-right: 5px;
 }
-.ManageUsers .WhiteCard .reportTable table .dot {
+.ManageUsers .WhiteCard .USERSTable table .dot {
   position: relative;
   cursor: pointer;
 }
-.ManageUsers .WhiteCard .reportTable table .dot img {
+.ManageUsers .WhiteCard .USERSTable table .dot img {
   width: 3px;
   margin: 0;
   position: relative;
 }
-.ManageUsers .WhiteCard .reportTable table .dot:hover div {
+.ManageUsers .WhiteCard .USERSTable table .dot:hover div {
   display: block;
 }
-.ManageUsers .WhiteCard .reportTable table .dot .firstDiv {
+.ManageUsers .WhiteCard .USERSTable table .dot .firstDiv {
   display: none;
   position: absolute;
   cursor: pointer;
@@ -1402,54 +1451,54 @@
   border-radius: 5px;
   z-index: 1;
 }
-.ManageUsers .WhiteCard .reportTable table .dot .firstDiv .flex {
+.ManageUsers .WhiteCard .USERSTable table .dot .firstDiv span {
   display: flex;
   padding: 10px 20px;
   align-items: center;
 }
-.ManageUsers .WhiteCard .reportTable table .dot .firstDiv .flex:hover {
+.ManageUsers .WhiteCard .USERSTable table .dot .firstDiv span:hover {
   background: rgb(238, 255, 252);
 }
-.ManageUsers .WhiteCard .reportTable table .dot .firstDiv img {
+.ManageUsers .WhiteCard .USERSTable table .dot .firstDiv img {
   width: 30px;
   margin-right: 10px;
   border-radius: 50%;
 }
-.ManageUsers .WhiteCard .reportTable table .dot .firstDiv span {
+.ManageUsers .WhiteCard .USERSTable table .dot .firstDiv span {
   font-size: 14px;
   font-family: "DM Sans", sans-serif;
   font-weight: 400;
 }
-.ManageUsers .WhiteCard .reportTable .perPage {
+.ManageUsers .WhiteCard .USERSTable .perPage {
   height: 30px;
   font-size: 14px;
 }
-.ManageUsers .WhiteCard .reportTable .perPage .abs {
+.ManageUsers .WhiteCard .USERSTable .perPage .abs {
   display: flex;
   align-items: center;
   position: absolute;
   right: 10px;
 }
-.ManageUsers .WhiteCard .reportTable .perPage p {
+.ManageUsers .WhiteCard .USERSTable .perPage p {
   margin: 0;
 }
-.ManageUsers .WhiteCard .reportTable .perPage img {
+.ManageUsers .WhiteCard .USERSTable .perPage img {
   width: 8px;
 }
-.ManageUsers .WhiteCard .reportTable .perPage .bord {
+.ManageUsers .WhiteCard .USERSTable .perPage .bord {
   border: 1px solid rgb(129, 129, 129) !important;
   padding: 2px 10px;
   border-radius: 5px;
   cursor: pointer;
 }
-.ManageUsers .WhiteCard .reportTable .perPage .bord:hover {
+.ManageUsers .WhiteCard .USERSTable .perPage .bord:hover {
   background: rgb(238, 255, 252);
 }
-.ManageUsers .WhiteCard .reportTable .perPage .LeftRight {
+.ManageUsers .WhiteCard .USERSTable .perPage .LeftRight {
   display: flex;
   align-items: center;
 }
-.ManageUsers .WhiteCard .reportTable .perPage .LeftRight img {
+.ManageUsers .WhiteCard .USERSTable .perPage .LeftRight img {
   width: 5px;
 }
 .ManageUsers .WhiteCard .data p {
