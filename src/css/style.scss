@@ -39,11 +39,16 @@ $playfair: 'Playfair Display', serif;
 $borderbottom: 3px solid rgba(234, 236, 240, 1);
 $dark: rgba(0, 41, 102, 1);
 $lightSecondary: rgba(238, 255, 252, 1);
+$LightGrey: rgba(170, 170, 170, 1);
+;
 
 
 // ================================================================
 // MAGIN - PADDDING
 // ================================================================
+.Grey {
+    color: $LightGrey !important;
+}
 
 .margin50 {
     margin: 50px 0;
@@ -51,6 +56,14 @@ $lightSecondary: rgba(238, 255, 252, 1);
 
 .margin70 {
     margin: 70px 0;
+}
+
+.margin90 {
+    margin: 90px 0;
+}
+
+.margin100 {
+    margin: 100px 0;
 }
 
 .margin75 {
@@ -94,6 +107,14 @@ $lightSecondary: rgba(238, 255, 252, 1);
     height: 50px;
 }
 
+.NameCircle {
+    color: rgba(41, 41, 41, 1);
+    background-color: rgba(255, 171, 1, 0.3);
+    width: 32px;
+    border-radius: 50%;
+    padding: 10px;
+}
+
 // ================================================================
 // FOR ALL STYLES
 // ================================================================
@@ -120,6 +141,10 @@ $lightSecondary: rgba(238, 255, 252, 1);
     font-weight: 300;
 }
 
+.fw4 {
+    font-weight: 400;
+}
+
 .fw6 {
     font-weight: 600 !important;
 }
@@ -133,6 +158,14 @@ $lightSecondary: rgba(238, 255, 252, 1);
     font-size: 15px !important;
 }
 
+.f13 {
+    font-size: 13px !important;
+}
+
+.BorderNone {
+    border: none !important;
+}
+
 .f18 {
     font-size: 18px !important;
 }
@@ -141,9 +174,10 @@ $lightSecondary: rgba(238, 255, 252, 1);
     font-size: 17px !important;
 }
 
-.Dm{
+.Dm {
     font-family: $dm;
 }
+
 .flexDiv {
     display: flex;
     align-items: center;
@@ -303,7 +337,23 @@ $lightSecondary: rgba(238, 255, 252, 1);
     }
 }
 
-.selectHolder{
+.mixBtnBackgorund {
+    font-size: 13px;
+    color: $secondaryLight;
+    padding: 7px 20px;
+    border-radius: 6px;
+    outline: none;
+    font-weight: 300;
+    border: none;
+    background: $lightSecondary;
+
+    &:hover {
+        background: $secondary;
+        color: $white;
+    }
+}
+
+.selectHolder {
     font-size: 14px;
     color: rgba(99, 119, 138, 0.5) !important;
 }
@@ -406,6 +456,215 @@ $lightSecondary: rgba(238, 255, 252, 1);
             // font-size: 20px;
             span {
                 color: $secondaryLight;
+            }
+        }
+    }
+}
+
+// ================================================================
+// MANAGE ROLES
+// ================================================================
+.ManageRoles {
+    .WhiteCard {
+        background-color: $white;
+        border-radius: 18px;
+        padding: 20px 30px;
+        width: 100%;
+        box-shadow: 0px 4px 15px 0px rgba(216, 210, 252, 0.15);
+
+        .header {
+            h2 {
+                font-size: 18px;
+                font-family: $nuno;
+            }
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+
+    .FirstContainer {
+        background: rgba(251, 251, 251, 1);
+        border-radius: 15px;
+        padding: 40px 20px;
+        height: 100%;
+
+        .accordion {
+            border: none !important;
+            background: transparent !important;
+            padding: 0;
+            // color: red !important;
+            --bs-accordion-color: rgba(170, 170, 170, 1) !important;
+            --bs-accordion-bg: transparent !important;
+            --bs-accordion-border-color: none !important;
+            --bs-accordion-transition: none !important;
+
+            .accordion-button {
+                background: rgba(251, 251, 251, 1) !important;
+                border: none !important;
+                padding: 0;
+
+                p {
+                    color: $black !important;
+                }
+
+                // &:hover {
+                //     background-color: #FFFFFF80 !important;
+                //     border-radius: 12px !important;
+                // }
+                .collapsed {
+                    background: blue;
+                     &::after {
+                        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+                    }
+                }
+
+                &:focus {
+                    border-color: none !important;
+                    box-shadow: none !important;
+
+                    p {
+                        color: $black !important;
+                    }
+                }
+            }
+
+            .accordion-collapse {
+                background-color: rgba(251, 251, 251, 1) !important;
+                border: none !important;
+
+                .accordion-body {
+                    border: none !important;
+                    text-align: left;
+
+                    padding-top: 30px;
+                    padding: 0;
+                    // padding-left: 20px;
+
+                    a {
+                        text-decoration: none;
+                    }
+
+                    div {
+                        display: flex;
+                        align-items: center;
+
+                        img {
+                            width: 15px;
+                        }
+
+                        a {
+                            text-decoration: none;
+                        }
+
+                        p {
+                            margin: 10px 5px;
+                            cursor: pointer;
+                            font-size: 13px;
+                            color: rgba(170, 170, 170, 1) !important;
+
+                            // &:hover {
+                            //     color: white !important;
+                            // }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .SecondContainer {
+        padding: 20px 0;
+
+        .first {
+            h3 {
+                font-size: 15px;
+                font-weight: 600;
+            }
+
+            p {
+                color: rgba(115, 123, 139, 1);
+                font-size: 14px;
+            }
+        }
+
+        .second {
+            .can {
+                .header {
+                    background-color: $lightSecondary;
+                    border-radius: 10px;
+                    padding: 15px 25px;
+                    font-weight: 500;
+                    font-size: 15px;
+                }
+
+                .form-check {
+                    display: flex;
+
+                    .form-check-input {
+                        &:checked {
+                            background-color: $secondary !important;
+                            border-color: $secondary !important;
+                        }
+                    }
+
+                    label {
+                        color: rgba(157, 153, 172, 1);
+                        font-size: 13px;
+                    }
+
+                    input {
+                        width: 14px;
+                        height: 14px;
+                        border: 1px solid grey;
+                        margin-right: 15px;
+
+                        // &:hover {
+                        //     background: rgba(238, 255, 252, 1);
+
+                        //     .form-check-input {
+                        //         background-color: rgba(238, 255, 252, 1);
+                        //         border: 1px solid $secondaryLight;
+                        //         --bs-form-check-bg: white !important;
+                        //     }
+                        // }
+                    }
+                }
+            }
+
+            .cant {
+                background: rgba(251, 251, 251, 1);
+                border-radius: 15px;
+                height: 100%;
+
+                .header {
+                    background-color: rgba(238, 213, 211, 1);
+                    border-radius: 10px;
+                    padding: 15px 25px;
+                    font-weight: 500;
+                    width: 100%;
+                    font-size: 15px;
+                }
+
+                .Access {
+                    padding: 0 30px;
+                    padding-top: 40%;
+
+                    img {
+                        width: 47%;
+                    }
+
+                    h4 {
+                        font-size: 16px;
+                    }
+
+                    p {
+                        font-size: 15px;
+                        color: rgba(157, 153, 172, 1);
+                        font-weight: 300;
+                    }
+                }
             }
         }
     }
@@ -685,6 +944,8 @@ $lightSecondary: rgba(238, 255, 252, 1);
             --bs-accordion-bg: transparent !important;
             --bs-accordion-border-color: none !important;
             --bs-accordion-transition: none !important;
+            --bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+            --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 
             .accordion-button {
                 background: $secondary !important;
@@ -1575,6 +1836,7 @@ $lightSecondary: rgba(238, 255, 252, 1);
 
     .AllManageBtn {
         position: relative;
+
         // height: 50px;
         .manageButtons {
             display: flex;
@@ -1586,6 +1848,7 @@ $lightSecondary: rgba(238, 255, 252, 1);
 
     .EnableModal {
         padding: 30px 40px;
+
         p {
             margin: 17px 0;
             font-size: 15px;
@@ -1597,13 +1860,15 @@ $lightSecondary: rgba(238, 255, 252, 1);
             margin-right: 5px;
         }
 
-      
+
     }
-    .InviteModal{
-        h3{
+
+    .InviteModal {
+        h3 {
             font-family: $dm;
         }
-        label{
+
+        label {
             font-size: 14px;
         }
     }
@@ -1907,6 +2172,7 @@ $lightSecondary: rgba(238, 255, 252, 1);
         }
     }
 }
+
 
 // ================================================================
 // FOOTER

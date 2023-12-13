@@ -12,12 +12,24 @@
   font-family: "DM Sans", sans-serif;
 }
 
+.Grey {
+  color: rgb(170, 170, 170) !important;
+}
+
 .margin50 {
   margin: 50px 0;
 }
 
 .margin70 {
   margin: 70px 0;
+}
+
+.margin90 {
+  margin: 90px 0;
+}
+
+.margin100 {
+  margin: 100px 0;
 }
 
 .margin75 {
@@ -60,6 +72,14 @@
   height: 50px;
 }
 
+.NameCircle {
+  color: rgb(41, 41, 41);
+  background-color: rgba(255, 171, 1, 0.3);
+  width: 32px;
+  border-radius: 50%;
+  padding: 10px;
+}
+
 .divider {
   border-bottom: 0px solid rgb(234, 236, 240);
   width: 100%;
@@ -82,6 +102,10 @@
   font-weight: 300;
 }
 
+.fw4 {
+  font-weight: 400;
+}
+
 .fw6 {
   font-weight: 600 !important;
 }
@@ -92,6 +116,14 @@
 
 .f15 {
   font-size: 15px !important;
+}
+
+.f13 {
+  font-size: 13px !important;
+}
+
+.BorderNone {
+  border: none !important;
 }
 
 .f18 {
@@ -252,6 +284,21 @@
   color: #fff;
 }
 
+.mixBtnBackgorund {
+  font-size: 13px;
+  color: #54D4BD;
+  padding: 7px 20px;
+  border-radius: 6px;
+  outline: none;
+  font-weight: 300;
+  border: none;
+  background: rgb(238, 255, 252);
+}
+.mixBtnBackgorund:hover {
+  background: #0D5F50;
+  color: #fff;
+}
+
 .selectHolder {
   font-size: 14px;
   color: rgba(99, 119, 138, 0.5) !important;
@@ -335,6 +382,149 @@
 }
 .LeftBanner .text h1 span {
   color: #54D4BD;
+}
+
+.ManageRoles .WhiteCard {
+  background-color: #fff;
+  border-radius: 18px;
+  padding: 20px 30px;
+  width: 100%;
+  box-shadow: 0px 4px 15px 0px rgba(216, 210, 252, 0.15);
+}
+.ManageRoles .WhiteCard .header h2 {
+  font-size: 18px;
+  font-family: "Nunito Sans", sans-serif;
+}
+.ManageRoles .WhiteCard p {
+  margin: 0;
+}
+.ManageRoles .FirstContainer {
+  background: rgb(251, 251, 251);
+  border-radius: 15px;
+  padding: 40px 20px;
+  height: 100%;
+}
+.ManageRoles .FirstContainer .accordion {
+  border: none !important;
+  background: transparent !important;
+  padding: 0;
+  --bs-accordion-color: rgba(170, 170, 170, 1) !important;
+  --bs-accordion-bg: transparent !important;
+  --bs-accordion-border-color: none !important;
+  --bs-accordion-transition: none !important;
+}
+.ManageRoles .FirstContainer .accordion .accordion-button {
+  background: rgb(251, 251, 251) !important;
+  border: none !important;
+  padding: 0;
+}
+.ManageRoles .FirstContainer .accordion .accordion-button p {
+  color: #000 !important;
+}
+.ManageRoles .FirstContainer .accordion .accordion-button .collapsed {
+  background: blue;
+}
+.ManageRoles .FirstContainer .accordion .accordion-button .collapsed::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+.ManageRoles .FirstContainer .accordion .accordion-button:focus {
+  border-color: none !important;
+  box-shadow: none !important;
+}
+.ManageRoles .FirstContainer .accordion .accordion-button:focus p {
+  color: #000 !important;
+}
+.ManageRoles .FirstContainer .accordion .accordion-collapse {
+  background-color: rgb(251, 251, 251) !important;
+  border: none !important;
+}
+.ManageRoles .FirstContainer .accordion .accordion-collapse .accordion-body {
+  border: none !important;
+  text-align: left;
+  padding-top: 30px;
+  padding: 0;
+}
+.ManageRoles .FirstContainer .accordion .accordion-collapse .accordion-body a {
+  text-decoration: none;
+}
+.ManageRoles .FirstContainer .accordion .accordion-collapse .accordion-body div {
+  display: flex;
+  align-items: center;
+}
+.ManageRoles .FirstContainer .accordion .accordion-collapse .accordion-body div img {
+  width: 15px;
+}
+.ManageRoles .FirstContainer .accordion .accordion-collapse .accordion-body div a {
+  text-decoration: none;
+}
+.ManageRoles .FirstContainer .accordion .accordion-collapse .accordion-body div p {
+  margin: 10px 5px;
+  cursor: pointer;
+  font-size: 13px;
+  color: rgb(170, 170, 170) !important;
+}
+.ManageRoles .SecondContainer {
+  padding: 20px 0;
+}
+.ManageRoles .SecondContainer .first h3 {
+  font-size: 15px;
+  font-weight: 600;
+}
+.ManageRoles .SecondContainer .first p {
+  color: rgb(115, 123, 139);
+  font-size: 14px;
+}
+.ManageRoles .SecondContainer .second .can .header {
+  background-color: rgb(238, 255, 252);
+  border-radius: 10px;
+  padding: 15px 25px;
+  font-weight: 500;
+  font-size: 15px;
+}
+.ManageRoles .SecondContainer .second .can .form-check {
+  display: flex;
+}
+.ManageRoles .SecondContainer .second .can .form-check .form-check-input:checked {
+  background-color: #0D5F50 !important;
+  border-color: #0D5F50 !important;
+}
+.ManageRoles .SecondContainer .second .can .form-check label {
+  color: rgb(157, 153, 172);
+  font-size: 13px;
+}
+.ManageRoles .SecondContainer .second .can .form-check input {
+  width: 14px;
+  height: 14px;
+  border: 1px solid grey;
+  margin-right: 15px;
+}
+.ManageRoles .SecondContainer .second .cant {
+  background: rgb(251, 251, 251);
+  border-radius: 15px;
+  height: 100%;
+}
+.ManageRoles .SecondContainer .second .cant .header {
+  background-color: rgb(238, 213, 211);
+  border-radius: 10px;
+  padding: 15px 25px;
+  font-weight: 500;
+  width: 100%;
+  font-size: 15px;
+}
+.ManageRoles .SecondContainer .second .cant .Access {
+  padding: 0 30px;
+  padding-top: 40%;
+}
+.ManageRoles .SecondContainer .second .cant .Access img {
+  width: 47%;
+}
+.ManageRoles .SecondContainer .second .cant .Access h4 {
+  font-size: 16px;
+}
+.ManageRoles .SecondContainer .second .cant .Access p {
+  font-size: 15px;
+  color: rgb(157, 153, 172);
+  font-weight: 300;
 }
 
 .NameHeader h2 {
@@ -550,6 +740,8 @@
   --bs-accordion-bg: transparent !important;
   --bs-accordion-border-color: none !important;
   --bs-accordion-transition: none !important;
+  --bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
 .Sidebar .Top .accordion .accordion-button {
   background: #0D5F50 !important;

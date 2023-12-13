@@ -3,6 +3,7 @@ import { useRoutes } from 'react-router-dom';
 import { ActiveForms, Auth, Login } from '../pages';
 import Report from '../pages/Report/Report';
 import ManageUser from '../pages/ManageUsers/ManageUser';
+import ManageRoles from '../pages/ManageUsers/ManageRoles';
 
 
 export const Routes = () => {
@@ -26,6 +27,10 @@ export const Routes = () => {
     {
         path: '/manage-user',
         element: < ManageUser/>
+    },
+    {
+        path: '/manage-role',
+        element: < ManageRoles/>
     }
   ]);
 };

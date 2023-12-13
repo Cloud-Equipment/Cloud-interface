@@ -12,6 +12,7 @@ import Left from '../../Assets/IconAndLogo/primary (1).png'
 import Right from '../../Assets/IconAndLogo/primary (2).png'
 import Down from '../../Assets/IconAndLogo/primary.png'
 import Img1 from '../../Assets/IconAndLogo/Frame 2755.png'
+import { Link } from 'react-router-dom'
 
 function ManageUser() {
     return (
@@ -85,7 +86,10 @@ function ManageUser() {
                             <div className="AllManageBtn pt-5 pb-5">
                                 <div className="manageButtons">
                                     <button class='btn secondaryButtonBackground' type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2">Invite User</button>
-                                    <button className='secondaryButtonBorder'>Manage Roles</button>
+                                    <Link to="/manage-role">
+                                        <button className='secondaryButtonBorder'>Manage Roles</button>
+                                    </Link>
+
                                     <button type="button" class="btn secondaryButtonNoBg" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         Enforce 2FA
                                     </button>
