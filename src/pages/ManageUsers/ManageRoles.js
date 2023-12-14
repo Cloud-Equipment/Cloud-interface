@@ -3,12 +3,326 @@ import LayoutWithSidebar from '../../components/LayoutWithSidebar'
 import NavbarTwo from '../../components/NavbarTwo'
 import Img1 from '../../Assets/IconAndLogo/Gift.png'
 import Img2 from '../../Assets/IconAndLogo/Group 5745.png'
+import Img3 from '../../Assets/IconAndLogo/Frame 2756.png'
 // import { Link } from 'react-router-dom'
 
 function ManageRoles() {
     return (
         <div>
+
             <div className="ManageRoles">
+                {/* INVITE USER */}
+                <div class="modal fade" id="editrole" tabindex="-1" aria-labelledby="example" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body RolesModal p-4" >
+                                <div className="">
+                                    <div className="header">
+                                        <h3 className=''>Create Custom Role</h3>
+                                        <img data-bs-dismiss="modal" src={Img3} alt="" />
+                                    </div>
+                                    <div className="margin30"></div>
+                                    <h1 className='f20'>Roles</h1>
+                                    <div className="margin30"></div>
+                                    <div className="Rolediv">
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <label htmlFor="discount" className='fw3'>Role Name</label>  <br />
+                                                <select class="form-select" aria-label="Default select example">
+                                                    <option selected ><span>Customer Supports</span></option>
+                                                </select>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <label htmlFor="discount" className='fw3'>Role Name</label>  <br />
+                                                <div class="selectBord">
+                                                    <span className='f11'>This role is best suited for the Organization/Association executives or anyone appointed by them that will require full admin access</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="margin30"></div>
+                                    <div className="">
+                                        <div className="row">
+                                            <div className="col-md-6 mb-4">
+                                                <div class="accordion" id="accordionEditRole">
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header">
+                                                            <button class="eachss accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#RoleCollapse2" aria-expanded="true" aria-controls="RoleCollapse2">
+                                                                <div className=""><p>Role 1</p></div>
+                                                            </button>
+                                                        </h2>
+                                                        <div id="RoleCollapse2" class="accordion-collapse collapse show" data-bs-parent="#accordionExample1">
+                                                            <div class="accordion-body">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect1" />
+                                                                    <label class="form-check-label" for="roleselect1">
+                                                                    Can View User Management
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect2" />
+                                                                    <label class="form-check-label" for="roleselect2">
+                                                                    Can View and Edit User Management
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6 mb-4">
+                                                <div class="accordion" id="accordionEditRole">
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header">
+                                                            <button class="eachss accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#RoleCollapse3" aria-expanded="true" aria-controls="RoleCollapse3">
+                                                                <div className=""><p>Role 2</p></div>
+                                                            </button>
+                                                        </h2>
+                                                        <div id="RoleCollapse3" class="accordion-collapse collapse show" data-bs-parent="#accordionExample1">
+                                                            <div class="accordion-body">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect3" />
+                                                                    <label class="form-check-label" for="roleselect3">
+                                                                    Can View User Management
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect4" />
+                                                                    <label class="form-check-label" for="roleselect4">
+                                                                    Can View and Edit User Management
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6 mb-4">
+                                                <div class="accordion" id="accordionEditRole">
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header">
+                                                            <button class="eachss accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#RoleCollapse4" aria-expanded="true" aria-controls="RoleCollapse4">
+                                                                <div className=""><p>Role 3</p></div>
+                                                            </button>
+                                                        </h2>
+                                                        <div id="RoleCollapse4" class="accordion-collapse collapse show" data-bs-parent="#accordionExample1">
+                                                            <div class="accordion-body">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect5" />
+                                                                    <label class="form-check-label" for="roleselect5">
+                                                                    Can View User Management
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect6" />
+                                                                    <label class="form-check-label" for="roleselect6">
+                                                                    Can View and Edit User Management
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6 mb-4">
+                                                <div class="accordion" id="accordionEditRole">
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header">
+                                                            <button class="eachss accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#RoleCollapse5" aria-expanded="true" aria-controls="RoleCollapse5">
+                                                                <div className=""><p>Role 4</p></div>
+                                                            </button>
+                                                        </h2>
+                                                        <div id="RoleCollapse1" class="accordion-collapse collapse show" data-bs-parent="#accordionExample1">
+                                                            <div class="accordion-body">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect7" />
+                                                                    <label class="form-check-label" for="roleselect7">
+                                                                    Can View User Management
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect8" />
+                                                                    <label class="form-check-label" for="roleselect8">
+                                                                    Can View and Edit User Management
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6 mb-4">
+                                                <div class="accordion" id="accordionEditRole">
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header">
+                                                            <button class="eachss accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#RoleCollapse6" aria-expanded="true" aria-controls="RoleCollapse1">
+                                                                <div className=""><p>Role 5</p></div>
+                                                            </button>
+                                                        </h2>
+                                                        <div id="RoleCollapse6" class="accordion-collapse collapse show" data-bs-parent="#accordionExample1">
+                                                            <div class="accordion-body">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect9" />
+                                                                    <label class="form-check-label" for="roleselect9">
+                                                                    Can View User Management
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect10" />
+                                                                    <label class="form-check-label" for="roleselect10">
+                                                                    Can View and Edit User Management
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6 mb-4">
+                                                <div class="accordion" id="accordionEditRole">
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header">
+                                                            <button class="eachss accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#RoleCollapse7" aria-expanded="true" aria-controls="RoleCollapse7">
+                                                                <div className=""><p>Role 6</p></div>
+                                                            </button>
+                                                        </h2>
+                                                        <div id="RoleCollapse7" class="accordion-collapse collapse show" data-bs-parent="#accordionExample1">
+                                                            <div class="accordion-body">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect12" />
+                                                                    <label class="form-check-label" for="roleselect12">
+                                                                    Can View User Management
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect13" />
+                                                                    <label class="form-check-label" for="roleselect13">
+                                                                    Can View and Edit User Management
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6 mb-4">
+                                                <div class="accordion" id="accordionEditRole">
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header">
+                                                            <button class="eachss accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#RoleCollapse8" aria-expanded="true" aria-controls="RoleCollapse8">
+                                                                <div className=""><p>Users Management</p></div>
+                                                            </button>
+                                                        </h2>
+                                                        <div id="RoleCollapse8" class="accordion-collapse collapse show" data-bs-parent="#accordionExample1">
+                                                            <div class="accordion-body">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect14" />
+                                                                    <label class="form-check-label" for="roleselect14">
+                                                                    Can View User Management
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect15" />
+                                                                    <label class="form-check-label" for="roleselect15">
+                                                                    Can View and Edit User Management
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6 mb-4">
+                                                <div class="accordion" id="accordionEditRole">
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header">
+                                                            <button class="eachss accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#RoleCollapse9" aria-expanded="true" aria-controls="RoleCollapse9">
+                                                                <div className=""><p>Users Management</p></div>
+                                                            </button>
+                                                        </h2>
+                                                        <div id="RoleCollapse9" class="accordion-collapse collapse show" data-bs-parent="#accordionExample1">
+                                                            <div class="accordion-body">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect16" />
+                                                                    <label class="form-check-label" for="roleselect16">
+                                                                    Can View User Management
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect17" />
+                                                                    <label class="form-check-label" for="roleselect17">
+                                                                    Can View and Edit User Management
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6 mb-4">
+                                                <div class="accordion" id="accordionEditRole">
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header">
+                                                            <button class="eachss accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#RoleCollapse10" aria-expanded="true" aria-controls="RoleCollapse10">
+                                                                <div className=""><p>Users Management</p></div>
+                                                            </button>
+                                                        </h2>
+                                                        <div id="RoleCollapse10" class="accordion-collapse collapse show" data-bs-parent="#accordionExample1">
+                                                            <div class="accordion-body">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect18" />
+                                                                    <label class="form-check-label" for="roleselect18">
+                                                                    Can View User Management
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect19" />
+                                                                    <label class="form-check-label" for="roleselect19">
+                                                                    Can View and Edit User Management
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6 mb-4">
+                                                <div class="accordion" id="accordionEditRole">
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header ">
+                                                            <button class="eachss accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#RoleCollapse11" aria-expanded="true" aria-controls="RoleCollapse11">
+                                                                <div className=""><p>Users Management</p></div>
+                                                            </button>
+                                                        </h2>
+                                                        <div id="RoleCollapse11" class="accordion-collapse collapse show" data-bs-parent="#accordionExample1">
+                                                            <div class="accordion-body ">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect20" />
+                                                                    <label class="form-check-label" for="roleselect20">
+                                                                    Can View User Management
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="roleselect21" />
+                                                                    <label class="form-check-label" for="roleselect21">
+                                                                    Can View and Edit User Management
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                            <button type="button" class="btn dark-button100 m-0 mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#edit">Create Role</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <LayoutWithSidebar >
                     <div className="ManageUser">
                         <NavbarTwo
@@ -71,7 +385,7 @@ function ManageRoles() {
                                                             <div className="">
                                                                 <h3>Super Admin</h3>
                                                                 <p>This role is best suited for the Organization/Association executives or anyone appointed by them that will require full admin access</p>
-                                                                <button className='dark-button mt-3 m-0 ps-4 pe-4  '>Edit Role</button>
+                                                                <button class='btn dark-button mt-3 m-0 ps-4 pe-4' type="button" data-bs-toggle="modal" data-bs-target="#editrole">Edit Role</button>
                                                             </div>
                                                         </div>
                                                         <div className="col-md-5">
