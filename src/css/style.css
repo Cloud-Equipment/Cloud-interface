@@ -845,6 +845,9 @@
   padding: 50px 20px;
   color: #fff;
 }
+.Sidebar a {
+  text-decoration: none;
+}
 .Sidebar .facility {
   display: flex;
   align-items: center;
@@ -1788,6 +1791,7 @@
   display: flex;
   align-items: center;
   position: absolute;
+  flex-wrap: wrap;
   right: 4%;
 }
 .ManageUsers .EnableModal {
@@ -1857,6 +1861,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 .ManageUsers .WhiteCard .Check .search {
   width: 45%;
@@ -2493,6 +2498,9 @@
   }
   .paddingres {
     padding: 30px 10px !important;
+  }
+  .WhiteCard {
+    padding: 20px !important;
   }
   .ActiveBanner {
     padding: 35px 25px !important;

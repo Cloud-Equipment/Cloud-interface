@@ -328,8 +328,8 @@ function ManageRoles() {
                         <Navbar
                             header="Manage User"
                         />
-                        <div className="margin100"></div>
-                        <div className="p-30">
+                        <div className="Navmargin"></div>
+                        <div className="paddingres">
                             <div className="WhiteCard">
                                 <div className="header mb-3">
                                     <h2>Users</h2>
@@ -381,14 +381,14 @@ function ManageRoles() {
                                             <div className="SecondContainer">
                                                 <div className="first">
                                                     <div className="row">
-                                                        <div className="col-md-7">
+                                                        <div className="col-md-7 mb-3">
                                                             <div className="">
                                                                 <h3>Super Admin</h3>
                                                                 <p>This role is best suited for the Organization/Association executives or anyone appointed by them that will require full admin access</p>
                                                                 <button class='btn dark-button mt-3 m-0 ps-4 pe-4' type="button" data-bs-toggle="modal" data-bs-target="#editrole">Edit Role</button>
                                                             </div>
                                                         </div>
-                                                        <div className="col-md-5">
+                                                        <div className="col-md-5 mb-3">
                                                             <div className="">
                                                                 <h3>Team Members with this role</h3>
                                                                 <div className="flexDivSpace mt-4">
@@ -403,7 +403,7 @@ function ManageRoles() {
                                                 </div>
                                                 <div className="second mt-3">
                                                     <div className="row">
-                                                        <div className="col-md-6">
+                                                        <div className="col-md-6 mb-3">
                                                             <div className="can mt-3">
                                                                 <div className="header">
                                                                     <p>What role can they access</p>
@@ -520,7 +520,7 @@ function ManageRoles() {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="col-md-6">
+                                                        <div className="col-md-6 mb-3">
                                                             <div className="cant mt-3">
                                                                 <div className="header">
                                                                     <p>What this role can’t access</p>

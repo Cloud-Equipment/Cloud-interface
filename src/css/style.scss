@@ -1099,7 +1099,9 @@ $LightGrey: rgba(170, 170, 170, 1);
     height: 100vh;
     padding: 50px 20px;
     color: $white;
-
+    a{
+        text-decoration: none;
+    }
     .facility {
         display: flex;
         align-items: center;
@@ -2318,6 +2320,7 @@ $LightGrey: rgba(170, 170, 170, 1);
             display: flex;
             align-items: center;
             position: absolute;
+            flex-wrap: wrap;
             right: 4%;
         }
     }
@@ -2408,6 +2411,7 @@ $LightGrey: rgba(170, 170, 170, 1);
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-wrap: wrap;
 
             .search {
                 width: 45%;
@@ -3201,7 +3205,9 @@ $LightGrey: rgba(170, 170, 170, 1);
     .paddingres {
         padding: 30px 10px !important;
     }
-
+    .WhiteCard {
+        padding: 20px !important;
+    }
     .ActiveBanner {
         padding: 35px 25px !important;
 

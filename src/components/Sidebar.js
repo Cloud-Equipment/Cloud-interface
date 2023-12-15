@@ -23,15 +23,15 @@ function Sidebar() {
                                     <div className=""><p>Dashboard</p></div>
 
                                 </li>
+                                <Link to="/reports">
                                 <li className='eachs'>
                                     <div className="">
                                         <img src={SidebarIcon.icon2} alt="" />
                                     </div>
-                                    <Link to="/reports">
                                     <div className=""><p>Report</p></div>
-                                    </Link>
 
                                 </li>
+                                </Link>
                                 <li class="" >
                                     <div class="accordion" id="accordionExample">
                                         <div class="accordion-item">

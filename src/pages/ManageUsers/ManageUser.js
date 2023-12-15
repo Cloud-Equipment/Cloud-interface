@@ -95,7 +95,7 @@ function ManageUser() {
                                     </button>
                                 </div>
                             </div>
-                            <div className="p-30">
+                            <div className="paddingres">
                                 <div className="WhiteCard">
                                     <div className="header mb-3">
                                         <h2>Users</h2>
@@ -118,7 +118,7 @@ function ManageUser() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="filter flexDi mb-3">
+                                        <div className="filter flexDiv mb-3">
                                             <img src={Icon1} alt="" />
                                             <p>Filter by</p>
                                         </div>
