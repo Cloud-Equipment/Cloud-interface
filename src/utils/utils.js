@@ -4,9 +4,8 @@ const calculateHeight =(pixels)=>{
     return height
 }
 
-const calculateWeight =(pixels)=>{
-    const w = window.screen.availWidth - pixels
-    const width = w + 'px'
+const calculateWeight =()=>{
+    const width = window.screen.availWidth
     return width
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import LayoutWithSidebar from '../../components/LayoutWithSidebar'
-import NavbarTwo from '../../components/NavbarTwo'
+import Navbar from '../../components/Navbar'
 import NameHeader from '../../components/NameHeader'
 import NewReport from '../../components/NewReport'
 import Search from '../../Assets/IconAndLogo/search-status.png'
@@ -51,13 +51,12 @@ function Report() {
                 </div> */}
                 <LayoutWithSidebar >
                     <div className="Report">
-                        <NavbarTwo
+                        <Navbar
                             header="Report"
                         />
-                        <div className="margin75"></div>
+                       <div className="Navmargin"></div>
 
-                        <div className="p-30">
-                            <div className="padding20"></div>
+                        <div className="paddingres">
                             <NameHeader
                                 name="Emma Taylor"
                             />
@@ -68,12 +67,12 @@ function Report() {
                                 <div className="header mb-3">
                                     <h2>All Report</h2>
                                 </div>
-                                <div className="Check mb-4">
-                                    <div className="search flexDiv">
+                                <div className="Check mb-2" style={{flexWrap:"wrap"}}>
+                                    <div className="search flexDiv mb-3">
                                         <input type="text" placeholder='Search Patient Name' />
                                         <img src={Search} alt="" />
                                     </div>
-                                    <div className="sort flexDiv">
+                                    <div className="sort flexDiv mb-3">
                                         <p>Sort by:</p>
                                         <div className="">
                                             <div class="form">
@@ -86,11 +85,11 @@ function Report() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="filter flexDiv">
+                                    <div className="filter flexDiv mb-3">
                                         <img src={Icon1} alt="" />
                                         <p>Filter by</p>
                                     </div>
-                                    <div className="export flexDiv">
+                                    <div className="export flexDiv mb-3">
                                         <img src={Icon2} alt="" />
                                         <p>Export</p>
                                     </div>
@@ -99,7 +98,7 @@ function Report() {
                                     <div className="header mb-3">
                                         <h2>All Report</h2>
                                     </div>
-                                    <div className="">
+                                    <div className="OverflowTable"  style={{overflowX:"auto"}}>
                                         <table className='w-100'>
                                             <thead>
                                                 <tr>

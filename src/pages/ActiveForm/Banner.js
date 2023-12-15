@@ -5,11 +5,11 @@ function Banner() {
     return (
         <div>
             <center>
-                <div className="margin70"></div>
+                <div className="Navmargin"></div>
                 <div className="ActiveBanner">
                     <div className="arrow">
                         <img src={Arrow} alt="" />
-                        <p className='ms-2'>Activities</p>
+                        <p className='ms-2 activity'>Activities</p>
                     </div>
                     <div className="text col-md-9">
                         <h1>Daily Procedure Tracker</h1>

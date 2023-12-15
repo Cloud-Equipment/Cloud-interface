@@ -1,6 +1,6 @@
 import React from 'react'
 import LayoutWithSidebar from '../../components/LayoutWithSidebar'
-import NavbarTwo from '../../components/NavbarTwo'
+import Navbar from '../../components/Navbar'
 import Search from '../../Assets/IconAndLogo/search-status.png'
 import Icon1 from '../../Assets/IconAndLogo/icon.png'
 import Icon2 from '../../Assets/IconAndLogo/icon 2.png'
@@ -79,7 +79,7 @@ function ManageUser() {
                     </div>
                     <LayoutWithSidebar >
                         <div className="ManageUser">
-                            <NavbarTwo
+                            <Navbar
                                 header="Manage User"
                             />
                             <div className="margin75"></div>
@@ -100,12 +100,12 @@ function ManageUser() {
                                     <div className="header mb-3">
                                         <h2>Users</h2>
                                     </div>
-                                    <div className="Check mb-4">
-                                        <div className="search flexDiv">
+                                    <div className="Check mb-2" style={{overflowX:"auto"}}>
+                                        <div className="search flexDiv mb-3">
                                             <input type="text" placeholder='Search Patient Name' />
                                             <img src={Search} alt="" />
                                         </div>
-                                        <div className="sort flexDiv">
+                                        <div className="sort flexDiv mb-3">
                                             <p>Role</p>
                                             <div className="">
                                                 <div class="form">
@@ -118,11 +118,11 @@ function ManageUser() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="filter flexDiv">
+                                        <div className="filter flexDi mb-3">
                                             <img src={Icon1} alt="" />
                                             <p>Filter by</p>
                                         </div>
-                                        <div className="export flexDiv">
+                                        <div className="export flexDiv mb-3">
                                             <img src={Icon2} alt="" />
                                             <p>Export</p>
                                         </div>
@@ -131,7 +131,7 @@ function ManageUser() {
                                         <div className="header mb-3">
                                             <h2>Team members - 5</h2>
                                         </div>
-                                        <div className="">
+                                        <div className="" style={{overflowX:"auto"}}>
                                             <table className='w-100'>
                                                 <thead>
                                                     <tr>

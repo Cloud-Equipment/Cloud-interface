@@ -1,6 +1,6 @@
 import React from 'react'
 import LayoutWithSidebar from '../../components/LayoutWithSidebar'
-import NavbarTwo from '../../components/NavbarTwo'
+import Navbar from '../../components/Navbar'
 import Img1 from '../../Assets/IconAndLogo/Gift.png'
 import Img2 from '../../Assets/IconAndLogo/Group 5745.png'
 import Img3 from '../../Assets/IconAndLogo/Frame 2756.png'
@@ -325,7 +325,7 @@ function ManageRoles() {
                 </div>
                 <LayoutWithSidebar >
                     <div className="ManageUser">
-                        <NavbarTwo
+                        <Navbar
                             header="Manage User"
                         />
                         <div className="margin100"></div>

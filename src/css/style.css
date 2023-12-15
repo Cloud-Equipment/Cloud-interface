@@ -16,12 +16,20 @@
   color: rgb(170, 170, 170) !important;
 }
 
+.paddingres {
+  padding: 30px;
+}
+
 .margin50 {
   margin: 50px 0;
 }
 
 .margin70 {
   margin: 70px 0;
+}
+
+.Navmargin {
+  margin: 70px;
 }
 
 .margin90 {
@@ -214,6 +222,16 @@
 .dark-button:hover {
   background: rgb(73, 186, 165);
   color: #fff;
+}
+
+.roundballSecondarys {
+  position: absolute;
+  bottom: 5px;
+  right: 2px;
+  padding: 5px;
+  border-radius: 50%;
+  background-color: #0D5F50;
+  color: white;
 }
 
 .dark-button100 {
@@ -1024,6 +1042,224 @@
   position: relative;
 }
 
+.SidebarMobile .sidenav {
+  width: 0;
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #0D5F50;
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+.SidebarMobile .sidenav.open {
+  width: 250px;
+}
+.SidebarMobile .MobileSidebar {
+  background-color: #0D5F50;
+  height: 100vh;
+  padding: 50px 20px;
+  color: #fff;
+}
+.SidebarMobile .MobileSidebar .facility {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  padding-left: 10px;
+}
+.SidebarMobile .MobileSidebar .facility p {
+  margin: 0;
+  font-size: 11px;
+  line-height: 22px;
+  font-weight: 500;
+  font-family: "Inter", sans-serif;
+}
+.SidebarMobile .MobileSidebar .facility img {
+  width: 50px;
+  margin-right: 10px;
+}
+.SidebarMobile .MobileSidebar .Icons {
+  margin-top: 30px;
+  height: 80vh;
+  overflow: scroll;
+  color: #fff;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.SidebarMobile .MobileSidebar .Icons::-webkit-scrollbar {
+  display: none;
+}
+.SidebarMobile .MobileSidebar .header {
+  font-size: 12px;
+  line-height: 24px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  padding-left: 10px;
+  font-family: "Inter", sans-serif;
+}
+.SidebarMobile .MobileSidebar .Top .accordion {
+  border: none !important;
+  background: transparent !important;
+  padding: 0;
+  --bs-accordion-color: rgba(255, 255, 255, 0.56) !important;
+  --bs-accordion-bg: transparent !important;
+  --bs-accordion-border-color: none !important;
+  --bs-accordion-transition: none !important;
+  --bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+.SidebarMobile .MobileSidebar .Top .accordion .accordion-button {
+  background: #0D5F50 !important;
+  border: none !important;
+  padding: 0;
+}
+.SidebarMobile .MobileSidebar .Top .accordion .accordion-button p {
+  color: white !important;
+}
+.SidebarMobile .MobileSidebar .Top .accordion .accordion-button:hover {
+  background-color: rgba(255, 255, 255, 0.5019607843) !important;
+  border-radius: 12px !important;
+}
+.SidebarMobile .MobileSidebar .Top .accordion .accordion-button:focus {
+  border-color: none !important;
+  box-shadow: none !important;
+}
+.SidebarMobile .MobileSidebar .Top .accordion .accordion-button:focus p {
+  color: white !important;
+}
+.SidebarMobile .MobileSidebar .Top .accordion .accordion-collapse {
+  background-color: #0D5F50 !important;
+  border: none !important;
+}
+.SidebarMobile .MobileSidebar .Top .accordion .accordion-collapse .accordion-body {
+  border: none !important;
+  text-align: left;
+  padding-top: 0px;
+  padding: 0;
+  padding-left: 20px;
+}
+.SidebarMobile .MobileSidebar .Top .accordion .accordion-collapse .accordion-body a {
+  text-decoration: none;
+}
+.SidebarMobile .MobileSidebar .Top .accordion .accordion-collapse .accordion-body div {
+  display: flex;
+  align-items: center;
+}
+.SidebarMobile .MobileSidebar .Top .accordion .accordion-collapse .accordion-body div a {
+  text-decoration: none;
+}
+.SidebarMobile .MobileSidebar .Top .accordion .accordion-collapse .accordion-body div p {
+  margin: 10px 5px;
+  cursor: pointer;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.56) !important;
+}
+.SidebarMobile .MobileSidebar .Top .accordion .accordion-collapse .accordion-body div p:hover {
+  color: white !important;
+}
+.SidebarMobile .MobileSidebar .Top .eachss {
+  display: flex;
+  align-items: center;
+  padding: 15px !important;
+  cursor: pointer;
+}
+.SidebarMobile .MobileSidebar .Top .eachss p {
+  margin: 0;
+  margin-left: 10px;
+  font-size: 11px;
+  font-family: "Inter", sans-serif;
+}
+.SidebarMobile .MobileSidebar .Top .eachss img {
+  width: 24px;
+}
+.SidebarMobile .MobileSidebar .Top ul {
+  margin: 0;
+  padding: 0;
+}
+.SidebarMobile .MobileSidebar .Top ul .eachs {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+}
+.SidebarMobile .MobileSidebar .Top ul .eachs a {
+  text-decoration: none;
+}
+.SidebarMobile .MobileSidebar .Top ul .eachs p {
+  margin: 0;
+  margin-left: 10px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 11px;
+  font-family: "Inter", sans-serif;
+}
+.SidebarMobile .MobileSidebar .Top ul .eachs img {
+  width: 20px;
+}
+.SidebarMobile .MobileSidebar .Top ul .eachs:hover {
+  background-color: rgba(255, 255, 255, 0.5019607843);
+  border-radius: 12px;
+}
+.SidebarMobile .MobileSidebar .Last {
+  margin-top: 30px;
+}
+.SidebarMobile .MobileSidebar .Last .message-header {
+  font-size: 12px;
+  line-height: 24px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Inter", sans-serif;
+}
+.SidebarMobile .MobileSidebar .Last .message-header p {
+  margin: 0;
+  font-size: 12px;
+}
+.SidebarMobile .MobileSidebar .Last .message-header img {
+  width: 24px;
+}
+.SidebarMobile .MobileSidebar .Last .message-header .img {
+  position: relative;
+}
+.SidebarMobile .MobileSidebar .Last .message-header .img .roundball {
+  background-color: #7FBA7A;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.SidebarMobile .MobileSidebar .Last .li {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+}
+.SidebarMobile .MobileSidebar .Last ul {
+  margin: 0;
+  padding: 0;
+}
+.SidebarMobile .MobileSidebar .Last ul li {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+}
+.SidebarMobile .MobileSidebar .Last ul li p {
+  margin: 0;
+  margin-left: 10px;
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+}
+.SidebarMobile .MobileSidebar .Last ul li img {
+  width: 30px;
+}
+.SidebarMobile .MobileSidebar .Last ul li .img {
+  position: relative;
+}
+
 .Navbar {
   background-color: #fff;
   max-height: 95px;
@@ -1031,7 +1267,7 @@
   display: flex;
   align-items: center;
   z-index: 1;
-  width: 79%;
+  width: 81%;
   position: fixed;
   top: 0;
   justify-content: space-between;
@@ -1153,60 +1389,42 @@
   cursor: pointer;
 }
 
-.NavbarTwo {
-  background: rgb(246, 249, 248);
-  max-height: 95px;
-  padding: 10px 30px;
+.MobileNavbar {
+  background-image: url(../Assets/IconAndLogo/Mask\ group\ 2.png);
+  display: none;
+}
+.MobileNavbar .all {
   display: flex;
   align-items: center;
-  width: 79%;
-  position: fixed;
-  top: 0;
   justify-content: space-between;
 }
-.NavbarTwo .title h2 {
-  font-family: "Nunito Sans", sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 31px;
-  letter-spacing: 0em;
-  text-align: left;
+.MobileNavbar .all .menu img {
+  width: 30px;
 }
-.NavbarTwo .together {
+.MobileNavbar .all .together {
   display: flex;
   align-items: center;
 }
-.NavbarTwo .together .details {
+.MobileNavbar .all .together .details {
   display: flex;
   align-items: center;
-  box-shadow: 0px 20px 70px 0px rgba(86, 89, 146, 0.1);
-  padding: 7px 10px;
-  border-radius: 10px;
-  position: relative;
-  z-index: 99;
 }
-.NavbarTwo .together .details img {
+.MobileNavbar .all .together .details img {
   width: 40px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
-.NavbarTwo .together .details .img {
+.MobileNavbar .all .together .details .img {
   position: relative;
 }
-.NavbarTwo .together .details .roundballSecondary {
-  position: absolute;
-  bottom: 5px;
-  right: 2px;
-  padding: 5px;
-  border-radius: 50%;
-  background-color: #0D5F50;
-  color: white;
-}
-.NavbarTwo .together .details .arrow img {
+.MobileNavbar .all .together .details .arrow img {
   width: 21px;
 }
-.NavbarTwo .together .details .arrow:hover .profile {
+.MobileNavbar .all .together .details .arrow:hover .profile {
   display: block !important;
 }
-.NavbarTwo .together .details h3 {
+.MobileNavbar .all .together .details h3 {
   margin: 0;
   font-family: "Nunito Sans", sans-serif;
   font-size: 14px;
@@ -1215,7 +1433,7 @@
   letter-spacing: 0em;
   text-align: left;
 }
-.NavbarTwo .together .details p {
+.MobileNavbar .all .together .details p {
   font-family: "Nunito Sans", sans-serif;
   font-size: 13px;
   font-weight: 400;
@@ -1224,7 +1442,7 @@
   text-align: left;
   margin: 0;
 }
-.NavbarTwo .together .details .profile {
+.MobileNavbar .all .together .details .profile {
   display: none;
   position: absolute;
   top: 41px;
@@ -1237,49 +1455,50 @@
   box-shadow: 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
   box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08);
 }
-.NavbarTwo .together .details .profile a {
+.MobileNavbar .all .together .details .profile a {
   text-decoration: none;
 }
-.NavbarTwo .together .details .profile .dot {
+.MobileNavbar .all .together .details .profile .dot {
   display: flex;
   align-items: center;
   padding: 15px 20px;
 }
-.NavbarTwo .together .details .profile .dot p {
+.MobileNavbar .all .together .details .profile .dot p {
   margin: 0;
   color: #000;
 }
-.NavbarTwo .together .details .profile .dot a {
+.MobileNavbar .all .together .details .profile .dot a {
   text-decoration: none;
 }
-.NavbarTwo .together .details .profile .dot img {
+.MobileNavbar .all .together .details .profile .dot img {
   margin: 0 10px;
   width: 20px;
 }
-.NavbarTwo .together .details .profile .dot:hover {
+.MobileNavbar .all .together .details .profile .dot:hover {
   background-color: rgb(238, 255, 252);
 }
-.NavbarTwo .together .utils {
+.MobileNavbar .all .together .utils {
   display: flex;
   align-items: center;
   margin-left: 50px;
 }
-.NavbarTwo .together .utils img {
-  width: 21px;
+.MobileNavbar .all .together .utils img {
+  width: 25px;
 }
-.NavbarTwo .together .utils .prof {
+.MobileNavbar .all .together .utils .prof {
   display: flex;
   align-items: center;
   position: relative;
 }
-.NavbarTwo .together .utils .prof:hover .profile {
+.MobileNavbar .all .together .utils .prof:hover .profile {
   display: block !important;
 }
-.NavbarTwo .together .utils .bord {
+.MobileNavbar .all .together .utils .bord {
   box-shadow: 0px 4px 15px 0px rgba(216, 210, 252, 0.64);
   padding: 7px;
-  border-radius: 13px;
-  margin: 0 7px;
+  border-radius: 50%;
+  margin: 0 10px;
+  background-color: #fff;
   cursor: pointer;
 }
 
@@ -1528,10 +1747,12 @@
   display: flex;
   align-items: center;
   position: absolute;
+  flex-wrap: wrap;
   right: 10px;
 }
 .Report .WhiteCard .reportTable .perPage p {
   margin: 0;
+  font-size: 15px;
 }
 .Report .WhiteCard .reportTable .perPage img {
   width: 8px;
@@ -1884,10 +2105,9 @@
 }
 
 .ActiveBanner {
-  height: 250px;
   background-position: center;
   background-size: cover;
-  padding: 50px 0;
+  padding: 50px 30px;
   background-image: url(../Assets/ActivitiesForm/Mask\ group.png);
 }
 .ActiveBanner .arrow {
@@ -1912,9 +2132,10 @@
   font-family: "Playfair Display", serif;
   font-size: 46px;
   font-weight: 700;
-  line-height: 62px;
+  line-height: 40px;
   letter-spacing: 0px;
   text-align: center;
+  margin: 10px 0;
 }
 
 .ActiveOutline {
@@ -1924,6 +2145,8 @@
 
 .ActiveFormSection {
   background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
   box-shadow: 0px 4px 40px 0px rgba(13, 149, 137, 0.1);
 }
 .ActiveFormSection .relative {
@@ -2264,11 +2487,92 @@
   border: none;
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 600px) {
+  .Navmargin {
+    margin: 0px !important;
+  }
+  .paddingres {
+    padding: 30px 10px !important;
+  }
+  .ActiveBanner {
+    padding: 35px 25px !important;
+  }
+  .ActiveBanner .text p {
+    font-size: 13px !important;
+  }
+  .ActiveBanner .text h1 {
+    font-size: 36px !important;
+  }
+  .ActiveBanner .activity {
+    font-size: 14px !important;
+  }
+  .ActiveBanner img {
+    width: 45px !important;
+  }
+  .Navbar {
+    display: none !important;
+  }
+  .MobileNavbar {
+    display: block !important;
+  }
+  .ActiveFormSection {
+    padding: 20px !important;
+  }
+  .ActiveOutline {
+    padding: 30px 0px !important;
+  }
   .LayoutWithSidebar .left {
     display: none !important;
   }
   .LayoutWithSidebar .right {
     width: 100% !important;
+  }
+  .NameHeader h2 {
+    color: #0D5F50;
+    font-size: 20px;
+    font-family: "Nunito Sans", sans-serif;
+    margin: 0;
+  }
+  .NameHeader h2 span {
+    font-weight: 600;
+  }
+  .NameHeader p {
+    font-size: 12px;
+    font-weight: 300;
+    margin: 0;
+  }
+  .perPage {
+    height: 35px !important;
+  }
+  .perPage .abs {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    right: 10px;
+  }
+  .perPage p {
+    margin: 0;
+    font-size: 13px !important;
+  }
+  .perPage img {
+    width: 7px;
+  }
+  .perPage .bord {
+    border: 1px solid rgb(129, 129, 129) !important;
+    padding: 0px 8px !important;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .perPage .bord:hover {
+    background: rgb(238, 255, 252);
+  }
+  .perPage .LeftRight {
+    display: flex;
+    align-items: center;
+  }
+  .perPage .LeftRight img {
+    width: 4px;
   }
 }/*# sourceMappingURL=style.css.map */

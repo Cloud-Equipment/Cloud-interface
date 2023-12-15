@@ -15,7 +15,7 @@ function Form() {
 
     return (
         <div>
-            <div className="ActiveFormSection p-5 pt-4 pb-4 ">
+            <div className="ActiveFormSection ">
                 <div className="relative ">
                     <div className="headers">
                         <div className="date ">
