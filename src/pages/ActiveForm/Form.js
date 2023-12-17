@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Img2 from '../../Assets/IconAndLogo/iconamoon_clock-light.png'
 import Naira from '../../Assets/IconAndLogo/fa6-solid_naira-sign.png'
 import RedNaira from '../../Assets/IconAndLogo/Vector (1).png'
@@ -7,15 +7,125 @@ import Int from '../../Assets/IconAndLogo/Group.png'
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import NewReport from '../../components/NewReport'
+import Img1 from '../../Assets/IconAndLogo/Frame 2755.png'
+import axios from 'axios'
 
 function Form() {
+    const [phone, setPhone] = useState()
+    const [data, setData] = useState([]);
+    const [patientId, setPatientId] = useState('')
+    const [timer, setTimer] = useState(null)
 
-    const [value, setValue] = useState()
-    console.log(value)
+    const buttonRef = useRef(null);
+
+    // useEffect(() => {
+    //   const statusCheck = false;
+
+    //   if (!statusCheck) {
+    //     buttonRef.current.click();
+    //   }
+    // }, []); 
+  
+    // const handleClick = () => {
+    //   console.log('Button Clicked!');
+    // };
+
+    const url = `https://patient/users${patientId}`;
+    const fetchPatient = () => {
+        return axios.get(url)
+        .then((res) => setData(res.data))
+        .catch((err) => console.log(err));
+    };
+
+    const inputChanged = e => {
+        setPatientId(e.target.value)
+
+        clearTimeout(timer)
+
+        const newTimer = setTimeout(() => {
+            fetchPatient()
+        }, 500)
+
+        setTimer(newTimer)
+    }
+
+    let today = new Date().toLocaleDateString()
+
+    const [post, setPost] = useState({
+        procedureEntryId: '',
+        trackId: '',
+        formID: '',
+        date: today,
+        patientId: patientId,
+        serviceDescriptionId: '',
+        quantity: '',
+        amount: '',
+        subotal: '',
+        remarks: '',
+        referrerName: '',
+        rebatePaid: '',
+        phoneNo: phone,
+        discountId: '',
+        userId: ''
+    })
+
+    // PATIENTS DATA
+    const [patientName, setPatientName] = useState('')
+    const [patientNumber, setPatientNumber] = useState('')
+    const [patientGender, setPatientGender] = useState('')
+    const [patientAge, setPatientAge] = useState('')
+    const [patientAddress, setPatientAddress] = useState('')
+
+
+    useEffect(() => {
+        if (data.status === 'false') {
+
+        }
+        //   fetchInfo();
+        if (data) {
+            setPatientName(data.name)
+            setPatientNumber(data.number)
+            setPatientAge(data.age)
+            setPatientAddress(data.address)
+            setPatientGender(data.gender)
+        }
+    }, [data]);
+
+
+    const handleInput = (event) => {
+        setPost({ ...post, [event.target.name]: event.target.value })
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault()
+        axios.post('http://localhost', { post })
+            .then(response => console.log(response))
+            .catch(err => console.log(err))
+    }
 
     return (
         <div>
             <div className="ActiveFormSection ">
+                {/* ENABLE MODAL */}
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body EnableModal">
+                                <center>
+                                    <img src={Img1} alt="" />
+                                    <p>You currently do not have 2FA enabled on your account. Enable 2FA now to continue</p>
+                                    <div className="buttonss">
+                                        <button type="button" class="btn cancel" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn success" data-bs-toggle="modal" data-bs-target="#edit">Enable 2FA</button>
+                                    </div>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal" ref={buttonRef} style={{ display: 'none' }}>
+                Show
+                </button>
                 <div className="relative ">
                     <div className="headers">
                         <div className="date ">
@@ -32,7 +142,7 @@ function Form() {
                 </div>
                 <div className="divider"></div>
                 <div className="form">
-                    <form action="">
+                    <form action="" onSubmit={handleSubmit}>
                         <div className="deduction">
                             <h2>Patient Details</h2>
                             <p>You are to fill in the patient Basic Information</p>
@@ -43,14 +153,14 @@ function Form() {
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="discount">
-                                        <label htmlFor="discount" className='fw3'>User ID</label> <br />
-                                        <input type="text" name="" id="discount" placeholder='AGA/453|' />
+                                        <label htmlFor="discount" className='fw3'>Patient ID</label> <br />
+                                        <input type="text" value={patientId} name="userId" id="discount" placeholder='AGA/453|' onChange={inputChanged} />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="discount">
                                         <label htmlFor="discount" className='fw3'>Patient Name</label>  <br />
-                                        <input type="text" name="" id="discount" placeholder='Adepoju Deborah ' />
+                                        <input type="text" name="name" value={patientName} id="discount" placeholder='Adepoju Deborah ' />
                                     </div>
                                 </div>
                             </div>
@@ -61,7 +171,7 @@ function Form() {
                                 <div className="col-md-6">
                                     <div className="discount">
                                         <label htmlFor="discount" className='fw3'>Patient Mobile Number</label>  <br />
-                                        <input type="number" name="" id="discount" placeholder='+234 08143626356' />
+                                        <input type="number" name="number" value={patientNumber} id="discount" placeholder='+234 08143626356' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
@@ -78,19 +188,13 @@ function Form() {
                                 <div className="col-md-6">
                                     <label htmlFor="discount" className='fw3'>Gender</label>  <br />
                                     <select class="form-select" aria-label="Default select example">
-                                        <option selected ><span>Select Gender</span></option>
-                                        <option value="2" >Male </option>
-                                        <option value="3">Female</option>
-                                        <option value="3">Other</option>
+                                        <option selected ><span>{patientGender}</span></option>
                                     </select>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="discount" className='fw3'>Age of the Patient</label>  <br />
                                     <select class="form-select" aria-label="Default select example">
-                                        <option selected ><span>Select Patient  age</span></option>
-                                        <option value="2" >Less than 1year </option>
-                                        <option value="3">1 Year</option>
-                                        <option value="3">2 Years</option>
+                                        <option selected ><span>{patientAge}</span></option>
                                     </select>
                                 </div>
                             </div>
@@ -101,7 +205,7 @@ function Form() {
                                 <div className="col-md-6">
                                     <div className="discount">
                                         <label htmlFor="discount" className='fw3'>Address</label>  <br />
-                                        <input type="text" name="" id="discount" placeholder='No 24, W. F. Kumuyi Street,' />
+                                        <input type="text" name="address" value={patientAddress} id="discount" placeholder='No 24, W. F. Kumuyi Street,' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
@@ -212,7 +316,7 @@ function Form() {
                                 <div className="col-md-6">
                                     <div className="discount">
                                         <label htmlFor="discount" className='fw3'>Discount Code</label>  <br />
-                                        <input type="text" name="" id="discount" placeholder='Enter code' />
+                                        <input type="text" name="discountId" onChange={handleInput} id="discount" placeholder='Enter code' />
                                     </div>
                                     <div className="int">
                                         <img src={Int} alt="" />
@@ -227,13 +331,13 @@ function Form() {
                                 <div className="col-md-6">
                                     <div className="discount">
                                         <label htmlFor="discount" className='fw3'>Rebate Paid </label>  <br />
-                                        <input type="text" name="" id="discount" placeholder='Enter Amount of Rebate Paid' />
+                                        <input type="text" name="rebatePaid" onChange={handleInput} id="discount" placeholder='Enter Amount of Rebate Paid' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="discount">
                                         <label htmlFor="discount" className='fw3'>Referrers Name</label>  <br />
-                                        <input type="text" name="" id="discount" placeholder='Enter Referee Name' />
+                                        <input type="text" name="referrerName" onChange={handleInput} id="discount" placeholder='Enter Referee Name' />
                                     </div>
                                 </div>
                             </div>
@@ -261,15 +365,15 @@ function Form() {
                                 <label htmlFor="discount" className='fw3'>Referrer’s Phone Number</label>  <br />
                                 <PhoneInput
                                     placeholder="Enter phone number"
-                                    value={value}
-                                    onChange={setValue}
+                                    value={phone}
+                                    onChange={setPhone}
                                 />
                             </div>
                         </div>
                         <div className="margin30"></div>
                         <div className="remark">
                             <label htmlFor="discount" className='fw3'>Remark</label> <br />
-                            <textarea name="" id="" placeholder='Leave a Message for the diagnostic center'></textarea>
+                            <textarea name="remarks" onChange={handleInput} id="" placeholder='Leave a Message for the diagnostic center'></textarea>
                         </div>
                         <div className="margin40"></div>
                         <div className="">

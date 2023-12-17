@@ -98,7 +98,7 @@ function Report() {
                                     <div className="header mb-3">
                                         <h2>All Report</h2>
                                     </div>
-                                    <div className="OverflowTable"  style={{overflowX:"auto"}}>
+                                    <div className="OverflowTable" >
                                         <table className='w-100'>
                                             <thead>
                                                 <tr>
@@ -135,6 +135,14 @@ function Report() {
                                                         <div className="dot">
                                                             <img className='' src={Icon5} alt="" />
                                                             <div className="firstDiv">
+                                                            <div className="flex">
+                                                                    <img src={Icon4} alt="" />
+                                                                    <span>Edit Test</span>
+                                                                </div>
+                                                                <div className="flex">
+                                                                    <img src={Icon4} alt="" />
+                                                                    <span>View Profile</span>
+                                                                </div>
                                                                 <div className="flex">
                                                                     <img src={Icon4} alt="" />
                                                                     <span>Confirm Test</span>
@@ -199,6 +207,14 @@ function Report() {
                                                         <div className="dot">
                                                             <img className='' src={Icon5} alt="" />
                                                             <div className="firstDiv">
+                                                            <div className="flex">
+                                                                    <img src={Icon4} alt="" />
+                                                                    <span>Edit Test</span>
+                                                                </div>
+                                                                <div className="flex">
+                                                                    <img src={Icon4} alt="" />
+                                                                    <span>View Profile</span>
+                                                                </div>
                                                                 <div className="flex">
                                                                     <img src={Icon4} alt="" />
                                                                     <span>Confirm Test</span>

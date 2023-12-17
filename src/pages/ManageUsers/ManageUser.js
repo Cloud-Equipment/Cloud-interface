@@ -131,7 +131,7 @@ function ManageUser() {
                                         <div className="header mb-3">
                                             <h2>Team members - 5</h2>
                                         </div>
-                                        <div className="" style={{overflowX:"auto"}}>
+                                        <div className="" >
                                             <table className='w-100'>
                                                 <thead>
                                                     <tr>
