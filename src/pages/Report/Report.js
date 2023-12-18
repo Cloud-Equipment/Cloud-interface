@@ -22,7 +22,15 @@ import NoData from '../../components/NoData'
 
 function Report() {
 
+    const data = true
+
     const [report, setReport] = useState(true)
+
+    useEffect(()=>{
+        if(!data){
+            setReport(false)
+        }
+    },[data])
 
     return (
         <div>
