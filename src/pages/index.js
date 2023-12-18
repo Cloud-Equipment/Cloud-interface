@@ -5,6 +5,7 @@ import Report from "./Report/Report"
 import ManageUser from "./ManageUsers/ManageUser"
 import ManageRoles from "./ManageUsers/ManageRoles"
 import ReportDetails from "./Report/ReportDetails"
+import ReportUploader from "./Report/ReportUploader"
 
 export{
     ActiveForms,
@@ -13,5 +14,6 @@ export{
     Report,
     ManageUser,
     ManageRoles,
-    ReportDetails
+    ReportDetails,
+    ReportUploader
 }

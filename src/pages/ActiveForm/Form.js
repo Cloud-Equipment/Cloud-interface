@@ -56,7 +56,7 @@ function Form() {
         trackId: '',
         formID: '',
         date: today,
-        // patientId: patientId,
+        patientId: '',
         serviceDescriptionId: '',
         quantity: '',
         amount: '',
@@ -96,10 +96,17 @@ function Form() {
         setPost({ ...post, [event.target.name]: event.target.value })
     }
 
+    let axiosConfig = {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            "Access-Control-Allow-Origin": "*",
+        }
+    }
+
     function handleSubmit(e) {
         e.preventDefault()
         console.log(post)
-        axios.post('http://139.59.168.0:8080/service-manager/procedures/create', { post })
+        axios.post('http://139.59.168.0:8080/service-manager/procedures/create', { post }, axiosConfig)
             .then(response => console.log(response))
             .catch(err => console.log(err))
     }
