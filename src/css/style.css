@@ -1734,9 +1734,8 @@
   background: rgb(238, 255, 252);
 }
 .Report .WhiteCard .reportTable table .dot .firstDiv img {
-  width: 30px;
+  width: 16px;
   margin-right: 10px;
-  border-radius: 50%;
 }
 .Report .WhiteCard .reportTable table .dot .firstDiv span {
   font-size: 14px;

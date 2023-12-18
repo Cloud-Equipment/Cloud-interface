@@ -18,6 +18,12 @@ import social1 from '../Assets/IconAndLogo/Negative copy 2.png'
 import social2 from '../Assets/IconAndLogo/Negative copy.png'
 import social3 from '../Assets/IconAndLogo/Negative.png'
 import social4 from '../Assets/IconAndLogo/Negative copy 4.png'
+//REPORT
+import Edit from '../Assets/IconAndLogo/tabler_upload.png'
+import Profile from '../Assets/IconAndLogo/carbon_data-view.png'
+import Share from '../Assets/IconAndLogo/game-icons_share.png'
+import Confirm from '../Assets/IconAndLogo/line-md_confirm-circle.png'
+import Upload from '../Assets/IconAndLogo/tabler_upload.png'
 
 
 const SidebarIcon = {
@@ -47,5 +53,13 @@ const SocialIcon = {
 }
 
 
+const ReportIcon = {
+    "edit": Edit,
+    "profile": Profile,
+    "share": Share,
+    "confirm": Confirm,
+    "upload": Upload,
+}
 
-export  {SidebarIcon,PartnersImg,SocialIcon}
+
+export  {SidebarIcon,PartnersImg,SocialIcon,ReportIcon}

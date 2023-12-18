@@ -8,12 +8,12 @@ import Icon1 from '../../Assets/IconAndLogo/icon.png'
 import Icon2 from '../../Assets/IconAndLogo/icon 2.png'
 // import Icons from '../../Assets/IconAndLogo/arrows.png'
 import Icon3 from '../../Assets/IconAndLogo/Group 3.png'
-import Icon4 from '../../Assets/IconAndLogo/state-layer.png'
 import Icon5 from '../../Assets/IconAndLogo/Group 5.png'
 import Icon6 from '../../Assets/IconAndLogo/fa6-solid_naira-sign.png'
 import Left from '../../Assets/IconAndLogo/primary (1).png'
 import Right from '../../Assets/IconAndLogo/primary (2).png'
 import Down from '../../Assets/IconAndLogo/primary.png'
+import { ReportIcon } from '../../data/data'
 // import Img1 from '../../Assets/IconAndLogo/Frame 2755.png'
 // import Form from '../ActiveForm/Form'
 // import Modal from '../../components/Modal'
@@ -54,7 +54,7 @@ function Report() {
                         <Navbar
                             header="Report"
                         />
-                       <div className="Navmargin"></div>
+                        <div className="Navmargin"></div>
 
                         <div className="paddingres">
                             <NameHeader
@@ -67,7 +67,7 @@ function Report() {
                                 <div className="header mb-3">
                                     <h2>All Report</h2>
                                 </div>
-                                <div className="Check mb-2" style={{flexWrap:"wrap"}}>
+                                <div className="Check mb-2" style={{ flexWrap: "wrap" }}>
                                     <div className="search flexDiv mb-3">
                                         <input type="text" placeholder='Search Patient Name' />
                                         <img src={Search} alt="" />
@@ -135,20 +135,24 @@ function Report() {
                                                         <div className="dot">
                                                             <img className='' src={Icon5} alt="" />
                                                             <div className="firstDiv">
-                                                            <div className="flex">
-                                                                    <img src={Icon4} alt="" />
+                                                                <div className="flex">
+                                                                    <img src={ReportIcon.edit} alt="" />
                                                                     <span>Edit Test</span>
                                                                 </div>
                                                                 <div className="flex">
-                                                                    <img src={Icon4} alt="" />
+                                                                    <img src={ReportIcon.profile} alt="" />
                                                                     <span>View Profile</span>
                                                                 </div>
                                                                 <div className="flex">
-                                                                    <img src={Icon4} alt="" />
+                                                                    <img src={ReportIcon.share} alt="" />
+                                                                    <span>Share Result</span>
+                                                                </div>
+                                                                <div className="flex">
+                                                                    <img src={ReportIcon.confirm} alt="" />
                                                                     <span>Confirm Test</span>
                                                                 </div>
                                                                 <div className="flex">
-                                                                    <img src={Icon4} alt="" />
+                                                                    <img src={ReportIcon.upload} alt="" />
                                                                     <span>Upload Result</span>
                                                                 </div>
                                                                 {/* <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -207,20 +211,24 @@ function Report() {
                                                         <div className="dot">
                                                             <img className='' src={Icon5} alt="" />
                                                             <div className="firstDiv">
-                                                            <div className="flex">
-                                                                    <img src={Icon4} alt="" />
+                                                                <div className="flex">
+                                                                    <img src={ReportIcon.edit} alt="" />
                                                                     <span>Edit Test</span>
                                                                 </div>
                                                                 <div className="flex">
-                                                                    <img src={Icon4} alt="" />
+                                                                    <img src={ReportIcon.profile} alt="" />
                                                                     <span>View Profile</span>
                                                                 </div>
                                                                 <div className="flex">
-                                                                    <img src={Icon4} alt="" />
+                                                                    <img src={ReportIcon.share} alt="" />
+                                                                    <span>Share Result</span>
+                                                                </div>
+                                                                <div className="flex">
+                                                                    <img src={ReportIcon.confirm} alt="" />
                                                                     <span>Confirm Test</span>
                                                                 </div>
                                                                 <div className="flex">
-                                                                    <img src={Icon4} alt="" />
+                                                                    <img src={ReportIcon.upload} alt="" />
                                                                     <span>Upload Result</span>
                                                                 </div>
                                                                 {/* <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">

@@ -12,42 +12,42 @@ import axios from 'axios'
 
 function Form() {
     const [phone, setPhone] = useState()
-    const [data, setData] = useState([]);
-    const [patientId, setPatientId] = useState('')
-    const [timer, setTimer] = useState(null)
+    // const [data, setData] = useState([]);
+    // const [patientId, setPatientId] = useState('')
+    // const [timer, setTimer] = useState(null)
 
     const buttonRef = useRef(null);
 
-    // useEffect(() => {
+    useEffect(() => {
     //   const statusCheck = false;
 
     //   if (!statusCheck) {
     //     buttonRef.current.click();
     //   }
-    // }, []); 
+    }, []); 
   
     // const handleClick = () => {
     //   console.log('Button Clicked!');
     // };
 
-    const url = `https://patient/users${patientId}`;
-    const fetchPatient = () => {
-        return axios.get(url)
-        .then((res) => setData(res.data))
-        .catch((err) => console.log(err));
-    };
+    // const url = `https://patient/users${patientId}`;
+    // const fetchPatient = () => {
+    //     return axios.get(url)
+    //     .then((res) => setData(res.data))
+    //     .catch((err) => console.log(err));
+    // };
 
-    const inputChanged = e => {
-        setPatientId(e.target.value)
+    // const inputChanged = e => {
+    //     setPatientId(e.target.value)
 
-        clearTimeout(timer)
+    //     clearTimeout(timer)
 
-        const newTimer = setTimeout(() => {
-            fetchPatient()
-        }, 500)
+    //     const newTimer = setTimeout(() => {
+    //         fetchPatient()
+    //     }, 500)
 
-        setTimer(newTimer)
-    }
+    //     setTimer(newTimer)
+    // }
 
     let today = new Date().toLocaleDateString()
 
@@ -56,7 +56,7 @@ function Form() {
         trackId: '',
         formID: '',
         date: today,
-        patientId: patientId,
+        // patientId: patientId,
         serviceDescriptionId: '',
         quantity: '',
         amount: '',
@@ -70,26 +70,26 @@ function Form() {
     })
 
     // PATIENTS DATA
-    const [patientName, setPatientName] = useState('')
-    const [patientNumber, setPatientNumber] = useState('')
-    const [patientGender, setPatientGender] = useState('')
-    const [patientAge, setPatientAge] = useState('')
-    const [patientAddress, setPatientAddress] = useState('')
+    // const [patientName, setPatientName] = useState('')
+    // const [patientNumber, setPatientNumber] = useState('')
+    // const [patientGender, setPatientGender] = useState('')
+    // const [patientAge, setPatientAge] = useState('')
+    // const [patientAddress, setPatientAddress] = useState('')
 
 
-    useEffect(() => {
-        if (data.status === 'false') {
+    // useEffect(() => {
+    //     if (data.status === 'false') {
 
-        }
-        //   fetchInfo();
-        if (data) {
-            setPatientName(data.name)
-            setPatientNumber(data.number)
-            setPatientAge(data.age)
-            setPatientAddress(data.address)
-            setPatientGender(data.gender)
-        }
-    }, [data]);
+    //     }
+    //     //   fetchInfo();
+    //     if (data) {
+    //         setPatientName(data.name)
+    //         setPatientNumber(data.number)
+    //         setPatientAge(data.age)
+    //         setPatientAddress(data.address)
+    //         setPatientGender(data.gender)
+    //     }
+    // }, [data]);
 
 
     const handleInput = (event) => {
@@ -98,7 +98,8 @@ function Form() {
 
     function handleSubmit(e) {
         e.preventDefault()
-        axios.post('http://localhost', { post })
+        console.log(post)
+        axios.post('http://139.59.168.0:8080/service-manager/procedures/create', { post })
             .then(response => console.log(response))
             .catch(err => console.log(err))
     }
@@ -142,7 +143,7 @@ function Form() {
                 </div>
                 <div className="divider"></div>
                 <div className="form">
-                    <form action="" onSubmit={handleSubmit}>
+                    <form action="">
                         <div className="deduction">
                             <h2>Patient Details</h2>
                             <p>You are to fill in the patient Basic Information</p>
@@ -154,13 +155,14 @@ function Form() {
                                 <div className="col-md-6">
                                     <div className="discount">
                                         <label htmlFor="discount" className='fw3'>Patient ID</label> <br />
-                                        <input type="text" value={patientId} name="userId" id="discount" placeholder='AGA/453|' onChange={inputChanged} />
+                                        <input type="text" name="patientId" onChange={handleInput} id="discount" placeholder='AGA/453|' />
+                                        {/* <input type="text" value={patientId} name="userId" id="discount" placeholder='AGA/453|' onChange={inputChanged} /> */}
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="discount">
                                         <label htmlFor="discount" className='fw3'>Patient Name</label>  <br />
-                                        <input type="text" name="name" value={patientName} id="discount" placeholder='Adepoju Deborah ' />
+                                        <input type="text" name="name"  id="discount" placeholder='Adepoju Deborah ' />
                                     </div>
                                 </div>
                             </div>
@@ -171,7 +173,7 @@ function Form() {
                                 <div className="col-md-6">
                                     <div className="discount">
                                         <label htmlFor="discount" className='fw3'>Patient Mobile Number</label>  <br />
-                                        <input type="number" name="number" value={patientNumber} id="discount" placeholder='+234 08143626356' />
+                                        <input type="number" name="number"  id="discount" placeholder='+234 08143626356' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
@@ -188,13 +190,13 @@ function Form() {
                                 <div className="col-md-6">
                                     <label htmlFor="discount" className='fw3'>Gender</label>  <br />
                                     <select class="form-select" aria-label="Default select example">
-                                        <option selected ><span>{patientGender}</span></option>
+                                        <option selected ><span></span></option>
                                     </select>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="discount" className='fw3'>Age of the Patient</label>  <br />
                                     <select class="form-select" aria-label="Default select example">
-                                        <option selected ><span>{patientAge}</span></option>
+                                        <option selected ><span></span></option>
                                     </select>
                                 </div>
                             </div>
@@ -205,7 +207,7 @@ function Form() {
                                 <div className="col-md-6">
                                     <div className="discount">
                                         <label htmlFor="discount" className='fw3'>Address</label>  <br />
-                                        <input type="text" name="address" value={patientAddress} id="discount" placeholder='No 24, W. F. Kumuyi Street,' />
+                                        <input type="text" name="address"  id="discount" placeholder='No 24, W. F. Kumuyi Street,' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
@@ -417,7 +419,7 @@ function Form() {
                         </div>
                         <div className="margin40"></div>
                         <center>
-                            <button type="submit" className='submitForm'>Submit</button>
+                            <button type="submit" className='submitForm' onClick={handleSubmit}>Submit</button>
                         </center>
                         <div className="margin30"></div>
                     </form>
