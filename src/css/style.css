@@ -451,6 +451,19 @@
   color: #54D4BD;
 }
 
+.NoData {
+  padding: 0 30px;
+  padding: 100px 20px;
+}
+.NoData h4 {
+  font-size: 16px;
+}
+.NoData p {
+  font-size: 15px;
+  color: rgb(157, 153, 172);
+  font-weight: 300;
+}
+
 .LeftBanner {
   background-image: linear-gradient(89.31deg, #042620 13.27%, rgba(0, 10, 8, 0.6) 94%), url(../Assets/Authentication/image\ 8.png);
   height: 91vh;
@@ -720,21 +733,6 @@
   font-weight: 500;
   width: 100%;
   font-size: 15px;
-}
-.ManageRoles .SecondContainer .second .cant .Access {
-  padding: 0 30px;
-  padding-top: 40%;
-}
-.ManageRoles .SecondContainer .second .cant .Access img {
-  width: 47%;
-}
-.ManageRoles .SecondContainer .second .cant .Access h4 {
-  font-size: 16px;
-}
-.ManageRoles .SecondContainer .second .cant .Access p {
-  font-size: 15px;
-  color: rgb(157, 153, 172);
-  font-weight: 300;
 }
 
 .NameHeader h2 {

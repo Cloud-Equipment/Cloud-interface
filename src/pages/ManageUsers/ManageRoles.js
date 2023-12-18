@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar'
 import Img1 from '../../Assets/IconAndLogo/Gift.png'
 import Img2 from '../../Assets/IconAndLogo/Group 5745.png'
 import Img3 from '../../Assets/IconAndLogo/Frame 2756.png'
+import NoData from '../../components/NoData'
 // import { Link } from 'react-router-dom'
 
 function ManageRoles() {
@@ -56,13 +57,13 @@ function ManageRoles() {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect1" />
                                                                     <label class="form-check-label" for="roleselect1">
-                                                                    Can View User Management
+                                                                        Can View User Management
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect2" />
                                                                     <label class="form-check-label" for="roleselect2">
-                                                                    Can View and Edit User Management
+                                                                        Can View and Edit User Management
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -83,13 +84,13 @@ function ManageRoles() {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect3" />
                                                                     <label class="form-check-label" for="roleselect3">
-                                                                    Can View User Management
+                                                                        Can View User Management
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect4" />
                                                                     <label class="form-check-label" for="roleselect4">
-                                                                    Can View and Edit User Management
+                                                                        Can View and Edit User Management
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -110,13 +111,13 @@ function ManageRoles() {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect5" />
                                                                     <label class="form-check-label" for="roleselect5">
-                                                                    Can View User Management
+                                                                        Can View User Management
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect6" />
                                                                     <label class="form-check-label" for="roleselect6">
-                                                                    Can View and Edit User Management
+                                                                        Can View and Edit User Management
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -137,13 +138,13 @@ function ManageRoles() {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect7" />
                                                                     <label class="form-check-label" for="roleselect7">
-                                                                    Can View User Management
+                                                                        Can View User Management
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect8" />
                                                                     <label class="form-check-label" for="roleselect8">
-                                                                    Can View and Edit User Management
+                                                                        Can View and Edit User Management
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -164,13 +165,13 @@ function ManageRoles() {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect9" />
                                                                     <label class="form-check-label" for="roleselect9">
-                                                                    Can View User Management
+                                                                        Can View User Management
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect10" />
                                                                     <label class="form-check-label" for="roleselect10">
-                                                                    Can View and Edit User Management
+                                                                        Can View and Edit User Management
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -191,13 +192,13 @@ function ManageRoles() {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect12" />
                                                                     <label class="form-check-label" for="roleselect12">
-                                                                    Can View User Management
+                                                                        Can View User Management
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect13" />
                                                                     <label class="form-check-label" for="roleselect13">
-                                                                    Can View and Edit User Management
+                                                                        Can View and Edit User Management
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -218,13 +219,13 @@ function ManageRoles() {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect14" />
                                                                     <label class="form-check-label" for="roleselect14">
-                                                                    Can View User Management
+                                                                        Can View User Management
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect15" />
                                                                     <label class="form-check-label" for="roleselect15">
-                                                                    Can View and Edit User Management
+                                                                        Can View and Edit User Management
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -245,13 +246,13 @@ function ManageRoles() {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect16" />
                                                                     <label class="form-check-label" for="roleselect16">
-                                                                    Can View User Management
+                                                                        Can View User Management
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect17" />
                                                                     <label class="form-check-label" for="roleselect17">
-                                                                    Can View and Edit User Management
+                                                                        Can View and Edit User Management
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -272,13 +273,13 @@ function ManageRoles() {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect18" />
                                                                     <label class="form-check-label" for="roleselect18">
-                                                                    Can View User Management
+                                                                        Can View User Management
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect19" />
                                                                     <label class="form-check-label" for="roleselect19">
-                                                                    Can View and Edit User Management
+                                                                        Can View and Edit User Management
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -299,13 +300,13 @@ function ManageRoles() {
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect20" />
                                                                     <label class="form-check-label" for="roleselect20">
-                                                                    Can View User Management
+                                                                        Can View User Management
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="roleselect21" />
                                                                     <label class="form-check-label" for="roleselect21">
-                                                                    Can View and Edit User Management
+                                                                        Can View and Edit User Management
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -314,7 +315,7 @@ function ManageRoles() {
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
-                                            <button type="button" class="btn dark-button100 m-0 mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#edit">Create Role</button>
+                                                <button type="button" class="btn dark-button100 m-0 mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#edit">Create Role</button>
                                             </div>
                                         </div>
                                     </div>
@@ -525,13 +526,11 @@ function ManageRoles() {
                                                                 <div className="header">
                                                                     <p>What this role can’t access</p>
                                                                 </div>
-                                                                <div className="Access">
-                                                                    <center>
-                                                                        <img src={Img2} alt="" />
-                                                                        <h4 className='mt-4'>This role has full access!</h4>
-                                                                        <p>Any team member with this role can access all the sections of the dashboard.</p>
-                                                                    </center>
-                                                                </div>
+                                                                <NoData
+                                                                    width="47%"
+                                                                    title="This role has full access!"
+                                                                    body="Any team member with this role can access all the sections of the dashboard."
+                                                                />
                                                             </div>
                                                         </div>
                                                     </div>
