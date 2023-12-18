@@ -2533,6 +2533,50 @@ $LightGrey: rgba(170, 170, 170, 1);
     }
 }
 
+.RebortBord{
+    border: 1px solid rgba(229, 229, 229, 1);
+    background-color: rgba(251, 251, 251, 1);
+    margin: 50px 0;
+    border-radius: 15px;
+    img{
+        width: 20%;
+    }
+    a{
+        text-decoration: none;
+    }
+    .EachCard{
+        background-color: $white;
+        padding: 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        .text{
+            text-align: left;
+            p{
+                margin-bottom: 5px;
+                font-size: 15px;
+                color: $black;
+            }
+            span{
+                color: rgba(151, 151, 151, 1);
+                font-size: 13px;
+            }
+        }
+        &:hover{
+            box-shadow: 0px 20px 70px 0px rgba(86, 89, 146, 0.1);
+        }
+    }
+    .Down{
+        font-size: 13px;
+        span{
+            color: $secondaryLight;
+            cursor: pointer;
+        }
+        p{
+            margin-bottom: 5px;
+        }
+    }
+}
+
 // ================================================================
 // MANAGE USERS
 // ================================================================
@@ -3382,7 +3426,11 @@ $LightGrey: rgba(170, 170, 170, 1);
 
 }
 
-.bg-white {
+// ================================================================
+// REQUEST CARD
+// ================================================================
+
+.RequestCard {
     padding: 40px;
     background-color: white !important;
     width: 85%;

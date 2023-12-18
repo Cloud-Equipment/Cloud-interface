@@ -10,6 +10,10 @@ export const Routes = () => {
       element: <ActiveForms />,
     },
     {
+      path: '/form',
+      element: <ActiveForms />,
+    },
+    {
       path: '/login',
       element: <Login />
     },

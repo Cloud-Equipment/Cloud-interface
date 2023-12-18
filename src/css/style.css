@@ -1988,6 +1988,50 @@
   cursor: pointer;
 }
 
+.RebortBord {
+  border: 1px solid rgb(229, 229, 229);
+  background-color: rgb(251, 251, 251);
+  margin: 50px 0;
+  border-radius: 15px;
+}
+.RebortBord img {
+  width: 20%;
+}
+.RebortBord a {
+  text-decoration: none;
+}
+.RebortBord .EachCard {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.RebortBord .EachCard .text {
+  text-align: left;
+}
+.RebortBord .EachCard .text p {
+  margin-bottom: 5px;
+  font-size: 15px;
+  color: #000;
+}
+.RebortBord .EachCard .text span {
+  color: rgb(151, 151, 151);
+  font-size: 13px;
+}
+.RebortBord .EachCard:hover {
+  box-shadow: 0px 20px 70px 0px rgba(86, 89, 146, 0.1);
+}
+.RebortBord .Down {
+  font-size: 13px;
+}
+.RebortBord .Down span {
+  color: #54D4BD;
+  cursor: pointer;
+}
+.RebortBord .Down p {
+  margin-bottom: 5px;
+}
+
 .ManageUsers {
   margin: 0;
 }
@@ -2666,12 +2710,12 @@
   border: none;
 }
 
-.bg-white {
+.RequestCard {
   padding: 40px;
   background-color: white !important;
   width: 85%;
 }
-.bg-white .Request {
+.RequestCard .Request {
   background-image: url(../Assets/IconAndLogo/Vector.png);
   background-position: right;
   background-size: contain;
@@ -2681,16 +2725,16 @@
   text-align: left;
   padding: 20px 30px;
 }
-.bg-white .Request h2 {
+.RequestCard .Request h2 {
   font-family: "Playfair Display", serif;
   font-size: 25px;
   color: rgb(0, 41, 102);
 }
-.bg-white .Request p {
+.RequestCard .Request p {
   font-size: 14px;
   color: rgb(0, 41, 102);
 }
-.bg-white .Request button {
+.RequestCard .Request button {
   color: #fff;
   background-color: rgba(84, 212, 188, 0.559);
   padding: 10px 25px;
