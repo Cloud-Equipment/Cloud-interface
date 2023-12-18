@@ -1,15 +1,79 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import LayoutWithSidebar from '../../components/LayoutWithSidebar'
 import Navbar from '../../components/Navbar'
 import Naira from '../../Assets/IconAndLogo/fa6-solid_naira-sign.png'
 import RedNaira from '../../Assets/IconAndLogo/Vector (1).png'
 import Icon from '../../Assets/IconAndLogo/Vector 3.png'
+import Icon1 from '../../Assets/IconAndLogo/Icon 3.png'
+import Icon2 from '../../Assets/IconAndLogo/Group 48095749.png'
 import { Link } from 'react-router-dom'
 
 function ReportDetails() {
+    const [file, setFile] = useState();
+    const [display, setDisplay] = useState("block");
+    const fileInput = useRef(null)
+
+    const handleClick = () => {
+        fileInput.current.click()
+    }
+
+    function handleChange(e) {
+        console.log(e.target.files);
+        setFile(URL.createObjectURL(e.target.files[0]));
+    }
+
+    useEffect(()=>{
+        if(file){
+            setDisplay("none")
+        }else{
+            setDisplay("block")
+        }
+    },[file])
+
     return (
         <div>
             <div className="ReportDetails">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body UploadResult">
+
+                                <div className="flexDivSpace header">
+                                    <h4 className='f20 fw5'>Upload Result</h4>
+                                    <img src={Icon1} alt="" data-bs-dismiss="modal" />
+                                </div>
+                                <div className="margin30"></div>
+                                <div className="discount">
+                                    <label htmlFor="discount" className='fw5'>Leave a Note</label>  <br />
+                                    <input type="text" name="name" id="discount" placeholder='Leave a message ' />
+                                </div>
+                                <div className="margin30"></div>
+                                <center>
+                                    <div className="FileUpload">
+                                        <div className="details" style={{display: display}}>
+                                            <div className="mb-3" onClick={() => handleClick()}>
+                                                <img src={Icon2} alt="" className='uploader' />
+                                            </div>
+                                            <p>Drag and drop or  <span onClick={() => handleClick()}> choose a file</span> to upload your contacts.</p>
+                                            <p>All .csv, .xlsx, and .xls file types are supported</p>
+                                        </div>
+                                        <img src={file} alt="" className='uploaded' />
+                                    </div>
+                                </center>
+                                <input
+                                    type="file"
+                                    onChange={handleChange}
+                                    ref={fileInput}
+                                    style={{ display: 'none' }}
+                                />
+                                <div className="buttonss mt-3">
+                                    <button type="button" class="btn dark-button100" data-bs-toggle="modal" data-bs-target="#edit">Upload Result</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <LayoutWithSidebar >
                     <div className="ReportDetails">
                         <Navbar
@@ -35,7 +99,7 @@ function ReportDetails() {
                                 <div className="btns">
                                     <button className='dark-button ps-5 pe-5 me-4 mb-3'>New Appointment</button>
                                     <button className='grey-button ps-5 pe-5 me-4 mb-3'>Refer Patient</button>
-                                    <button className='grey-border-button ps-5 pe-5 me-4 mb-3'>Upload a result</button>
+                                    <button className='grey-border-button ps-5 pe-5 me-4 mb-3' data-bs-toggle="modal" data-bs-target="#exampleModal">Upload a result</button>
                                 </div>
                                 <div className="margin20"></div>
                                 <div className="TableCard">

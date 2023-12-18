@@ -156,7 +156,9 @@ $LightGrey: rgba(170, 170, 170, 1);
 .fw6 {
     font-weight: 600 !important;
 }
-
+.fw5 {
+    font-weight: 500 !important;
+}
 
 .f20 {
     font-size: 20px !important;
@@ -2479,7 +2481,54 @@ $LightGrey: rgba(170, 170, 170, 1);
             }
         }
     }
+    .UploadResult{
+        padding: 30px 50px;
+        .header{
+            img{
+                width: 15px;
+                cursor: pointer;
+            }
+        }
+        .discount {
+            input {
+                width: 90% !important;
+                border: 2px solid rgba(99, 119, 138, 0.5);
+                border-radius: 8px;
+                height: 45px;
+                margin: 2px 0;
+                padding: 0.375rem 2.25rem 0.375rem 0.75rem;
 
+                &::placeholder {
+                    font-weight: 300;
+                    color: rgba(99, 119, 138, 0.5) !important;
+                    font-size: 14px;
+                }
+            }
+            label {
+                margin: 0;
+                font-size: 14px;
+                font-weight: 300;
+            }
+        }
+        .FileUpload{
+            border: 1px solid $secondaryLight;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: rgba(247, 247, 247, 1);
+            font-size: 15px;
+            .uploader{
+                width: 55px;
+                cursor: pointer;
+            }
+            .uploaded{
+                width: 50%;
+            }
+            span{
+                color: $secondaryLight;
+                cursor: pointer;
+            }
+        }
+    }
 }
 
 // ================================================================

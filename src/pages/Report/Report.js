@@ -188,7 +188,7 @@ function Report() {
                                                         <div className="dot">
                                                             <img className='' src={Icon5} alt="" />
                                                             <div className="firstDiv">
-                                                                <div className="flex">
+                                                                <div className="flex" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                                     <img src={ReportIcon.edit} alt="" />
                                                                     <span>Edit Test</span>
                                                                 </div>
@@ -239,7 +239,7 @@ function Report() {
                                                         <div className="dot">
                                                             <img className='' src={Icon5} alt="" />
                                                             <div className="firstDiv">
-                                                                <div className="flex">
+                                                                <div className="flex" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                                     <img src={ReportIcon.edit} alt="" />
                                                                     <span>Edit Test</span>
                                                                 </div>
