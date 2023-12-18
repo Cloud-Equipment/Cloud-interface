@@ -14,6 +14,7 @@ import Left from '../../Assets/IconAndLogo/primary (1).png'
 import Right from '../../Assets/IconAndLogo/primary (2).png'
 import Down from '../../Assets/IconAndLogo/primary.png'
 import { ReportIcon } from '../../data/data'
+import { Link } from 'react-router-dom'
 // import Img1 from '../../Assets/IconAndLogo/Frame 2755.png'
 // import Form from '../ActiveForm/Form'
 // import Modal from '../../components/Modal'
@@ -139,10 +140,12 @@ function Report() {
                                                                     <img src={ReportIcon.edit} alt="" />
                                                                     <span>Edit Test</span>
                                                                 </div>
-                                                                <div className="flex">
-                                                                    <img src={ReportIcon.profile} alt="" />
-                                                                    <span>View Profile</span>
-                                                                </div>
+                                                                <Link to="/report-details">
+                                                                    <div className="flex">
+                                                                        <img src={ReportIcon.profile} alt="" />
+                                                                        <span>View Profile</span>
+                                                                    </div>
+                                                                </Link>
                                                                 <div className="flex">
                                                                     <img src={ReportIcon.share} alt="" />
                                                                     <span>Share Result</span>
@@ -163,32 +166,6 @@ function Report() {
                                                     </td>
 
                                                 </tr>
-                                                {/* <div className="downtr">
-                                                    <ul>
-                                                        <li className='flexDivSpace'>
-                                                            <div className=""> <span>Add:</span></div>
-                                                            <div className="flexDiv">
-                                                                <span>Kidney Scan</span>
-                                                                <div className="flexDiv">
-                                                                    <img src={Icon6} alt="" />
-                                                                    <span>1,500.00</span>
-                                                                </div>
-                                                            </div>
-
-                                                        </li>
-                                                        <li className='flexDivSpace'>
-                                                            <div className=""> <span>Remove:</span></div>
-                                                            <div className="flexDiv">
-                                                                <p className=''>Cholesterol - Test - 500 </p>
-                                                                <div className="flexDiv">
-                                                                    <img src={Icon6} alt="" />
-                                                                    <span>2,000.00</span>
-                                                                </div>
-                                                            </div>
-
-                                                        </li>
-                                                    </ul>
-                                                </div> */}
                                                 <tr>
                                                     <th scope="row">
                                                         <div className="flexDiv">
@@ -215,10 +192,12 @@ function Report() {
                                                                     <img src={ReportIcon.edit} alt="" />
                                                                     <span>Edit Test</span>
                                                                 </div>
-                                                                <div className="flex">
-                                                                    <img src={ReportIcon.profile} alt="" />
-                                                                    <span>View Profile</span>
-                                                                </div>
+                                                                <Link to="/report-details">
+                                                                    <div className="flex">
+                                                                        <img src={ReportIcon.profile} alt="" />
+                                                                        <span>View Profile</span>
+                                                                    </div>
+                                                                </Link>
                                                                 <div className="flex">
                                                                     <img src={ReportIcon.share} alt="" />
                                                                     <span>Share Result</span>
@@ -237,6 +216,58 @@ function Report() {
                                                             </div>
                                                         </div>
                                                     </td>
+                                                </tr>
+                                                <tr className=''>
+                                                    <th scope="">
+                                                        <div className="flexDiv">
+                                                            <img src={Icon3} alt="" />
+                                                            <span>001</span>
+                                                        </div>
+                                                    </th>
+                                                    <td>Cholesterol Profile</td>
+                                                    <td>35</td>
+                                                    <td>Emmanuel Umunna</td>
+                                                    <td>Agape Care Laboratory</td>
+                                                    <td>+234 7085646378</td>
+                                                    <td>
+                                                        <div className="flexDiv">
+                                                            <img src={Icon6} alt="" />
+                                                            <span>1,000.00</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="dot">
+                                                            <img className='' src={Icon5} alt="" />
+                                                            <div className="firstDiv">
+                                                                <div className="flex">
+                                                                    <img src={ReportIcon.edit} alt="" />
+                                                                    <span>Edit Test</span>
+                                                                </div>
+                                                                <Link to="/report-details">
+                                                                    <div className="flex">
+                                                                        <img src={ReportIcon.profile} alt="" />
+                                                                        <span>View Profile</span>
+                                                                    </div>
+                                                                </Link>
+                                                                <div className="flex">
+                                                                    <img src={ReportIcon.share} alt="" />
+                                                                    <span>Share Result</span>
+                                                                </div>
+                                                                <div className="flex">
+                                                                    <img src={ReportIcon.confirm} alt="" />
+                                                                    <span>Confirm Test</span>
+                                                                </div>
+                                                                <div className="flex">
+                                                                    <img src={ReportIcon.upload} alt="" />
+                                                                    <span>Upload Result</span>
+                                                                </div>
+                                                                {/* <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                                   
+                                                                </button> */}
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
                                                 </tr>
                                             </tbody>
                                         </table>

@@ -208,6 +208,10 @@ $LightGrey: rgba(170, 170, 170, 1);
     align-items: center;
     justify-content: space-between;
 }
+.flexNoAlignSpace {
+    display: flex;
+    justify-content: space-between;
+}
 
 .roundball {
     position: absolute;
@@ -265,6 +269,39 @@ $LightGrey: rgba(170, 170, 170, 1);
     &:hover {
         background: rgb(73, 186, 165);
         color: $white;
+    }
+}
+
+.grey-button {
+    font-size: 14px;
+    color: $secondaryLight;
+    padding: 7px 15px;
+    border-radius: 6px;
+    outline: none;
+    margin: 0 5px;
+    border: none;
+    background-color: rgb(243, 243, 243);
+
+    &:hover {
+        background-color: $secondaryLight;
+        color: $white;
+    }
+}
+
+.grey-border-button {
+    font-size: 14px;
+    color: $secondaryLight;
+    padding: 7px 15px;
+    border-radius: 6px;
+    outline: none;
+    margin: 0 5px;
+    border: 1px solid rgb(229, 233, 231);
+    background-color: transparent;
+
+    &:hover {
+        background-color: $secondaryLight;
+        color: $white;
+        border: none;
     }
 }
 
@@ -389,6 +426,29 @@ $LightGrey: rgba(170, 170, 170, 1);
 .selectHolder {
     font-size: 14px;
     color: rgba(99, 119, 138, 0.5) !important;
+}
+
+.secondaryButtonBackground {
+    font-size: 13px;
+    color: $white;
+    padding: 7px 20px;
+    border-radius: 6px;
+    outline: none;
+    margin: 0 5px;
+    font-weight: 300;
+    border: none;
+    background-color: $secondary;
+    border: 1px solid $secondary;
+
+    img {
+        width: 20px;
+        margin-right: 5px;
+    }
+
+    &:hover {
+        background: #0c5648;
+        color: $white;
+    }
 }
 
 .inputts {
@@ -2166,6 +2226,10 @@ $LightGrey: rgba(170, 170, 170, 1);
             }
 
             table {
+                a{
+                    text-decoration: none;
+                    color: $black;
+                }
                 thead {
                     background: rgba(238, 255, 252, 1);
 
@@ -2246,7 +2310,7 @@ $LightGrey: rgba(170, 170, 170, 1);
                         }
 
                         span {
-                            font-size: 14px;
+                            font-size: 13px;
                             font-family: $dm;
                         }
                     }
@@ -2303,6 +2367,119 @@ $LightGrey: rgba(170, 170, 170, 1);
             }
         }
     }
+}
+
+.ReportDetails{
+    font-family: $nuno;
+    .WhiteCard {
+        background-color: $white;
+        border-radius: 18px;
+        padding: 20px ;
+        box-shadow: 0px 4px 15px 0px rgba(216, 210, 252, 0.15);
+        .img{
+            cursor: pointer;
+            img{
+                width: 20px;
+            }
+        }
+        .top{
+            font-family: $nuno;
+            h3{
+                font-family: $nuno;
+                font-weight: 600;
+            }
+            p{
+                margin-bottom: 5px;
+            }
+            span{
+                font-size: 13px;
+                font-weight: 300;
+            }
+        }
+        .btns{
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            button{
+                margin: 0;
+                font-weight: 400;
+            }
+        }
+        .TableCard{
+            box-shadow: 0px 4px 12px 0px rgba(13, 95, 80, 0.15);
+            margin: 20px 0;
+            border-radius: 10px;
+            padding: 20px 40px;
+            padding-bottom: 0;
+            p{
+                margin-bottom: 3px;
+                font-size: 15px;
+                font-weight: 500;
+            }
+            span{
+                font-size: 13px;
+                font-weight: 300;
+            }
+            .deduction {
+    
+                h2 {
+                    font-size: 22px;
+                    font-family: $playfair;
+                    font-weight: 700;
+                    margin: 0;
+                }
+    
+                p {
+                    font-size: 14px;
+                    margin-bottom: 2px;
+                    color: rgba(102, 112, 133, 1);
+                    font-family: $dm;
+                    font-weight: 300;
+                }
+            }
+        }
+        .total {
+            width: 100%;
+            padding: 20px;
+            background-color: rgba(238, 255, 252, 1);
+            border: 1px solid $secondaryLight;
+            border-radius: 8px;
+
+            img {
+                width: 15px;
+            }
+
+            p {
+                margin: 0;
+                font-family: $inter;
+                font-size: 14px;
+            }
+
+            div {
+                display: flex;
+                margin: 3px 0;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .gray {
+                color: rgba(115, 123, 139, 1);
+            }
+
+            .red {
+                color: red;
+            }
+
+            .amount {
+                p {
+                    margin: 0 3px;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+
 }
 
 // ================================================================

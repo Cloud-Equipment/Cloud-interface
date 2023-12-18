@@ -1,9 +1,6 @@
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
-import { ActiveForms, Auth, Login } from '../pages';
-import Report from '../pages/Report/Report';
-import ManageUser from '../pages/ManageUsers/ManageUser';
-import ManageRoles from '../pages/ManageUsers/ManageRoles';
+import { ActiveForms, Auth, Login, Report, ManageUser, ManageRoles, ReportDetails } from '../pages';
 
 
 export const Routes = () => {
@@ -13,24 +10,28 @@ export const Routes = () => {
       element: <ActiveForms />,
     },
     {
-        path: '/login',
-        element: <Login />
+      path: '/login',
+      element: <Login />
     },
     {
-        path: '/verify',
-        element: < Auth/>
+      path: '/verify',
+      element: < Auth />
     },
     {
-        path: '/reports',
-        element: < Report/>
+      path: '/reports',
+      element: < Report />
     },
     {
-        path: '/manage-user',
-        element: < ManageUser/>
+      path: '/manage-user',
+      element: < ManageUser />
     },
     {
-        path: '/manage-role',
-        element: < ManageRoles/>
+      path: '/manage-role',
+      element: < ManageRoles />
+    },
+    {
+      path: '/report-details',
+      element: < ReportDetails />
     }
   ]);
 };
