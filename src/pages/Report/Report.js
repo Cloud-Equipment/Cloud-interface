@@ -18,19 +18,47 @@ import { Link } from 'react-router-dom'
 import Img1 from '../../Assets/IconAndLogo/Frame 2755.png'
 import Form from '../ActiveForm/Form'
 import NoData from '../../components/NoData'
+import axios from 'axios'
+import { BASE_URL } from '../../data/data'
 // import Modal from '../../components/Modal'
 
 function Report() {
 
-    const data = true
 
     const [report, setReport] = useState(true)
+    const [data, setData] = useState([])
 
-    useEffect(()=>{
-        if(!data){
+    const datas = true
+    useEffect(() => {
+        if (!datas) {
             setReport(false)
         }
-    },[data])
+    }, [datas])
+
+    useEffect(() => {
+        const url = `${BASE_URL}/service-manager/procedures/getAll`
+        axios.get(url)
+            .then((res) => {
+                if (res.data.success === true) {
+                    setData(res.data.data)
+                }
+            })
+            .catch((err) => console.log(err));
+
+    },[])
+
+
+    const dateFormat = (inputDateString) => {
+        const inputDate = new Date(inputDateString);
+
+        const day = inputDate.getDate().toString().padStart(2, '0');
+        const month = (inputDate.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+        const year = inputDate.getFullYear();
+
+        const formattedDate = `${day}-${month}-${year}`;
+        return formattedDate
+    }
+
 
     return (
         <div>
@@ -126,161 +154,61 @@ function Report() {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr className=''>
-                                                        <th scope="">
-                                                            <div className="flexDiv">
-                                                                <img src={Icon3} alt="" />
-                                                                <span>001</span>
-                                                            </div>
-                                                        </th>
-                                                        <td>Cholesterol Profile</td>
-                                                        <td>35</td>
-                                                        <td>Emmanuel Umunna</td>
-                                                        <td>Agape Care Laboratory</td>
-                                                        <td>+234 7085646378</td>
-                                                        <td>
-                                                            <div className="flexDiv">
-                                                                <img src={Icon6} alt="" />
-                                                                <span>1,000.00</span>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className="dot">
-                                                                <img className='' src={Icon5} alt="" />
-                                                                <div className="firstDiv">
-                                                                    <div className="flex" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                                        <img src={ReportIcon.edit} alt="" />
-                                                                        <span>Edit Test</span>
-                                                                    </div>
-                                                                    <Link to="/report-details">
-                                                                        <div className="flex">
-                                                                            <img src={ReportIcon.profile} alt="" />
-                                                                            <span>View Profile</span>
-                                                                        </div>
-                                                                    </Link>
-                                                                    <div className="flex">
-                                                                        <img src={ReportIcon.share} alt="" />
-                                                                        <span>Share Result</span>
-                                                                    </div>
-                                                                    <div className="flex">
-                                                                        <img src={ReportIcon.confirm} alt="" />
-                                                                        <span>Confirm Test</span>
-                                                                    </div>
-                                                                    <div className="flex">
-                                                                        <img src={ReportIcon.upload} alt="" />
-                                                                        <span>Upload Result</span>
-                                                                    </div>
-                                                                    {/* <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                                   
-                                                                </button> */}
-                                                                </div>
-                                                            </div>
-                                                        </td>
+                                                    {data.map((each, index) => (
 
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">
-                                                            <div className="flexDiv">
-                                                                <img className='plus' src={Icon3} alt="" />
-                                                                <span>001</span>
-                                                            </div>
-                                                        </th>
-                                                        <td>Cholesterol Profile</td>
-                                                        <td>35</td>
-                                                        <td>Emmanuel Umunna</td>
-                                                        <td>Agape Care Laboratory</td>
-                                                        <td>+234 7085646378</td>
-                                                        <td>
-                                                            <div className="flexDiv">
-                                                                <img className='naira' src={Icon6} alt="" />
-                                                                <span>1,500.00</span>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className="dot">
-                                                                <img className='' src={Icon5} alt="" />
-                                                                <div className="firstDiv">
-                                                                    <div className="flex" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                                        <img src={ReportIcon.edit} alt="" />
-                                                                        <span>Edit Test</span>
-                                                                    </div>
-                                                                    <Link to="/report-details">
-                                                                        <div className="flex">
-                                                                            <img src={ReportIcon.profile} alt="" />
-                                                                            <span>View Profile</span>
-                                                                        </div>
-                                                                    </Link>
-                                                                    <div className="flex">
-                                                                        <img src={ReportIcon.share} alt="" />
-                                                                        <span>Share Result</span>
-                                                                    </div>
-                                                                    <div className="flex">
-                                                                        <img src={ReportIcon.confirm} alt="" />
-                                                                        <span>Confirm Test</span>
-                                                                    </div>
-                                                                    <div className="flex">
-                                                                        <img src={ReportIcon.upload} alt="" />
-                                                                        <span>Upload Result</span>
-                                                                    </div>
-                                                                    {/* <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                                   
-                                                                </button> */}
+                                                        <tr className='' key={index}>
+                                                            <th scope="">
+                                                                <div className="flexDiv">
+                                                                    <img src={Icon3} alt="" />
+                                                                    <span>{dateFormat(each.date)}</span>
                                                                 </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr className=''>
-                                                        <th scope="">
-                                                            <div className="flexDiv">
-                                                                <img src={Icon3} alt="" />
-                                                                <span>001</span>
-                                                            </div>
-                                                        </th>
-                                                        <td>Cholesterol Profile</td>
-                                                        <td>35</td>
-                                                        <td>Emmanuel Umunna</td>
-                                                        <td>Agape Care Laboratory</td>
-                                                        <td>+234 7085646378</td>
-                                                        <td>
-                                                            <div className="flexDiv">
-                                                                <img src={Icon6} alt="" />
-                                                                <span>1,000.00</span>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className="dot">
-                                                                <img className='' src={Icon5} alt="" />
-                                                                <div className="firstDiv">
-                                                                    <div className="flex" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                                        <img src={ReportIcon.edit} alt="" />
-                                                                        <span>Edit Test</span>
-                                                                    </div>
-                                                                    <Link to="/report-details">
-                                                                        <div className="flex">
-                                                                            <img src={ReportIcon.profile} alt="" />
-                                                                            <span>View Profile</span>
-                                                                        </div>
-                                                                    </Link>
-                                                                    <div className="flex">
-                                                                        <img src={ReportIcon.share} alt="" />
-                                                                        <span>Share Result</span>
-                                                                    </div>
-                                                                    <div className="flex">
-                                                                        <img src={ReportIcon.confirm} alt="" />
-                                                                        <span>Confirm Test</span>
-                                                                    </div>
-                                                                    <div className="flex">
-                                                                        <img src={ReportIcon.upload} alt="" />
-                                                                        <span>Upload Result</span>
-                                                                    </div>
-                                                                    {/* <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                                   
-                                                                </button> */}
+                                                            </th>
+                                                            <td>Cholesterol Profile</td>
+                                                            <td>35</td>
+                                                            <td>{each.referrerName}</td>
+                                                            <td>Agape Care Laboratory</td>
+                                                            <td>{each.phoneNo}</td>
+                                                            <td>
+                                                                <div className="flexDiv">
+                                                                    <img src={Icon6} alt="" />
+                                                                    <span>{each.amount}.00</span>
                                                                 </div>
-                                                            </div>
-                                                        </td>
+                                                            </td>
+                                                            <td>
+                                                                <div className="dot">
+                                                                    <img className='' src={Icon5} alt="" />
+                                                                    <div className="firstDiv">
+                                                                        <div className="flex" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                                            <img src={ReportIcon.edit} alt="" />
+                                                                            <span>Edit Test</span>
+                                                                        </div>
+                                                                        <Link to="/report-details">
+                                                                            <div className="flex">
+                                                                                <img src={ReportIcon.profile} alt="" />
+                                                                                <span>View Profile</span>
+                                                                            </div>
+                                                                        </Link>
+                                                                        <div className="flex">
+                                                                            <img src={ReportIcon.share} alt="" />
+                                                                            <span>Share Result</span>
+                                                                        </div>
+                                                                        <div className="flex">
+                                                                            <img src={ReportIcon.confirm} alt="" />
+                                                                            <span>Confirm Test</span>
+                                                                        </div>
+                                                                        <div className="flex">
+                                                                            <img src={ReportIcon.upload} alt="" />
+                                                                            <span>Upload Result</span>
+                                                                        </div>
+                                                                        {/* <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                                    
+                                                                 </button> */}
+                                                                    </div>
+                                                                </div>
+                                                            </td>
 
-                                                    </tr>
+                                                        </tr>
+                                                    ))}
                                                 </tbody>
                                             </table> : <div className="">
                                                 <table className='w-100'>

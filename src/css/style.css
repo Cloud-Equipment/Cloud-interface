@@ -1564,6 +1564,21 @@
   cursor: pointer;
 }
 
+.ErrorModal, .SuccessModal {
+  padding: 30px 40px;
+}
+.ErrorModal a, .SuccessModal a {
+  text-decoration: none;
+}
+.ErrorModal p, .SuccessModal p {
+  margin: 17px 0;
+  font-size: 15px;
+}
+.ErrorModal img, .SuccessModal img {
+  width: 15%;
+  margin-right: 5px;
+}
+
 .Partners {
   background-color: rgb(245, 245, 245);
   padding: 20px 0px;
@@ -2701,10 +2716,18 @@
   margin: 0 3px;
   font-size: 14px;
 }
-.ActiveFormSection .form .submitForm {
+.ActiveFormSection .form .submitFormLight {
   width: 50%;
   color: #fff;
   background-color: rgba(84, 212, 188, 0.559);
+  padding: 15px;
+  border-radius: 8px;
+  border: none;
+}
+.ActiveFormSection .form .submitFormDark {
+  width: 50%;
+  color: #fff;
+  background-color: #54D4BD;
   padding: 15px;
   border-radius: 8px;
   border: none;

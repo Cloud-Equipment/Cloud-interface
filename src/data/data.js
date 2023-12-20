@@ -61,5 +61,8 @@ const ReportIcon = {
     "upload": Upload,
 }
 
+const BASE_URL = "http://139.59.168.0:8080"
 
-export  {SidebarIcon,PartnersImg,SocialIcon,ReportIcon}
+
+
+export { SidebarIcon, PartnersImg, SocialIcon, ReportIcon, BASE_URL }

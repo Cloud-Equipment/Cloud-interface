@@ -2013,6 +2013,28 @@ $LightGrey: rgba(170, 170, 170, 1);
     }
 }
 
+// ================================================================
+// MODAL
+// ================================================================
+
+.ErrorModal,.SuccessModal {
+    padding: 30px 40px;
+a{
+    text-decoration: none;
+}
+    p {
+        margin: 17px 0;
+        font-size: 15px;
+    }
+
+
+    img {
+        width: 15%;
+        margin-right: 5px;
+    }
+
+
+}
 
 // ================================================================
 // PARTNERS
@@ -3414,10 +3436,19 @@ $LightGrey: rgba(170, 170, 170, 1);
             }
         }
 
-        .submitForm {
+        .submitFormLight {
             width: 50%;
             color: $white;
             background-color: rgba(84, 212, 188, 0.559);
+            padding: 15px;
+            border-radius: 8px;
+            border: none;
+        }
+
+        .submitFormDark {
+            width: 50%;
+            color: $white;
+            background-color: $secondaryLight;
             padding: 15px;
             border-radius: 8px;
             border: none;
