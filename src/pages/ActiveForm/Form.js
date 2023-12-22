@@ -166,14 +166,6 @@ function Form() {
                 0
             );
 
-            let procedureTotalAmoumt = 0;
-
-            for (let i = 0; i < procedure.length; i++) {
-                procedureTotalAmoumt += procedure[i].amount;
-            }
-
-            console.log(procedureTotalAmoumt);
-
             setTotalAmount(updatedTotalAmount);
 
             // Update localStorage

@@ -61,7 +61,7 @@ const ReportIcon = {
     "upload": Upload,
 }
 
-const BASE_URL = "https://139.59.168.0:8080"
+const BASE_URL = "http://139.59.168.0:8080"
 
 
 
