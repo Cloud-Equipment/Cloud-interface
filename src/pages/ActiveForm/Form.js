@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Img2 from '../../Assets/IconAndLogo/iconamoon_clock-light.png'
 import Naira from '../../Assets/IconAndLogo/fa6-solid_naira-sign.png'
 import RedNaira from '../../Assets/IconAndLogo/Vector (1).png'
-import Arrow from '../../Assets/IconAndLogo/arrow-down.png'
+import Arrow from '../../Assets/IconAndLogo/Frame 2756.png'
 import Int from '../../Assets/IconAndLogo/Group.png'
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
@@ -10,17 +10,30 @@ import NewReport from '../../components/NewReport'
 import axios from 'axios'
 import Success from '../../Assets/IconAndLogo/Group 5647.png'
 import Error from '../../Assets/IconAndLogo/Frame 2755 (1).png'
+import { BASE_URL } from '../../data/data'
+import { MoneyFormat } from '../../utils/utils'
 // import { Link } from 'react-router-dom'
 
 function Form() {
     const [phone, setPhone] = useState("")
     const [remarks, setRemarks] = useState("")
+    const [error, setError] = useState("")
     const [referrerName, setReferrerName] = useState("")
-    const [rebatePaid, setRebatePaid] = useState("")
-    const [discountId, setDiscountId] = useState("")
+    const [rebatePaid, setRebatePaid] = useState(0)
+    const [discountId, setDiscountId] = useState(0)
     const [patientId, setPatientId] = useState("")
+    const [facilityId, setFacilityId] = useState("")
     const [buttonClass, setButtonClass] = useState("submitFormLight")
+    const [category, setCategory] = useState([])
+    const [procedures, setProcedures] = useState([])
+    const [procedure, setProcedure] = useState([]);
+    const [rebate, setRebate] = useState(false);
+    const [totalAmount, setTotalAmount] = useState(0);
 
+    const toggleRebate = () => {
+        setRebate(!rebate);
+    };
+    
     // const [patient, setPatient] = useState([]);
     // const [patientId, setPatientId] = useState('')
     // const [timer, setTimer] = useState(null)
@@ -35,13 +48,13 @@ function Form() {
     const successRef = useRef(null);
 
     useEffect(() => {
-        if (referrerName || rebatePaid || discountId || patientId || phone || remarks) {
+        if ( patientId  || remarks) {
             setButtonClass("submitFormDark")
         } else {
             setButtonClass("submitFormLight")
         }
 
-    }, [referrerName, rebatePaid, discountId, patientId, phone, remarks]);
+    }, [ patientId, remarks]);
 
     // const handleClick = () => {
     //   console.log('Button Clicked!');
@@ -66,25 +79,156 @@ function Form() {
     //     setTimer(newTimer)
     // }
 
+    const [categoryValue, setCategorydValue] = useState("");
+
+    const handleProcedureCategory = (event) => {
+        const value = event.target.value;
+        // Update localStorage
+        const storedcategoryValues = value
+        localStorage.setItem('procedureCategoryValues', JSON.stringify(storedcategoryValues));
+
+        setCategorydValue(storedcategoryValues);
+
+        if (categoryValue) {
+            setError("")
+        }
+
+    };
+
+    const handleCategoryDelete = (valueToDelete) => {
+        // Remove the value from the array
+        const updatedValues = setCategorydValue("");
+
+        // Update localStorage and state
+        localStorage.setItem('procedureCategoryValues', JSON.stringify(updatedValues));
+        setCategorydValue(updatedValues);
+    };
+
+
+    const CategoryCheck = () => {
+        if (!categoryValue) {
+            setError("Choose a procedure category before selecting procedure")
+        } else (
+            setError("")
+        )
+    }
+
+    const FetchProedure = () => {
+        const url = `${BASE_URL}/service-manager/medServices/getall`
+        axios.get(url)
+            .then((res) => {
+                setProcedures(res.data.data)
+            })
+            .catch((err) => console.log(err));
+    };
+
+
+    const FetchCategory = () => {
+        const url = `${BASE_URL}/service-manager/medServiceCategory/getactivemedservicecategory`
+        axios.get(url)
+            .then((res) => {
+                setCategory(res.data.data)
+            })
+            .catch((err) => console.log(err));
+    };
+
+    useEffect(() => {
+        FetchProedure()
+        FetchCategory()
+        setDiscountId(0)
+        setFacilityId("")
+    }, [])
+
+
+    useEffect(() => {
+        const storedcategoryValues = JSON.parse(localStorage.getItem('procedureCategoryValues')) || "";
+        setCategorydValue(storedcategoryValues);
+
+        const handleBeforeUnload = () => {
+            // Clear localStorage
+            localStorage.clear();
+        };
+
+        // Attach the event listener
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+    }, []); // Empty dependency array ensures this effect runs once on mount
+
+    const addProcedure = (test) => {
+        if (!procedure.some(item => item.name === test.name)) {
+            // Add the product to the cart
+            const updatedProcedure = [...procedure, test];
+            setProcedure(updatedProcedure);
+
+            // Update the total amount
+            const updatedTotalAmount = updatedProcedure.reduce(
+                (total, item) => total + +item.amount,
+                0
+            );
+
+            let procedureTotalAmoumt = 0;
+
+            for (let i = 0; i < procedure.length; i++) {
+                procedureTotalAmoumt += procedure[i].amount;
+            }
+
+            console.log(procedureTotalAmoumt);
+
+            setTotalAmount(updatedTotalAmount);
+
+            // Update localStorage
+            localStorage.setItem('procedures', JSON.stringify(updatedProcedure));
+
+        } else {
+            // Product already in the cart, handle accordingly (e.g., show a message)
+            console.log(`procedure ${test.name} is added already .`);
+        }
+    };
+
+    const removeProcedure = (index) => {
+        const removedProduct = procedure[index];
+        const updatedProcedure = procedure.filter((_, i) => i !== index);
+        setProcedure(updatedProcedure);
+
+        // Update the total amount
+        const updatedTotalAmount = totalAmount - removedProduct.amount;
+        setTotalAmount(updatedTotalAmount);
+
+        // Update localStorage
+        localStorage.setItem('procedures', JSON.stringify(updatedProcedure));
+    };
+
+    useEffect(() => {
+        const storedProcedure = JSON.parse(localStorage.getItem('procedures')) || [];
+        setProcedure(storedProcedure);
+
+        // Calculate total amount
+        const storedTotalAmount = storedProcedure.reduce(
+            (total, item) => total + +item.amount,
+            0
+        );
+
+        setTotalAmount(storedTotalAmount);
+    }, [totalAmount]); // Empty dependency array ensures this effect runs once on mount
+
+
+
 
     const body = {
         "trackId": "1",
-        "patientName": "Deborah",
-        "age": "25",
-        "facilityId":"1",
+        "facilityId": facilityId,
         "medServiceId": "11",
-        "quantity": "2",
-        "amount": "1000",
-        "subotal": "2000",
+        "quantity": 0,
+        "amount": totalAmount,
+        "subotal": totalAmount,
         "remarks": remarks,
         "referrerName": referrerName,
         "rebatePaid": rebatePaid,
-        "phoneNo": phone,
         "discountId": discountId,
+        "phoneNo": phone,
         "entryUserId": "1",
         "patientId": patientId
     }
-
 
     // useEffect(() => {
     //     if (patient.status === 'false') {
@@ -115,19 +259,17 @@ function Form() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Submit");
-        if (!referrerName && !rebatePaid && !discountId && !patientId && !phone && !remarks) {
+        if (!patientId && !remarks) {
             errorRef.current.click();
         } else {
-            axios.post('http://139.59.168.0:8080/service-manager/procedures/create', body, axiosConfig)
+            axios.post(`${BASE_URL}/service-manager/procedures/create`, body, axiosConfig)
                 .then(response => {
                     successRef.current.click()
                     console.log(response)
                 })
                 .catch(err => console.log(err))
         }
-
     };
-
 
 
     return (
@@ -260,91 +402,116 @@ function Form() {
                                     </div>
                                 </div>
                                 <div className="col-md-6">
-                                    <div className="formss">
-                                        <label htmlFor="Defaultselectexample" className='label'>Procedure category</label>  <br />
-                                        <div className="inputt">
-                                            <p>Select Procedure/Test</p>
-                                            <img src={Arrow} alt="" />
-                                        </div>
-                                        <div className="testDropdown">
-                                            <div className="header">
-                                                <p>Select from the category</p>
+                                    <label htmlFor="Defaultselectexample" className='label'>Procedure category</label>  <br />
+                                    <div class="dropdown">
+                                        <button class="btn inputt dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Select Procedure/Test
+                                        </button>
+                                        <ul class="dropdown-menu" style={{ width: "100%" }}>
+                                            <div className="testDropdown">
+                                                <div className="header">
+                                                    <p>Select from the category </p>
+                                                </div>
+                                                {category.map((each, i) => (
+                                                    <div className="each">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" value={each.categoryName}
+                                                                // checked={selectedValue === ' Liver Test '}
+                                                                onChange={handleProcedureCategory}
+                                                                type="checkbox" id="flexCheckDefaults1" />
+                                                            <label class="form-check-label" for="flexCheckDefaults1">
+                                                                {each.categoryName}
+                                                            </label>
+                                                        </div>
+                                                        <div className="amount">
+                                                            {/* <img src={Naira} alt="" />
+                                                            <p>{each.price}</p> */}
+                                                        </div>
+                                                    </div>
+                                                ))}
+
                                             </div>
-                                            <div className="each">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                        Cholesterol Profile
-                                                    </label>
-                                                </div>
-                                                <div className="amount">
-                                                    <img src={Naira} alt="" />
-                                                    <p>500.00</p>
-                                                </div>
-                                            </div>
-                                            <div className="each">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaults" />
-                                                    <label class="form-check-label" for="flexCheckDefaults">
-                                                        Liver Test
-                                                    </label>
-                                                </div>
-                                                <div className="amount">
-                                                    <img src={Naira} alt="" />
-                                                    <p>1000.00</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </ul>
+
+                                    </div>
+                                    <div className="selecteedValues">
+                                        <ul>
+                                            {categoryValue ?
+                                                <li >
+                                                    {categoryValue}
+                                                    <img src={Arrow} onClick={() => handleCategoryDelete(categoryValue)} alt='' />
+                                                </li>
+                                                : <div className=""></div>
+                                            }
+                                        </ul>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
-
-
-                        <div className="sett">
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <div className="formss">
-                                        <label htmlFor="Defaultselectexample" className='label'>Procedures</label>  <br />
-                                        <div className="inputt">
-                                            <p>Select Procedure/Test</p>
-                                            <img src={Arrow} alt="" />
+                        <div className="margin20"></div>
+                        <div className="col-md-6" onClick={CategoryCheck}>
+                            <span className='errorMessage'>{error}</span> <br />
+                            <label htmlFor="Defaultselectexample" className='label'>Procedures</label>  <br />
+                            <div class="dropdown">
+                                <button class="btn inputt dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Select Procedure/Test
+                                </button>
+                                <ul class="dropdown-menu" style={{ width: "100%" }}>
+                                    <div className="testDropdown">
+                                        <div className="header">
+                                            <p>Select </p>
                                         </div>
-                                        <div className="testDropdown">
-                                            <div className="header">
-                                                <p>Select one option...</p>
-                                            </div>
+                                        {/* {procedures.map((each, i) => (
                                             <div className="each">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                        Cholesterol Profile
+                                                    <input class="form-check-input" value={each.medServiceName}
+                                                        // checked={selectedValue === ' Liver Test '}
+                                                        onChange={(event) => handleProcedure(event, each.price)}
+                                                        type="checkbox" id="flexCheckDefaultts1" />
+                                                    <label class="form-check-label" for="flexCheckDefaultts1">
+                                                        {each.medServiceName}
                                                     </label>
                                                 </div>
                                                 <div className="amount">
                                                     <img src={Naira} alt="" />
-                                                    <p>500.00</p>
+                                                    <p>{each.price}</p>
                                                 </div>
                                             </div>
-                                            <div className="each">
+                                        ))} */}
+                                        {procedures.map((each, i) => (
+                                            <div className="each" key={i}>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaults" />
-                                                    <label class="form-check-label" for="flexCheckDefaults">
-                                                        Liver Test
+                                                    <input class="form-check-input" value={each.medServiceName}
+                                                        // checked={selectedValue === ' Liver Test '}
+                                                        onClick={(event) => addProcedure({ name: `${each.medServiceName}`, amount: `${each.price}` })}
+                                                        type="checkbox" id={`flexCheckDefaultts+${i}`} />
+                                                    <label class="form-check-label" for={`flexCheckDefaultts+${i}`}>
+                                                        {each.medServiceName}
                                                     </label>
                                                 </div>
                                                 <div className="amount">
                                                     <img src={Naira} alt="" />
-                                                    <p>1000.00</p>
+                                                    <p>{each.price}</p>
                                                 </div>
                                             </div>
-                                        </div>
+                                        ))}
                                     </div>
-                                </div>
+                                </ul>
 
                             </div>
+                            <div className="selecteedValues">
+                                <ul>
+                                    {procedure.map((value, index) => (
+                                        <li key={index}>
+                                            {value.name} - {value.amount}
+                                            <img src={Arrow} onClick={() => removeProcedure(index)} alt='' />
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
                         </div>
+
                         <div className="deduction">
                             <h2>Deduction</h2>
                             <p>You are to populate the Rebate Amount to efficiency calculate a deduction</p>
@@ -353,8 +520,8 @@ function Form() {
                         <div className="Rebate">
                             <div className="row">
                                 <div className="col-md-6 mt-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultt" />
+                                    <div class="form-check" >
+                                        <input class="form-check-input" type="checkbox" onChange={toggleRebate}  value="" id="flexCheckDefaultt" />
                                         <label class="form-check-label" for="flexCheckDefaultt">
                                             Rebate
                                         </label>
@@ -364,7 +531,7 @@ function Form() {
                                         <p className='fw3'>click on the box if rebate was paid</p>
                                     </div>
                                 </div>
-                                <div className="col-md-6">
+                                {/* <div className="col-md-6">
                                     <div className="discount">
                                         <label htmlFor="discount" className='fw3'>Discount Code</label>  <br />
                                         <input type="text" name="discountId" onChange={(e) => setDiscountId(e.target.value)} id="discount" placeholder='Enter code' />
@@ -373,54 +540,57 @@ function Form() {
                                         <img src={Int} alt="" />
                                         <p className='fw3'>50% Discount as being applied to this transaction - 1,000.00</p>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
-                        <div className="margin30"></div>
-                        <div className="Rebate">
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <div className="discount">
-                                        <label htmlFor="discount" className='fw3'>Rebate Paid </label>  <br />
-                                        <input type="text" name="rebatePaid" onChange={(e) => setRebatePaid(e.target.value)} id="discount" placeholder='Enter Amount of Rebate Paid' />
+                        {rebate ? <div className="">
+                            <div className="margin30"></div>
+                            <div className="Rebate">
+                                <div className="row">
+                                    <div className="col-md-6">
+                                        <div className="discount">
+                                            <label htmlFor="discount" className='fw3'>Rebate Paid </label>  <br />
+                                            <input type="text" name="rebatePaid" onChange={(e) => setRebatePaid(e.target.value)} id="discount" placeholder='Enter Amount of Rebate Paid' />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="discount">
-                                        <label htmlFor="discount" className='fw3'>Referrers Name</label>  <br />
-                                        <input type="text" name="referrerName" onChange={(e) => setReferrerName(e.target.value)} id="discount" placeholder='Enter Referee Name' />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="margin30"></div>
-                        <div className="Rebate">
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <div className="discount">
-                                        <label htmlFor="discount" className='fw3'>Referrer’s Hospital/Laboratory</label>  <br />
-                                        <input type="text" name="" id="discount" placeholder='Enter Laboratory Name' />
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="discount">
-                                        <label htmlFor="discount" className='fw3'>Referrer’s Email Address</label>  <br />
-                                        <input type="text" name="" id="discount" placeholder='Enter Referrer Email Address' />
+                                    <div className="col-md-6">
+                                        <div className="discount">
+                                            <label htmlFor="discount" className='fw3'>Referrers Name</label>  <br />
+                                            <input type="text" name="referrerName" onChange={(e) => setReferrerName(e.target.value)} id="discount" placeholder='Enter Referee Name' />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="margin30"></div>
-                        <div className="phone">
-                            <div className="col-md-6">
-                                <label htmlFor="discount" className='fw3'>Referrer’s Phone Number</label>  <br />
-                                <PhoneInput
-                                    placeholder="Enter phone number"
-                                    value={phone}
-                                    onChange={setPhone}
-                                />
+                            <div className="margin30"></div>
+                            <div className="Rebate">
+                                <div className="row">
+                                    <div className="col-md-6">
+                                        <div className="discount">
+                                            <label htmlFor="discount" className='fw3'>Referrer’s Hospital/Laboratory</label>  <br />
+                                            <input type="text" name="" id="discount" placeholder='Enter Laboratory Name' />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="discount">
+                                            <label htmlFor="discount" className='fw3'>Referrer’s Email Address</label>  <br />
+                                            <input type="text" name="" id="discount" placeholder='Enter Referrer Email Address' />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                            <div className="margin30"></div>
+                            <div className="phone">
+                                <div className="col-md-6">
+                                    <label htmlFor="discount" className='fw3'>Referrer’s Phone Number</label>  <br />
+                                    <PhoneInput
+                                        placeholder="Enter phone number"
+                                        value={phone}
+                                        onChange={setPhone}
+                                    />
+                                </div>
+                            </div>
+                        </div> : <div></div> 
+                        }
                         <div className="margin30"></div>
                         <div className="remark">
                             <label htmlFor="discount" className='fw3'>Remark</label> <br />
@@ -436,7 +606,7 @@ function Form() {
                                         </div>
                                         <div className="amount">
                                             <img src={Naira} alt="" />
-                                            <p className='fw3'>2,000.00</p>
+                                            <p className='fw3'>{MoneyFormat(totalAmount)}.00</p>
                                         </div>
                                     </div>
                                     <div className="">
@@ -446,7 +616,7 @@ function Form() {
                                         <div className="amount">
                                             <p className='fw3 red'>( </p>
                                             <img src={RedNaira} alt="" />
-                                            <p className='fw3 red'> 1,000.00</p>
+                                            <p className='fw3 red'> 0.00</p>
                                             <p className='fw3 red'> )</p>
                                         </div>
                                     </div>
@@ -456,7 +626,7 @@ function Form() {
                                         </div>
                                         <div className="amount">
                                             <img src={Naira} alt="" />
-                                            <p className='f20'>1,000.00</p>
+                                            <p className='f20'>{MoneyFormat(totalAmount)}.00</p>
                                         </div>
                                     </div>
                                 </div>

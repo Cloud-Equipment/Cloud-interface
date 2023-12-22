@@ -52,6 +52,10 @@
   margin: 30px 0;
 }
 
+.margin20 {
+  margin: 20px 0;
+}
+
 .padding50 {
   padding: 50px 0;
 }
@@ -160,6 +164,11 @@
 
 .Dm {
   font-family: "DM Sans", sans-serif;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 12px;
 }
 
 .flexDiv {
@@ -2447,6 +2456,26 @@
 .ActiveFormSection .form .sett {
   padding-top: 20px;
 }
+.ActiveFormSection .form .selecteedValues ul {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.ActiveFormSection .form .selecteedValues ul li {
+  border: 1px solid #54D4BD;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 12px;
+  margin: 5px;
+  color: #54D4BD;
+}
+.ActiveFormSection .form .selecteedValues img {
+  width: 15px;
+  margin-left: 10px;
+  cursor: pointer;
+}
 .ActiveFormSection .form .formss {
   cursor: pointer;
   margin: 10px 0;
@@ -2486,10 +2515,43 @@
 .ActiveFormSection .form .formss .inputt img {
   width: 12px;
 }
+.ActiveFormSection .form .label {
+  font-size: 14px;
+  margin-bottom: 3px;
+  font-weight: 300;
+}
+.ActiveFormSection .form .dropdown button {
+  border: 1px solid rgba(99, 119, 138, 0.5);
+  border-radius: 8px;
+  height: 40px;
+  width: 90%;
+  color: rgba(99, 119, 138, 0.5) !important;
+  font-weight: 300;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+}
+.ActiveFormSection .form .dropdown button::-moz-placeholder {
+  color: rgba(99, 119, 138, 0.5) !important;
+}
+.ActiveFormSection .form .dropdown button::placeholder,
+.ActiveFormSection .form .dropdown button .placeholder {
+  color: rgba(99, 119, 138, 0.5) !important;
+}
+.ActiveFormSection .form .dropdown button p {
+  margin: 0;
+  color: rgba(99, 119, 138, 0.5) !important;
+  font-weight: 300;
+  font-size: 13px;
+}
+.ActiveFormSection .form .dropdown button img {
+  width: 12px;
+}
 .ActiveFormSection .form .testDropdown {
   background-color: #fff;
   width: 100%;
-  display: none;
   border-radius: 5px;
   position: absolute;
   border: 1px;
