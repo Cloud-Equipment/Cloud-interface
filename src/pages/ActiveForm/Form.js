@@ -10,7 +10,7 @@ import NewReport from '../../components/NewReport'
 import axios from 'axios'
 import Success from '../../Assets/IconAndLogo/Group 5647.png'
 import Error from '../../Assets/IconAndLogo/Frame 2755 (1).png'
-import { BASE_URL } from '../../data/data'
+import { BASE_URL, Debounce } from '../../data/data'
 import { MoneyFormat } from '../../utils/utils'
 // import { Link } from 'react-router-dom'
 
@@ -19,8 +19,11 @@ function Form() {
     const [remarks, setRemarks] = useState("")
     const [error, setError] = useState("")
     const [referrerName, setReferrerName] = useState("")
-    const [rebatePaid, setRebatePaid] = useState(0)
-    const [discountId, setDiscountId] = useState(0)
+    const [rebatePaid, setRebatePaid] = useState("")
+    const [discountData, setDiscountData] = useState([])
+    const [quantity, setQuantity] = useState("1")
+    const [discountId, setDiscountId] = useState()
+    const [userId, setUserId] = useState("")
     const [patientId, setPatientId] = useState("")
     const [facilityId, setFacilityId] = useState("")
     const [buttonClass, setButtonClass] = useState("submitFormLight")
@@ -28,56 +31,85 @@ function Form() {
     const [procedures, setProcedures] = useState([])
     const [procedure, setProcedure] = useState([]);
     const [rebate, setRebate] = useState(false);
-    const [totalAmount, setTotalAmount] = useState(0);
+    const [patientStatus, setPatientStatus] = useState(false);
+    const [totalAmount, setTotalAmount] = useState("");
+    const [totalDiscount, setTotalDiscount] = useState("");
+    const [subtotal, setSubtotal] = useState("");
+    const [total, setTotal] = useState("");
+    const [patient, setPatient] = useState([]);
+    const [refererHospital, setRefererHospital] = useState('')
+    const [refererEmail, setRefererEmail] = useState('')
+    const [procedureData, setProcedureData] = useState([]);
+    // PATIENTS DATA
+    const [patientName, setPatientName] = useState('')
+    const [patientEmail, setPatientEmail] = useState('')
+    const [patientNumber, setPatientNumber] = useState('')
+    const [patientGender, setPatientGender] = useState('')
+    const [patientAge, setPatientAge] = useState('')
+    const [patientAddress, setPatientAddress] = useState('')
+    const [faclityDiscountId, setFaclityDiscountId] = useState()
 
     const toggleRebate = () => {
         setRebate(!rebate);
     };
-    
-    // const [patient, setPatient] = useState([]);
-    // const [patientId, setPatientId] = useState('')
-    // const [timer, setTimer] = useState(null)
-    // PATIENTS DATA
-    // const [patientName, setPatientName] = useState('')
-    // const [patientNumber, setPatientNumber] = useState('')
-    // const [patientGender, setPatientGender] = useState('')
-    // const [patientAge, setPatientAge] = useState('')
-    // const [patientAddress, setPatientAddress] = useState('')
 
     const errorRef = useRef(null);
     const successRef = useRef(null);
+    const patientNull = useRef(null);
 
     useEffect(() => {
-        if ( patientId  || remarks) {
+        if (patientId || remarks) {
             setButtonClass("submitFormDark")
         } else {
             setButtonClass("submitFormLight")
         }
 
-    }, [ patientId, remarks]);
+    }, [patientId, remarks]);
 
-    // const handleClick = () => {
-    //   console.log('Button Clicked!');
-    // };
+    const url = `${BASE_URL}/patient/getpatientbyuniqueid/${patientId}`;
+    const FetchPatient = () => {
+        return axios.get(url)
+            .then((res) => {
+                if (res.data.statusCode === 200) {
+                    setPatient(res.data.data)
+                    setPatientStatus(true)
+                }
+            })
+            .catch((err) => console.log(err));
+    }
 
-    // const url = `https://patient/users${patientId}`;
-    // const fetchPatient = () => {
-    //     return axios.get(url)
-    //     .then((res) => setPatient(res.data))
-    //     .catch((err) => console.log(err));
-    // };
+    const debouncedFetchData = Debounce(FetchPatient, 500);
 
-    // const inputChanged = e => {
-    //     setPatientId(e.target.value)
+    useEffect(() => {
+        if (patientId) {
+            debouncedFetchData(patientId);
+        }
+    }, [patientId, debouncedFetchData]);
 
-    //     clearTimeout(timer)
+    const handleInputChange = (event) => {
+        setPatientId(event.target.value);
+    };
 
-    //     const newTimer = setTimeout(() => {
-    //         fetchPatient()
-    //     }, 500)
 
-    //     setTimer(newTimer)
-    // }
+    useEffect(() => {
+        //   fetchInfo();
+        if (patient) {
+            setPatientName(patient.patientName)
+            setPatientNumber(patient.patientPhone)
+            setPatientAge(patient.patientAge)
+            setPatientAddress(patient.address)
+            setPatientEmail(patient.patientEmail)
+
+            if (patient.patientGenderId === 1) {
+                setPatientGender("Male")
+            } else if (patient.patientGenderId === 2) {
+                setPatientGender("Female")
+            } else if (patient.patientGenderId === 3) {
+                setPatientGender("Others")
+            }
+        }
+    }, [patient]);
+
 
     const [categoryValue, setCategorydValue] = useState("");
 
@@ -122,6 +154,14 @@ function Form() {
             .catch((err) => console.log(err));
     };
 
+    // const FetchDiscount = () => {
+    //     const url = `${BASE_URL}/service-manager/medServices/getall`
+    //     axios.get(url)
+    //         .then((res) => {
+    //             setProcedures(res.data.data)
+    //         })
+    //         .catch((err) => console.log(err));
+    // };
 
     const FetchCategory = () => {
         const url = `${BASE_URL}/service-manager/medServiceCategory/getactivemedservicecategory`
@@ -135,8 +175,9 @@ function Form() {
     useEffect(() => {
         FetchProedure()
         FetchCategory()
-        setDiscountId(0)
-        setFacilityId("")
+        setFacilityId("ewjeri1")
+        setQuantity("1")
+        setUserId("11")
     }, [])
 
 
@@ -152,13 +193,43 @@ function Form() {
         // Attach the event listener
         window.addEventListener('beforeunload', handleBeforeUnload);
 
-    }, []); // Empty dependency array ensures this effect runs once on mount
+    }, []);
 
-    const addProcedure = (test) => {
-        if (!procedure.some(item => item.name === test.name)) {
-            // Add the product to the cart
+    const Fac_url = `${BASE_URL}/payment/discounts/getactivediscount/facilityId?facilityId=${facilityId}`
+
+    useEffect(() => {
+        axios.get(Fac_url)
+            .then((res) => {
+                setDiscountData(res.data.data)
+            })
+            .catch((err) => console.log(err));
+
+    }, [Fac_url])
+
+    const handleAddProcedure = (id, price, name) => {
+        const totals = price * quantity
+
+        const discount = discountData.find((d) => d.procedureId === id);
+        const facility = discountData.find((d) => d.discountTypeId === 1);
+
+        if (facility) {
+            setFaclityDiscountId(facility.facilityId)
+        }
+
+        let discountValues;
+
+        if (discount) {
+            discountValues = discount.discountPercent
+            setDiscountId(discount.procedureId)
+        }
+
+        const test = { name: name, amount: price, discount: discountValues}
+
+        if (!procedureData.some(procedureData => procedureData.medServiceId === id)) {
+            // Add the product to the array
             const updatedProcedure = [...procedure, test];
             setProcedure(updatedProcedure);
+
 
             // Update the total amount
             const updatedTotalAmount = updatedProcedure.reduce(
@@ -168,12 +239,46 @@ function Form() {
 
             setTotalAmount(updatedTotalAmount);
 
+            if (discount && facility) {
+
+                const discountValue = discount.discountPercent
+                const facilityValue = facility.discountPercent
+                const Value = +discountValue + +facilityValue
+                setTotalDiscount((prevDiscount) => prevDiscount + +Value);
+
+            } else if (discount) {
+                setTotalDiscount((prevDiscount) => prevDiscount + discount.discountPercent);
+            } else if (facility) {
+                setTotalDiscount((prevDiscount) => prevDiscount + discount.discountPercent);
+            }
+
             // Update localStorage
             localStorage.setItem('procedures', JSON.stringify(updatedProcedure));
 
+
+            const newPrcedure = {
+                "patientId": patientId,
+                "medServiceId": id,
+                "quantity": quantity,
+                "amount": price,
+                "subotal": totals,
+                "remarks": remarks,
+                "referrerName": referrerName,
+                "rebatePaid": rebatePaid,
+                "refererHospital": refererHospital,
+                "refererEmail": refererEmail,
+                "phoneNo": phone,
+                "entryUserId": userId,
+                "facilityId": facilityId,
+                "procedureDiscountId": discountId,
+                "faclityDiscountId": faclityDiscountId,
+            };
+
+            setProcedureData([...procedureData, newPrcedure]);
+
+            console.log(procedureData)
         } else {
-            // Product already in the cart, handle accordingly (e.g., show a message)
-            console.log(`procedure ${test.name} is added already .`);
+            alert("Added already")
         }
     };
 
@@ -186,8 +291,15 @@ function Form() {
         const updatedTotalAmount = totalAmount - removedProduct.amount;
         setTotalAmount(updatedTotalAmount);
 
+        const discountPercents = removedProduct.discount
+        console.log(discountPercents)
+        setTotalDiscount((prevDiscount) => prevDiscount - discountPercents)
+
         // Update localStorage
         localStorage.setItem('procedures', JSON.stringify(updatedProcedure));
+
+        const updatedProcedureData = procedureData.filter((_, i) => i !== index);
+        setProcedureData(updatedProcedureData);
     };
 
     useEffect(() => {
@@ -201,45 +313,8 @@ function Form() {
         );
 
         setTotalAmount(storedTotalAmount);
-    }, [totalAmount]); // Empty dependency array ensures this effect runs once on mount
 
-
-
-
-    const body = {
-        "trackId": "1",
-        "facilityId": facilityId,
-        "medServiceId": "11",
-        "quantity": 0,
-        "amount": totalAmount,
-        "subotal": totalAmount,
-        "remarks": remarks,
-        "referrerName": referrerName,
-        "rebatePaid": rebatePaid,
-        "discountId": discountId,
-        "phoneNo": phone,
-        "entryUserId": "1",
-        "patientId": patientId
-    }
-
-    // useEffect(() => {
-    //     if (patient.status === 'false') {
-
-    //     }
-    //     //   fetchInfo();
-    //     if (patient) {
-    //         setPatientName(patient.name)
-    //         setPatientNumber(patient.number)
-    //         setPatientAge(patient.age)
-    //         setPatientAddress(patient.address)
-    //         setPatientGender(patient.gender)
-    //     }
-    // }, [patient]);
-
-
-    // const handleInput = (event) => (
-    //    { ...body, [event.target.name]: event.target.value }
-    // )
+    }, [totalAmount]);
 
     let axiosConfig = {
         headers: {
@@ -248,21 +323,57 @@ function Form() {
         }
     }
 
+    useEffect(() => {
+        const updatedData = procedureData.map(item => ({
+            ...item,
+            "remarks": remarks,
+            "referrerName": referrerName,
+            "rebatePaid": rebatePaid,
+            "phoneNo": phone,
+            "refererHospital": refererHospital,
+            "refererEmail": refererEmail,
+        }));
+
+        localStorage.setItem('procedureData', JSON.stringify(updatedData));
+        // setProcedureData(updatedData)
+    }, [procedureData, remarks, referrerName, rebatePaid, phone, refererHospital, refererEmail])
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Submit");
-        if (!patientId && !remarks) {
+        const data = JSON.parse(localStorage.getItem('procedureData')) || [];
+        if (!patientStatus) {
+            patientNull.current.click();
+            console.log(patientStatus)
+        } else if (!patientId && !remarks) {
             errorRef.current.click();
         } else {
-            axios.post(`${BASE_URL}/service-manager/procedures/create`, body, axiosConfig)
+            console.log(procedureData)
+            axios.post(`${BASE_URL}/service-manager/procedures/create`, data, axiosConfig)
                 .then(response => {
-                    successRef.current.click()
                     console.log(response)
+                    if (response) {
+                        successRef.current.click()
+                    }
+
                 })
                 .catch(err => console.log(err))
         }
     };
 
+
+    useEffect(() => {
+        if (rebate) {
+            setSubtotal(totalAmount - rebatePaid)
+        } else (
+            setSubtotal(totalAmount)
+        )
+    }, [totalAmount, rebate, rebatePaid])
+
+    useEffect(() => {
+        setTotal(subtotal - (subtotal * (totalDiscount / 100)))
+
+    }, [subtotal, totalDiscount])
 
     return (
 
@@ -310,6 +421,27 @@ function Form() {
 
                     </button>
                 </div>
+                {/* PATIENT ERROR */}
+                <div>
+                    <div class="modal fade" id="exampleModall" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body ErrorModal">
+                                    <center>
+                                        <img src={Error} alt="" />
+                                        <p>Patient not found</p>
+                                        <div className="buttonss">
+                                            <button type="button" class="btn light-button" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModall" ref={patientNull} style={{ display: 'none' }}>
+
+                    </button>
+                </div>
                 <div className="relative ">
                     <div className="headers">
                         <div className="date ">
@@ -338,14 +470,14 @@ function Form() {
                                 <div className="col-md-6">
                                     <div className="discount">
                                         <label htmlFor="discount" className='fw3'>Patient ID</label> <br />
-                                        <input type="text" name="patientId" onChange={(e) => setPatientId(e.target.value)} id="discount" placeholder='AGA/453|' />
-                                        {/* <input type="text" value={patientId} name="userId" id="discount" placeholder='AGA/453|' onChange={inputChanged} /> */}
+                                        {/* <input type="text" name="patientId" onChange={(e) => setPatientId(e.target.value)} id="discount" placeholder='AGA/453|' /> */}
+                                        <input type="text" onChange={handleInputChange} name="userId" id="discount" placeholder='AGA/453' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="discount">
                                         <label htmlFor="discount" className='fw3'>Patient Name</label>  <br />
-                                        <input type="text" name="name" id="discount" placeholder='Adepoju Deborah ' />
+                                        <input type="text" name="name" value={patientName} id="discount" placeholder='Adepoju Deborah ' />
                                     </div>
                                 </div>
                             </div>
@@ -356,13 +488,13 @@ function Form() {
                                 <div className="col-md-6">
                                     <div className="discount">
                                         <label htmlFor="discount" className='fw3'>Patient Mobile Number</label>  <br />
-                                        <input type="number" name="number" id="discount" placeholder='+234 08143626356' />
+                                        <input type="text" name="number" value={patientNumber} id="discount" placeholder='+234 08143626356' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="discount">
-                                        <label htmlFor="discount" className='fw3'>Referrer’s Email Address</label>  <br />
-                                        <input type="email" name="" id="discount" placeholder='Enter Referrer Email Address' />
+                                        <label htmlFor="discount" className='fw3'>Gender</label>  <br />
+                                        <input type="text" name="gender" value={patientGender} id="discount" placeholder='Male' />
                                     </div>
                                 </div>
                             </div>
@@ -370,18 +502,20 @@ function Form() {
                         <div className="margin30"></div>
                         <div className="Rebate">
                             <div className="row">
+
                                 <div className="col-md-6">
-                                    <label htmlFor="discount" className='fw3'>Gender</label>  <br />
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected ><span></span></option>
-                                    </select>
+                                    <div className="discount">
+                                        <label htmlFor="discount" className='fw3'>Age of the Patient</label>  <br />
+                                        <input type="text" name="age" value={patientAge} id="discount" placeholder='' />
+                                    </div>
                                 </div>
                                 <div className="col-md-6">
-                                    <label htmlFor="discount" className='fw3'>Age of the Patient</label>  <br />
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected ><span></span></option>
-                                    </select>
+                                    <div className="discount">
+                                        <label htmlFor="discount" className='fw3'>Patient Emial</label>  <br />
+                                        <input type="text" name="email" value={patientEmail} id="discount" placeholder='' />
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                         <div className="margin30"></div>
@@ -390,7 +524,7 @@ function Form() {
                                 <div className="col-md-6">
                                     <div className="discount">
                                         <label htmlFor="discount" className='fw3'>Address</label>  <br />
-                                        <input type="text" name="address" id="discount" placeholder='No 24, W. F. Kumuyi Street,' />
+                                        <input type="text" name="address" value={patientAddress} id="discount" placeholder='No 24, W. F. Kumuyi Street,' />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
@@ -405,7 +539,7 @@ function Form() {
                                                     <p>Select from the category </p>
                                                 </div>
                                                 {category.map((each, i) => (
-                                                    <div className="each">
+                                                    <div className="each" key={i}>
                                                         <div class="form-check">
                                                             <input class="form-check-input" value={each.categoryName}
                                                                 // checked={selectedValue === ' Liver Test '}
@@ -438,71 +572,74 @@ function Form() {
                                         </ul>
                                     </div>
                                 </div>
+
                             </div>
-                        </div>
-                        <div className="margin20"></div>
-                        <div className="col-md-6" onClick={CategoryCheck}>
-                            <span className='errorMessage'>{error}</span> <br />
-                            <label htmlFor="Defaultselectexample" className='label'>Procedures</label>  <br />
-                            <div class="dropdown">
-                                <button class="btn inputt dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Select Procedure/Test
-                                </button>
-                                <ul class="dropdown-menu" style={{ width: "100%" }}>
-                                    <div className="testDropdown">
-                                        <div className="header">
-                                            <p>Select </p>
+                            <div className="margin30"></div>
+                            <div className="col-md-6" onClick={CategoryCheck}>
+                                <label htmlFor="Defaultselectexample" className='label'>Procedures</label>  <br />
+                                <div class="dropdown">
+                                    <button class="btn inputt dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Select Procedure/Test
+                                    </button>
+                                    <ul class="dropdown-menu" style={{ width: "100%" }}>
+                                        <div className="testDropdown">
+                                            <div className="header">
+                                                <p>Select </p>
+                                            </div>
+                                            {/* {procedures.map((each, i) => (
+                                     <div className="each">
+                                         <div class="form-check">
+                                             <input class="form-check-input" value={each.medServiceName}
+                                                 // checked={selectedValue === ' Liver Test '}
+                                                 onChange={(event) => handleProcedure(event, each.price)}
+                                                 type="checkbox" id="flexCheckDefaultts1" />
+                                             <label class="form-check-label" for="flexCheckDefaultts1">
+                                                 {each.medServiceName}
+                                             </label>
+                                         </div>
+                                         <div className="amount">
+                                             <img src={Naira} alt="" />
+                                             <p>{each.price}</p>
+                                         </div>
+                                     </div>
+                                 ))} */}
+                                            {procedures.map((each, i) => (
+                                                <div className="each" key={i}>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" value={each.medServiceName}
+                                                            // checked={selectedValue === ' Liver Test '}
+                                                            onClick={(event) => handleAddProcedure(each.medServiceId, each.price, each.medServiceName)}
+                                                            // onClick={(event) => addProcedure({ name: `${each.medServiceName}`, amount: `${each.price}` })}
+                                                            type="checkbox" id={`flexCheckDefaultts+${i}`} />
+                                                        <label class="form-check-label" for={`flexCheckDefaultts+${i}`}>
+                                                            {each.medServiceName}
+                                                        </label>
+                                                    </div>
+                                                    <div className="amount">
+                                                        <img src={Naira} alt="" />
+                                                        <p>{each.price}</p>
+                                                    </div>
+                                                </div>
+                                            ))}
                                         </div>
-                                        {/* {procedures.map((each, i) => (
-                                            <div className="each">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" value={each.medServiceName}
-                                                        // checked={selectedValue === ' Liver Test '}
-                                                        onChange={(event) => handleProcedure(event, each.price)}
-                                                        type="checkbox" id="flexCheckDefaultts1" />
-                                                    <label class="form-check-label" for="flexCheckDefaultts1">
-                                                        {each.medServiceName}
-                                                    </label>
-                                                </div>
-                                                <div className="amount">
-                                                    <img src={Naira} alt="" />
-                                                    <p>{each.price}</p>
-                                                </div>
-                                            </div>
-                                        ))} */}
-                                        {procedures.map((each, i) => (
-                                            <div className="each" key={i}>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" value={each.medServiceName}
-                                                        // checked={selectedValue === ' Liver Test '}
-                                                        onClick={(event) => addProcedure({ name: `${each.medServiceName}`, amount: `${each.price}` })}
-                                                        type="checkbox" id={`flexCheckDefaultts+${i}`} />
-                                                    <label class="form-check-label" for={`flexCheckDefaultts+${i}`}>
-                                                        {each.medServiceName}
-                                                    </label>
-                                                </div>
-                                                <div className="amount">
-                                                    <img src={Naira} alt="" />
-                                                    <p>{each.price}</p>
-                                                </div>
-                                            </div>
+                                    </ul>
+
+                                </div>
+                                <span className='errorMessage'>{error}</span> <br />
+                                <div className="selecteedValues">
+                                    <ul>
+                                        {procedure.map((value, index) => (
+                                            <li key={index}>
+                                                {value.name} - {value.amount}
+                                                <img src={Arrow} onClick={() => removeProcedure(index)} alt='' />
+                                            </li>
                                         ))}
-                                    </div>
-                                </ul>
+                                    </ul>
+                                </div>
 
                             </div>
-                            <div className="selecteedValues">
-                                <ul>
-                                    {procedure.map((value, index) => (
-                                        <li key={index}>
-                                            {value.name} - {value.amount}
-                                            <img src={Arrow} onClick={() => removeProcedure(index)} alt='' />
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-
                         </div>
+
 
                         <div className="deduction">
                             <h2>Deduction</h2>
@@ -513,7 +650,7 @@ function Form() {
                             <div className="row">
                                 <div className="col-md-6 mt-4">
                                     <div class="form-check" >
-                                        <input class="form-check-input" type="checkbox" onChange={toggleRebate}  value="" id="flexCheckDefaultt" />
+                                        <input class="form-check-input" type="checkbox" onChange={toggleRebate} value="" id="flexCheckDefaultt" />
                                         <label class="form-check-label" for="flexCheckDefaultt">
                                             Rebate
                                         </label>
@@ -559,13 +696,13 @@ function Form() {
                                     <div className="col-md-6">
                                         <div className="discount">
                                             <label htmlFor="discount" className='fw3'>Referrer’s Hospital/Laboratory</label>  <br />
-                                            <input type="text" name="" id="discount" placeholder='Enter Laboratory Name' />
+                                            <input type="text" name="refersHospital" onChange={(e) => setRefererHospital(e.target.value)} id="discount" placeholder='Enter Laboratory Name' />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="discount">
                                             <label htmlFor="discount" className='fw3'>Referrer’s Email Address</label>  <br />
-                                            <input type="text" name="" id="discount" placeholder='Enter Referrer Email Address' />
+                                            <input type="text" name="refersEmail" id="discount" onChange={(e) => setRefererEmail(e.target.value)} placeholder='Enter Referrer Email Address' />
                                         </div>
                                     </div>
                                 </div>
@@ -581,7 +718,7 @@ function Form() {
                                     />
                                 </div>
                             </div>
-                        </div> : <div></div> 
+                        </div> : <div></div>
                         }
                         <div className="margin30"></div>
                         <div className="remark">
@@ -598,7 +735,7 @@ function Form() {
                                         </div>
                                         <div className="amount">
                                             <img src={Naira} alt="" />
-                                            <p className='fw3'>{MoneyFormat(totalAmount)}.00</p>
+                                            <p className='fw3'>{MoneyFormat(subtotal)}.00</p>
                                         </div>
                                     </div>
                                     <div className="">
@@ -608,7 +745,7 @@ function Form() {
                                         <div className="amount">
                                             <p className='fw3 red'>( </p>
                                             <img src={RedNaira} alt="" />
-                                            <p className='fw3 red'> 0.00</p>
+                                            <p className='fw3 red'>{totalDiscount}</p>
                                             <p className='fw3 red'> )</p>
                                         </div>
                                     </div>
@@ -618,7 +755,7 @@ function Form() {
                                         </div>
                                         <div className="amount">
                                             <img src={Naira} alt="" />
-                                            <p className='f20'>{MoneyFormat(totalAmount)}.00</p>
+                                            <p className='f20'>{MoneyFormat(total)}.00</p>
                                         </div>
                                     </div>
                                 </div>

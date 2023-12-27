@@ -61,8 +61,16 @@ const ReportIcon = {
     "upload": Upload,
 }
 
-const BASE_URL = "http://139.59.168.0:8080"
+const BASE_URL = "https://api.cloudequipment.io"
+
+const Debounce = (func, delay) => {
+    let timeoutId;
+    return function (...args) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func(...args), delay);
+    };
+  };
 
 
 
-export { SidebarIcon, PartnersImg, SocialIcon, ReportIcon, BASE_URL }
+export { SidebarIcon, PartnersImg, SocialIcon, ReportIcon, BASE_URL, Debounce }

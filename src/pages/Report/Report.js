@@ -44,7 +44,6 @@ function Report() {
                 }
             })
             .catch((err) => console.log(err));
-
     },[])
 
 
@@ -58,6 +57,8 @@ function Report() {
         const formattedDate = `${day}-${month}-${year}`;
         return formattedDate
     }
+
+    const NewData = data.reverse().slice(0, 10);
 
 
     return (
@@ -154,7 +155,7 @@ function Report() {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {data.map((each, index) => (
+                                                    {NewData.map((each, index) => (
 
                                                         <tr className='' key={index}>
                                                             <th scope="">
@@ -163,10 +164,10 @@ function Report() {
                                                                     <span>{dateFormat(each.date)}</span>
                                                                 </div>
                                                             </th>
-                                                            <td>Cholesterol Profile</td>
-                                                            <td>35</td>
+                                                            <td>{each.medServiceName}</td>
+                                                            <td>...</td>
                                                             <td>{each.referrerName}</td>
-                                                            <td>Agape Care Laboratory</td>
+                                                            <td>{each.refererHospital}</td>
                                                             <td>{each.phoneNo}</td>
                                                             <td>
                                                                 <div className="flexDiv">
