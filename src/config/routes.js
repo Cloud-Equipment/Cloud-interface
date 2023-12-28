@@ -1,45 +1,61 @@
-import React from 'react';
-import { useRoutes } from 'react-router-dom';
-import { ActiveForms, Auth, Login, Report, ManageUser, ManageRoles, ReportDetails, ReportUploader } from '../pages';
-
+import React from "react";
+import { useRoutes } from "react-router-dom";
+import {
+  ActiveForms,
+  Auth,
+  Login,
+  Report,
+  ManageUser,
+  ManageRoles,
+  ReportDetails,
+  ReportUploader,
+} from "../pages";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import { Main } from "../pages/Main/Main";
 
 export const Routes = () => {
   return useRoutes([
     {
-      path: '/',
+      path: "/login",
+      element: <Login />,
+    },
+    {
+      path: "/verify",
+      element: <Auth />,
+    },
+    { path: "/*", element: <Main /> },
+  ]);
+};
+
+export const MainRouting = () => {
+  return useRoutes([
+    {
+      path: "/",
+      element: <Dashboard />,
+    },
+    {
+      path: "/create-report-form",
       element: <ActiveForms />,
     },
     {
-      path: '/form',
-      element: <ActiveForms />,
+      path: "/reports",
+      element: <Report />,
     },
     {
-      path: '/login',
-      element: <Login />
+      path: "/manage-user",
+      element: <ManageUser />,
     },
     {
-      path: '/verify',
-      element: < Auth />
+      path: "/manage-role",
+      element: <ManageRoles />,
     },
     {
-      path: '/reports',
-      element: < Report />
+      path: "/report-details",
+      element: <ReportDetails />,
     },
     {
-      path: '/manage-user',
-      element: < ManageUser />
+      path: "/new-report",
+      element: <ReportUploader />,
     },
-    {
-      path: '/manage-role',
-      element: < ManageRoles />
-    },
-    {
-      path: '/report-details',
-      element: < ReportDetails />
-    },
-    {
-      path: '/new-report',
-      element: < ReportUploader />
-    }
   ]);
 };
