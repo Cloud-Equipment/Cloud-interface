@@ -1573,17 +1573,21 @@
   cursor: pointer;
 }
 
-.ErrorModal, .SuccessModal {
+.ErrorModal,
+.SuccessModal {
   padding: 30px 40px;
 }
-.ErrorModal a, .SuccessModal a {
+.ErrorModal a,
+.SuccessModal a {
   text-decoration: none;
 }
-.ErrorModal p, .SuccessModal p {
+.ErrorModal p,
+.SuccessModal p {
   margin: 17px 0;
   font-size: 15px;
 }
-.ErrorModal img, .SuccessModal img {
+.ErrorModal img,
+.SuccessModal img {
   width: 15%;
   margin-right: 5px;
 }
@@ -2023,6 +2027,7 @@
 }
 .RebortBord a {
   text-decoration: none;
+  color: #54D4BD;
 }
 .RebortBord .EachCard {
   background-color: #fff;
@@ -2054,6 +2059,9 @@
 }
 .RebortBord .Down p {
   margin-bottom: 5px;
+}
+.RebortBord .Down a {
+  text-decoration: underline !important;
 }
 
 .ManageUsers {

@@ -3,7 +3,8 @@ import LayoutWithSidebar from '../../components/LayoutWithSidebar'
 import Navbar from '../../components/Navbar'
 import Banner from '../ActiveForm/Banner'
 import Img1 from '../../Assets/IconAndLogo/Group (1).png'
-import File from '../../Assets/Files/REPORT TEMPLATE.pdf'
+import Csv from '../../Assets/Files/csv.csv'
+import Xlsx from '../../Assets/Files/rep.xlsx'
 import RequestCard from '../../components/RequestCard'
 import Partners from '../../components/Partners'
 import Footer from '../../components/Footer'
@@ -66,9 +67,7 @@ function ReportUploader() {
                 </div>
                 <div className="Down mt-4">
                   <p>Need help getting started?</p>
-                  <a href={File} download="REPORT TEMPLATE" target='_blank' rel="noreferrer">
-                  <span>Download sample spreadsheet template</span>
-                  </a>
+                  <span>Download sample spreadsheet template <a href={Csv} download="REPORT TEMPLATE" target='_blank' rel="noreferrer"> CSV </a> - <a href={Xlsx} download="REPORT TEMPLATE" target='_blank' rel="noreferrer"> XLSX </a></span>
                 </div>
               </div>
             </div>

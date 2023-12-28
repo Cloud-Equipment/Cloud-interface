@@ -160,6 +160,7 @@ $LightGrey: rgba(170, 170, 170, 1);
 .fw6 {
     font-weight: 600 !important;
 }
+
 .fw5 {
     font-weight: 500 !important;
 }
@@ -204,7 +205,7 @@ $LightGrey: rgba(170, 170, 170, 1);
     font-family: $dm;
 }
 
-.errorMessage{
+.errorMessage {
     color: red;
     font-size: 12px;
 }
@@ -219,6 +220,7 @@ $LightGrey: rgba(170, 170, 170, 1);
     align-items: center;
     justify-content: space-between;
 }
+
 .flexNoAlignSpace {
     display: flex;
     justify-content: space-between;
@@ -950,7 +952,7 @@ $LightGrey: rgba(170, 170, 170, 1);
                     font-size: 15px;
                 }
 
-         
+
             }
         }
     }
@@ -1172,9 +1174,11 @@ $LightGrey: rgba(170, 170, 170, 1);
     height: 100vh;
     padding: 50px 20px;
     color: $white;
-    a{
+
+    a {
         text-decoration: none;
     }
+
     .facility {
         display: flex;
         align-items: center;
@@ -1449,6 +1453,7 @@ $LightGrey: rgba(170, 170, 170, 1);
     .sidenav.open {
         width: 250px;
     }
+
     .MobileSidebar {
         background-color: $secondary;
         height: 100vh;
@@ -2026,11 +2031,14 @@ $LightGrey: rgba(170, 170, 170, 1);
 // MODAL
 // ================================================================
 
-.ErrorModal,.SuccessModal {
+.ErrorModal,
+.SuccessModal {
     padding: 30px 40px;
-a{
-    text-decoration: none;
-}
+
+    a {
+        text-decoration: none;
+    }
+
     p {
         margin: 17px 0;
         font-size: 15px;
@@ -2261,10 +2269,11 @@ a{
             }
 
             table {
-                a{
+                a {
                     text-decoration: none;
                     color: $black;
                 }
+
                 thead {
                     background: rgba(238, 255, 252, 1);
 
@@ -2404,67 +2413,80 @@ a{
     }
 }
 
-.ReportDetails{
+.ReportDetails {
     font-family: $nuno;
+
     .WhiteCard {
         background-color: $white;
         border-radius: 18px;
-        padding: 20px ;
+        padding: 20px;
         box-shadow: 0px 4px 15px 0px rgba(216, 210, 252, 0.15);
-        .img{
+
+        .img {
             cursor: pointer;
-            img{
+
+            img {
                 width: 20px;
             }
         }
-        .top{
+
+        .top {
             font-family: $nuno;
-            h3{
+
+            h3 {
                 font-family: $nuno;
                 font-weight: 600;
             }
-            p{
+
+            p {
                 margin-bottom: 5px;
             }
-            span{
+
+            span {
                 font-size: 13px;
                 font-weight: 300;
             }
         }
-        .btns{
+
+        .btns {
             margin: 20px 0;
             display: flex;
             align-items: center;
             flex-wrap: wrap;
-            button{
+
+            button {
                 margin: 0;
                 font-weight: 400;
             }
         }
-        .TableCard{
+
+        .TableCard {
             box-shadow: 0px 4px 12px 0px rgba(13, 95, 80, 0.15);
             margin: 20px 0;
             border-radius: 10px;
             padding: 20px 40px;
             padding-bottom: 0;
-            p{
+
+            p {
                 margin-bottom: 3px;
                 font-size: 15px;
                 font-weight: 500;
             }
-            span{
+
+            span {
                 font-size: 13px;
                 font-weight: 300;
             }
+
             .deduction {
-    
+
                 h2 {
                     font-size: 22px;
                     font-family: $playfair;
                     font-weight: 700;
                     margin: 0;
                 }
-    
+
                 p {
                     font-size: 14px;
                     margin-bottom: 2px;
@@ -2474,6 +2496,7 @@ a{
                 }
             }
         }
+
         .total {
             width: 100%;
             padding: 20px;
@@ -2514,14 +2537,17 @@ a{
             }
         }
     }
-    .UploadResult{
+
+    .UploadResult {
         padding: 30px 50px;
-        .header{
-            img{
+
+        .header {
+            img {
                 width: 15px;
                 cursor: pointer;
             }
         }
+
         .discount {
             input {
                 width: 90% !important;
@@ -2537,26 +2563,31 @@ a{
                     font-size: 14px;
                 }
             }
+
             label {
                 margin: 0;
                 font-size: 14px;
                 font-weight: 300;
             }
         }
-        .FileUpload{
+
+        .FileUpload {
             border: 1px solid $secondaryLight;
             border-radius: 5px;
             padding: 20px;
             background-color: rgba(247, 247, 247, 1);
             font-size: 15px;
-            .uploader{
+
+            .uploader {
                 width: 55px;
                 cursor: pointer;
             }
-            .uploaded{
+
+            .uploaded {
                 width: 50%;
             }
-            span{
+
+            span {
                 color: $secondaryLight;
                 cursor: pointer;
             }
@@ -2564,46 +2595,61 @@ a{
     }
 }
 
-.RebortBord{
+.RebortBord {
     border: 1px solid rgba(229, 229, 229, 1);
     background-color: rgba(251, 251, 251, 1);
     margin: 50px 0;
     border-radius: 15px;
-    img{
+
+    img {
         width: 20%;
     }
-    a{
+
+    a {
         text-decoration: none;
+        color: $secondaryLight;
     }
-    .EachCard{
+
+    .EachCard {
         background-color: $white;
         padding: 20px;
         border-radius: 10px;
         cursor: pointer;
-        .text{
+
+        .text {
             text-align: left;
-            p{
+
+            p {
                 margin-bottom: 5px;
                 font-size: 15px;
                 color: $black;
             }
-            span{
+
+            span {
                 color: rgba(151, 151, 151, 1);
                 font-size: 13px;
             }
         }
-        &:hover{
+
+        &:hover {
             box-shadow: 0px 20px 70px 0px rgba(86, 89, 146, 0.1);
         }
     }
-    .Down{
+
+    .Down {
         font-size: 13px;
-        span{
+
+        span {
             color: $secondaryLight;
             cursor: pointer;
         }
-        p{
+
+        p {
             margin-bottom: 5px;
+        }
+
+        a {
+            text-decoration: underline !important;
         }
     }
 }
@@ -3126,14 +3172,16 @@ a{
             padding-top: 20px;
 
         }
-        .selecteedValues{
-            ul{
+
+        .selecteedValues {
+            ul {
                 padding: 0;
                 margin: 0;
                 display: flex;
                 flex-wrap: wrap;
                 align-items: center;
-                li{
+
+                li {
                     border: 1px solid $secondaryLight;
                     border-radius: 5px;
                     padding: 5px 10px;
@@ -3142,12 +3190,14 @@ a{
                     color: $secondaryLight;
                 }
             }
-            img{
+
+            img {
                 width: 15px;
                 margin-left: 10px;
                 cursor: pointer;
             }
         }
+
         .formss {
             cursor: pointer;
             margin: 10px 0;
@@ -3194,13 +3244,15 @@ a{
 
             }
         }
+
         .label {
             font-size: 14px;
             margin-bottom: 3px;
             font-weight: 300;
         }
-        .dropdown{
-        
+
+        .dropdown {
+
             button {
                 border: 1px solid rgba(99, 119, 138, 0.5);
                 border-radius: 8px;
@@ -3580,9 +3632,11 @@ a{
     .paddingres {
         padding: 30px 10px !important;
     }
+
     .WhiteCard {
         padding: 20px !important;
     }
+
     .ActiveBanner {
         padding: 35px 25px !important;
 
