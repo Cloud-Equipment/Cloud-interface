@@ -988,7 +988,7 @@ function Form({ procedureToEdit }) {
                     </div>
                     <div className="amount">
                       <img src={Naira} alt="" />
-                      <p className="f20">{MoneyFormat(total)}.00</p>
+                      <p className="f20">{MoneyFormat(total)}</p>
                     </div>
                   </div>
                 </div>
