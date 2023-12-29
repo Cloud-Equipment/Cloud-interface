@@ -666,7 +666,7 @@ $play: 'Playfair Display', serif;
             font-size: 13px;
         }
         img{
-            width: 7px;
+            width: 6px;
         }
         ul{
             display: flex;
@@ -675,9 +675,9 @@ $play: 'Playfair Display', serif;
             margin: 0;
             li{
                 cursor: pointer;
-                padding: 4px 10px;
-                font-size: 13px;
-                margin: 0 5px ;
+                padding: 3px 8px;
+                font-size: 12px;
+                margin: 0 3px ;
                 &:hover{
                     background-color: #54D4BD;
                     color: $white;

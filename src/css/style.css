@@ -571,7 +571,7 @@
   font-size: 13px;
 }
 .AppointmentTable .down img {
-  width: 7px;
+  width: 6px;
 }
 .AppointmentTable .down ul {
   display: flex;
@@ -581,9 +581,9 @@
 }
 .AppointmentTable .down ul li {
   cursor: pointer;
-  padding: 4px 10px;
-  font-size: 13px;
-  margin: 0 5px;
+  padding: 3px 8px;
+  font-size: 12px;
+  margin: 0 3px;
 }
 .AppointmentTable .down ul li:hover {
   background-color: #54D4BD;
