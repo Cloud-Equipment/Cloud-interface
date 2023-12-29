@@ -500,73 +500,220 @@ $play: 'Playfair Display', serif;
 // ================================================================
 // DASHBOARD
 // ================================================================
-.BannerDashboard{
+.BannerDashboard {
     background: linear-gradient(66.15deg, #F6FEFC -5.25%, #9BD8F1 35.43%, #0D5F50 98.77%);
     border-radius: 10px;
     margin-top: 40px;
-    img{
+
+    img {
         width: 80%;
     }
-    .img{
-        img{
+
+    .img {
+        img {
             margin-top: -45px;
         }
     }
 
-    p{
+    p {
         margin: 0;
     }
-    h1,h2{
+
+    h1,
+    h2 {
         font-family: $play;
     }
-    .card1{
+
+    .card1 {
         background: #FFFFFF8C;
         border-radius: 10px;
-        margin-right:10px;
+        margin-right: 10px;
         padding: 10px;
         cursor: pointer;
-        .green{
+
+        .green {
             background: #DFFDDD;
         }
-        .red{
+
+        .red {
             background: #FBC3C3;
         }
-        p{
+
+        p {
             font-size: 13px;
         }
-        .numb{
+
+        .numb {
             display: flex;
             align-items: center;
             margin-top: 15px;
-           justify-content: space-between;
-            .chart{
+            justify-content: space-between;
+
+            .chart {
                 // position: absolute;
                 margin-left: 40%;
-                padding: 5px 10px ;
-              
+                padding: 5px 10px;
+
                 border-radius: 5px;
                 box-shadow: 0px 27.490896224975586px 27.490896224975586px 0px #00000026;
 
-p{
-    font-size: 13px;
-}
-                img{
+                p {
+                    font-size: 13px;
+                }
+
+                img {
                     width: 30%;
                     margin-left: 5px;
                 }
             }
         }
-        &:hover{
+
+        &:hover {
             box-shadow: 0px 35px 25px 0px #00000033;
-            .chart{
-                p{
+
+            .chart {
+                p {
                     font-size: 15px !important;
                 }
+
                 box-shadow: 0px 15px 15px 0px #00000026;
             }
         }
     }
 }
+
+.AppointmentTable {
+    margin-top: 30px;
+    background-color: $white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0px 4px 15px 0px #D8D2FC26;
+
+    table {
+        thead {
+            background: #54D4BD;
+            color: $white;
+
+            th {
+                font-size: 13px;
+                padding: 10px 15px;
+                font-weight: 400;
+            }
+        }
+
+        tbody {
+            th {
+                font-size: 12px;
+                padding: 10px 15px;
+                font-weight: 300;
+            }
+
+            td {
+                font-size: 12px;
+                font-weight: 300;
+                padding: 10px 15px;
+            }
+
+            tr {
+                margin-top: 15px;
+                border-bottom: 1px solid rgba(225, 225, 225, 1);
+                background-color: rgba(255, 255, 255, 1);
+            }
+        }
+        p{
+            margin: 0;
+        }
+        .jane{
+            display: flex;
+            align-items: center;
+            img{
+                width: 30px;
+                margin-right: 6px;
+            }
+        }
+
+        .con{
+            display: flex;
+            align-items: center;
+            img{
+                width: 8px;
+                margin-right: 6px;
+            }
+            .greenC{
+                color: #4DC736;
+            }
+            .greyC{
+                color: #8F9AA3;
+            }
+        }
+
+        .action{
+                width: 23px;
+                background-color: $white;
+                border-radius: 8px;
+                box-shadow: 0px 4px 15px 0px #B9B2E2A3;
+                padding: 4px 3px;
+        }
+    }
+
+    .down{
+        display: flex;
+        align-items: cneter;
+        margin-top: 20px;
+        justify-content: space-between;
+        p{
+            margin: 0;
+            font-size: 13px;
+        }
+        img{
+            width: 7px;
+        }
+        ul{
+            display: flex;
+            align-items: cneter;
+            padding: 0;
+            margin: 0;
+            li{
+                cursor: pointer;
+                padding: 4px 10px;
+                font-size: 13px;
+                margin: 0 5px ;
+                &:hover{
+                    background-color: #54D4BD;
+                    color: $white;
+                    border-radius: 3px;
+                }
+            }
+        }
+    }
+
+    .form-check {
+        .form-check-input {
+            &:checked {
+                background-color: $secondaryLight !important;
+                border-color: $secondaryLight !important;
+            }
+        }
+
+        input {
+            width: 15px;
+            height: 15px;
+            border: 1px solid grey;
+            margin-right: 15px;
+
+            &:hover {
+                background: rgba(238, 255, 252, 1);
+
+                .form-check-input {
+                    background-color: rgba(238, 255, 252, 1);
+                    border: 1px solid $secondaryLight;
+                    --bs-form-check-bg: white !important;
+                }
+            }
+        }
+    }
+}
+
 // ================================================================
 // PAGE NAVBAR
 // ================================================================

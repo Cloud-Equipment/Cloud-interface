@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar'
 import NewReport from '../../components/NewReport'
 import NameHeader from '../../components/NameHeader'
 import Banner from './Banner'
+import AppointmentTable from './AppointmentTable'
 
 function Dasboard() {
     return (
@@ -21,9 +22,14 @@ function Dasboard() {
                                     name=" Emma Taylor"
                                     details="Check your activities in this dashboard."
                                 /></div>
-                                <div className=""> <NewReport /></div>
+                                <div className="">
+                                     <NewReport
+                                     Type="New"
+                                 />
+                                 </div>
                             </div>
                             <Banner />
+                            <AppointmentTable />
                         </div>
                     </div>
                 </LayoutWithSidebar >
