@@ -100,6 +100,7 @@ function Report() {
                         <div className="paddingres">
                             <NameHeader
                                 name="Emma Taylor"
+                                details="Stay up-to-date with your patients report."
                             />
                             <NewReport
                                 Type="New"

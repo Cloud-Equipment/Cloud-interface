@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,500;6..12,600;6..12,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -431,6 +432,68 @@
 }
 .inputts img {
   width: 12px;
+}
+
+.BannerDashboard {
+  background: linear-gradient(66.15deg, #F6FEFC -5.25%, #9BD8F1 35.43%, #0D5F50 98.77%);
+  border-radius: 10px;
+  margin-top: 40px;
+}
+.BannerDashboard img {
+  width: 80%;
+}
+.BannerDashboard .img img {
+  margin-top: -45px;
+}
+.BannerDashboard p {
+  margin: 0;
+}
+.BannerDashboard h1, .BannerDashboard h2 {
+  font-family: "Playfair Display", serif;
+}
+.BannerDashboard .card1 {
+  background: rgba(255, 255, 255, 0.5490196078);
+  border-radius: 10px;
+  margin-right: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+.BannerDashboard .card1 .green {
+  background: #DFFDDD;
+}
+.BannerDashboard .card1 .red {
+  background: #FBC3C3;
+}
+.BannerDashboard .card1 p {
+  font-size: 13px;
+}
+.BannerDashboard .card1 .numb {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  justify-content: space-between;
+}
+.BannerDashboard .card1 .numb .chart {
+  margin-left: 40%;
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-shadow: 0px 27.490896225px 27.490896225px 0px rgba(0, 0, 0, 0.1490196078);
+}
+.BannerDashboard .card1 .numb .chart p {
+  font-size: 13px;
+}
+.BannerDashboard .card1 .numb .chart img {
+  width: 30%;
+  margin-left: 5px;
+}
+.BannerDashboard .card1:hover {
+  box-shadow: 0px 35px 25px 0px rgba(0, 0, 0, 0.2);
+}
+.BannerDashboard .card1:hover .chart {
+  box-shadow: 0px 15px 15px 0px rgba(0, 0, 0, 0.1490196078);
+}
+.BannerDashboard .card1:hover .chart p {
+  font-size: 15px !important;
 }
 
 .NavbarPage {

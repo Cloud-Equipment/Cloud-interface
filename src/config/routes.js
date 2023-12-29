@@ -1,14 +1,10 @@
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
-import { ActiveForms, Auth, Login, Report, ManageUser, ManageRoles, ReportDetails, ReportUploader } from '../pages';
+import { ActiveForms, Auth, Login, Report, ManageUser, ManageRoles, ReportDetails, ReportUploader, Dasboard } from '../pages';
 
 
 export const Routes = () => {
   return useRoutes([
-    {
-      path: '/',
-      element: <ActiveForms />,
-    },
     {
       path: '/form',
       element: <ActiveForms />,
@@ -40,6 +36,10 @@ export const Routes = () => {
     {
       path: '/new-report',
       element: < ReportUploader />
+    },
+    {
+      path: '/',
+      element: < Dasboard />
     }
   ]);
 };

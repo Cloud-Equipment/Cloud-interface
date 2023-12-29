@@ -5,7 +5,7 @@ function NameHeader(props) {
     <div>
         <div className="NameHeader">
             <h2>Hello, <span>{props.name}</span></h2>
-            <p>Stay up-to-date with your patients report.</p>
+            <p>{props.details}</p>
         </div>
     </div>
   )

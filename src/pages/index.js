@@ -6,6 +6,7 @@ import ManageUser from "./ManageUsers/ManageUser"
 import ManageRoles from "./ManageUsers/ManageRoles"
 import ReportDetails from "./Report/ReportDetails"
 import ReportUploader from "./Report/ReportUploader"
+import Dasboard from "./Dashboard/Dasboard"
 
 export{
     ActiveForms,
@@ -15,5 +16,6 @@ export{
     ManageUser,
     ManageRoles,
     ReportDetails,
-    ReportUploader
+    ReportUploader,
+    Dasboard
 }
