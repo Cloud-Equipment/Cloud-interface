@@ -20,6 +20,7 @@ import Form from "../ActiveForm/Form";
 import NoData from "../../components/NoData";
 import axios from "axios";
 import { BASE_URL } from "../../data/data";
+import { TablePagination } from "@mui/material";
 // import Modal from '../../components/Modal'
 
 function Report() {
@@ -33,17 +34,42 @@ function Report() {
     }
   }, [datas]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [startIndex, setStartIndex] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [total, setTotal] = useState(0);
+
   useEffect(() => {
-    const url = `${BASE_URL}/service-manager/procedures/getAll`;
+    fetchList();
+  }, [currentPage, pageSize]);
+
+  const handleChangePage = (event, newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setCurrentPage(1);
+    setPageSize(parseInt(event.target.value, 10));
+  };
+
+  const fetchList = () => {
+    const url = `${BASE_URL}/service-manager/procedures/getAllPaged`;
     axios
-      .get(url)
+      .get(url, {
+        params: {
+          currentPage,
+          startIndex: (currentPage - 1) * pageSize + 1,
+          pageSize,
+        },
+      })
       .then((res) => {
         if (res.data.success === true) {
-          setData(res.data.data);
+          setData(res.data?.data?.resultItem ?? []);
+          setTotal(res.data?.data?.totalCount ?? 0);
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  };
 
   const dateFormat = (inputDateString) => {
     const inputDate = new Date(inputDateString);
@@ -123,7 +149,9 @@ function Report() {
             <NewReport Type="New" />
             <div className="WhiteCard">
               <div className="header mb-3">
-                <h2>All Report</h2>
+                <h2>
+                  All Report {currentPage} {startIndex} {pageSize} {total}{" "}
+                </h2>
               </div>
               <div className="Check mb-2" style={{ flexWrap: "wrap" }}>
                 <div className="search flexDiv mb-3">
@@ -208,7 +236,9 @@ function Report() {
                                     <span>Edit Test</span>
                                   </div>
                                   <Link
-                                    to={"/report-details/" + each.medServiceId}
+                                    to={
+                                      "/report-details/" + each.procedureEntryId
+                                    }
                                   >
                                     <div className="flex">
                                       <img src={ReportIcon.profile} alt="" />
@@ -262,25 +292,15 @@ function Report() {
                     </div>
                   )}
                 </div>
-                <div className="perPage mt-3">
-                  <div className="abs">
-                    <div className="ms-2 me-2">
-                      <p>Items per page</p>
-                    </div>
-                    <div className="bord ms-2 me-2 flexDiv">
-                      <p className="me-2">8</p>
-                      <img src={Down} alt="" />
-                    </div>
-                    <div className="LeftRight ms-2 me-2">
-                      <div className="bord ms-2 me-2">
-                        <img src={Left} alt="" />
-                      </div>
-                      <div className="bord ms-2 me-2">
-                        <img src={Right} alt="" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <TablePagination
+                  component="div"
+                  count={total}
+                  page={currentPage}
+                  labelRowsPerPage="Items per page"
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  rowsPerPage={pageSize}
+                />
               </div>
               <div className="margin50"></div>
               <div className="data">

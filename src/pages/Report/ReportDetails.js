@@ -35,12 +35,23 @@ function ReportDetails() {
   const { id } = useParams();
   const [reportDetails, setReportDetails] = useState(null);
 
+  const [discountDisplayed, setDiscountDisplayed] = useState(0);
+
+  const getDiscount = () => {
+    setDiscountDisplayed(
+      reportDetails?.amount
+        ? ((reportDetails?.discountPercent || 0) * 100) / reportDetails?.amount
+        : null
+    );
+  };
+
   useEffect(() => {
-    const url = `${BASE_URL}/service-manager/procedures/getprocedure/${id}`;
+    const url = `${BASE_URL}/service-manager/procedures/get/${id}`;
     axios
       .get(url)
       .then((res) => {
-        alert(res.data.data);
+        // alert(res.data.data);
+        setReportDetails(res.data?.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -124,8 +135,8 @@ function ReportDetails() {
                 <div className="top">
                   <h3>Procedure detail</h3>
                   <p>Patient Information</p>
-                  <span>User ID: AGP/453</span>
-                  <h5>Emma Ummuna</h5>
+                  <span>User ID: {reportDetails?.patientId}</span>
+                  <h5>{reportDetails?.patientName}</h5>
                 </div>
                 <div className="img">
                   <Link to="/reports">
@@ -155,33 +166,31 @@ function ReportDetails() {
                   <div className="row">
                     <div className="col-md-3 mb-4">
                       <p>Phone Number</p>
-                      <span>+234 70 34522211</span>
+                      <span>{reportDetails?.phoneNo}</span>
                     </div>
                     <div className="col-md-3 mb-4">
                       <p>Email</p>
-                      <span>johnsmith@gmail.com</span>
+                      <span>{null}</span>
                     </div>
                     <div className="col-md-3 mb-4">
                       <p>Gender</p>
-                      <span>Male</span>
+                      <span>{null}</span>
                     </div>
                     <div className="col-md-3 mb-4">
                       <p>Age of Patient</p>
-                      <span>19</span>
+                      <span>{reportDetails?.patientAge}</span>
                     </div>
                     <div className="col-md-3 mb-4">
                       <p>Address</p>
-                      <span>
-                        345, Sarju Appt., Mota Varacha, Surat Gujarat, India.
-                      </span>
+                      <span>{null}</span>
                     </div>
                     <div className="col-md-3 mb-4">
                       <p>Procedure Category</p>
-                      <span>johnsmith@gmail.com</span>
+                      <span>{null}</span>
                     </div>
                     <div className="col-md-3 mb-4">
                       <p>Procedures</p>
-                      <span>Cholesterol</span>
+                      <span>{null}</span>
                     </div>
                   </div>
                 </div>
@@ -200,31 +209,31 @@ function ReportDetails() {
                   <div className="row mt-3">
                     <div className="col-md-3 mb-4">
                       <p>Discount Code</p>
-                      <span>ARGWETES</span>
+                      <span>{null}</span>
                     </div>
                     <div className="col-md-3 mb-4">
                       <p>Rebate Paid</p>
-                      <span>Enter Rebate Paid</span>
+                      <span>{reportDetails?.rebatePaid}%</span>
                     </div>
                     <div className="col-md-3 mb-4">
                       <p>Referrers Name</p>
-                      <span>Abdullahi Mohammed</span>
+                      <span>{reportDetails?.referrerName}</span>
                     </div>
                     <div className="col-md-3 mb-4">
                       <p>Referrer’s Email</p>
-                      <span>anebiemmanuel@gmail.com</span>
+                      <span>{reportDetails?.refererEmail}</span>
                     </div>
                     <div className="col-md-3 mb-4">
                       <p>Referrers Hospital</p>
-                      <span>Agape Laboratory Care</span>
+                      <span>{reportDetails?.refererHospital}</span>
                     </div>
                     <div className="col-md-3 mb-4">
                       <p>Referrer’s Number</p>
-                      <span>08143313429</span>
+                      <span>{null}</span>
                     </div>
                     <div className="col-md-3 mb-4">
                       <p>Remark</p>
-                      <span>Leave a Message</span>
+                      <span>{reportDetails?.remarks}</span>
                     </div>
                   </div>
                 </div>
@@ -239,7 +248,7 @@ function ReportDetails() {
                       </div>
                       <div className="amount">
                         <img src={Naira} alt="" />
-                        <p className="fw3">2,000.00</p>
+                        <p className="fw3">{reportDetails?.amount}</p>
                       </div>
                     </div>
                     <div className="">
@@ -249,7 +258,7 @@ function ReportDetails() {
                       <div className="amount">
                         <p className="fw3 red">( </p>
                         <img src={RedNaira} alt="" />
-                        <p className="fw3 red"> 1,000.00</p>
+                        <p className="fw3 red">{discountDisplayed}</p>
                         <p className="fw3 red"> )</p>
                       </div>
                     </div>
@@ -259,7 +268,9 @@ function ReportDetails() {
                       </div>
                       <div className="amount">
                         <img src={Naira} alt="" />
-                        <p className="f20">1,000.00</p>
+                        <p className="f20">
+                          {reportDetails?.amount ?? 0 - discountDisplayed ?? 0}
+                        </p>
                       </div>
                     </div>
                   </div>
