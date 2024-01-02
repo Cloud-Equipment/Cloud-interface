@@ -66,10 +66,16 @@ function Form({ procedureToEdit }) {
   }, [patientId, remarks]);
 
   useEffect(() => {
+    // alert("I want to edit");
     if (procedureToEdit) {
-      alert("I want to edit");
+      setPatientId(procedureToEdit.patientId);
+      setPatientName(procedureToEdit.patientName);
+      setPatientNumber(procedureToEdit.phoneNo);
+      setPatientAge(procedureToEdit.patientAge);
+      setPatientAddress(procedureToEdit.address);
+      setPatientEmail(procedureToEdit.patientEmail);
     }
-  }, []);
+  }, [procedureToEdit]);
 
   const url = `${BASE_URL}/patient/getpatientbyuniqueid/${patientId}`;
   const FetchPatient = () => {
@@ -383,7 +389,7 @@ function Form({ procedureToEdit }) {
 
   useEffect(() => {
     if (rebate) {
-        const rebateValue = rebatePaid * totalAmount / 100
+      const rebateValue = (rebatePaid * totalAmount) / 100;
       setSubtotal(totalAmount - rebateValue);
     } else setSubtotal(totalAmount);
   }, [totalAmount, rebate, rebatePaid]);

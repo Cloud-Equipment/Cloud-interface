@@ -34,7 +34,7 @@ function Report() {
     }
   }, [datas]);
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   const [startIndex, setStartIndex] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
@@ -57,7 +57,7 @@ function Report() {
     axios
       .get(url, {
         params: {
-          currentPage,
+          currentPage: currentPage + 1,
           startIndex: (currentPage - 1) * pageSize + 1,
           pageSize,
         },
@@ -81,8 +81,6 @@ function Report() {
     const formattedDate = `${day}-${month}-${year}`;
     return formattedDate;
   };
-
-  const NewData = data.reverse().slice(0, 10);
 
   const [procedureToEdit, setProcedureToEdit] = useState(null);
 
@@ -149,9 +147,7 @@ function Report() {
             <NewReport Type="New" />
             <div className="WhiteCard">
               <div className="header mb-3">
-                <h2>
-                  All Report {currentPage} {startIndex} {pageSize} {total}{" "}
-                </h2>
+                <h2>All Report</h2>
               </div>
               <div className="Check mb-2" style={{ flexWrap: "wrap" }}>
                 <div className="search flexDiv mb-3">
@@ -204,7 +200,7 @@ function Report() {
                         </tr>
                       </thead>
                       <tbody>
-                        {NewData.map((each, index) => (
+                        {data.map((each, index) => (
                           <tr className="" key={index}>
                             <th scope="">
                               <div className="flexDiv">
@@ -231,6 +227,9 @@ function Report() {
                                     className="flex"
                                     data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"
+                                    onClick={() => {
+                                      setProcedureToEdit(each);
+                                    }}
                                   >
                                     <img src={ReportIcon.edit} alt="" />
                                     <span>Edit Test</span>
@@ -304,7 +303,7 @@ function Report() {
               </div>
               <div className="margin50"></div>
               <div className="data">
-                <p>Showing 10 from 160 data</p>
+                {data?.length ? <p>Showing 10 from {total} data</p> : <></>}
               </div>
             </div>
           </div>
