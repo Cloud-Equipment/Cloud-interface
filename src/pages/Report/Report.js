@@ -48,7 +48,7 @@ function Report() {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setCurrentPage(1);
+    setCurrentPage(0);
     setPageSize(parseInt(event.target.value, 10));
   };
 
@@ -223,7 +223,7 @@ function Report() {
                               <div className="dot">
                                 <img className="" src={Icon5} alt="" />
                                 <div className="firstDiv">
-                                  <div
+                                  {/* <div
                                     className="flex"
                                     data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"
@@ -233,7 +233,7 @@ function Report() {
                                   >
                                     <img src={ReportIcon.edit} alt="" />
                                     <span>Edit Test</span>
-                                  </div>
+                                  </div> */}
                                   <Link
                                     to={
                                       "/report-details/" + each.procedureEntryId

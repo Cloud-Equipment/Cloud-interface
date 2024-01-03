@@ -642,388 +642,386 @@ function ManageRoles() {
             </div>
           </div>
         </div>
-        <LayoutWithSidebar>
-          <div className="ManageUser">
-            <Navbar header="Manage User" />
-            <div className="Navmargin"></div>
-            <div className="paddingres">
-              <div className="WhiteCard">
-                <div className="header mb-3">
-                  <h2>Users</h2>
-                </div>
-                <div className="firstDivider">
-                  <div className="row">
-                    <div className="col-md-4">
-                      <div className="FirstContainer">
-                        <div className="accordion" id="accordionExample1">
-                          <div className="accordion-item">
-                            <h2 className="accordion-header">
-                              <button
-                                className="eachss accordion-button"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne1"
-                                aria-expanded="true"
-                                aria-controls="collapseOne1"
-                              >
-                                {/* <div className="">
+        <div className="ManageUser">
+          <Navbar header="Manage User" />
+          <div className="Navmargin"></div>
+          <div className="paddingres">
+            <div className="WhiteCard">
+              <div className="header mb-3">
+                <h2>Users</h2>
+              </div>
+              <div className="firstDivider">
+                <div className="row">
+                  <div className="col-md-4">
+                    <div className="FirstContainer">
+                      <div className="accordion" id="accordionExample1">
+                        <div className="accordion-item">
+                          <h2 className="accordion-header">
+                            <button
+                              className="eachss accordion-button"
+                              type="button"
+                              data-bs-toggle="collapse"
+                              data-bs-target="#collapseOne1"
+                              aria-expanded="true"
+                              aria-controls="collapseOne1"
+                            >
+                              {/* <div className="">
                                                         <img src={SidebarIcon.icon3} alt="" />
                                                     </div> */}
-                                <div className="me-5 mb-3">
-                                  <p>Default Roles</p>
-                                </div>
-                              </button>
-                            </h2>
-                            <div
-                              id="collapseOne1"
-                              className="accordion-collapse collapse show"
-                              data-bs-parent="#accordionExample1"
-                            >
-                              <div className="accordion-body">
-                                <div className="">
-                                  <img src={Img1} alt="" />
-                                  <p className="ms-2">Super Admin</p>
-                                </div>
-                                <div className="">
-                                  <img src={Img1} alt="" />
-                                  <p className="ms-2">Operations</p>
-                                </div>
-                                <div className="">
-                                  <img src={Img1} alt="" />
-                                  <p className="ms-2">Receptionist</p>
-                                </div>
-                                <div className="">
-                                  <img src={Img1} alt="" />
-                                  <p className="ms-2">Customer Support</p>
-                                </div>
+                              <div className="me-5 mb-3">
+                                <p>Default Roles</p>
+                              </div>
+                            </button>
+                          </h2>
+                          <div
+                            id="collapseOne1"
+                            className="accordion-collapse collapse show"
+                            data-bs-parent="#accordionExample1"
+                          >
+                            <div className="accordion-body">
+                              <div className="">
+                                <img src={Img1} alt="" />
+                                <p className="ms-2">Super Admin</p>
+                              </div>
+                              <div className="">
+                                <img src={Img1} alt="" />
+                                <p className="ms-2">Operations</p>
+                              </div>
+                              <div className="">
+                                <img src={Img1} alt="" />
+                                <p className="ms-2">Receptionist</p>
+                              </div>
+                              <div className="">
+                                <img src={Img1} alt="" />
+                                <p className="ms-2">Customer Support</p>
                               </div>
                             </div>
                           </div>
                         </div>
-                        <div className="custom mt-5">
-                          <h3 className="ms-3 f15 fw4">Custom roles</h3>
-                          <p className="f15 Grey">
-                            You can create your own custom roles, and choose
-                            exactly what team members can see and do
-                          </p>
-                          <button className="mixBtnBackgorund fw4 mt-3">
-                            Create a Custom Role
-                          </button>
-                        </div>
+                      </div>
+                      <div className="custom mt-5">
+                        <h3 className="ms-3 f15 fw4">Custom roles</h3>
+                        <p className="f15 Grey">
+                          You can create your own custom roles, and choose
+                          exactly what team members can see and do
+                        </p>
+                        <button className="mixBtnBackgorund fw4 mt-3">
+                          Create a Custom Role
+                        </button>
                       </div>
                     </div>
-                    <div className="col-md-8">
-                      <div className="SecondContainer">
-                        <div className="first">
-                          <div className="row">
-                            <div className="col-md-7 mb-3">
-                              <div className="">
-                                <h3>Super Admin</h3>
-                                <p>
-                                  This role is best suited for the
-                                  Organization/Association executives or anyone
-                                  appointed by them that will require full admin
-                                  access
-                                </p>
-                                <button
-                                  className="btn dark-button mt-3 m-0 ps-4 pe-4"
-                                  type="button"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#editrole"
-                                >
-                                  Edit Role
+                  </div>
+                  <div className="col-md-8">
+                    <div className="SecondContainer">
+                      <div className="first">
+                        <div className="row">
+                          <div className="col-md-7 mb-3">
+                            <div className="">
+                              <h3>Super Admin</h3>
+                              <p>
+                                This role is best suited for the
+                                Organization/Association executives or anyone
+                                appointed by them that will require full admin
+                                access
+                              </p>
+                              <button
+                                className="btn dark-button mt-3 m-0 ps-4 pe-4"
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editrole"
+                              >
+                                Edit Role
+                              </button>
+                            </div>
+                          </div>
+                          <div className="col-md-5 mb-3">
+                            <div className="">
+                              <h3>Team Members with this role</h3>
+                              <div className="flexDivSpace mt-4">
+                                <div className="">
+                                  <span className="NameCircle f15">AA</span>
+                                </div>
+                                <button className="light-button f13 BorderNone fw4">
+                                  View members
                                 </button>
                               </div>
                             </div>
-                            <div className="col-md-5 mb-3">
-                              <div className="">
-                                <h3>Team Members with this role</h3>
-                                <div className="flexDivSpace mt-4">
-                                  <div className="">
-                                    <span className="NameCircle f15">AA</span>
-                                  </div>
-                                  <button className="light-button f13 BorderNone fw4">
-                                    View members
-                                  </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="second mt-3">
+                        <div className="row">
+                          <div className="col-md-6 mb-3">
+                            <div className="can mt-3">
+                              <div className="header">
+                                <p>What role can they access</p>
+                              </div>
+                              <div className="AllCheck mt-3 ms-4">
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults1"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults1"
+                                  >
+                                    Can View User Management
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults2"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults2"
+                                  >
+                                    Can View and Edit User Management
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults3"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults3"
+                                  >
+                                    Can View Partners Management
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults6"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults6"
+                                  >
+                                    Can View and Edit Partner Management
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults5"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults5"
+                                  >
+                                    Can View Financial Metrics
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults4"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults4"
+                                  >
+                                    Can View and export Revenues
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults7"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults7"
+                                  >
+                                    Can initiate Refund
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults8"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults8"
+                                  >
+                                    Can create and manage settlement Account
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults9"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults9"
+                                  >
+                                    Can view and export Payment
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults10"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults10"
+                                  >
+                                    Can edit business settings & preferences
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults11"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults11"
+                                  >
+                                    Can view Business settings & preference
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults12"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults12"
+                                  >
+                                    Can View and export Revenues
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults13"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults13"
+                                  >
+                                    Can Manage API Keys & Webhooks
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults14"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults14"
+                                  >
+                                    Can Manage and Invite Users
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults15"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults15"
+                                  >
+                                    Can view users
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults16"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults16"
+                                  >
+                                    Can Invite Users
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults17"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults17"
+                                  >
+                                    can manage Bank Accounts setting
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefaults18"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexCheckDefaults18"
+                                  >
+                                    Can view Bank Accounts settings
+                                  </label>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="second mt-3">
-                          <div className="row">
-                            <div className="col-md-6 mb-3">
-                              <div className="can mt-3">
-                                <div className="header">
-                                  <p>What role can they access</p>
-                                </div>
-                                <div className="AllCheck mt-3 ms-4">
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults1"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults1"
-                                    >
-                                      Can View User Management
-                                    </label>
-                                  </div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults2"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults2"
-                                    >
-                                      Can View and Edit User Management
-                                    </label>
-                                  </div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults3"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults3"
-                                    >
-                                      Can View Partners Management
-                                    </label>
-                                  </div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults6"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults6"
-                                    >
-                                      Can View and Edit Partner Management
-                                    </label>
-                                  </div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults5"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults5"
-                                    >
-                                      Can View Financial Metrics
-                                    </label>
-                                  </div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults4"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults4"
-                                    >
-                                      Can View and export Revenues
-                                    </label>
-                                  </div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults7"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults7"
-                                    >
-                                      Can initiate Refund
-                                    </label>
-                                  </div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults8"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults8"
-                                    >
-                                      Can create and manage settlement Account
-                                    </label>
-                                  </div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults9"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults9"
-                                    >
-                                      Can view and export Payment
-                                    </label>
-                                  </div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults10"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults10"
-                                    >
-                                      Can edit business settings & preferences
-                                    </label>
-                                  </div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults11"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults11"
-                                    >
-                                      Can view Business settings & preference
-                                    </label>
-                                  </div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults12"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults12"
-                                    >
-                                      Can View and export Revenues
-                                    </label>
-                                  </div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults13"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults13"
-                                    >
-                                      Can Manage API Keys & Webhooks
-                                    </label>
-                                  </div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults14"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults14"
-                                    >
-                                      Can Manage and Invite Users
-                                    </label>
-                                  </div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults15"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults15"
-                                    >
-                                      Can view users
-                                    </label>
-                                  </div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults16"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults16"
-                                    >
-                                      Can Invite Users
-                                    </label>
-                                  </div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults17"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults17"
-                                    >
-                                      can manage Bank Accounts setting
-                                    </label>
-                                  </div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      value=""
-                                      id="flexCheckDefaults18"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="flexCheckDefaults18"
-                                    >
-                                      Can view Bank Accounts settings
-                                    </label>
-                                  </div>
-                                </div>
+                          <div className="col-md-6 mb-3">
+                            <div className="cant mt-3">
+                              <div className="header">
+                                <p>What this role can’t access</p>
                               </div>
-                            </div>
-                            <div className="col-md-6 mb-3">
-                              <div className="cant mt-3">
-                                <div className="header">
-                                  <p>What this role can’t access</p>
-                                </div>
-                                <NoData
-                                  width="47%"
-                                  title="This role has full access!"
-                                  body="Any team member with this role can access all the sections of the dashboard."
-                                />
-                              </div>
+                              <NoData
+                                width="47%"
+                                title="This role has full access!"
+                                body="Any team member with this role can access all the sections of the dashboard."
+                              />
                             </div>
                           </div>
                         </div>
@@ -1034,7 +1032,7 @@ function ManageRoles() {
               </div>
             </div>
           </div>
-        </LayoutWithSidebar>
+        </div>
       </div>
     </div>
   );

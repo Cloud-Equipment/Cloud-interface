@@ -13,44 +13,159 @@ import Error from "../../Assets/IconAndLogo/Frame 2755 (1).png";
 import { BASE_URL, Debounce } from "../../data/data";
 import { MoneyFormat } from "../../utils/utils";
 // import { Link } from 'react-router-dom'
+import { useForm, useFieldArray, Controller } from "react-hook-form";
 
 function Form({ procedureToEdit }) {
   const [phone, setPhone] = useState("");
   const [remarks, setRemarks] = useState("");
   const [error, setError] = useState("");
-  const [referrerName, setReferrerName] = useState("");
-  const [rebatePaid, setRebatePaid] = useState("");
-  const [discountData, setDiscountData] = useState([]);
   const [quantity, setQuantity] = useState("1");
   const [discountId, setDiscountId] = useState();
-  const [userId, setUserId] = useState("");
-  const [patientId, setPatientId] = useState("");
-  const [facilityId, setFacilityId] = useState("");
   const [buttonClass, setButtonClass] = useState("submitFormLight");
-  const [category, setCategory] = useState([]);
+
   const [procedures, setProcedures] = useState([]);
   const [procedure, setProcedure] = useState([]);
-  const [rebate, setRebate] = useState(false);
-  const [patientStatus, setPatientStatus] = useState(false);
-  const [totalAmount, setTotalAmount] = useState("");
+
+  const [userId, setUserId] = useState("");
+  const [facilityId, setFacilityId] = useState("");
+
+  const [category, setCategory] = useState([]);
+
+  const [discountData, setDiscountData] = useState([]);
+
   const [totalDiscount, setTotalDiscount] = useState("");
-  const [subtotal, setSubtotal] = useState("");
+
   const [total, setTotal] = useState("");
-  const [patient, setPatient] = useState([]);
-  const [refererHospital, setRefererHospital] = useState("");
-  const [refererEmail, setRefererEmail] = useState("");
-  const [procedureData, setProcedureData] = useState([]);
+
+  const [subTotal, setSubTotal] = useState(0);
+
   // PATIENTS DATA
-  const [patientName, setPatientName] = useState("");
-  const [patientEmail, setPatientEmail] = useState("");
-  const [patientNumber, setPatientNumber] = useState("");
-  const [patientGender, setPatientGender] = useState("");
-  const [patientAge, setPatientAge] = useState("");
-  const [patientAddress, setPatientAddress] = useState("");
+  const [patientStatus, setPatientStatus] = useState(false);
   const [faclityDiscountId, setFaclityDiscountId] = useState();
 
-  const toggleRebate = () => {
-    setRebate(!rebate);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+    getValues,
+    setValue,
+    control,
+  } = useForm();
+
+  const FetchPatient = async () => {
+    // 1404174
+    const url = `${BASE_URL}/patient/getpatientbyuniqueid/${patientId}`;
+
+    return axios
+      .get(url)
+      .then((res) => {
+        if (res.data.success && res.data.data) {
+          setPatientStatus(true);
+          setValue("patientName", res.data.data?.patientName);
+          setValue("patientPhone", res.data.data?.patientPhone);
+          setValue("patientAge", res.data.data?.patientAge);
+          setValue("patientAddress", res.data.data?.patientAddress);
+          setValue("patientGenderId", res.data.data?.patientGenderId);
+          setValue("patientEmail", res.data.data?.patientEmail);
+        } else {
+          setPatientStatus(false);
+        }
+      })
+      .catch((err) => {
+        setPatientStatus(false);
+      });
+  };
+
+  const patientId = watch("patientId");
+  const rebate = watch("rebate");
+
+  const debouncedFetchData = Debounce(FetchPatient, 500);
+  useEffect(() => {
+    if (patientId) {
+      debouncedFetchData(patientId);
+    }
+  }, [patientId, debouncedFetchData]);
+
+  const onSubmit = (data_) => {
+    console.log(data_);
+
+    const createProcedure = (patientId) => {
+      const proceduresToSubmit = [];
+      data_.rebatesArray.map((x) => {
+        proceduresToSubmit.push({
+          patientId: patientId,
+          medServiceId: x.medServiceId,
+          quantity: 1,
+          amount: x.price,
+          subotal: x.price,
+          remarks: remarks,
+          referrerName: x.referrerName,
+          rebatePaid: x.rebatePaid,
+          refererHospital: x.refererHospital,
+          refererEmail: x.refererEmail,
+          phoneNo: "x.phone",
+          entryUserId: userId,
+          facilityId: facilityId,
+          procedureDiscountId: discountId,
+          faclityDiscountId: faclityDiscountId,
+          procedureDiscountId: 0,
+
+          // entryUserId: "string",
+          // trackId: "string",
+          // date: "2024-01-03T08:43:27.827Z",
+          // formID: "string",
+          // procedureEntryStatus: "string",
+          // facilityId: "string",
+        });
+      });
+
+      axios
+        .post(
+          `${BASE_URL}/service-manager/procedures/create`,
+          proceduresToSubmit,
+          axiosConfig
+        )
+        .then((response) => {
+          console.log(response);
+          if (response) {
+            successRef.current.click();
+          }
+        })
+        .catch((err) => console.log(err));
+    };
+
+    if (!patientStatus) {
+      // patientNull.current.click();
+      // console.log(patientStatus);
+      const data = {
+        patientFacilityCode: facilityId,
+        patientName: data_.patientName,
+        patientAge: Number(data_.patientAge) || 10,
+        patientEmail: data_.patientEmail,
+        patientPhone: data_.patientPhone,
+        patientGenderId: 0,
+        aboutPatient: "",
+        maritalStatusId: 0,
+        address: data_.patientAddress,
+        bloodGroupId: 0,
+        dateOfBirth: "2024-01-03T08:37:00.151Z",
+        dateOfDeath: "2024-01-03T08:37:00.151Z",
+        // isActive: true,
+        // patientUniqueID: "string",
+      };
+      axios
+        .post(`${BASE_URL}/patient/createpatientt`, data, axiosConfig)
+        .then((response) => {
+          if (response) {
+            createProcedure(response.data.data.patientUniqueID);
+            setPatientStatus(true);
+          }
+        })
+        .catch((err) => console.log(err));
+    } else {
+      createProcedure(data_.patientId);
+    }
   };
 
   const errorRef = useRef(null);
@@ -64,62 +179,6 @@ function Form({ procedureToEdit }) {
       setButtonClass("submitFormLight");
     }
   }, [patientId, remarks]);
-
-  useEffect(() => {
-    // alert("I want to edit");
-    if (procedureToEdit) {
-      setPatientId(procedureToEdit.patientId);
-      setPatientName(procedureToEdit.patientName);
-      setPatientNumber(procedureToEdit.phoneNo);
-      setPatientAge(procedureToEdit.patientAge);
-      setPatientAddress(procedureToEdit.address);
-      setPatientEmail(procedureToEdit.patientEmail);
-    }
-  }, [procedureToEdit]);
-
-  const url = `${BASE_URL}/patient/getpatientbyuniqueid/${patientId}`;
-  const FetchPatient = () => {
-    return axios
-      .get(url)
-      .then((res) => {
-        if (res.data.statusCode === 200) {
-          setPatient(res.data.data);
-          setPatientStatus(true);
-        }
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const debouncedFetchData = Debounce(FetchPatient, 500);
-
-  useEffect(() => {
-    if (patientId) {
-      debouncedFetchData(patientId);
-    }
-  }, [patientId, debouncedFetchData]);
-
-  const handleInputChange = (event) => {
-    setPatientId(event.target.value);
-  };
-
-  useEffect(() => {
-    //   fetchInfo();
-    if (patient) {
-      setPatientName(patient.patientName);
-      setPatientNumber(patient.patientPhone);
-      setPatientAge(patient.patientAge);
-      setPatientAddress(patient.address);
-      setPatientEmail(patient.patientEmail);
-
-      if (patient.patientGenderId === 1) {
-        setPatientGender("Male");
-      } else if (patient.patientGenderId === 2) {
-        setPatientGender("Female");
-      } else if (patient.patientGenderId === 3) {
-        setPatientGender("Others");
-      }
-    }
-  }, [patientId]);
 
   const [categoryValue, setCategorydValue] = useState("");
 
@@ -167,6 +226,14 @@ function Form({ procedureToEdit }) {
       .catch((err) => console.log(err));
   };
 
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+    {
+      control,
+      name: "rebatesArray",
+    }
+  );
+  const rebatesArray = watch("rebatesArray");
+
   // const FetchDiscount = () => {
   //     const url = `${BASE_URL}/service-manager/medServices/getall`
   //     axios.get(url)
@@ -195,141 +262,56 @@ function Form({ procedureToEdit }) {
   }, []);
 
   useEffect(() => {
-    const storedcategoryValues =
-      JSON.parse(localStorage.getItem("procedureCategoryValues")) || "";
-    setCategorydValue(storedcategoryValues);
+    const Fac_url = `${BASE_URL}/payment/discounts/getactivediscount/facilityId?facilityId=${facilityId}`;
+    if (facilityId)
+      axios
+        .get(Fac_url)
+        .then((res) => {
+          setDiscountData(res.data.data);
+        })
+        .catch((err) => console.log(err));
+  }, [facilityId]);
 
-    const handleBeforeUnload = () => {
-      // Clear localStorage
-      localStorage.clear();
-    };
-
-    // Attach the event listener
-    window.addEventListener("beforeunload", handleBeforeUnload);
-  }, []);
-
-  const Fac_url = `${BASE_URL}/payment/discounts/getactivediscount/facilityId?facilityId=${facilityId}`;
-
-  useEffect(() => {
-    axios
-      .get(Fac_url)
-      .then((res) => {
-        setDiscountData(res.data.data);
-      })
-      .catch((err) => console.log(err));
-  }, [Fac_url]);
-
-  const handleAddProcedure = (id, price, name) => {
-    const totals = price * quantity;
-
-    const discount = discountData.find((d) => d.procedureId === id);
-    const facility = discountData.find((d) => d.discountTypeId === 1);
-
-    if (facility) {
-      setFaclityDiscountId(facility.facilityId);
-    }
-
-    let discountValues;
-
-    if (discount) {
-      discountValues = discount.discountPercent;
-      setDiscountId(discount.procedureId);
-    }
-
-    const test = { name: name, amount: price, discount: discountValues };
+  const handleAddProcedure = (procedureInfo) => {
+    // const discount = discountData.find((d) => d.procedureId === id);
+    // const facility = discountData.find((d) => d.discountTypeId === 1);
+    // if (facility) {
+    //   setFaclityDiscountId(facility.facilityId);
+    // }
+    // let discountValues;
+    // if (discount) {
+    //   discountValues = discount.discountPercent;
+    //   setDiscountId(discount.procedureId);
+    // }
 
     if (
-      !procedureData.some((procedureData) => procedureData.medServiceId === id)
+      !procedure.find(
+        (item) => item.medServiceId === procedureInfo.medServiceId
+      )
     ) {
       // Add the product to the array
-      const updatedProcedure = [...procedure, test];
-      setProcedure(updatedProcedure);
+      setProcedure([...procedure, procedureInfo]);
 
-      // Update the total amount
-      const updatedTotalAmount = updatedProcedure.reduce(
-        (total, item) => total + +item.amount,
-        0
-      );
-
-      setTotalAmount(updatedTotalAmount);
-
-      if (discount && facility) {
-        const discountValue = discount.discountPercent;
-        const facilityValue = facility.discountPercent;
-        const Value = +discountValue + +facilityValue;
-        setTotalDiscount((prevDiscount) => prevDiscount + +Value);
-      } else if (discount) {
-        setTotalDiscount(
-          (prevDiscount) => prevDiscount + discount.discountPercent
-        );
-      } else if (facility) {
-        setTotalDiscount(
-          (prevDiscount) => prevDiscount + discount.discountPercent
-        );
-      }
-
-      // Update localStorage
-      localStorage.setItem("procedures", JSON.stringify(updatedProcedure));
-
-      const newPrcedure = {
-        patientId: patientId,
-        medServiceId: id,
-        quantity: quantity,
-        amount: price,
-        subotal: totals,
-        remarks: remarks,
-        referrerName: referrerName,
-        rebatePaid: rebatePaid,
-        refererHospital: refererHospital,
-        refererEmail: refererEmail,
-        phoneNo: phone,
-        entryUserId: userId,
-        facilityId: facilityId,
-        procedureDiscountId: discountId,
-        faclityDiscountId: faclityDiscountId,
-      };
-
-      setProcedureData([...procedureData, newPrcedure]);
-
-      console.log(procedureData);
-    } else {
-      alert("Added already");
+      // if (discount && facility) {
+      //   const discountValue = discount.discountPercent;
+      //   const facilityValue = facility.discountPercent;
+      //   const Value = +discountValue + +facilityValue;
+      //   setTotalDiscount((prevDiscount) => prevDiscount + +Value);
+      // } else if (discount) {
+      //   setTotalDiscount(
+      //     (prevDiscount) => prevDiscount + discount.discountPercent
+      //   );
+      // } else if (facility) {
+      //   setTotalDiscount(
+      //     (prevDiscount) => prevDiscount + discount.discountPercent
+      //   );
+      // }
     }
   };
 
-  const removeProcedure = (index) => {
-    const removedProduct = procedure[index];
-    const updatedProcedure = procedure.filter((_, i) => i !== index);
-    setProcedure(updatedProcedure);
-
-    // Update the total amount
-    const updatedTotalAmount = totalAmount - removedProduct.amount;
-    setTotalAmount(updatedTotalAmount);
-
-    const discountPercents = removedProduct.discount;
-    console.log(discountPercents);
-    setTotalDiscount((prevDiscount) => prevDiscount - discountPercents);
-
-    // Update localStorage
-    localStorage.setItem("procedures", JSON.stringify(updatedProcedure));
-
-    const updatedProcedureData = procedureData.filter((_, i) => i !== index);
-    setProcedureData(updatedProcedureData);
+  const removeProcedure = (id) => {
+    setProcedure(procedure.filter((x) => x.medServiceId !== id));
   };
-
-  useEffect(() => {
-    const storedProcedure =
-      JSON.parse(localStorage.getItem("procedures")) || [];
-    setProcedure(storedProcedure);
-
-    // Calculate total amount
-    const storedTotalAmount = storedProcedure.reduce(
-      (total, item) => total + +item.amount,
-      0
-    );
-
-    setTotalAmount(storedTotalAmount);
-  }, [totalAmount]);
 
   let axiosConfig = {
     headers: {
@@ -338,189 +320,175 @@ function Form({ procedureToEdit }) {
     },
   };
 
-  useEffect(() => {
-    const updatedData = procedureData.map((item) => ({
-      ...item,
-      remarks: remarks,
-      referrerName: referrerName,
-      rebatePaid: rebatePaid,
-      phoneNo: phone,
-      refererHospital: refererHospital,
-      refererEmail: refererEmail,
-    }));
-
-    localStorage.setItem("procedureData", JSON.stringify(updatedData));
-    // setProcedureData(updatedData)
-  }, [
-    procedureData,
-    remarks,
-    referrerName,
-    rebatePaid,
-    phone,
-    refererHospital,
-    refererEmail,
-  ]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const data = JSON.parse(localStorage.getItem("procedureData")) || [];
-    if (!patientStatus) {
-      patientNull.current.click();
-      console.log(patientStatus);
-    } else if (!patientId && !remarks) {
-      errorRef.current.click();
-    } else {
-      console.log(procedureData);
-      axios
-        .post(
-          `${BASE_URL}/service-manager/procedures/create`,
-          data,
-          axiosConfig
-        )
-        .then((response) => {
-          console.log(response);
-          if (response) {
-            successRef.current.click();
-          }
-        })
-        .catch((err) => console.log(err));
-    }
-  };
+  // calculations to display
 
   useEffect(() => {
     if (rebate) {
-      const rebateValue = (rebatePaid * totalAmount) / 100;
-      setSubtotal(totalAmount - rebateValue);
-    } else setSubtotal(totalAmount);
-  }, [totalAmount, rebate, rebatePaid]);
+      let total = 0;
+      const proceduresToConsider = getValues().rebatesArray;
+
+      // loop over all procedures selected
+      for (let item of procedure) {
+        let amount = Number(item.price) || 0;
+        // check if the procedure has rebate
+        const rebateInfo = proceduresToConsider?.find(
+          (x) => x.id === item.medServiceId
+        );
+        if (rebateInfo?.rebatePaid) {
+          const rebatePaid = Number(rebateInfo.rebatePaid) || 0;
+          amount = amount - (rebatePaid * amount) / 100;
+        }
+
+        total = total + amount;
+      }
+
+      setSubTotal(total);
+    } else {
+      const totalPrice = procedure.reduce((acc, item) => acc + item.price, 0);
+      setSubTotal(totalPrice);
+    }
+  }, [rebate, procedure, rebatesArray]);
 
   useEffect(() => {
-    setTotal(subtotal - subtotal * (totalDiscount / 100));
-  }, [subtotal, totalDiscount]);
+    setTotal(subTotal);
+  }, [subTotal]);
+
+  const SuccessModal = () => (
+    <div>
+      <div
+        className="modal fade"
+        id="exampleModal1"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-body SuccessModal">
+              <center>
+                <img src={Success} alt="" />
+                <p>Form created successfully</p>
+                <div className="buttonss">
+                  <button
+                    type="button"
+                    className="btn cancel"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                  <a href="/reports">
+                    {" "}
+                    <button type="button" className="btn light-button">
+                      Check it out
+                    </button>
+                  </a>
+                </div>
+              </center>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        type="button"
+        className=""
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal1"
+        ref={successRef}
+        style={{ display: "none" }}
+      ></button>
+    </div>
+  );
+
+  const ErrorModal = () => (
+    <div>
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-body ErrorModal">
+              <center>
+                <img src={Error} alt="" />
+                <p>Field required, Fill and try again</p>
+                <div className="buttonss">
+                  <button
+                    type="button"
+                    className="btn light-button"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </center>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        type="button"
+        className=""
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        ref={errorRef}
+        style={{ display: "none" }}
+      ></button>
+    </div>
+  );
+
+  const PatientErrorModal = () => (
+    <div>
+      <div
+        className="modal fade"
+        id="exampleModall"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-body ErrorModal">
+              <center>
+                <img src={Error} alt="" />
+                <p>Patient not found</p>
+                <div className="buttonss">
+                  <button
+                    type="button"
+                    className="btn light-button"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </center>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        type="button"
+        className=""
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModall"
+        ref={patientNull}
+        style={{ display: "none" }}
+      ></button>
+    </div>
+  );
 
   return (
     <div>
-      {/* SUCCESS */}
       <div className="ActiveFormSection ">
-        <div>
-          <div
-            className="modal fade"
-            id="exampleModal1"
-            tabIndex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog modal-dialog modal-dialog-centered">
-              <div className="modal-content">
-                <div className="modal-body SuccessModal">
-                  <center>
-                    <img src={Success} alt="" />
-                    <p>Form created successfully</p>
-                    <div className="buttonss">
-                      <button
-                        type="button"
-                        className="btn cancel"
-                        data-bs-dismiss="modal"
-                      >
-                        Cancel
-                      </button>
-                      <a href="/reports">
-                        {" "}
-                        <button type="button" className="btn light-button">
-                          Check it out
-                        </button>
-                      </a>
-                    </div>
-                  </center>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button
-            type="button"
-            className=""
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal1"
-            ref={successRef}
-            style={{ display: "none" }}
-          ></button>
-        </div>
+        {/* SUCCESS */}
+        <SuccessModal />
         {/* ERROR */}
-        <div>
-          <div
-            className="modal fade"
-            id="exampleModal"
-            tabIndex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog modal-dialog modal-dialog-centered">
-              <div className="modal-content">
-                <div className="modal-body ErrorModal">
-                  <center>
-                    <img src={Error} alt="" />
-                    <p>Field required, Fill and try again</p>
-                    <div className="buttonss">
-                      <button
-                        type="button"
-                        className="btn light-button"
-                        data-bs-dismiss="modal"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </center>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button
-            type="button"
-            className=""
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            ref={errorRef}
-            style={{ display: "none" }}
-          ></button>
-        </div>
+        <ErrorModal />
         {/* PATIENT ERROR */}
-        <div>
-          <div
-            className="modal fade"
-            id="exampleModall"
-            tabIndex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog modal-dialog modal-dialog-centered">
-              <div className="modal-content">
-                <div className="modal-body ErrorModal">
-                  <center>
-                    <img src={Error} alt="" />
-                    <p>Patient not found</p>
-                    <div className="buttonss">
-                      <button
-                        type="button"
-                        className="btn light-button"
-                        data-bs-dismiss="modal"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </center>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button
-            type="button"
-            className=""
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModall"
-            ref={patientNull}
-            style={{ display: "none" }}
-          ></button>
-        </div>
+        <PatientErrorModal />
+
         <div className="relative ">
           <div className="headers">
             <div className="date ">
@@ -533,9 +501,11 @@ function Form({ procedureToEdit }) {
             <NewReport Type="View" />
           </div>
         </div>
+
         <div className="divider"></div>
+
         <div className="form">
-          <form action="">
+          <form>
             <div className="deduction">
               <h2>Patient Details</h2>
               <p>You are to fill in the patient Basic Information</p>
@@ -546,129 +516,129 @@ function Form({ procedureToEdit }) {
               <div className="row">
                 <div className="col-md-6">
                   <div className="discount">
-                    <label htmlFor="discount" className="fw3">
+                    <label htmlFor="patientId" className="fw3">
                       Patient ID
                     </label>{" "}
                     <br />
-                    {/* <input type="text" name="patientId" onChange={(e) => setPatientId(e.target.value)} id="discount" placeholder='AGA/453|' /> */}
                     <input
-                      type="text"
-                      onChange={handleInputChange}
-                      name="userId"
-                      id="discount"
+                      {...register("patientId")}
+                      name="patientId"
+                      id="patientId"
                       placeholder="AGA/453"
                     />
                   </div>
                 </div>
+
                 <div className="col-md-6">
                   <div className="discount">
-                    <label htmlFor="discount" className="fw3">
+                    <label htmlFor="patientName" className="fw3">
                       Patient Name
-                    </label>{" "}
+                    </label>
                     <br />
                     <input
-                      type="text"
-                      name="name"
-                      value={patientName}
-                      id="discount"
+                      name="patientName"
+                      {...register("patientName")}
+                      id="patientName"
                       placeholder="Adepoju Deborah "
                     />
                   </div>
                 </div>
               </div>
             </div>
+
             <div className="margin30"></div>
+
             <div className="Rebate">
               <div className="row">
                 <div className="col-md-6">
                   <div className="discount">
-                    <label htmlFor="discount" className="fw3">
+                    <label htmlFor="patientPhone" className="fw3">
                       Patient Mobile Number
-                    </label>{" "}
+                    </label>
                     <br />
                     <input
                       type="text"
-                      name="number"
-                      value={patientNumber}
-                      id="discount"
+                      name="patientPhone"
+                      {...register("patientPhone")}
+                      id="patientPhone"
                       placeholder="+234 08143626356"
                     />
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="discount">
-                    <label htmlFor="discount" className="fw3">
+                    <label htmlFor="patientGenderId" className="fw3">
                       Gender
-                    </label>{" "}
+                    </label>
                     <br />
-                    <input
-                      type="text"
-                      name="gender"
-                      value={patientGender}
-                      id="discount"
-                      placeholder="Male"
-                    />
+                    <select id="patientGender" {...register("patientGender")}>
+                      <option value="1">Male</option>
+                      <option value="2">Female</option>
+                    </select>
                   </div>
                 </div>
               </div>
             </div>
+
             <div className="margin30"></div>
+
             <div className="Rebate">
               <div className="row">
                 <div className="col-md-6">
                   <div className="discount">
-                    <label htmlFor="discount" className="fw3">
+                    <label htmlFor="patientAge" className="fw3">
                       Age of the Patient
-                    </label>{" "}
+                    </label>
                     <br />
                     <input
                       type="text"
-                      name="age"
-                      value={patientAge}
-                      id="discount"
-                      placeholder=""
+                      name="patientAge"
+                      {...register("patientAge")}
+                      id="patientAge"
                     />
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="discount">
-                    <label htmlFor="discount" className="fw3">
+                    <label htmlFor="patientEmail" className="fw3">
                       Patient Email
-                    </label>{" "}
+                    </label>
                     <br />
                     <input
-                      type="text"
-                      name="email"
-                      value={patientEmail}
-                      id="discount"
-                      placeholder=""
+                      type="email"
+                      name="patientEmail"
+                      {...register("patientEmail")}
+                      id="patientEmail"
                     />
                   </div>
                 </div>
               </div>
             </div>
+
             <div className="margin30"></div>
+
             <div className="Rebate">
               <div className="row">
                 <div className="col-md-6">
                   <div className="discount">
-                    <label htmlFor="discount" className="fw3">
+                    <label htmlFor="patientAddress" className="fw3">
                       Address
-                    </label>{" "}
+                    </label>
                     <br />
                     <input
                       type="text"
-                      name="address"
-                      value={patientAddress}
-                      id="discount"
+                      name="patientAddress"
+                      {...register("patientAddress")}
+                      id="patientAddress"
                       placeholder="No 24, W. F. Kumuyi Street,"
                     />
                   </div>
                 </div>
+
                 <div className="col-md-6">
                   <label htmlFor="Defaultselectexample" className="label">
                     Procedure category
-                  </label>{" "}
+                  </label>
                   <br />
                   <div className="dropdown">
                     <button
@@ -693,18 +663,14 @@ function Form({ procedureToEdit }) {
                                 // checked={selectedValue === ' Liver Test '}
                                 onChange={handleProcedureCategory}
                                 type="checkbox"
-                                id="flexCheckDefaults1"
                               />
-                              <label
-                                className="form-check-label"
-                                htmlFor="flexCheckDefaults1"
-                              >
+                              <label className="form-check-label">
                                 {each.categoryName}
                               </label>
                             </div>
                             <div className="amount">
                               {/* <img src={Naira} alt="" />
-                                                            <p>{each.price}</p> */}
+                              <p>{each.price}</p> */}
                             </div>
                           </div>
                         ))}
@@ -729,11 +695,13 @@ function Form({ procedureToEdit }) {
                   </div>
                 </div>
               </div>
+
               <div className="margin30"></div>
+
               <div className="col-md-6" onClick={CategoryCheck}>
                 <label htmlFor="Defaultselectexample" className="label">
                   Procedures
-                </label>{" "}
+                </label>
                 <br />
                 <div className="dropdown">
                   <button
@@ -772,15 +740,13 @@ function Form({ procedureToEdit }) {
                             <input
                               className="form-check-input"
                               value={each.medServiceName}
-                              // checked={selectedValue === ' Liver Test '}
-                              onClick={(event) =>
-                                handleAddProcedure(
-                                  each.medServiceId,
-                                  each.price,
-                                  each.medServiceName
-                                )
-                              }
-                              // onClick={(event) => addProcedure({ name: `${each.medServiceName}`, amount: `${each.price}` })}
+                              onClick={(event) => {
+                                if (event.target.checked) {
+                                  handleAddProcedure(each);
+                                } else {
+                                  removeProcedure(each.medServiceId);
+                                }
+                              }}
                               type="checkbox"
                               id={`flexCheckDefaultts+${i}`}
                             />
@@ -805,10 +771,10 @@ function Form({ procedureToEdit }) {
                   <ul>
                     {procedure.map((value, index) => (
                       <li key={index}>
-                        {value.name} - {value.amount}
+                        {value.medServiceName} - {value.price}
                         <img
                           src={Arrow}
-                          onClick={() => removeProcedure(index)}
+                          onClick={() => removeProcedure(value.medServiceId)}
                           alt=""
                         />
                       </li>
@@ -826,6 +792,7 @@ function Form({ procedureToEdit }) {
               </p>
               <div className="dividerTwo"></div>
             </div>
+
             <div className="Rebate">
               <div className="row">
                 <div className="col-md-6 mt-4">
@@ -833,8 +800,7 @@ function Form({ procedureToEdit }) {
                     <input
                       className="form-check-input"
                       type="checkbox"
-                      onChange={toggleRebate}
-                      value=""
+                      {...register("rebate")}
                       id="flexCheckDefaultt"
                     />
                     <label
@@ -849,109 +815,155 @@ function Form({ procedureToEdit }) {
                     <p className="fw3">click on the box if rebate was paid</p>
                   </div>
                 </div>
+
                 {/* <div className="col-md-6">
-                                    <div className="discount">
-                                        <label htmlFor="discount" className='fw3'>Discount Code</label>  <br />
-                                        <input type="text" name="discountId" onChange={(e) => setDiscountId(e.target.value)} id="discount" placeholder='Enter code' />
-                                    </div>
-                                    <div className="int">
-                                        <img src={Int} alt="" />
-                                        <p className='fw3'>50% Discount as being applied to this transaction - 1,000.00</p>
-                                    </div>
-                                </div> */}
-              </div>
-            </div>
-            {rebate ? (
-              <div className="">
-                <div className="margin30"></div>
-                <div className="Rebate">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="discount">
-                        <label htmlFor="discount" className="fw3">
-                          Rebate Paid (%)
-                        </label>
-                        <br />
-                        <input
-                          type="text"
-                          name="rebatePaid"
-                          onChange={(e) => setRebatePaid(e.target.value)}
-                          id="discount"
-                          placeholder="Enter Percentage of Rebate Paid"
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="discount">
-                        <label htmlFor="discount" className="fw3">
-                          Referrers Name
-                        </label>{" "}
-                        <br />
-                        <input
-                          type="text"
-                          name="referrerName"
-                          onChange={(e) => setReferrerName(e.target.value)}
-                          id="discount"
-                          placeholder="Enter Referee Name"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="margin30"></div>
-                <div className="Rebate">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="discount">
-                        <label htmlFor="discount" className="fw3">
-                          Referrer’s Hospital/Laboratory
-                        </label>{" "}
-                        <br />
-                        <input
-                          type="text"
-                          name="refersHospital"
-                          onChange={(e) => setRefererHospital(e.target.value)}
-                          id="discount"
-                          placeholder="Enter Laboratory Name"
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="discount">
-                        <label htmlFor="discount" className="fw3">
-                          Referrer’s Email Address
-                        </label>{" "}
-                        <br />
-                        <input
-                          type="text"
-                          name="refersEmail"
-                          id="discount"
-                          onChange={(e) => setRefererEmail(e.target.value)}
-                          placeholder="Enter Referrer Email Address"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="margin30"></div>
-                <div className="phone">
-                  <div className="col-md-6">
+                  <div className="discount">
                     <label htmlFor="discount" className="fw3">
-                      Referrer’s Phone Number
+                      Discount Code
                     </label>{" "}
                     <br />
-                    <PhoneInput
-                      placeholder="Enter phone number"
-                      value={phone}
-                      onChange={setPhone}
+                    <input
+                      type="text"
+                      name="discountId"
+                      onChange={(e) => setDiscountId(e.target.value)}
+                      id="discount"
+                      placeholder="Enter code"
                     />
                   </div>
-                </div>
+                  <div className="int">
+                    <img src={Int} alt="" />
+                    <p className="fw3">
+                      50% Discount as being applied to this transaction -
+                      1,000.00
+                    </p>
+                  </div>
+                </div> */}
               </div>
+            </div>
+
+            {rebate ? (
+              procedure?.map((selectedProcedure, index) => (
+                <div key={selectedProcedure.medServiceId} className="">
+                  <div className="margin30"></div>
+                  <h6>{selectedProcedure.medServiceName}</h6>
+
+                  <Controller
+                    name={`rebatesArray.${index}.id`}
+                    control={control}
+                    defaultValue={selectedProcedure.medServiceId}
+                    render={({ field }) => <input type="hidden" {...field} />}
+                  />
+
+                  <div className="Rebate">
+                    <div className="row">
+                      <div className="col-md-6">
+                        <div className="discount">
+                          <label htmlFor="discount" className="fw3">
+                            Rebate Paid (%)
+                          </label>
+                          <br />
+                          <input
+                            type="text"
+                            name="rebatePaid"
+                            {...register(`rebatesArray.${index}.rebatePaid`)}
+                            id="discount"
+                            placeholder="Enter Percentage of Rebate Paid"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="col-md-6">
+                        <div className="discount">
+                          <label htmlFor="referrerName" className="fw3">
+                            Referrers Name
+                          </label>
+                          <br />
+                          <input
+                            type="text"
+                            name="referrerName"
+                            {...register(`rebatesArray.${index}.referrerName`)}
+                            id="referrerName"
+                            placeholder="Enter Referee Name"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="margin30"></div>
+
+                  <div className="Rebate">
+                    <div className="row">
+                      <div className="col-md-6">
+                        <div className="discount">
+                          <label htmlFor="refersHospital" className="fw3">
+                            Referrer’s Hospital/Laboratory
+                          </label>
+                          <br />
+                          <input
+                            type="text"
+                            name="refersHospital"
+                            {...register(
+                              `rebatesArray.${index}.refersHospital`
+                            )}
+                            id="refersHospital"
+                            placeholder="Enter Laboratory Name"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="col-md-6">
+                        <div className="discount">
+                          <label htmlFor="discount" className="fw3">
+                            Referrer’s Email Address
+                          </label>{" "}
+                          <br />
+                          <input
+                            type="text"
+                            name="refererEmail"
+                            id="discount"
+                            {...register(`rebatesArray.${index}.refererEmail`)}
+                            placeholder="Enter Referrer Email Address"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="margin30"></div>
+
+                  <div className="phone">
+                    <div className="col-md-6">
+                      <label htmlFor="discount" className="fw3">
+                        Referrer’s Phone Number
+                      </label>
+                      <br />
+                      {/* <PhoneInput
+                        placeholder="Enter phone number"
+                        value={phone}
+                        onChange={setPhone}
+                      /> */}
+                      <Controller
+                        name="phoneNo"
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                          <PhoneInput
+                            value={value}
+                            onChange={onChange}
+                            id="phoneNo"
+                          />
+                        )}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))
             ) : (
               <div></div>
             )}
+
             <div className="margin30"></div>
+
             <div className="remark">
               <label htmlFor="discount" className="fw3">
                 Remark
@@ -964,7 +976,9 @@ function Form({ procedureToEdit }) {
                 placeholder="Leave a Message for the diagnostic center"
               ></textarea>
             </div>
+
             <div className="margin40"></div>
+
             <div className="">
               <div className="col-md-6">
                 <div className="total">
@@ -974,7 +988,7 @@ function Form({ procedureToEdit }) {
                     </div>
                     <div className="amount">
                       <img src={Naira} alt="" />
-                      <p className="fw3">{MoneyFormat(subtotal)}.00</p>
+                      <p className="fw3">{MoneyFormat(subTotal)}.00</p>
                     </div>
                   </div>
                   <div className="">
@@ -1000,7 +1014,9 @@ function Form({ procedureToEdit }) {
                 </div>
               </div>
             </div>
+
             <div className="margin30"></div>
+
             <div className="ttext">
               <p className="gray f15">
                 The data collected helps us to track utilisation and tailor our
@@ -1013,11 +1029,12 @@ function Form({ procedureToEdit }) {
               <button
                 type="submit"
                 className={buttonClass}
-                onClick={handleSubmit}
+                onClick={handleSubmit(onSubmit)}
               >
                 Submit
               </button>
             </center>
+
             <div className="margin30"></div>
           </form>
         </div>
