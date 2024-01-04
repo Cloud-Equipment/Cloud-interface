@@ -14,6 +14,7 @@ import { BASE_URL, Debounce } from "../../data/data";
 import { MoneyFormat } from "../../utils/utils";
 // import { Link } from 'react-router-dom'
 import { useForm, useFieldArray, Controller } from "react-hook-form";
+import SearchBox from "../../components/SearchBox";
 
 function Form({ procedureToEdit }) {
   const [phone, setPhone] = useState("");
@@ -75,6 +76,26 @@ function Form({ procedureToEdit }) {
       .catch((err) => {
         setPatientStatus(false);
       });
+  };
+
+  const options = [
+    { value: "john", label: "John Doe" },
+    { value: "jane", label: "Jane Doe" },
+    { value: "mary", label: "Mary Phillips" },
+    { value: "robert", label: "Robert" },
+    { value: "karius", label: "Karius" },
+  ];
+
+  const handleSelect = (selectedPatient) => {
+    console.log(selectedPatient);
+    setPatientStatus(true);
+    setValue("patientId", selectedPatient?.patientUniqueID);
+    setValue("patientName", selectedPatient?.patientName);
+    setValue("patientPhone", selectedPatient?.patientPhone);
+    setValue("patientAge", selectedPatient?.patientAge);
+    setValue("patientAddress", selectedPatient?.patientAddress);
+    setValue("patientGenderId", selectedPatient?.patientGenderId);
+    setValue("patientEmail", selectedPatient?.patientEmail);
   };
 
   const patientId = watch("patientId");
@@ -511,6 +532,10 @@ function Form({ procedureToEdit }) {
               <p>You are to fill in the patient Basic Information</p>
               <div className="dividerTwo"></div>
             </div>
+
+            <SearchBox options={options} onSelect={handleSelect} />
+
+            <div className="margin30"></div>
 
             <div className="Rebate">
               <div className="row">
