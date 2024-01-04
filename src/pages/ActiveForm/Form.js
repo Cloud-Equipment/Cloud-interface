@@ -176,7 +176,7 @@ function Form({ procedureToEdit }) {
         // patientUniqueID: "string",
       };
       axios
-        .post(`${BASE_URL}/patient/createpatientt`, data, axiosConfig)
+        .post(`${BASE_URL}/patient/createpatient`, data, axiosConfig)
         .then((response) => {
           if (response) {
             createProcedure(response.data.data.patientUniqueID);
