@@ -92,22 +92,12 @@
   padding: 10px;
 }
 
-.divider {
-  border-bottom: 0px solid rgb(234, 236, 240);
-  width: 100%;
-}
-
 .OverflowSection {
   overflow: scroll;
 }
 
 .gray {
   color: rgb(93, 91, 91);
-}
-
-.dividerTwo {
-  border-bottom: 2px solid rgb(234, 236, 240);
-  width: 100%;
 }
 
 .fw3 {
@@ -193,25 +183,25 @@
   right: 0px;
   padding: 4px;
   border-radius: 50%;
-  background-color: #7FBA7A;
+  background-color: #7fba7a;
   color: white;
 }
 
 .roundballNo {
   padding: 3px;
   border-radius: 50%;
-  background-color: #7FBA7A;
+  background-color: #7fba7a;
   color: white;
 }
 
 .light-button {
   font-size: 14px;
-  color: #54D4BD;
+  color: #54d4bd;
   padding: 7px 15px;
   border-radius: 6px;
   margin: 0 5px;
   outline: none;
-  border: 1px solid #54D4BD;
+  border: 1px solid #54d4bd;
   background: transparent;
 }
 .light-button img {
@@ -219,7 +209,7 @@
   margin-right: 5px;
 }
 .light-button:hover {
-  background: #54D4BD;
+  background: #54d4bd;
   color: #fff !important;
 }
 
@@ -231,7 +221,7 @@
   outline: none;
   margin: 0 5px;
   border: none;
-  background-color: #54D4BD;
+  background-color: #54d4bd;
 }
 .dark-button img {
   width: 20px;
@@ -244,7 +234,7 @@
 
 .grey-button {
   font-size: 14px;
-  color: #54D4BD;
+  color: #54d4bd;
   padding: 7px 15px;
   border-radius: 6px;
   outline: none;
@@ -253,13 +243,13 @@
   background-color: rgb(243, 243, 243);
 }
 .grey-button:hover {
-  background-color: #54D4BD;
+  background-color: #54d4bd;
   color: #fff;
 }
 
 .grey-border-button {
   font-size: 14px;
-  color: #54D4BD;
+  color: #54d4bd;
   padding: 7px 15px;
   border-radius: 6px;
   outline: none;
@@ -268,7 +258,7 @@
   background-color: transparent;
 }
 .grey-border-button:hover {
-  background-color: #54D4BD;
+  background-color: #54d4bd;
   color: #fff;
   border: none;
 }
@@ -279,7 +269,7 @@
   right: 2px;
   padding: 5px;
   border-radius: 50%;
-  background-color: #0D5F50;
+  background-color: #0d5f50;
   color: white;
 }
 
@@ -291,7 +281,7 @@
   width: 100%;
   margin: 0 5px;
   border: none;
-  background-color: #54D4BD;
+  background-color: #54d4bd;
 }
 .dark-button100 img {
   width: 20px;
@@ -311,8 +301,8 @@
   margin: 0 5px;
   font-weight: 300;
   border: none;
-  background-color: #0D5F50;
-  border: 1px solid #0D5F50;
+  background-color: #0d5f50;
+  border: 1px solid #0d5f50;
 }
 .secondaryButtonBackground img {
   width: 20px;
@@ -325,7 +315,7 @@
 
 .secondaryButtonBorder {
   font-size: 13px;
-  color: #0D5F50;
+  color: #0d5f50;
   padding: 7px 20px;
   border-radius: 6px;
   outline: none;
@@ -333,20 +323,20 @@
   font-weight: 300;
   border: none;
   background-color: transparent;
-  border: 1px solid #0D5F50;
+  border: 1px solid #0d5f50;
 }
 .secondaryButtonBorder img {
   width: 20px;
   margin-right: 5px;
 }
 .secondaryButtonBorder:hover {
-  background: #0D5F50;
+  background: #0d5f50;
   color: #fff;
 }
 
 .secondaryButtonNoBg {
   font-size: 13px;
-  color: #0D5F50;
+  color: #0d5f50;
   padding: 7px 20px;
   border-radius: 6px;
   outline: none;
@@ -360,13 +350,13 @@
   margin-right: 5px;
 }
 .secondaryButtonNoBg:hover {
-  background: #0D5F50;
+  background: #0d5f50;
   color: #fff;
 }
 
 .mixBtnBackgorund {
   font-size: 13px;
-  color: #54D4BD;
+  color: #54d4bd;
   padding: 7px 20px;
   border-radius: 6px;
   outline: none;
@@ -375,7 +365,7 @@
   background: rgb(238, 255, 252);
 }
 .mixBtnBackgorund:hover {
-  background: #0D5F50;
+  background: #0d5f50;
   color: #fff;
 }
 
@@ -393,8 +383,8 @@
   margin: 0 5px;
   font-weight: 300;
   border: none;
-  background-color: #0D5F50;
-  border: 1px solid #0D5F50;
+  background-color: #0d5f50;
+  border: 1px solid #0d5f50;
 }
 .secondaryButtonBackground img {
   width: 20px;
@@ -415,6 +405,7 @@
   justify-content: space-between;
   padding: 0.375rem 2.25rem 0.375rem 0.75rem;
 }
+
 .inputts::-moz-placeholder {
   font-size: 14px;
   color: rgba(99, 119, 138, 0.5) !important;
@@ -457,7 +448,7 @@
   cursor: pointer;
 }
 .NavbarPage .middle ul li:hover {
-  color: #54D4BD;
+  color: #54d4bd;
 }
 
 .NoData {
@@ -474,7 +465,12 @@
 }
 
 .LeftBanner {
-  background-image: linear-gradient(89.31deg, #042620 13.27%, rgba(0, 10, 8, 0.6) 94%), url(../Assets/Authentication/image\ 8.png);
+  background-image: linear-gradient(
+      89.31deg,
+      #042620 13.27%,
+      rgba(0, 10, 8, 0.6) 94%
+    ),
+    url(../Assets/Authentication/image\ 8.png);
   height: 91vh;
   background-size: cover;
   background-repeat: no-repeat;
@@ -495,7 +491,7 @@
   font-weight: 800;
 }
 .LeftBanner .text h1 span {
-  color: #54D4BD;
+  color: #54d4bd;
 }
 
 .ManageRoles .RolesModal .header {
@@ -538,8 +534,8 @@
   display: flex;
 }
 .ManageRoles .RolesModal .form-check .form-check-input:checked {
-  background-color: #0D5F50 !important;
-  border-color: #0D5F50 !important;
+  background-color: #0d5f50 !important;
+  border-color: #0d5f50 !important;
 }
 .ManageRoles .RolesModal .form-check label {
   color: rgb(157, 153, 172);
@@ -604,7 +600,13 @@
   display: flex;
   align-items: center;
 }
-.ManageRoles .RolesModal .accordion .accordion-collapse .accordion-body div img {
+.ManageRoles
+  .RolesModal
+  .accordion
+  .accordion-collapse
+  .accordion-body
+  div
+  img {
   width: 15px;
 }
 .ManageRoles .RolesModal .accordion .accordion-collapse .accordion-body div a {
@@ -679,17 +681,40 @@
 .ManageRoles .FirstContainer .accordion .accordion-collapse .accordion-body a {
   text-decoration: none;
 }
-.ManageRoles .FirstContainer .accordion .accordion-collapse .accordion-body div {
+.ManageRoles
+  .FirstContainer
+  .accordion
+  .accordion-collapse
+  .accordion-body
+  div {
   display: flex;
   align-items: center;
 }
-.ManageRoles .FirstContainer .accordion .accordion-collapse .accordion-body div img {
+.ManageRoles
+  .FirstContainer
+  .accordion
+  .accordion-collapse
+  .accordion-body
+  div
+  img {
   width: 15px;
 }
-.ManageRoles .FirstContainer .accordion .accordion-collapse .accordion-body div a {
+.ManageRoles
+  .FirstContainer
+  .accordion
+  .accordion-collapse
+  .accordion-body
+  div
+  a {
   text-decoration: none;
 }
-.ManageRoles .FirstContainer .accordion .accordion-collapse .accordion-body div p {
+.ManageRoles
+  .FirstContainer
+  .accordion
+  .accordion-collapse
+  .accordion-body
+  div
+  p {
   margin: 10px 5px;
   cursor: pointer;
   font-size: 13px;
@@ -716,9 +741,14 @@
 .ManageRoles .SecondContainer .second .can .form-check {
   display: flex;
 }
-.ManageRoles .SecondContainer .second .can .form-check .form-check-input:checked {
-  background-color: #0D5F50 !important;
-  border-color: #0D5F50 !important;
+.ManageRoles
+  .SecondContainer
+  .second
+  .can
+  .form-check
+  .form-check-input:checked {
+  background-color: #0d5f50 !important;
+  border-color: #0d5f50 !important;
 }
 .ManageRoles .SecondContainer .second .can .form-check label {
   color: rgb(157, 153, 172);
@@ -745,7 +775,7 @@
 }
 
 .NameHeader h2 {
-  color: #0D5F50;
+  color: #0d5f50;
   font-size: 25px;
   font-family: "Nunito Sans", sans-serif;
   margin: 0;
@@ -771,7 +801,7 @@
   align-items: center;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.04);
   border-radius: 5px;
-  background-color: #0D5F50;
+  background-color: #0d5f50;
   width: 150px;
   padding: 7px 15px;
   text-align: right;
@@ -841,7 +871,7 @@
 }
 .Login .LoginForm form span {
   font-size: 14px;
-  color: #54D4BD;
+  color: #54d4bd;
 }
 
 .VERIFY {
@@ -902,13 +932,13 @@
 }
 .VERIFY .VerifyForm form span {
   font-size: 14px;
-  color: #54D4BD;
+  color: #54d4bd;
 }
 
 .Sidebar {
   width: 19%;
   position: fixed;
-  background-color: #0D5F50;
+  background-color: #0d5f50;
   height: 100vh;
   padding: 50px 20px;
   color: #fff;
@@ -964,7 +994,7 @@
   --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
 .Sidebar .Top .accordion .accordion-button {
-  background: #0D5F50 !important;
+  background: #0d5f50 !important;
   border: none !important;
   padding: 0;
 }
@@ -983,7 +1013,7 @@
   color: white !important;
 }
 .Sidebar .Top .accordion .accordion-collapse {
-  background-color: #0D5F50 !important;
+  background-color: #0d5f50 !important;
   border: none !important;
 }
 .Sidebar .Top .accordion .accordion-collapse .accordion-body {
@@ -1079,7 +1109,7 @@
   position: relative;
 }
 .Sidebar .Last .message-header .img .roundball {
-  background-color: #7FBA7A;
+  background-color: #7fba7a;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -1120,7 +1150,7 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #0D5F50;
+  background-color: #0d5f50;
   overflow-x: hidden;
   transition: 0.5s;
 }
@@ -1128,7 +1158,7 @@
   width: 250px;
 }
 .SidebarMobile .MobileSidebar {
-  background-color: #0D5F50;
+  background-color: #0d5f50;
   height: 100vh;
   padding: 50px 20px;
   color: #fff;
@@ -1181,7 +1211,7 @@
   --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
 .SidebarMobile .MobileSidebar .Top .accordion .accordion-button {
-  background: #0D5F50 !important;
+  background: #0d5f50 !important;
   border: none !important;
   padding: 0;
 }
@@ -1200,33 +1230,71 @@
   color: white !important;
 }
 .SidebarMobile .MobileSidebar .Top .accordion .accordion-collapse {
-  background-color: #0D5F50 !important;
+  background-color: #0d5f50 !important;
   border: none !important;
 }
-.SidebarMobile .MobileSidebar .Top .accordion .accordion-collapse .accordion-body {
+.SidebarMobile
+  .MobileSidebar
+  .Top
+  .accordion
+  .accordion-collapse
+  .accordion-body {
   border: none !important;
   text-align: left;
   padding-top: 0px;
   padding: 0;
   padding-left: 20px;
 }
-.SidebarMobile .MobileSidebar .Top .accordion .accordion-collapse .accordion-body a {
+.SidebarMobile
+  .MobileSidebar
+  .Top
+  .accordion
+  .accordion-collapse
+  .accordion-body
+  a {
   text-decoration: none;
 }
-.SidebarMobile .MobileSidebar .Top .accordion .accordion-collapse .accordion-body div {
+.SidebarMobile
+  .MobileSidebar
+  .Top
+  .accordion
+  .accordion-collapse
+  .accordion-body
+  div {
   display: flex;
   align-items: center;
 }
-.SidebarMobile .MobileSidebar .Top .accordion .accordion-collapse .accordion-body div a {
+.SidebarMobile
+  .MobileSidebar
+  .Top
+  .accordion
+  .accordion-collapse
+  .accordion-body
+  div
+  a {
   text-decoration: none;
 }
-.SidebarMobile .MobileSidebar .Top .accordion .accordion-collapse .accordion-body div p {
+.SidebarMobile
+  .MobileSidebar
+  .Top
+  .accordion
+  .accordion-collapse
+  .accordion-body
+  div
+  p {
   margin: 10px 5px;
   cursor: pointer;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.56) !important;
 }
-.SidebarMobile .MobileSidebar .Top .accordion .accordion-collapse .accordion-body div p:hover {
+.SidebarMobile
+  .MobileSidebar
+  .Top
+  .accordion
+  .accordion-collapse
+  .accordion-body
+  div
+  p:hover {
   color: white !important;
 }
 .SidebarMobile .MobileSidebar .Top .eachss {
@@ -1297,7 +1365,7 @@
   position: relative;
 }
 .SidebarMobile .MobileSidebar .Last .message-header .img .roundball {
-  background-color: #7FBA7A;
+  background-color: #7fba7a;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -1374,7 +1442,7 @@
   right: 2px;
   padding: 5px;
   border-radius: 50%;
-  background-color: #0D5F50;
+  background-color: #0d5f50;
   color: white;
 }
 .Navbar .together .details .arrow img {
@@ -1484,7 +1552,7 @@
   width: 40px;
   border-radius: 50%;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .MobileNavbar .all .together .details .img {
   position: relative;
@@ -1619,21 +1687,21 @@
 }
 .Report .EditBodyReport .buttonss .success {
   font-size: 14px;
-  color: #54D4BD;
+  color: #54d4bd;
   padding: 7px 15px;
   border-radius: 6px;
   outline: none;
   margin: 0 5px;
   border: none;
   background-color: transparent;
-  border: 1px solid #54D4BD;
+  border: 1px solid #54d4bd;
 }
 .Report .EditBodyReport .buttonss .success img {
   width: 20px;
   margin-right: 5px;
 }
 .Report .EditBodyReport .buttonss .success:hover {
-  background: #54D4BD;
+  background: #54d4bd;
   color: #fff;
 }
 .Report .EditBodyReport .buttonss .cancel {
@@ -1651,7 +1719,7 @@
   margin-right: 5px;
 }
 .Report .EditBodyReport .buttonss .cancel:hover {
-  background: #54D4BD;
+  background: #54d4bd;
   color: #fff;
 }
 .Report .WhiteCard {
@@ -1676,7 +1744,7 @@
   width: 45%;
   padding: 0 13px;
   border: 0.5px solid rgb(250, 250, 250);
-  background: linear-gradient(0deg, #F8F8FA, #F8F8FA);
+  background: linear-gradient(0deg, #f8f8fa, #f8f8fa);
   border-radius: 30px;
 }
 .Report .WhiteCard .Check .search input {
@@ -1701,7 +1769,7 @@
 .Report .WhiteCard .Check .sort {
   padding: 4px 13px;
   border: 0.5px solid rgb(250, 250, 250);
-  background: linear-gradient(0deg, #F8F8FA, #F8F8FA);
+  background: linear-gradient(0deg, #f8f8fa, #f8f8fa);
   border-radius: 30px;
   display: flex;
   align-items: center;
@@ -1715,7 +1783,7 @@
   border: none;
   font-size: 14px;
   outline: none !important;
-  background: linear-gradient(0deg, #F8F8FA, #F8F8FA);
+  background: linear-gradient(0deg, #f8f8fa, #f8f8fa);
 }
 .Report .WhiteCard .Check .sort .form-select {
   transition: none;
@@ -1744,13 +1812,13 @@
   border-radius: 4px;
 }
 .Report .WhiteCard .Check .export {
-  background-color: #54D4BD;
+  background-color: #54d4bd;
   color: white;
   border-radius: 4px;
 }
 .Report .WhiteCard .reportTable {
   border: 1px solid rgb(229, 229, 229);
-  background: linear-gradient(0deg, #F8F8FA, #F8F8FA);
+  background: linear-gradient(0deg, #f8f8fa, #f8f8fa);
   padding: 15px;
   position: relative;
   border-radius: 10px 15px;
@@ -1940,7 +2008,7 @@
   width: 100%;
   padding: 20px;
   background-color: rgb(238, 255, 252);
-  border: 1px solid #54D4BD;
+  border: 1px solid #54d4bd;
   border-radius: 8px;
 }
 .ReportDetails .WhiteCard .total img {
@@ -1975,7 +2043,6 @@
   cursor: pointer;
 }
 .ReportDetails .UploadResult .discount input {
-  width: 90% !important;
   border: 2px solid rgba(99, 119, 138, 0.5);
   border-radius: 8px;
   height: 45px;
@@ -1998,7 +2065,7 @@
   font-weight: 300;
 }
 .ReportDetails .UploadResult .FileUpload {
-  border: 1px solid #54D4BD;
+  border: 1px solid #54d4bd;
   border-radius: 5px;
   padding: 20px;
   background-color: rgb(247, 247, 247);
@@ -2012,7 +2079,7 @@
   width: 50%;
 }
 .ReportDetails .UploadResult .FileUpload span {
-  color: #54D4BD;
+  color: #54d4bd;
   cursor: pointer;
 }
 
@@ -2027,7 +2094,7 @@
 }
 .RebortBord a {
   text-decoration: none;
-  color: #54D4BD;
+  color: #54d4bd;
 }
 .RebortBord .EachCard {
   background-color: #fff;
@@ -2054,7 +2121,7 @@
   font-size: 13px;
 }
 .RebortBord .Down span {
-  color: #54D4BD;
+  color: #54d4bd;
   cursor: pointer;
 }
 .RebortBord .Down p {
@@ -2099,17 +2166,17 @@
 }
 .ManageUsers .buttonss .success {
   font-size: 14px;
-  color: #54D4BD;
+  color: #54d4bd;
   padding: 7px 15px;
   border-radius: 6px;
   outline: none;
   margin: 0 5px;
   border: none;
   background-color: transparent;
-  border: 1px solid #54D4BD;
+  border: 1px solid #54d4bd;
 }
 .ManageUsers .buttonss .success:hover {
-  background: #54D4BD;
+  background: #54d4bd;
   color: #fff;
 }
 .ManageUsers .buttonss .cancel {
@@ -2123,7 +2190,7 @@
   background-color: transparent;
 }
 .ManageUsers .buttonss .cancel:hover {
-  background: #54D4BD;
+  background: #54d4bd;
   color: #fff;
 }
 .ManageUsers .WhiteCard {
@@ -2150,7 +2217,7 @@
   width: 45%;
   padding: 0 13px;
   border: 0.5px solid rgb(250, 250, 250);
-  background: linear-gradient(0deg, #F8F8FA, #F8F8FA);
+  background: linear-gradient(0deg, #f8f8fa, #f8f8fa);
   border-radius: 30px;
 }
 .ManageUsers .WhiteCard .Check .search input {
@@ -2175,7 +2242,7 @@
 .ManageUsers .WhiteCard .Check .sort {
   padding: 4px 13px;
   border: 0.5px solid rgb(250, 250, 250);
-  background: linear-gradient(0deg, #F8F8FA, #F8F8FA);
+  background: linear-gradient(0deg, #f8f8fa, #f8f8fa);
   border-radius: 30px;
   display: flex;
   align-items: center;
@@ -2189,7 +2256,7 @@
   border: none;
   font-size: 13px;
   outline: none !important;
-  background: linear-gradient(0deg, #F8F8FA, #F8F8FA);
+  background: linear-gradient(0deg, #f8f8fa, #f8f8fa);
 }
 .ManageUsers .WhiteCard .Check .sort .form-select {
   transition: none;
@@ -2218,13 +2285,13 @@
   border-radius: 4px;
 }
 .ManageUsers .WhiteCard .Check .export {
-  background-color: #54D4BD;
+  background-color: #54d4bd;
   color: white;
   border-radius: 4px;
 }
 .ManageUsers .WhiteCard .USERSTable {
   border: 1px solid rgb(229, 229, 229);
-  background: linear-gradient(0deg, #F8F8FA, #F8F8FA);
+  background: linear-gradient(0deg, #f8f8fa, #f8f8fa);
   padding: 15px;
   position: relative;
   border-radius: 10px 15px;
@@ -2351,7 +2418,7 @@
   font-weight: 300;
 }
 .Footer .cloud .social {
-  background-color: #54D4BD;
+  background-color: #54d4bd;
   display: flex;
   align-items: center;
   flex-wrap: wrap-reverse;
@@ -2427,7 +2494,7 @@
 }
 
 .ActiveOutline {
-  background: #F5FAFA;
+  background: #f5fafa;
   padding: 30px;
 }
 
@@ -2472,12 +2539,12 @@
   align-items: center;
 }
 .ActiveFormSection .form .selecteedValues ul li {
-  border: 1px solid #54D4BD;
+  border: 1px solid #54d4bd;
   border-radius: 5px;
   padding: 5px 10px;
   font-size: 12px;
   margin: 5px;
-  color: #54D4BD;
+  color: #54d4bd;
 }
 .ActiveFormSection .form .selecteedValues img {
   width: 15px;
@@ -2501,7 +2568,6 @@
   border: 1px solid rgba(99, 119, 138, 0.5);
   border-radius: 8px;
   height: 40px;
-  width: 90%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2532,7 +2598,6 @@
   border: 1px solid rgba(99, 119, 138, 0.5);
   border-radius: 8px;
   height: 40px;
-  width: 90%;
   color: rgba(99, 119, 138, 0.5) !important;
   font-weight: 300;
   font-size: 13px;
@@ -2601,15 +2666,15 @@
   align-items: center;
 }
 .ActiveFormSection .form .testDropdown .each .form-check-input:checked {
-  background-color: #54D4BD !important;
-  border-color: #54D4BD !important;
+  background-color: #54d4bd !important;
+  border-color: #54d4bd !important;
 }
 .ActiveFormSection .form .testDropdown .each:hover {
   background: rgb(238, 255, 252);
 }
 .ActiveFormSection .form .testDropdown .each:hover .form-check-input {
   background-color: rgb(238, 255, 252);
-  border: 1px solid #54D4BD;
+  border: 1px solid #54d4bd;
   --bs-form-check-bg: white !important;
 }
 .ActiveFormSection .form .deduction {
@@ -2629,8 +2694,8 @@
   font-weight: 300;
 }
 .ActiveFormSection .form .Rebate .form-check .form-check-input:checked {
-  background-color: #54D4BD !important;
-  border-color: #54D4BD !important;
+  background-color: #54d4bd !important;
+  border-color: #54d4bd !important;
 }
 .ActiveFormSection .form .Rebate .form-check input {
   width: 18px;
@@ -2643,7 +2708,7 @@
 }
 .ActiveFormSection .form .Rebate .form-check input:hover .form-check-input {
   background-color: rgb(238, 255, 252);
-  border: 1px solid #54D4BD;
+  border: 1px solid #54d4bd;
   --bs-form-check-bg: white !important;
 }
 .ActiveFormSection .form .Rebate .int {
@@ -2664,7 +2729,6 @@
   font-size: 14px;
 }
 .ActiveFormSection .form .Rebate .form-select {
-  width: 90% !important;
   border: 1px solid rgba(99, 119, 138, 0.5);
   border-radius: 8px;
   height: 40px;
@@ -2684,82 +2748,87 @@
   color: rgba(99, 119, 138, 0.5) !important;
   font-size: 14px;
 }
-.ActiveFormSection .form .Rebate .discount input {
-  width: 90% !important;
+.ce-form input[type="text"],
+.ce-form input[type="email"],
+.ce-form input[type="number"] {
   border: 1px solid rgba(99, 119, 138, 0.5);
   border-radius: 8px;
   height: 40px;
   margin: 2px 0;
   padding: 0.375rem 2.25rem 0.375rem 0.75rem;
 }
-.ActiveFormSection .form .Rebate .discount input::-moz-placeholder {
+
+.ce-form input::-moz-placeholder {
   font-weight: 300;
   color: rgba(99, 119, 138, 0.5) !important;
   font-size: 14px;
 }
-.ActiveFormSection .form .Rebate .discount input::placeholder {
+
+.ce-form input[type="text"]::placeholder,
+.ce-form input[type="email"]::placeholder,
+.ce-form input[type="number"]::placeholder {
   font-weight: 300;
   color: rgba(99, 119, 138, 0.5) !important;
   font-size: 14px;
 }
-.ActiveFormSection .form .phone label {
+
+.ce-form .phone label {
   margin: 0;
   font-size: 14px;
 }
-.ActiveFormSection .form .phone .PhoneInput {
-  width: 90%;
+
+.ce-form .PhoneInput {
   padding-left: 10px;
   height: 40px;
   border: 1px solid rgba(99, 119, 138, 0.5);
   background: rgb(247, 247, 247);
   border-radius: 8px;
 }
-.ActiveFormSection .form .phone .PhoneInput .PhoneInputCountrySelect {
+.ce-form .PhoneInputCountrySelect {
   padding: 10px;
 }
-.ActiveFormSection .form .phone .PhoneInput .PhoneInputInput {
+.ce-form .PhoneInputInput {
   border: none;
   padding-left: 10px;
   height: 39px;
   border-radius: 0 8px 8px 0;
 }
-.ActiveFormSection .form .phone .PhoneInput .PhoneInputInput::-moz-placeholder {
+.ce-form .PhoneInput .PhoneInputInput::-moz-placeholder {
   font-weight: 300;
   color: rgba(99, 119, 138, 0.5) !important;
   font-size: 14px;
 }
-.ActiveFormSection .form .phone .PhoneInput .PhoneInputInput::placeholder {
+.ce-form .PhoneInput .PhoneInputInput::placeholder {
   font-weight: 300;
   color: rgba(99, 119, 138, 0.5) !important;
   font-size: 14px;
 }
-.ActiveFormSection .form .remark label {
+.ce-form label {
   margin: 0;
   font-size: 14px;
 }
-.ActiveFormSection .form .remark textarea {
-  width: 90%;
+.ce-form textarea {
   padding: 10px;
   height: 100px;
   border: 1px solid rgba(99, 119, 138, 0.5);
   background: transparent;
   border-radius: 8px;
 }
-.ActiveFormSection .form .remark textarea::-moz-placeholder {
+.ce-form textarea::-moz-placeholder {
   font-weight: 300;
   color: rgba(99, 119, 138, 0.5) !important;
   font-size: 14px;
 }
-.ActiveFormSection .form .remark textarea::placeholder {
+.ce-form textarea::placeholder {
   font-weight: 300;
   color: rgba(99, 119, 138, 0.5) !important;
   font-size: 14px;
 }
-.ActiveFormSection .form .total {
+.ActiveFormSection .total {
   width: 100%;
   padding: 20px;
   background-color: rgb(238, 255, 252);
-  border: 1px solid #54D4BD;
+  border: 1px solid #54d4bd;
   border-radius: 8px;
 }
 .ActiveFormSection .form .total img {
@@ -2797,7 +2866,7 @@
 .ActiveFormSection .form .submitFormDark {
   width: 50%;
   color: #fff;
-  background-color: #54D4BD;
+  background-color: #54d4bd;
   padding: 15px;
   border-radius: 8px;
   border: none;
@@ -2880,7 +2949,7 @@
     width: 100% !important;
   }
   .NameHeader h2 {
-    color: #0D5F50;
+    color: #0d5f50;
     font-size: 20px;
     font-family: "Nunito Sans", sans-serif;
     margin: 0;
@@ -2927,4 +2996,4 @@
   .perPage .LeftRight img {
     width: 4px;
   }
-}/*# sourceMappingURL=style.css.map */
+} /*# sourceMappingURL=style.css.map */

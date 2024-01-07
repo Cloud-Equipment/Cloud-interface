@@ -15,22 +15,25 @@ import { MoneyFormat } from "../../utils/utils";
 // import { Link } from 'react-router-dom'
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import SearchBox from "../../components/SearchBox";
+import Select from "react-select";
+import BlackPlusIcon from "../../Assets/IconAndLogo/black-plus.png";
 
 function Form({ procedureToEdit }) {
-  const [phone, setPhone] = useState("");
   const [remarks, setRemarks] = useState("");
   const [error, setError] = useState("");
-  const [quantity, setQuantity] = useState("1");
-  const [discountId, setDiscountId] = useState();
   const [buttonClass, setButtonClass] = useState("submitFormLight");
 
-  const [procedures, setProcedures] = useState([]);
-  const [procedure, setProcedure] = useState([]);
+  const facilityId = "FAC-ID";
+  const userId = "USER-ID";
 
-  const [userId, setUserId] = useState("");
-  const [facilityId, setFacilityId] = useState("");
+  const [categoriesList, setCategoriesList] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
-  const [category, setCategory] = useState([]);
+  const [proceduresList, setProceduresList] = useState([]);
+  const [selectedProcedures, setSelectedProcedures] = useState([]);
+
+  const [proceduresListForRebate, setProceduresListForRebate] = useState([]);
+  const [proceduresWithRebate, setProceduresWithRebate] = useState([]);
 
   const [discountData, setDiscountData] = useState([]);
 
@@ -78,16 +81,7 @@ function Form({ procedureToEdit }) {
       });
   };
 
-  const options = [
-    { value: "john", label: "John Doe" },
-    { value: "jane", label: "Jane Doe" },
-    { value: "mary", label: "Mary Phillips" },
-    { value: "robert", label: "Robert" },
-    { value: "karius", label: "Karius" },
-  ];
-
   const handleSelect = (selectedPatient) => {
-    console.log(selectedPatient);
     setPatientStatus(true);
     setValue("patientId", selectedPatient?.patientUniqueID);
     setValue("patientName", selectedPatient?.patientName);
@@ -99,9 +93,9 @@ function Form({ procedureToEdit }) {
   };
 
   const patientId = watch("patientId");
-  const rebate = watch("rebate");
 
   const debouncedFetchData = Debounce(FetchPatient, 500);
+
   useEffect(() => {
     if (patientId) {
       debouncedFetchData(patientId);
@@ -109,36 +103,39 @@ function Form({ procedureToEdit }) {
   }, [patientId, debouncedFetchData]);
 
   const onSubmit = (data_) => {
-    console.log(data_);
+    // console.log(data_);
 
     const createProcedure = (patientId) => {
       const proceduresToSubmit = [];
-      data_.rebatesArray.map((x) => {
-        proceduresToSubmit.push({
+      selectedProcedures.map((x) => {
+        const rebateInfo = proceduresWithRebate.find(
+          (y) => y.medServiceId === x.medServiceId
+        );
+        const item_ = {
           patientId: patientId,
           medServiceId: x.medServiceId,
           quantity: 1,
           amount: x.price,
           subotal: x.price,
           remarks: remarks,
-          referrerName: x.referrerName,
-          rebatePaid: x.rebatePaid,
-          refererHospital: x.refererHospital,
-          refererEmail: x.refererEmail,
-          phoneNo: "x.phone",
           entryUserId: userId,
           facilityId: facilityId,
-          procedureDiscountId: discountId,
+          procedureDiscountId: "coming-soon",
           faclityDiscountId: faclityDiscountId,
           procedureDiscountId: 0,
-
-          // entryUserId: "string",
-          // trackId: "string",
-          // date: "2024-01-03T08:43:27.827Z",
-          // formID: "string",
-          // procedureEntryStatus: "string",
-          // facilityId: "string",
-        });
+        };
+        if (rebateInfo) {
+          item_.rebate = {
+            facilityId: facilityId,
+            rebatePercent: 5,
+            refererHospital: facilityId,
+            refererName: data_.referrerName,
+            refererHospital: data_.refererHospital,
+            refererEmail: data_.refererEmail,
+            refererPhone: "phone",
+          };
+        }
+        proceduresToSubmit.push(item_);
       });
 
       axios
@@ -148,7 +145,6 @@ function Form({ procedureToEdit }) {
           axiosConfig
         )
         .then((response) => {
-          console.log(response);
           if (response) {
             successRef.current.click();
           }
@@ -201,39 +197,11 @@ function Form({ procedureToEdit }) {
     }
   }, [patientId, remarks]);
 
-  const [categoryValue, setCategorydValue] = useState("");
-
-  const handleProcedureCategory = (event) => {
-    const value = event.target.value;
-    // Update localStorage
-    const storedcategoryValues = value;
-    localStorage.setItem(
-      "procedureCategoryValues",
-      JSON.stringify(storedcategoryValues)
-    );
-
-    setCategorydValue(storedcategoryValues);
-
-    if (categoryValue) {
-      setError("");
-    }
-  };
-
-  const handleCategoryDelete = (valueToDelete) => {
-    // Remove the value from the array
-    const updatedValues = setCategorydValue("");
-
-    // Update localStorage and state
-    localStorage.setItem(
-      "procedureCategoryValues",
-      JSON.stringify(updatedValues)
-    );
-    setCategorydValue(updatedValues);
-  };
-
   const CategoryCheck = () => {
-    if (!categoryValue) {
-      setError("Choose a procedure category before selecting procedure");
+    if (!selectedCategories?.length) {
+      setError(
+        "Choose a selectedProcedures category before selecting selectedProcedures"
+      );
     } else setError("");
   };
 
@@ -242,34 +210,29 @@ function Form({ procedureToEdit }) {
     axios
       .get(url)
       .then((res) => {
-        setProcedures(res.data.data);
+        setProceduresList(
+          res.data.data.map((x) => ({
+            ...x,
+            label: x.medServiceName,
+            value: x.medServiceId,
+          }))
+        );
       })
       .catch((err) => console.log(err));
   };
-
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control,
-      name: "rebatesArray",
-    }
-  );
-  const rebatesArray = watch("rebatesArray");
-
-  // const FetchDiscount = () => {
-  //     const url = `${BASE_URL}/service-manager/medServices/getall`
-  //     axios.get(url)
-  //         .then((res) => {
-  //             setProcedures(res.data.data)
-  //         })
-  //         .catch((err) => console.log(err));
-  // };
 
   const FetchCategory = () => {
     const url = `${BASE_URL}/service-manager/medServiceCategory/getactivemedservicecategory`;
     axios
       .get(url)
       .then((res) => {
-        setCategory(res.data.data);
+        setCategoriesList(
+          res.data.data.map((x) => ({
+            ...x,
+            label: x.categoryName,
+            value: x.categoryId,
+          }))
+        );
       })
       .catch((err) => console.log(err));
   };
@@ -277,62 +240,67 @@ function Form({ procedureToEdit }) {
   useEffect(() => {
     FetchProedure();
     FetchCategory();
-    setFacilityId("ewjeri1");
-    setQuantity("1");
-    setUserId("11");
   }, []);
 
-  useEffect(() => {
-    const Fac_url = `${BASE_URL}/payment/discounts/getactivediscount/facilityId?facilityId=${facilityId}`;
-    if (facilityId)
-      axios
-        .get(Fac_url)
-        .then((res) => {
-          setDiscountData(res.data.data);
-        })
-        .catch((err) => console.log(err));
-  }, [facilityId]);
-
-  const handleAddProcedure = (procedureInfo) => {
-    // const discount = discountData.find((d) => d.procedureId === id);
-    // const facility = discountData.find((d) => d.discountTypeId === 1);
-    // if (facility) {
-    //   setFaclityDiscountId(facility.facilityId);
-    // }
-    // let discountValues;
-    // if (discount) {
-    //   discountValues = discount.discountPercent;
-    //   setDiscountId(discount.procedureId);
-    // }
-
-    if (
-      !procedure.find(
-        (item) => item.medServiceId === procedureInfo.medServiceId
-      )
-    ) {
-      // Add the product to the array
-      setProcedure([...procedure, procedureInfo]);
-
-      // if (discount && facility) {
-      //   const discountValue = discount.discountPercent;
-      //   const facilityValue = facility.discountPercent;
-      //   const Value = +discountValue + +facilityValue;
-      //   setTotalDiscount((prevDiscount) => prevDiscount + +Value);
-      // } else if (discount) {
-      //   setTotalDiscount(
-      //     (prevDiscount) => prevDiscount + discount.discountPercent
-      //   );
-      // } else if (facility) {
-      //   setTotalDiscount(
-      //     (prevDiscount) => prevDiscount + discount.discountPercent
-      //   );
-      // }
+  const handleAddRebateClick = () => {
+    if (proceduresListForRebate.length) {
+      setProceduresWithRebate(proceduresWithRebate.concat({}));
     }
   };
 
-  const removeProcedure = (id) => {
-    setProcedure(procedure.filter((x) => x.medServiceId !== id));
+  // populate the dropdown for rebates selection based on the selected procedures
+  useEffect(() => {
+    console.log({ proceduresWithRebate });
+    setProceduresListForRebate(
+      selectedProcedures.filter(
+        (x) =>
+          !proceduresWithRebate.some((y) => y.medServiceId === x.medServiceId)
+      )
+    );
+  }, [selectedProcedures, proceduresWithRebate]);
+
+  // remove from the selected procedures with rebates if they are unselected from the procedures list
+  useEffect(() => {
+    setProceduresWithRebate(
+      proceduresWithRebate.filter((x) =>
+        selectedProcedures.some((y) => y.medServiceId === x.medServiceId)
+      )
+    );
+    console.log(
+      proceduresWithRebate.filter((x) =>
+        selectedProcedures.some((y) => y.medServiceId === x.medServiceId)
+      )
+    );
+  }, [selectedProcedures]);
+
+  const handleRebateSelectionFromDropdown = (item) => {
+    if (
+      proceduresWithRebate.find((x) => x.medServiceId === item.medServiceId)
+    ) {
+      // if the an already selected one is selected again
+      return;
+    }
+
+    setProceduresWithRebate(proceduresWithRebate.slice(0, -1).concat(item));
+
+    // after selecting an item for rebate, remove it from the list
+    setProceduresListForRebate(
+      proceduresListForRebate.filter(
+        (x) => x.medServiceId !== item.medServiceId
+      )
+    );
   };
+
+  // fetch active procedure-based discounts
+  useEffect(() => {
+    const Fac_url = `${BASE_URL}/payment/discounts/getactivediscount/facilityId?facilityId=${facilityId}`;
+    axios
+      .get(Fac_url)
+      .then((res) => {
+        setDiscountData(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   let axiosConfig = {
     headers: {
@@ -344,14 +312,15 @@ function Form({ procedureToEdit }) {
   // calculations to display
 
   useEffect(() => {
+    const rebate = false; // please remember to change
     if (rebate) {
       let total = 0;
       const proceduresToConsider = getValues().rebatesArray;
 
       // loop over all procedures selected
-      for (let item of procedure) {
+      for (let item of selectedProcedures) {
         let amount = Number(item.price) || 0;
-        // check if the procedure has rebate
+        // check if the selectedProcedures has rebate
         const rebateInfo = proceduresToConsider?.find(
           (x) => x.id === item.medServiceId
         );
@@ -365,10 +334,13 @@ function Form({ procedureToEdit }) {
 
       setSubTotal(total);
     } else {
-      const totalPrice = procedure.reduce((acc, item) => acc + item.price, 0);
+      const totalPrice = selectedProcedures.reduce(
+        (acc, item) => acc + item.price,
+        0
+      );
       setSubTotal(totalPrice);
     }
-  }, [rebate, procedure, rebatesArray]);
+  }, [selectedProcedures]);
 
   useEffect(() => {
     setTotal(subTotal);
@@ -502,7 +474,7 @@ function Form({ procedureToEdit }) {
 
   return (
     <div>
-      <div className="ActiveFormSection ">
+      <div className="ActiveFormSection tw-bg-white">
         {/* SUCCESS */}
         <SuccessModal />
         {/* ERROR */}
@@ -523,9 +495,7 @@ function Form({ procedureToEdit }) {
           </div>
         </div>
 
-        <div className="divider"></div>
-
-        <div className="form">
+        <div className="form ce-form">
           <form>
             <div className="deduction">
               <h2>Patient Details</h2>
@@ -533,286 +503,200 @@ function Form({ procedureToEdit }) {
               <div className="dividerTwo"></div>
             </div>
 
-            <SearchBox options={options} onSelect={handleSelect} />
+            <div className="tw-grid md:tw-grid-cols-2 tw-gap-5 md:tw-gap-8">
+              <SearchBox onSelect={handleSelect} />
+              <div className="tw-hidden md:tw-block"></div>
 
-            <div className="margin30"></div>
-
-            <div className="Rebate">
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="discount">
-                    <label htmlFor="patientId" className="fw3">
-                      Patient ID
-                    </label>{" "}
-                    <br />
-                    <input
-                      {...register("patientId")}
-                      name="patientId"
-                      id="patientId"
-                      placeholder="AGA/453"
-                    />
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <div className="discount">
-                    <label htmlFor="patientName" className="fw3">
-                      Patient Name
-                    </label>
-                    <br />
-                    <input
-                      name="patientName"
-                      {...register("patientName")}
-                      id="patientName"
-                      placeholder="Adepoju Deborah "
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="margin30"></div>
-
-            <div className="Rebate">
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="discount">
-                    <label htmlFor="patientPhone" className="fw3">
-                      Patient Mobile Number
-                    </label>
-                    <br />
-                    <input
-                      type="text"
-                      name="patientPhone"
-                      {...register("patientPhone")}
-                      id="patientPhone"
-                      placeholder="+234 08143626356"
-                    />
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="discount">
-                    <label htmlFor="patientGenderId" className="fw3">
-                      Gender
-                    </label>
-                    <br />
-                    <select id="patientGender" {...register("patientGender")}>
-                      <option value="1">Male</option>
-                      <option value="2">Female</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="margin30"></div>
-
-            <div className="Rebate">
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="discount">
-                    <label htmlFor="patientAge" className="fw3">
-                      Age of the Patient
-                    </label>
-                    <br />
-                    <input
-                      type="text"
-                      name="patientAge"
-                      {...register("patientAge")}
-                      id="patientAge"
-                    />
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="discount">
-                    <label htmlFor="patientEmail" className="fw3">
-                      Patient Email
-                    </label>
-                    <br />
-                    <input
-                      type="email"
-                      name="patientEmail"
-                      {...register("patientEmail")}
-                      id="patientEmail"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="margin30"></div>
-
-            <div className="Rebate">
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="discount">
-                    <label htmlFor="patientAddress" className="fw3">
-                      Address
-                    </label>
-                    <br />
-                    <input
-                      type="text"
-                      name="patientAddress"
-                      {...register("patientAddress")}
-                      id="patientAddress"
-                      placeholder="No 24, W. F. Kumuyi Street,"
-                    />
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <label htmlFor="Defaultselectexample" className="label">
-                    Procedure category
-                  </label>
-                  <br />
-                  <div className="dropdown">
-                    <button
-                      className="btn inputt dropdown-toggle"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      Select Procedure/Test
-                    </button>
-                    <ul className="dropdown-menu" style={{ width: "100%" }}>
-                      <div className="testDropdown">
-                        <div className="header">
-                          <p>Select from the category </p>
-                        </div>
-                        {category.map((each, i) => (
-                          <div className="each" key={i}>
-                            <div className="form-check">
-                              <input
-                                className="form-check-input"
-                                value={each.categoryName}
-                                // checked={selectedValue === ' Liver Test '}
-                                onChange={handleProcedureCategory}
-                                type="checkbox"
-                              />
-                              <label className="form-check-label">
-                                {each.categoryName}
-                              </label>
-                            </div>
-                            <div className="amount">
-                              {/* <img src={Naira} alt="" />
-                              <p>{each.price}</p> */}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </ul>
-                  </div>
-                  <div className="selecteedValues">
-                    <ul>
-                      {categoryValue ? (
-                        <li>
-                          {categoryValue}
-                          <img
-                            src={Arrow}
-                            onClick={() => handleCategoryDelete(categoryValue)}
-                            alt=""
-                          />
-                        </li>
-                      ) : (
-                        <div className=""></div>
-                      )}
-                    </ul>
-                  </div>
-                </div>
+              <div className="discount">
+                <label htmlFor="patientId" className="fw3">
+                  Patient ID
+                </label>{" "}
+                <br />
+                <input
+                  {...register("patientId")}
+                  name="patientId"
+                  id="patientId"
+                  type="text"
+                  placeholder="AGA/453"
+                />
               </div>
 
-              <div className="margin30"></div>
-
-              <div className="col-md-6" onClick={CategoryCheck}>
-                <label htmlFor="Defaultselectexample" className="label">
-                  Procedures
+              <div className="discount">
+                <label htmlFor="patientName" className="fw3">
+                  Patient Name
                 </label>
                 <br />
-                <div className="dropdown">
-                  <button
-                    className="btn inputt dropdown-toggle"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Select Procedure/Test
-                  </button>
-                  <ul className="dropdown-menu" style={{ width: "100%" }}>
-                    <div className="testDropdown">
-                      <div className="header">
-                        <p>Select </p>
-                      </div>
-                      {/* {procedures.map((each, i) => (
-                                     <div className="each">
-                                         <div className="form-check">
-                                             <input className="form-check-input" value={each.medServiceName}
-                                                 // checked={selectedValue === ' Liver Test '}
-                                                 onChange={(event) => handleProcedure(event, each.price)}
-                                                 type="checkbox" id="flexCheckDefaultts1" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefaultts1">
-                                                 {each.medServiceName}
-                                             </label>
-                                         </div>
-                                         <div className="amount">
-                                             <img src={Naira} alt="" />
-                                             <p>{each.price}</p>
-                                         </div>
-                                     </div>
-                                 ))} */}
-                      {procedures.map((each, i) => (
-                        <div className="each" key={i}>
-                          <div className="form-check">
-                            <input
-                              className="form-check-input"
-                              value={each.medServiceName}
-                              onClick={(event) => {
-                                if (event.target.checked) {
-                                  handleAddProcedure(each);
-                                } else {
-                                  removeProcedure(each.medServiceId);
-                                }
-                              }}
-                              type="checkbox"
-                              id={`flexCheckDefaultts+${i}`}
-                            />
-                            <label
-                              className="form-check-label"
-                              htmlFor={`flexCheckDefaultts+${i}`}
-                            >
-                              {each.medServiceName}
-                            </label>
-                          </div>
-                          <div className="amount">
-                            <img src={Naira} alt="" />
-                            <p>{each.price}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </ul>
+                <input
+                  name="patientName"
+                  type="text"
+                  {...register("patientName")}
+                  id="patientName"
+                  placeholder="Adepoju Deborah "
+                />
+              </div>
+
+              <div className="discount">
+                <label htmlFor="patientPhone" className="fw3">
+                  Patient Mobile Number
+                </label>
+                <br />
+                <input
+                  type="text"
+                  name="patientPhone"
+                  {...register("patientPhone")}
+                  id="patientPhone"
+                  placeholder="+234 08143626356"
+                />
+              </div>
+
+              <div className="discount">
+                <label htmlFor="patientGenderId" className="fw3">
+                  Gender
+                </label>
+                <br />
+                <select id="patientGender" {...register("patientGender")}>
+                  <option value="1">Male</option>
+                  <option value="2">Female</option>
+                </select>
+              </div>
+
+              <div className="discount">
+                <label htmlFor="patientAge" className="fw3">
+                  Age of the Patient
+                </label>
+                <br />
+                <input
+                  type="text"
+                  name="patientAge"
+                  {...register("patientAge")}
+                  id="patientAge"
+                />
+              </div>
+
+              <div className="">
+                <label htmlFor="patientEmail" className="fw3">
+                  Patient Email
+                </label>
+                <br />
+                <input
+                  type="email"
+                  name="patientEmail"
+                  {...register("patientEmail")}
+                  id="patientEmail"
+                />
+              </div>
+
+              <div className="">
+                <label htmlFor="patientAddress" className="fw3">
+                  Address
+                </label>
+                <br />
+                <input
+                  type="text"
+                  name="patientAddress"
+                  {...register("patientAddress")}
+                  id="patientAddress"
+                  placeholder="No 24, W. F. Kumuyi Street,"
+                />
+              </div>
+
+              <div className="">
+                <label className="label">Procedure category</label>
+                <Select
+                  styles={{
+                    control: (provided) => ({
+                      ...provided,
+                      borderRadius: "8px",
+                      border: "1px solid rgba(99, 119, 138, 0.5)",
+                      outline: "none",
+                    }),
+                  }}
+                  isMulti
+                  name="Procedure category"
+                  options={categoriesList}
+                  value={selectedCategories}
+                  className="react-select"
+                  onChange={(val) => setSelectedCategories(val)}
+                />
+              </div>
+
+              <div className="">
+                <label className="label">Procedures</label>
+                <Select
+                  styles={{
+                    control: (provided) => ({
+                      ...provided,
+                      borderRadius: "8px",
+                      border: "1px solid rgba(99, 119, 138, 0.5)",
+                      outline: "none",
+                    }),
+                  }}
+                  value={selectedProcedures}
+                  onChange={(val) => setSelectedProcedures(val)}
+                  isMulti
+                  name="Procedures"
+                  className="react-select"
+                  options={proceduresList}
+                />
+              </div>
+            </div>
+
+            <div className="deduction">
+              <h2>Rebate</h2>
+              <p>Click the add button to add rebate to various procedure</p>
+              <div className="dividerTwo"></div>
+            </div>
+
+            {proceduresWithRebate.map((procedure, index) => (
+              <div
+                key={index}
+                className="tw-grid md:tw-grid-cols-2 tw-gap-5 md:tw-gap-8"
+              >
+                <div className="">
+                  <label className="fw3">Procedure for Rebate</label> <br />
+                  <Select
+                    styles={{
+                      control: (provided) => ({
+                        ...provided,
+                        borderRadius: "8px",
+                        border: "1px solid rgba(99, 119, 138, 0.5)",
+                        outline: "none",
+                      }),
+                    }}
+                    name="Procedure category"
+                    className="react-select"
+                    options={proceduresListForRebate}
+                    onChange={handleRebateSelectionFromDropdown}
+                  />
                 </div>
-                <span className="errorMessage">{error}</span> <br />
-                <div className="selecteedValues">
-                  <ul>
-                    {procedure.map((value, index) => (
-                      <li key={index}>
-                        {value.medServiceName} - {value.price}
-                        <img
-                          src={Arrow}
-                          onClick={() => removeProcedure(value.medServiceId)}
-                          alt=""
-                        />
-                      </li>
-                    ))}
-                  </ul>
+
+                <div className="">
+                  <label className="fw3">Rebate Amount</label>
+                  <br />
+                  <input
+                    // {...register(`rebatesArray.${index}.referrerName`)}
+                    name="rebateAmount"
+                    type="text"
+                    readOnly
+                  />
                 </div>
               </div>
+            ))}
+
+            <div
+              onClick={handleAddRebateClick}
+              className="tw-mt-4 tw-flex tw-items-center tw-gap-1 tw-cursor-pointer"
+            >
+              <img src={BlackPlusIcon} />{" "}
+              <span className="tw-text-[#54D4BD] tw-text-sm">
+                Add Rebate to a Procedure
+              </span>
             </div>
 
             <div className="deduction">
               <h2>Deduction</h2>
               <p>
-                You are to populate the Rebate Amount to efficiency calculate a
+                You are to populate the Rebate Amount to efficiently calculate a
                 deduction
               </p>
               <div className="dividerTwo"></div>
@@ -820,27 +704,6 @@ function Form({ procedureToEdit }) {
 
             <div className="Rebate">
               <div className="row">
-                <div className="col-md-6 mt-4">
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      {...register("rebate")}
-                      id="flexCheckDefaultt"
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="flexCheckDefaultt"
-                    >
-                      Rebate
-                    </label>
-                  </div>
-                  <div className="int">
-                    <img src={Int} alt="" />
-                    <p className="fw3">click on the box if rebate was paid</p>
-                  </div>
-                </div>
-
                 {/* <div className="col-md-6">
                   <div className="discount">
                     <label htmlFor="discount" className="fw3">
@@ -866,145 +729,80 @@ function Form({ procedureToEdit }) {
               </div>
             </div>
 
-            {rebate ? (
-              procedure?.map((selectedProcedure, index) => (
-                <div key={selectedProcedure.medServiceId} className="">
-                  <div className="margin30"></div>
-                  <h6>{selectedProcedure.medServiceName}</h6>
+            <div className="tw-grid md:tw-grid-cols-2 tw-gap-5 md:tw-gap-8">
+              <div className="discount">
+                <label htmlFor="referrerName" className="fw3">
+                  Referrers Name
+                </label>
+                <br />
+                <input
+                  type="text"
+                  name="referrerName"
+                  {...register(`referrerName`)}
+                  id="referrerName"
+                  placeholder="Enter Referee Name"
+                />
+              </div>
 
-                  <Controller
-                    name={`rebatesArray.${index}.id`}
-                    control={control}
-                    defaultValue={selectedProcedure.medServiceId}
-                    render={({ field }) => <input type="hidden" {...field} />}
-                  />
+              <div className="discount">
+                <label htmlFor="refersHospital" className="fw3">
+                  Referrer’s Hospital/Laboratory
+                </label>
+                <br />
+                <input
+                  type="text"
+                  name="refersHospital"
+                  {...register(`refererHospital`)}
+                  id="refersHospital"
+                  placeholder="Enter Laboratory Name"
+                />
+              </div>
 
-                  <div className="Rebate">
-                    <div className="row">
-                      <div className="col-md-6">
-                        <div className="discount">
-                          <label htmlFor="discount" className="fw3">
-                            Rebate Paid (%)
-                          </label>
-                          <br />
-                          <input
-                            type="text"
-                            name="rebatePaid"
-                            {...register(`rebatesArray.${index}.rebatePaid`)}
-                            id="discount"
-                            placeholder="Enter Percentage of Rebate Paid"
-                          />
-                        </div>
-                      </div>
+              <div className="discount">
+                <label htmlFor="discount" className="fw3">
+                  Referrer’s Email Address
+                </label>{" "}
+                <br />
+                <input
+                  type="text"
+                  name="refererEmail"
+                  id="discount"
+                  {...register(`refererEmail`)}
+                  placeholder="Enter Referrer Email Address"
+                />
+              </div>
 
-                      <div className="col-md-6">
-                        <div className="discount">
-                          <label htmlFor="referrerName" className="fw3">
-                            Referrers Name
-                          </label>
-                          <br />
-                          <input
-                            type="text"
-                            name="referrerName"
-                            {...register(`rebatesArray.${index}.referrerName`)}
-                            id="referrerName"
-                            placeholder="Enter Referee Name"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div>
+                <label className="fw3">Referrer’s Phone Number</label>
 
-                  <div className="margin30"></div>
+                <Controller
+                  name="phoneNo"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <PhoneInput
+                      value={value}
+                      onChange={onChange}
+                      id="phoneNo"
+                    />
+                  )}
+                />
+              </div>
 
-                  <div className="Rebate">
-                    <div className="row">
-                      <div className="col-md-6">
-                        <div className="discount">
-                          <label htmlFor="refersHospital" className="fw3">
-                            Referrer’s Hospital/Laboratory
-                          </label>
-                          <br />
-                          <input
-                            type="text"
-                            name="refersHospital"
-                            {...register(
-                              `rebatesArray.${index}.refersHospital`
-                            )}
-                            id="refersHospital"
-                            placeholder="Enter Laboratory Name"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="col-md-6">
-                        <div className="discount">
-                          <label htmlFor="discount" className="fw3">
-                            Referrer’s Email Address
-                          </label>{" "}
-                          <br />
-                          <input
-                            type="text"
-                            name="refererEmail"
-                            id="discount"
-                            {...register(`rebatesArray.${index}.refererEmail`)}
-                            placeholder="Enter Referrer Email Address"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="margin30"></div>
-
-                  <div className="phone">
-                    <div className="col-md-6">
-                      <label htmlFor="discount" className="fw3">
-                        Referrer’s Phone Number
-                      </label>
-                      <br />
-                      {/* <PhoneInput
-                        placeholder="Enter phone number"
-                        value={phone}
-                        onChange={setPhone}
-                      /> */}
-                      <Controller
-                        name="phoneNo"
-                        control={control}
-                        render={({ field: { onChange, value } }) => (
-                          <PhoneInput
-                            value={value}
-                            onChange={onChange}
-                            id="phoneNo"
-                          />
-                        )}
-                      />
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div></div>
-            )}
-
-            <div className="margin30"></div>
-
-            <div className="remark">
-              <label htmlFor="discount" className="fw3">
-                Remark
-              </label>{" "}
-              <br />
-              <textarea
-                name="remarks"
-                onChange={(e) => setRemarks(e.target.value)}
-                id=""
-                placeholder="Leave a Message for the diagnostic center"
-              ></textarea>
+              <div className="md:tw-col-span-2">
+                <label htmlFor="discount" className="fw3">
+                  Remark
+                </label>{" "}
+                <br />
+                <textarea
+                  name="remarks"
+                  onChange={(e) => setRemarks(e.target.value)}
+                  id=""
+                  placeholder="Leave a Message for the diagnostic center"
+                ></textarea>
+              </div>
             </div>
 
-            <div className="margin40"></div>
-
-            <div className="">
+            <div className="tw-mt-6">
               <div className="col-md-6">
                 <div className="total">
                   <div className="">

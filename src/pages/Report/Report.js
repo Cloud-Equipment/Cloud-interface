@@ -58,7 +58,7 @@ function Report() {
       .get(url, {
         params: {
           currentPage: currentPage + 1,
-          startIndex: (currentPage - 1) * pageSize + 1,
+          startIndex: currentPage * pageSize + 1,
           pageSize,
         },
       })

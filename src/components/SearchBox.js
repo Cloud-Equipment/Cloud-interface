@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import AsyncSelect from "react-select/async";
 import axios from "axios";
 import { BASE_URL } from "../data/data";
+import DummyUserImg from "../Assets/IconAndLogo/dummy-user.webp";
 
 const SearchBox = ({ onSelect }) => {
   const customStyles = {
@@ -13,48 +14,44 @@ const SearchBox = ({ onSelect }) => {
     control: (provided) => ({
       ...provided,
       borderRadius: "8px",
-      width: "100%",
-      maxWidth: "400px",
       border: "1px solid rgba(99, 119, 138, 0.5)",
       outline: "none",
     }),
+    menu: (provided, state) => ({
+      ...provided,
+    }),
   };
-
-  const customOptionRenderer = (option) => (
-    <div style={{ display: "flex", alignItems: "center" }}>
-      <img
-        src={`url-to-your-image/${option.value}.jpg`}
-        alt={option.label}
-        style={{ marginRight: "8px", width: "24px", height: "24px" }}
-      />
-      {option.label}
-    </div>
-  );
 
   const selectRef = useRef(null);
 
-//   const handleMenuClose = () => {
-//     // Clear the input value when the menu is closed
-//     selectRef.current.select.setValue(null);
-//     if (selectRef.current) {
-//       alert("wler");
-//     }
-//   };
+  //   const handleMenuClose = () => {
+  //     // Clear the input value when the menu is closed
+  //     selectRef.current.select.setValue(null);
+  //     if (selectRef.current) {
+  //       alert("wler");
+  //     }
+  //   };
 
   const formatOptionLabel = (option) => (
-    // <div style={{ display: "flex" }}>
-    //   <div>{label}</div>
-    //   <div style={{ marginLeft: "10px", color: "#ccc" }}>
-    //     {customAbbreviation}
-    //   </div>
-    // </div>
     <div style={{ display: "flex", alignItems: "center" }}>
       <img
-        src={option.imagePath}
+        src={DummyUserImg}
         alt={option.patientNme}
-        style={{ marginRight: "8px", width: "24px", height: "24px" }}
+        style={{
+          borderRadius: "10px",
+          marginRight: "8px",
+          width: "50px",
+          height: "50px",
+        }}
       />
-      {option.patientName}
+      <div>
+        <p style={{ fontWeight: 700, marginBottom: 0 }}>{option.patientName}</p>
+        <p style={{ marginBottom: 0 }}>
+          <span>{option.patientUniqueID}</span>
+          &emsp;
+          <span>{option.patientAge} Years</span>
+        </p>
+      </div>
     </div>
   );
 
@@ -83,13 +80,15 @@ const SearchBox = ({ onSelect }) => {
       cacheOptions
       defaultOptions
       isSearchable
+      placeholder="Search Patient Name"
       styles={customStyles}
+      className="react-select"
       formatOptionLabel={formatOptionLabel}
       onChange={(selectedOption) => {
         onSelect(selectedOption);
       }}
       loadOptions={searchPatientsByName}
-    //   onMenuClose={handleMenuClose}
+      //   onMenuClose={handleMenuClose}
     />
   );
 };
