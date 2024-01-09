@@ -77,6 +77,12 @@ function Sidebar() {
                             <p> - </p>
                             <p className="ms-2">Price Management</p>
                           </div>
+                          <Link to="/procedure-management">
+                            <div className="">
+                              <p> - </p>
+                              <p className="ms-2">Procedure Management</p>
+                            </div>
+                          </Link>
                         </div>
                       </div>
                     </div>

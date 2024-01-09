@@ -1,3 +1,5 @@
+@import url(./table.css);
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -26,4 +28,34 @@ textarea {
 
 .react-select input[type="text"] {
   height: unset;
+}
+
+.ce-btn {
+  @apply tw-text-white tw-bg-[#0D5F50] tw-outline-none tw-px-4 tw-py-2 tw-rounded-[6px] tw-text-sm;
+}
+
+.ce-padding {
+  @apply tw-px-[20px] md:tw-px-[24px] lg:tw-px-[32px] tw-py-[36px] md:tw-py-[50px];
+}
+
+.ce-heading-2 {
+  @apply tw-font-medium tw-text-xl;
+}
+
+.search-input-container {
+  position: relative;
+}
+.search-input-container input {
+  @apply tw-bg-[#F8F8FA] tw-rounded-[30px] tw-px-[20px] tw-py-[12px];
+}
+
+.search-input-container img {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.export-btn {
+  @apply tw-bg-[#54D4BD] tw-text-[white] tw-flex tw-items-center tw-text-xs tw-w-fit tw-px-4 tw-py-2 tw-rounded tw-gap-2;
 }

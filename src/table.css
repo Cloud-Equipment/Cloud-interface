@@ -1,0 +1,40 @@
+.ce-table-holder {
+  @apply tw-border-[#E5E5E5] tw-border tw-border-solid tw-bg-[#FBFBFB] tw-rounded-[20px] tw-p-[16px] tw-mt-[20px];
+  overflow-x: auto;
+}
+
+.ce-table-holder .table-heading {
+  @apply tw-font-medium tw-mb-[14px];
+}
+
+.ce-table-holder table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+.ce-table-holder table thead {
+  background-color: #eefffc;
+}
+
+.ce-table-holder table thead th {
+  @apply tw-text-[#282828];
+  white-space: nowrap;
+}
+
+.ce-table-holder table tbody td {
+  @apply tw-text-[#525252];
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.ce-table-holder table th,
+.ce-table-holder table td {
+  padding: 12px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+.ce-table-holder table tbody tr {
+  background-color: white;
+}

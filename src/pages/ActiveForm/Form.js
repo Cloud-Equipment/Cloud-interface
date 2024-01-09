@@ -23,7 +23,7 @@ function Form({ procedureToEdit }) {
   const [error, setError] = useState("");
   const [buttonClass, setButtonClass] = useState("submitFormLight");
 
-  const facilityId = "FAC-ID";
+  const facilityId = "fb3d1285-af5d-422d-99b7-0724b26a24c3";
   const userId = "USER-ID";
 
   const [categoriesList, setCategoriesList] = useState([]);
@@ -791,7 +791,7 @@ function Form({ procedureToEdit }) {
               <div className="md:tw-col-span-2">
                 <label htmlFor="discount" className="fw3">
                   Remark
-                </label>{" "}
+                </label>
                 <br />
                 <textarea
                   name="remarks"

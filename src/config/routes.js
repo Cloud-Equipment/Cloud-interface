@@ -12,6 +12,7 @@ import {
 } from "../pages";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import { Main } from "../pages/Main/Main";
+import { ManageProceduresList } from "../pages/ManageProcedures/ManageProceduresList";
 
 export const Routes = () => {
   return useRoutes([
@@ -56,6 +57,14 @@ export const MainRouting = () => {
     {
       path: "/new-report",
       element: <ReportUploader />,
+    },
+    {
+      path: "procedure-management",
+      element: <ManageProceduresList />,
+    },
+    {
+      path: "procedure-management/*",
+      element: <ManageProceduresList />,
     },
   ]);
 };
