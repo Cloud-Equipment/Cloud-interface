@@ -8,7 +8,7 @@
 .MuiList-root {
   li {
     padding: 14px 20px !important;
-    
+
     &:hover {
       background-color: #eefffc;
     }
@@ -18,4 +18,18 @@
       color: #344054 !important;
     }
   }
+}
+
+.ce-px {
+  @apply px-4 md:px-6;
+}
+
+.ce-py {
+  @apply py-4 md:py-6;
+}
+
+.reportFormBanner {
+  background-size: cover;
+  background-position: right;
+  background-image: url(./assets/images/reports/procedure-tracker-bg.png);
 }

@@ -1,5 +1,6 @@
 import { useRoutes } from "react-router-dom";
-import Reports from "../Pages/Main/Reports";
+import Reports from "../Pages/Main/Reports/Reports";
+import NewReport from "../Pages/Main/Reports/NewReport";
 
 export const MainRouting = () => {
   return useRoutes([
@@ -7,13 +8,13 @@ export const MainRouting = () => {
     //   path: "/",
     //   element: <Dashboard />,
     // },
-    // {
-    //   path: "/create-report-form",
-    //   element: <ActiveForms />,
-    // },
     {
       path: "/reports",
       element: <Reports />,
+    },
+    {
+      path: "/reports/new",
+      element: <NewReport />,
     },
     // {
     //   path: "/manage-user",

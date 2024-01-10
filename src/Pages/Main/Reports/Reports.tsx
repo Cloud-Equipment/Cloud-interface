@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ReportsIcon from "../../assets/icons/report-btn.svg";
-import SearchIcon from "../../assets/icons/search.svg";
-import ExportIcon from "../../assets/icons/export-icon.svg";
-import ArrowDown from "../../assets/icons/solid-arrow-down.svg";
+import ReportsIcon from "../../../assets/icons/report-btn.svg";
+import SearchIcon from "../../../assets/icons/search.svg";
+import ExportIcon from "../../../assets/icons/export-icon.svg";
+import ArrowDown from "../../../assets/icons/solid-arrow-down.svg";
 import { ListItemIcon, ListItemText, TablePagination } from "@mui/material";
-import { environment } from "../../environments";
+import { environment } from "../../../environments";
 import axios, { AxiosResponse } from "axios";
-import { IProcedure } from "../../Models/procedures.models";
-import { ApiResponse } from "../../Models/api.models";
+import { IProcedure } from "../../../Models/procedures.models";
+import { ApiResponse } from "../../../Models/api.models";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import MenuIcon from "../../assets/icons/menu-dots.svg";
-import ViewIcon from "../../assets/icons/view.svg";
-import ShareIcon from "../../assets/icons/share.svg";
-import ConfirmIcon from "../../assets/icons/confirm.svg";
-import UploadIcon from "../../assets/icons/upload.svg";
+import MenuIcon from "../../../assets/icons/menu-dots.svg";
+import ViewIcon from "../../../assets/icons/view.svg";
+import ShareIcon from "../../../assets/icons/share.svg";
+import ConfirmIcon from "../../../assets/icons/confirm.svg";
+import UploadIcon from "../../../assets/icons/upload.svg";
 
 const Reports = () => {
   const [data, setData] = useState<IProcedure[]>([]);
@@ -78,7 +78,7 @@ const Reports = () => {
   const [procedureToEdit, setProcedureToEdit] = useState(null);
 
   return (
-    <section className="">
+    <section className="ce-px ce-py">
       <h4 className="text-ce-green font-bold text-2xl">
         <span className="font-normal">Hello</span> , Emma Taylor
       </h4>
