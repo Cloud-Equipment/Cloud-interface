@@ -1,0 +1,21 @@
+@import url(./assets/styles/shared-components.scss);
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// mui list
+.MuiList-root {
+  li {
+    padding: 14px 20px !important;
+    
+    &:hover {
+      background-color: #eefffc;
+    }
+
+    span {
+      font-size: 14px !important;
+      color: #344054 !important;
+    }
+  }
+}
