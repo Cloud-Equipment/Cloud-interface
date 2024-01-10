@@ -59,3 +59,13 @@ textarea {
 .export-btn {
   @apply tw-bg-[#54D4BD] tw-text-[white] tw-flex tw-items-center tw-text-xs tw-w-fit tw-px-4 tw-py-2 tw-rounded tw-gap-2;
 }
+
+.dashboard-tab-link.active {
+  color: #101828;
+  position: relative;
+}
+
+.dashboard-tab-link.active::after {
+  content: "";
+  @apply tw-absolute tw-left-4 tw-bottom-0 tw-w-[50%] tw-h-[2px] tw-bg-[#54D4BD];
+}

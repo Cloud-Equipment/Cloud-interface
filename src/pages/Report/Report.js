@@ -184,19 +184,19 @@ function Report() {
                 <div className="header mb-3">
                   <h2>All Report</h2>
                 </div>
-                <div className="OverflowTable">
+                <div className="ce-table-holder">
                   {report ? (
                     <table className="w-100">
                       <thead>
                         <tr>
-                          <th scope="col">Date & Time</th>
-                          <th scope="col">Procedure/Test Ordered</th>
-                          <th scope="col">Age of Patient</th>
-                          <th scope="col">Referrer’s Name</th>
-                          <th scope="col">Referrer’s Hospital</th>
-                          <th scope="col">Phone Number</th>
-                          <th scope="col">Amount</th>
-                          <th scope="col"></th>
+                          <th>Date & Time</th>
+                          <th>Procedure/Test Ordered</th>
+                          <th>Age of Patient</th>
+                          <th>Referrer’s Name</th>
+                          <th>Referrer’s Hospital</th>
+                          <th>Phone Number</th>
+                          <th>Amount</th>
+                          <th></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -271,14 +271,14 @@ function Report() {
                       <table className="w-100">
                         <thead>
                           <tr>
-                            <th scope="col">Date & Time</th>
-                            <th scope="col">Procedure/Test Ordered</th>
-                            <th scope="col">Age of Patient</th>
-                            <th scope="col">Referrer’s Name</th>
-                            <th scope="col">Referrer’s Hospital</th>
-                            <th scope="col">Phone Number</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col"></th>
+                            <th>Date & Time</th>
+                            <th>Procedure/Test Ordered</th>
+                            <th>Age of Patient</th>
+                            <th>Referrer’s Name</th>
+                            <th>Referrer’s Hospital</th>
+                            <th>Phone Number</th>
+                            <th>Amount</th>
+                            <th></th>
                           </tr>
                         </thead>
                         <tbody></tbody>

@@ -5,7 +5,7 @@ import { ApprovedProcedures } from "./ApprovedProcedures";
 
 export const ManageProceduresChildRoutes = () => {
   return useRoutes([
-    { path: "/", element: <AllProcedures /> },
+    { path: "/", element: <AllProcedures /> ,},
     {
       path: "/pending",
       element: <PendingProcedures />,
