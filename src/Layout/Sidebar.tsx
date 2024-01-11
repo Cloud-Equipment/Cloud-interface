@@ -10,7 +10,13 @@ import ManagementIcon from "../assets/icons/management-nav.svg";
 import SettingsIcon from "../assets/icons/settings.svg";
 import "./Layout.scss";
 
+import { useSelector } from "react-redux";
+import { IAppState } from "../Store/store";
+import { UserTypeEnum } from "../Models/auth.models";
+
 const Sidebar = () => {
+  const userDetails = useSelector((state: IAppState) => state.auth.user);
+
   return (
     <aside className="px-4 py-10 md:px-6 md:py-14 md:pr-10 bg-ce-green w-[80%] max-w-[300px] h-screen fixed left-0 top-0 z-50 lg:w-[25%] lg:max-w-[300px] text-sm text-white">
       <div className="flex items-center space-x-3">
@@ -26,52 +32,49 @@ const Sidebar = () => {
           <span>Dashboard</span>
         </NavLink>
 
-        <NavLink
-          to="/reports"
-          className="main-icon"
-        >
+        <NavLink to="/reports" className="main-icon">
           <img src={ReportsIcon} alt="" />
           <span>Reports</span>
         </NavLink>
 
-        <div className="mt-2 flex items-center justify-between">
-          <NavLink
-            to="/management"
-            className="px-4 py-3 flex items-center space-x-3"
-          >
-            <img src={ManagementIcon} alt="" />
-            <span>Management</span>
-          </NavLink>
+        {userDetails?.userType === UserTypeEnum.FACILITY_ADMIN ? (
+          <>
+            <div className="mt-2 flex items-center justify-between">
+              <NavLink
+                to="/management"
+                className="px-4 py-3 flex items-center space-x-3"
+              >
+                <img src={ManagementIcon} alt="" />
+                <span>Management</span>
+              </NavLink>
 
-          <button>
-            <img src={ArrowUpIcon} alt="" />
-          </button>
-        </div>
+              <button>
+                <img src={ArrowUpIcon} alt="" />
+              </button>
+            </div>
 
-        <div className="grid pl-[52px] text-[#FFFFFF8F] gap-4 py-2 font-medium">
-          <NavLink className="hover:text-white" to="/management/users">
-            Manage Users
-          </NavLink>
-          <NavLink className="hover:text-white" to="/management/users">
-            Manage Price
-          </NavLink>
-          <NavLink className="hover:text-white" to="/management/users">
-            Manage Patients
-          </NavLink>
-        </div>
+            <div className="grid pl-[52px] text-[#FFFFFF8F] gap-4 py-2 font-medium">
+              <NavLink className="hover:text-white" to="/management/users">
+                Manage Users
+              </NavLink>
+              <NavLink className="hover:text-white" to="/management/users">
+                Manage Price
+              </NavLink>
+              <NavLink className="hover:text-white" to="/management/users">
+                Manage Patients
+              </NavLink>
+            </div>
 
-        <NavLink
-          to="."
-          className="main-icon"
-        >
-          <img src={SettingsIcon} alt="" />
-          <span>Request Equipment</span>
-        </NavLink>
+            <NavLink to="." className="main-icon">
+              <img src={SettingsIcon} alt="" />
+              <span>Request Equipment</span>
+            </NavLink>
+          </>
+        ) : (
+          <></>
+        )}
 
-        <NavLink
-          to="."
-          className="main-icon"
-        >
+        <NavLink to="." className="main-icon">
           <img src={SettingsIcon} alt="" />
           <span>Settings</span>
         </NavLink>

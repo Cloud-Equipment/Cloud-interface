@@ -5,6 +5,13 @@ button.btn-icon {
 .ce-btn {
   @apply text-white bg-ce-green outline-none px-4 py-2 rounded-[6px] text-sm;
 }
+.ce-btn-text {
+  @apply text-ce-green outline-none px-4 py-2 rounded-[6px] text-sm;
+}
+
+.ce-btn-outline {
+  @apply text-ce-green border-ce-green border-solid border outline-none px-4 py-2 rounded-[6px] text-sm;
+}
 
 .ce-heading-2 {
   @apply font-medium text-lg;
@@ -91,4 +98,41 @@ button.btn-icon {
   .sort-value {
     @apply text-[#2C3647] text-sm;
   }
+}
+
+// inputs
+.form-input-label-holder {
+  @apply grid gap-2;
+
+  label {
+    @apply font-medium text-sm text-greyText2;
+  }
+}
+
+.ce-input {
+  border: 1px solid rgba(99, 119, 138, 0.5);
+  margin: 2px 0;
+  @apply px-3 rounded-lg py-2.5 focus:border-ce-green outline-none;
+}
+
+.ce-input::placeholder,
+.ce-input::-moz-placeholder {
+  @apply text-sm text-[#42526B];
+}
+
+.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border: 1px solid #0e5f50 !important;
+}
+
+.MuiSelect-select {
+  padding: 10px 12px !important;
+}
+
+.MuiInputBase-root {
+    border-radius: 8px !important;
+}
+
+.SelectListItem .MuiSelect-select {
+  padding: 6px 10px !important;
+  background-color: red !important;
 }

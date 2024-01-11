@@ -32,3 +32,24 @@ export interface IProcedure {
   trackId: string;
   rebateId: string;
 }
+
+export interface IMedService {
+  medServiceId: number;
+  medServiceCategoryId: number;
+  medServiceName: string;
+  medServiceDescription: string;
+  isActive: number;
+  price: number;
+  new_Price: number;
+  dateCreated?: Date;
+  dateModified?: Date;
+  facilityId: string;
+}
+
+export interface IMedserviceCategory {
+  categoryId: number;
+  categoryName: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  isActive: boolean;
+}

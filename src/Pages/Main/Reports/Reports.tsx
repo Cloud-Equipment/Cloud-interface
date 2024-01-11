@@ -60,6 +60,12 @@ const Reports = () => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleViewClick = (x: number) => {
+    console.log(x);
+    handleClose();
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -139,7 +145,7 @@ const Reports = () => {
 
               <tbody>
                 {data.map((item, index) => (
-                  <tr>
+                  <tr key={index}>
                     <td>{dateFormat(item.date)}</td>
                     <td>{item.medServiceName}</td>
                     <td>{item.patientAge}</td>
@@ -165,7 +171,11 @@ const Reports = () => {
                             "aria-labelledby": "basic-button",
                           }}
                         >
-                          <MenuItem onClick={handleClose}>
+                          <MenuItem
+                            onClick={() =>
+                              handleViewClick(item.procedureEntryId)
+                            }
+                          >
                             <ListItemIcon>
                               <img src={ViewIcon} alt="" />
                             </ListItemIcon>

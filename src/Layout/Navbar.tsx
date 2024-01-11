@@ -5,7 +5,7 @@ import DummyUserIcon from "../assets/images/temp/dummy-user-icon2.svg";
 
 const Navbar = () => {
   return (
-    <nav className="sticky top-0 px-5 py-4 md:p-6 flex justify-between">
+    <nav className="sticky bg-[#F6F9F8] top-0 px-5 pt-4 md:px-6 md:pt-6 pb-2 flex justify-between">
       <div>
         <h3 className="text-xl">Dashboard</h3>
 

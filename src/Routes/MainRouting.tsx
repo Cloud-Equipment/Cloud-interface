@@ -1,6 +1,7 @@
 import { useRoutes } from "react-router-dom";
 import Reports from "../Pages/Main/Reports/Reports";
 import NewReport from "../Pages/Main/Reports/NewReport";
+import UserManagement from "../Pages/Main/UserManagement/UserManagement";
 
 export const MainRouting = () => {
   return useRoutes([
@@ -16,10 +17,10 @@ export const MainRouting = () => {
       path: "/reports/new",
       element: <NewReport />,
     },
-    // {
-    //   path: "/manage-user",
-    //   element: <ManageUser />,
-    // },
+    {
+      path: "/management/users",
+      element: <UserManagement />,
+    },
     // {
     //   path: "/manage-role",
     //   element: <ManageRoles />,
@@ -42,3 +43,4 @@ export const MainRouting = () => {
     // },
   ]);
 };
+
