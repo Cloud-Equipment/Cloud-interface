@@ -78,6 +78,11 @@ const Sidebar = () => {
           <img src={SettingsIcon} alt="" />
           <span>Settings</span>
         </NavLink>
+
+        <NavLink to="/auth/login" className="main-icon">
+          <img src={SettingsIcon} alt="" />
+          <span>Logout</span>
+        </NavLink>
       </div>
 
       <div className="mt-10 flex justify-between items-center">
