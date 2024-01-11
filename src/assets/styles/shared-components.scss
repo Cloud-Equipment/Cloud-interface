@@ -129,10 +129,14 @@ button.btn-icon {
 }
 
 .MuiInputBase-root {
-    border-radius: 8px !important;
+  border-radius: 8px !important;
 }
 
 .SelectListItem .MuiSelect-select {
   padding: 6px 10px !important;
   background-color: red !important;
+}
+
+.centered-modal {
+  @apply absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[90%] max-w-[450px];
 }

@@ -26,11 +26,11 @@ const Register = () => {
         roles: ["FacilityAdmin"],
       })
       .then((response) => {
-        if (response.data.data.success) {
-          toast.success(response.data.data.msg);
+        if (response.data.success) {
+          toast.success(response.data.msg);
           navigate("/");
         } else {
-          toast.error(response.data.data.msg);
+          toast.error(response.data.msg);
         }
       })
       .catch((err) => {

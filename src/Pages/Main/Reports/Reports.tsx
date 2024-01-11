@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReportsIcon from "../../../assets/icons/report-btn.svg";
 import SearchIcon from "../../../assets/icons/search.svg";
 import ExportIcon from "../../../assets/icons/export-icon.svg";
@@ -62,7 +62,7 @@ const Reports = () => {
   };
 
   const handleViewClick = (x: number) => {
-    console.log(x);
+    navigate("/reports/" + x);
     handleClose();
   };
 
@@ -82,6 +82,8 @@ const Reports = () => {
   };
 
   const [procedureToEdit, setProcedureToEdit] = useState(null);
+
+  const navigate = useNavigate();
 
   return (
     <section className="ce-px ce-py">

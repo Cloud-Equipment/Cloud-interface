@@ -24,11 +24,11 @@ const Login = () => {
     axios
       .post(`${environment.baseUrl}/user-manager/account/login`, data)
       .then((response) => {
-        if (response.data.data.success) {
-          toast.success(response.data.data.message);
+        if (response.data.success) {
+          toast.success(response.data.message);
           navigate("/");
         } else {
-          toast.error(response.data.data.message);
+          toast.error(response.data.message);
         }
       })
       .catch((err) => {
