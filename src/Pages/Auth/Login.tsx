@@ -5,6 +5,10 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { environment } from "../../environments";
 import { toast } from "react-toastify";
+import * as jwtDecode from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../Store/Auth/actions";
+import { IUser } from "../../Models/auth.models";
 
 const Login = () => {
   const {
@@ -18,6 +22,7 @@ const Login = () => {
   } = useForm();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onSubmit = (data: any) => {
     // console.log(data_);
@@ -25,10 +30,28 @@ const Login = () => {
       .post(`${environment.baseUrl}/user-manager/account/login`, data)
       .then((response) => {
         if (response.data.success) {
-          toast.success(response.data.message);
+          toast.success(response.data.msg);
+
+          const token = response.data.data.token;
+
+          try {
+            const decoded = jwtDecode.jwtDecode(token) as unknown as IUser;
+            // Set the decoded payload in the state
+            // setDecodedToken(decoded);
+            console.log(decoded);
+            dispatch(
+              loginSuccess({
+                ...decoded,
+                userType: (decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'])
+              })
+            );
+          } catch (error) {
+            // console.error("Error decoding JWT:", error.message);
+          }
+
           navigate("/");
         } else {
-          toast.error(response.data.message);
+          toast.error(response.data.msg);
         }
       })
       .catch((err) => {

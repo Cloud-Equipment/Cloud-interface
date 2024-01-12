@@ -23,10 +23,11 @@ let token = localStorage.getItem("token");
 // }
 
 const initialState: IAuthState = {
-  user: {
-    userType: UserTypeEnum.FACILITY_ADMIN,
-    token: "",
-  },
+  //   user: {
+  //     userType: UserTypeEnum.FACILITY_ADMIN,
+  //     token: "",
+  //   },
+  user: null,
 };
 
 export const authReducer = (

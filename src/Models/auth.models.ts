@@ -1,12 +1,18 @@
 export interface IUser {
   userType: UserTypeEnum;
   token: string;
+  email: string;
+  userId: string;
+  FACILITY_ID: string;
+  USER_ID: string;
+  "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": UserTypeEnum;
+  FACILITY_REBATE_PERCENTAGE: string;
 }
 
 export enum UserTypeEnum {
   ADMIN = "ADMIN",
   RECEPTIONIST = "RECEPTIONIST",
-  FACILITY_ADMIN = "FACILITY_ADMIN",
+  FACILITY_ADMIN = "FacilityAdmin",
 }
 
 export interface IRegisterUser {

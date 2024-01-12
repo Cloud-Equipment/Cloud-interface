@@ -5,6 +5,8 @@ import { environment } from "../../../environments";
 import { toast } from "react-toastify";
 import { MenuItem, Select } from "@mui/material";
 import { UserTypeEnum } from "../../../Models/auth.models";
+import { useSelector } from "react-redux";
+import { IAppState } from "../../../Store/store";
 
 export const InviteUserModal = ({ onClose }: any) => {
   const {
@@ -17,6 +19,8 @@ export const InviteUserModal = ({ onClose }: any) => {
     control,
   } = useForm();
 
+  const userDetails = useSelector((state: IAppState) => state.auth.user);
+
   const onSubmit = (data: any) => {
     axios
       .post(`${environment.baseUrl}/user-manager/account/register`, {
@@ -25,7 +29,7 @@ export const InviteUserModal = ({ onClose }: any) => {
         password: "Qwerty1!",
         firstName: "Paul",
         lastName: "Peter",
-        facilityId: "1234",
+        facilityId: userDetails?.FACILITY_ID,
       })
       .then((response) => {
         if (response.data.success) {

@@ -5,6 +5,8 @@ import DummyUserIcon from "../assets/images/temp/dummy-user-icon2.svg";
 import { ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from "../assets/icons/logout.svg";
+import { useSelector } from "react-redux";
+import { IAppState } from "../Store/store";
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -14,6 +16,7 @@ const Navbar = () => {
   };
 
   const navigate = useNavigate();
+  const userDetails = useSelector((state: IAppState) => state.auth.user);
 
   const viewProfile = () => {
     // navigate("/reports/" + x);
@@ -47,7 +50,7 @@ const Navbar = () => {
 
           <div className="flex-1">
             <p className="font-bold text-blackText">Emma Taylor</p>
-            <p className="text-greyText text-sm">Receptionist</p>
+            <p className="text-greyText text-sm">{userDetails?.userType}</p>
           </div>
 
           <button onClick={handleClick} className="btn-icon">
