@@ -1,4 +1,3 @@
-import "./App.scss";
 import { BrowserRouter } from "react-router-dom";
 import { AppRoutes } from "./Routes/Routes";
 import { ToastContainer } from "react-toastify";
