@@ -44,7 +44,9 @@ export const ViewReport = () => {
             </Link>
           </div>
 
-          <p className="text-lg font-medium mt-4">Patient Information</p>
+          <p className="text-lg font-medium mt-4">
+            <span className="text-base font-normal"> Patient Name:</span> {reportDetails?.patientName}
+          </p>
 
           <p className="mt-5">User ID: {reportDetails?.patientId}</p>
 

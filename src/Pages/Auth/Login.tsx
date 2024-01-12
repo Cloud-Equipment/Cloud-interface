@@ -42,7 +42,20 @@ const Login = () => {
             dispatch(
               loginSuccess({
                 ...decoded,
-                userType: (decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'])
+                userType:
+                  decoded[
+                    "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+                  ],
+              })
+            );
+            localStorage.setItem(
+              "user",
+              JSON.stringify({
+                ...decoded,
+                userType:
+                  decoded[
+                    "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+                  ],
               })
             );
           } catch (error) {

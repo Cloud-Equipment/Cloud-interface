@@ -8,6 +8,9 @@ export interface IAuthState {
 
 let token = localStorage.getItem("token");
 
+let user: any = localStorage.getItem("user");
+user = user ? (JSON.parse(user) as unknown as IUser) : null;
+
 // Check if the token exists and is valid
 // if (token) {
 //   try {
@@ -27,7 +30,7 @@ const initialState: IAuthState = {
   //     userType: UserTypeEnum.FACILITY_ADMIN,
   //     token: "",
   //   },
-  user: null,
+  user,
 };
 
 export const authReducer = (
