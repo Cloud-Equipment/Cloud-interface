@@ -11,6 +11,10 @@ import {
   IMedserviceCategory,
 } from "../../Models/procedures.models";
 import BlackPlusIcon from "../../assets/icons/filled-white-plus.svg";
+import { ReportsPriceBreakdown } from "./ReportsPriceBreakdown";
+// const [totalDiscount, setTotalDiscount] = useState("");
+// const [total, setTotal] = useState("");
+// const [subTotal, setSubTotal] = useState(0);
 
 const CreateReportForm = () => {
   const {
@@ -162,36 +166,122 @@ const CreateReportForm = () => {
     }
   };
 
-  //   useEffect(() => {
-  //     const rebate = false; // please remember to change
-  //     if (rebate) {
-  //       let total = 0;
-  //       const proceduresToConsider = getValues().rebatesArray;
+  const onSubmit = (data_: any) => {
+    // console.log(data_);
 
-  //       // loop over all procedures selected
-  //       for (let item of selectedProcedures) {
-  //         let amount = Number(item.price) || 0;
-  //         // check if the selectedProcedures has rebate
-  //         const rebateInfo = proceduresToConsider?.find(
-  //           (x) => x.id === item.medServiceId
-  //         );
-  //         if (rebateInfo?.rebatePaid) {
-  //           const rebatePaid = Number(rebateInfo.rebatePaid) || 0;
-  //           amount = amount - (rebatePaid * amount) / 100;
-  //         }
+    const createProcedure = (patientId: number) => {
+      const proceduresToSubmit: any[] = [];
+      selectedProcedures.map((x) => {
+        const rebateInfo = proceduresWithRebate.find((y) => y === x);
+        const item_ = {
+          patientId: patientId,
+          medServiceId: x,
+          quantity: 1,
+          amount: proceduresList.find((y) => x === y.medServiceId),
+          subotal: proceduresList.find((y) => x === y.medServiceId),
+          remarks: "y",
+          entryUserId: userId,
+          facilityId: facilityId,
+          procedureDiscountId: "coming-soon",
+          faclityDiscountId: facilityId,
+          // procedureDiscountId: procedureId,
+        };
+        if (rebateInfo) {
+          const reportCake = {
+            facilityId: facilityId,
+            rebatePercent: 5,
+            refererHospital: facilityId,
+            refererName: data_.referrerName,
+            refererEmail: data_.refererEmail,
+            refererPhone: "phone",
+          };
+        }
+        proceduresToSubmit.push(item_);
+      });
 
-  //         total = total + amount;
-  //       }
+      axios
+        .post(
+          `${environment}/service-manager/procedures/create`,
+          proceduresToSubmit
+        )
+        .then((response) => {
+          if (response) {
+            // successRef.current.click();
+          }
+        })
+        .catch((err) => console.log(err));
+    };
 
-  //       setSubTotal(total);
-  //     } else {
-  //       const totalPrice = selectedProcedures.reduce(
-  //         (acc, item) => acc + item.price,
-  //         0
-  //       );
-  //       setSubTotal(totalPrice);
-  //     }
-  //   }, [selectedProcedures]);
+    if (isNewPatient) {
+      // patientNull.current.click();
+      // console.log(patientStatus);
+      const data = {
+        patientFacilityCode: facilityId,
+        patientName: data_.patientName,
+        patientAge: Number(data_.patientAge) || 10,
+        patientEmail: data_.patientEmail,
+        patientPhone: data_.patientPhone,
+        patientGenderId: 0,
+        aboutPatient: "",
+        maritalStatusId: 0,
+        address: data_.patientAddress,
+        bloodGroupId: 0,
+        dateOfBirth: "2024-01-03T08:37:00.151Z",
+        dateOfDeath: "2024-01-03T08:37:00.151Z",
+        // isActive: true,
+        // patientUniqueID: "string",
+      };
+      axios
+        .post(`${environment.baseUrl}/patient/createpatient`, data)
+        .then((response) => {
+          if (response) {
+            createProcedure(response.data.data.patientUniqueID);
+            setIsNewPatient(false);
+          }
+        })
+        .catch((err) => console.log(err));
+    } else {
+      createProcedure(data_.patientId);
+    }
+  };
+
+  const [totalDiscount, setTotalDiscount] = useState("");
+  const [total, setTotal] = useState("");
+  const [subTotal, setSubTotal] = useState(0);
+
+  useEffect(() => {
+    const rebate = false; // please remember to change
+    if (rebate) {
+      let total = 0;
+      const proceduresToConsider = getValues().rebatesArray;
+
+      // loop over all procedures selected
+      for (let item of selectedProcedures) {
+        const price = proceduresList.find(
+          (x) => x.medServiceId === item
+        )?.price;
+        let amount = Number(price) || 0;
+        // check if the selectedProcedures has rebate
+        const rebateInfo = proceduresToConsider?.find((x: any) => x === item);
+        if (rebateInfo?.rebatePaid) {
+          const rebatePaid = Number(rebateInfo.rebatePaid) || 0;
+          amount = amount - (rebatePaid * amount) / 100;
+        }
+
+        total = total + amount;
+      }
+
+      setSubTotal(total);
+    } else {
+      // const totalPrice = selectedProcedures.reduce(
+      //   (acc, item) =>
+      //     acc + proceduresList?.find((x) => x.medServiceId === item)?.price ?? 0,
+      //   0
+      // );
+      const totalPrice = 0;
+      setSubTotal(totalPrice);
+    }
+  }, [selectedProcedures]);
 
   // populate the dropdown for rebates selection based on the selected procedures
   useEffect(() => {
@@ -223,7 +313,10 @@ const CreateReportForm = () => {
 
   return (
     <section className=" p-5 md:p-10 xl:px-20 ">
-      <form className="[box-shadow:_0px_4px_40px_0px_#0D95891A] bg-white rounded-2xl p-5 md:p-8">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="[box-shadow:_0px_4px_40px_0px_#0D95891A] bg-white rounded-2xl p-5 md:p-8"
+      >
         <div className="border-b-[2px] pb-1 border-b-solid border-borderLine">
           <h4 className="font-bold text-xl">Patient Details</h4>
           <p className="text-sm text-greyText2 mt-1">
@@ -423,6 +516,69 @@ const CreateReportForm = () => {
             deduction
           </p>
         </div>
+
+        <div className="grid md:grid-cols-2 gap-5 md:gap-8 mt-8 md:mt-10">
+          <div className="form-input-label-holder">
+            <label>Referer Name</label>
+            <input
+              className="ce-input"
+              {...register("refererName")}
+              placeholder="Adepoju Deborah "
+              onClick={handleAddRebateClick}
+            />
+          </div>
+          <div className="form-input-label-holder">
+            <label>refererName</label>
+            <input
+              className="ce-input"
+              {...register("refererName")}
+              placeholder="Adepoju Deborah "
+              onClick={handleAddRebateClick}
+            />
+          </div>
+          <div className="form-input-label-holder">
+            <label>Referer's Hospital/Laboratory</label>
+            <input
+              className="ce-input"
+              {...register("refererHospital")}
+              placeholder="Fountain Care "
+              onClick={handleAddRebateClick}
+            />
+          </div>
+          <div className="form-input-label-holder">
+            <label>Referer Email Address</label>
+            <input
+              className="ce-input"
+              {...register("refererEmail")}
+              placeholder="email@example.io"
+            />
+          </div>
+          <div className="form-input-label-holder">
+            <label>Referer Phone</label>
+            <input
+              className="ce-input"
+              {...register("refererPhone")}
+              placeholder="+234 90292929 "
+            />
+          </div>
+          <div className="form-input-label-holder md:col-span-2">
+            <label>Remarks</label>
+            <textarea
+              className="ce-input"
+              rows={5}
+              {...register("remarks")}
+              placeholder="Leave a message for the diagnostic center"
+            ></textarea>
+          </div>
+        </div>
+
+        <ReportsPriceBreakdown
+          subTotal={() => {}}
+          discount={totalDiscount}
+          total={subTotal}
+        ></ReportsPriceBreakdown>
+
+        <button className="p-3 lg:px-6 .ce-btn">Save</button>
       </form>
     </section>
   );

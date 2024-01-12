@@ -28,7 +28,7 @@ const Register = () => {
       .then((response) => {
         if (response.data.success) {
           toast.success(response.data.msg);
-          navigate("/");
+          navigate("/auth/login");
         } else {
           toast.error(response.data.msg);
         }
