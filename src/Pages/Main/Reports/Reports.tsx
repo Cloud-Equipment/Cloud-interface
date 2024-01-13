@@ -24,6 +24,10 @@ const Reports = () => {
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
 
+  const [selectedProcedure, setSelectedProcedure] = useState<null | IProcedure>(
+    null
+  );
+
   useEffect(() => {
     fetchList();
   }, [currentPage, pageSize]);
@@ -57,12 +61,16 @@ const Reports = () => {
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    selectedProcedure: IProcedure
+  ) => {
     setAnchorEl(event.currentTarget);
+    setSelectedProcedure(selectedProcedure);
   };
 
-  const handleViewClick = (x: number) => {
-    navigate("/reports/" + x);
+  const handleViewClick = () => {
+    navigate("/reports/" + selectedProcedure?.procedureEntryId);
     handleClose();
   };
 
@@ -158,14 +166,12 @@ const Reports = () => {
                     <td>
                       <div>
                         <button
-                          //   id="basic-button"
-                          onClick={handleClick}
+                          onClick={(e) => handleClick(e, item)}
                           className="w-6"
                         >
                           <img src={MenuIcon} alt="" />
                         </button>
                         <Menu
-                          //   id="basic-menu"
                           anchorEl={anchorEl}
                           open={open}
                           onClose={handleClose}
@@ -173,11 +179,7 @@ const Reports = () => {
                             "aria-labelledby": "basic-button",
                           }}
                         >
-                          <MenuItem
-                            onClick={() =>
-                              handleViewClick(item.procedureEntryId)
-                            }
-                          >
+                          <MenuItem onClick={handleViewClick}>
                             <ListItemIcon>
                               <img src={ViewIcon} alt="" />
                             </ListItemIcon>

@@ -7,7 +7,7 @@ export const ReportsPriceBreakdown = ({ subTotal, discount, total }: any) => {
         <p>Subtotal:</p>
         <p>₦ {subTotal} </p>
         <p>Discount:</p>
-        <p className="text-[red]">₦ {discount}</p>
+        <p className="text-[red]">- ₦ {discount}</p>
         <p className="text-2xl">Total</p>
         <p className="text-2xl">₦ {total}</p>
       </div>

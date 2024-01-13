@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IAppState } from "../Store/store";
 import { UserTypeEnum } from "../Models/auth.models";
 import { closeSidebar } from "../Store/Shared/actions";
-import CloseIcon from '../assets/icons/x.png'
+import CloseIcon from "../assets/icons/x.png";
 
 const Sidebar = () => {
   const userDetails = useSelector((state: IAppState) => state.auth.user);
@@ -24,17 +24,19 @@ const Sidebar = () => {
 
   const dispatch = useDispatch();
 
+  const handleCloseSidebar = () => {
+    dispatch(closeSidebar());
+  };
+
   return (
     <aside
-      className={`px-4 py-10 md:px-6 md:py-14 md:pr-10 bg-ce-green w-[80%] max-w-[300px] h-screen fixed top-0 [z-index:51] duration-500 lg:w-[25%] lg:max-w-[300px] text-sm text-white overflow-y-auto ${
+      className={`px-4 py-10 md:px-6 md:py-14 md:pr-10 bg-ce-green w-[80%] max-w-[300px] h-screen fixed top-0 [z-index:51] duration-500 lg:w-[25%] lg:max-w-[300px] text-sm text-white overflow-y-auto lg:!left-0 ${
         sidebarOpen ? "left-0" : "left-[-100%]"
       }`}
     >
       <button
-        className="btn-icon block ml-auto mb-4 mr-2 bg-white"
-        onClick={() => {
-          dispatch(closeSidebar());
-        }}
+        className="btn-icon lg:hidden block ml-auto mb-4 mr-2 bg-white"
+        onClick={handleCloseSidebar}
       >
         <img src={CloseIcon} className="w-5" alt="" />
       </button>
@@ -47,12 +49,20 @@ const Sidebar = () => {
       <p className="mt-10 px-4">MAIN</p>
 
       <div className="mt-2">
-        <NavLink to="/" className="!mt-0 main-icon">
+        <NavLink
+          onClick={handleCloseSidebar}
+          to="/"
+          className="!mt-0 main-icon"
+        >
           <img src={DashboardIcon} alt="" />
           <span>Dashboard</span>
         </NavLink>
 
-        <NavLink to="/reports" className="main-icon">
+        <NavLink
+          onClick={handleCloseSidebar}
+          to="/reports"
+          className="main-icon"
+        >
           <img src={ReportsIcon} alt="" />
           <span>Reports</span>
         </NavLink>
@@ -74,18 +84,30 @@ const Sidebar = () => {
             </div>
 
             <div className="grid pl-[52px] text-[#FFFFFF8F] gap-4 py-2 font-medium">
-              <NavLink className="hover:text-white" to="/management/users">
+              <NavLink
+                onClick={handleCloseSidebar}
+                className="hover:text-white"
+                to="/management/users"
+              >
                 Manage Users
               </NavLink>
-              <NavLink className="hover:text-white" to="/management/users">
+              <NavLink
+                onClick={handleCloseSidebar}
+                className="hover:text-white"
+                to="/management/users"
+              >
                 Manage Price
               </NavLink>
-              <NavLink className="hover:text-white" to="/management/users">
+              <NavLink
+                onClick={handleCloseSidebar}
+                className="hover:text-white"
+                to="/management/users"
+              >
                 Manage Patients
               </NavLink>
             </div>
 
-            <NavLink to="." className="main-icon">
+            <NavLink onClick={handleCloseSidebar} to="." className="main-icon">
               <img src={SettingsIcon} alt="" />
               <span>Request Equipment</span>
             </NavLink>
@@ -94,12 +116,16 @@ const Sidebar = () => {
           <></>
         )}
 
-        <NavLink to="." className="main-icon">
+        <NavLink onClick={handleCloseSidebar} to="." className="main-icon">
           <img src={SettingsIcon} alt="" />
           <span>Settings</span>
         </NavLink>
 
-        <NavLink to="/auth/login" className="main-icon">
+        <NavLink
+          onClick={handleCloseSidebar}
+          to="/auth/login"
+          className="main-icon"
+        >
           <img src={SettingsIcon} alt="" />
           <span>Logout</span>
         </NavLink>
@@ -113,7 +139,11 @@ const Sidebar = () => {
       </div>
 
       <div className="px-5 py-3 mt-2">
-        <NavLink to="." className="flex items-center gap-3">
+        <NavLink
+          onClick={handleCloseSidebar}
+          to="."
+          className="flex items-center gap-3"
+        >
           <img className="w-6 h-6 rounded-full" src={DummyUserIcon} alt="" />
           <span>Support</span>
         </NavLink>

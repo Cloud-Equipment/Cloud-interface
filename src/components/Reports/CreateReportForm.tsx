@@ -22,6 +22,8 @@ import { IAppState } from "../../Store/store";
 import { IPatient } from "../../Models/patient.models";
 
 import UserIcon from "../../assets/icons/dummy-user.webp";
+import { ApiResponse } from "../../Models/api.models";
+import { IDiscount } from "../../Models/discount.models";
 
 const CreateReportForm = () => {
   const userDetails = useSelector((state: IAppState) => state.auth.user);
@@ -38,8 +40,17 @@ const CreateReportForm = () => {
 
   const patientId = watch("patientId");
 
+  const [isNewPatient, setIsNewPatient] = useState(true); // whether the patient was fetched
+
   const [selectedPatient, setSelectedPatient] = useState<IPatient | null>(null);
   const [patientsFound, setPatientsFound] = useState<Array<IPatient>>([]);
+
+  const [facilityDiscounts, setFacilityDiscounts] = useState<IDiscount[]>([]);
+  const [procedureDiscounts, setProcedureDiscounts] = useState<IDiscount[]>([]);
+
+  const [subTotal, setSubTotal] = useState(0);
+  const [totalDiscount, setTotalDiscount] = useState(0);
+  const [total, setTotal] = useState(0);
 
   const searchPatientsByName = async (searchTerm: string) => {
     if (!searchTerm) return;
@@ -57,8 +68,6 @@ const CreateReportForm = () => {
     } finally {
     }
   };
-
-  const [isNewPatient, setIsNewPatient] = useState(true); // whether the patient was fetched
 
   const FetchPatient = async () => {
     // 1404174
@@ -99,6 +108,31 @@ const CreateReportForm = () => {
     setValue("patientAddress", selectedPatient?.address);
     setValue("patientGenderId", selectedPatient?.patientGenderId);
     setValue("patientEmail", selectedPatient?.patientEmail);
+  };
+
+  //   discounts
+  const fetchAllDiscounts = () => {
+    const url = `${environment.baseUrl}/payment/discounts/getactivediscount/facilityId`;
+
+    axios
+      .get(url, { params: { facilityId: userDetails?.FACILITY_ID } })
+      .then((res: AxiosResponse<ApiResponse<IDiscount[]>>) => {
+        if (res.data.success) {
+          const facDiscounts = [];
+          const proDiscounts = [];
+
+          for (let item of res.data.data) {
+            if (item.discountTypeId === 1) {
+              facDiscounts.push(item);
+            } else {
+              proDiscounts.push(item);
+            }
+          }
+
+          setFacilityDiscounts(facDiscounts);
+          setProcedureDiscounts(proDiscounts);
+        }
+      });
   };
 
   // multiselect guys with their handlers
@@ -173,6 +207,7 @@ const CreateReportForm = () => {
   useEffect(() => {
     FetchProedure();
     FetchCategory();
+    fetchAllDiscounts();
   }, []);
 
   //   rebates
@@ -184,14 +219,9 @@ const CreateReportForm = () => {
     []
   );
 
-  useEffect(() => {
-    console.log({ proceduresWithRebate });
-  }, [proceduresWithRebate]);
-
   const handleRebateSelectionFromDropdown = (
     event: SelectChangeEvent<number>
   ) => {
-    console.log(event.target.value);
     if (proceduresWithRebate.find((x) => x === event.target.value)) {
       // if the an already event.target.value one is event.target.value again
       return;
@@ -212,8 +242,6 @@ const CreateReportForm = () => {
   };
 
   const onSubmit = (data_: any) => {
-    console.log(data_);
-
     const createProcedure = (patientId: number) => {
       const proceduresToSubmit: any[] = [];
       selectedProcedures.map((x) => {
@@ -253,12 +281,11 @@ const CreateReportForm = () => {
             // successRef.current.click();
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {});
     };
 
     if (isNewPatient) {
       // patientNull.current.click();
-      // console.log(patientStatus);
       const data = {
         patientFacilityCode: userDetails?.FACILITY_ID,
         patientName: data_.patientName,
@@ -283,49 +310,59 @@ const CreateReportForm = () => {
             setIsNewPatient(false);
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {});
     } else {
       createProcedure(data_.patientId);
     }
   };
 
-  const [totalDiscount, setTotalDiscount] = useState(0);
-  const [total, setTotal] = useState("");
-  const [subTotal, setSubTotal] = useState(0);
-
+  //   mathematics
   useEffect(() => {
-    console.log({ proceduresWithRebate, selectedProcedures });
-    if (proceduresWithRebate.length) {
-      let total = 0;
-      const proceduresToConsider = getValues().rebatesArray;
+    console.log({
+      proceduresWithRebate,
+      selectedProcedures,
+      procedureDiscounts,
+      facilityDiscounts,
+    });
 
-      // loop over all procedures selected
-      for (let item of selectedProcedures) {
-        const price = proceduresList.find(
-          (x) => x.medServiceId === item
-        )?.price;
-        let amount = Number(price) || 0;
-        // check if the selectedProcedures has rebate
-        const rebateInfo = proceduresToConsider?.find((x: any) => x === item);
-        if (rebateInfo?.rebatePaid) {
-          const rebatePaid = Number(rebateInfo.rebatePaid) || 0;
-          amount = amount - (rebatePaid * amount) / 100;
-        }
+    let _subTotal = 0;
+    let _total = 0;
+    let _totalDiscount = 0;
 
-        total = total + amount;
-        console.log({ total });
+    for (let procedureId of selectedProcedures) {
+      // get the price of the procedureId
+      let price = proceduresList.find(
+        (x) => x.medServiceId === procedureId
+      )?.price;
+      price = Number(price) || 0;
+
+      // check if the procedureId has rebate selected
+      // and change the price
+      const rebateInfo = proceduresWithRebate?.find((x) => x === procedureId);
+      if (rebateInfo) {
+        price = price - Number(userDetails!.FACILITY_REBATE_PERCENTAGE) * price;
       }
 
-      setSubTotal(total);
-    } else {
-      // const totalPrice = selectedProcedures.reduce(
-      //   (acc, item) =>
-      //     acc + proceduresList?.find((x) => x.medServiceId === item)?.price ?? 0,
-      //   0
-      // );
-      const totalPrice = 0;
-      setSubTotal(totalPrice);
+      // check if there's procedure based discount
+      const procedureFoundFromProceduresWithDiscount =
+        procedureDiscounts.filter((x) => x.procedureId === procedureId);
+      for (let r of procedureFoundFromProceduresWithDiscount) {
+        _totalDiscount = _totalDiscount + r.discountPercent * price;
+      }
+
+      // subtract all the facility based discounts
+      for (let r of facilityDiscounts) {
+        _totalDiscount = _totalDiscount + r.discountPercent * price;
+      }
+
+      _subTotal = _subTotal + price;
     }
+
+    _total = _subTotal - _totalDiscount;
+
+    setSubTotal(_subTotal);
+    setTotal(_total);
+    setTotalDiscount(_totalDiscount);
   }, [selectedProcedures, proceduresWithRebate]);
 
   // populate the dropdown for rebates selection based on the selected procedures
@@ -344,18 +381,9 @@ const CreateReportForm = () => {
         selectedProcedures.some((y) => y === x)
       )
     );
-    console.log(
-      proceduresWithRebate
-      //   .filter((x) =>
-      //     selectedProcedures.some((y) => y === x)
-      //   )
-    );
   }, [selectedProcedures]);
 
   const renderValueForSelectedRebate = (selected: number) => {
-    console.log(
-      proceduresList.find((x) => x.medServiceId === selected)?.medServiceName
-    );
     return proceduresList.find((x) => x.medServiceId === selected)
       ?.medServiceName;
   };
@@ -577,11 +605,10 @@ const CreateReportForm = () => {
               <input
                 className="ce-input"
                 value={
-                  ((proceduresList.find(
+                  (proceduresList.find(
                     (x) => x.medServiceId === proceduresWithRebate[index]
                   )?.price ?? 0) *
-                    Number(userDetails!.FACILITY_REBATE_PERCENTAGE)) /
-                  100
+                  Number(userDetails!.FACILITY_REBATE_PERCENTAGE)
                 }
                 readOnly
               />
@@ -663,7 +690,7 @@ const CreateReportForm = () => {
         <ReportsPriceBreakdown
           subTotal={subTotal}
           discount={totalDiscount}
-          total={subTotal}
+          total={total}
         ></ReportsPriceBreakdown>
 
         <button className="p-3 lg:px-6 ce-btn bg-greenText block w-[80%] mx-auto mt-10 max-w-[500px]">
