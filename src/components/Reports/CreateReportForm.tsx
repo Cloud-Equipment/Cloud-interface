@@ -3,7 +3,12 @@ import { useForm, Controller } from "react-hook-form";
 import { environment } from "../../environments";
 import axios, { AxiosResponse } from "axios";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
+import {
+  Autocomplete,
+  CircularProgress,
+  MenuItem,
+  TextField,
+} from "@mui/material";
 import { Checkbox, ListItemText } from "@mui/material";
 import {
   IMedService,
@@ -14,6 +19,9 @@ import BlackPlusIcon from "../../assets/icons/filled-white-plus.svg";
 import { ReportsPriceBreakdown } from "./ReportsPriceBreakdown";
 import { useSelector } from "react-redux";
 import { IAppState } from "../../Store/store";
+import { IPatient } from "../../Models/patient.models";
+
+import UserIcon from "../../assets/icons/dummy-user.webp";
 
 const CreateReportForm = () => {
   const userDetails = useSelector((state: IAppState) => state.auth.user);
@@ -30,6 +38,26 @@ const CreateReportForm = () => {
 
   const patientId = watch("patientId");
 
+  const [selectedPatient, setSelectedPatient] = useState<IPatient | null>(null);
+  const [patientsFound, setPatientsFound] = useState<Array<IPatient>>([]);
+
+  const searchPatientsByName = async (searchTerm: string) => {
+    if (!searchTerm) return;
+    const url = `${environment.baseUrl}/patient/getpatientbyname`;
+    try {
+      const response = await axios.get(url, {
+        params: { patientName: searchTerm },
+      });
+
+      if (response.data.success) {
+        setPatientsFound(response.data.data);
+      }
+    } catch (error) {
+      setPatientsFound([]);
+    } finally {
+    }
+  };
+
   const [isNewPatient, setIsNewPatient] = useState(true); // whether the patient was fetched
 
   const FetchPatient = async () => {
@@ -41,7 +69,7 @@ const CreateReportForm = () => {
       .then((res: AxiosResponse) => {
         if (res.data.success && res.data.data) {
           setIsNewPatient(false);
-          setValue("patientName", res.data.data?.patientName);
+          setSelectedPatient(res.data.data);
           setValue("patientPhone", res.data.data?.patientPhone);
           setValue("patientAge", res.data.data?.patientAge);
           setValue("patientAddress", res.data.data?.patientAddress);
@@ -62,13 +90,13 @@ const CreateReportForm = () => {
     }
   }, [patientId]);
 
-  const handleSelect = (selectedPatient: any) => {
+  const handleSelect = (selectedPatient: IPatient) => {
     setIsNewPatient(false);
     setValue("patientId", selectedPatient?.patientUniqueID);
     setValue("patientName", selectedPatient?.patientName);
     setValue("patientPhone", selectedPatient?.patientPhone);
     setValue("patientAge", selectedPatient?.patientAge);
-    setValue("patientAddress", selectedPatient?.patientAddress);
+    setValue("patientAddress", selectedPatient?.address);
     setValue("patientGenderId", selectedPatient?.patientGenderId);
     setValue("patientEmail", selectedPatient?.patientEmail);
   };
@@ -151,6 +179,7 @@ const CreateReportForm = () => {
   const [proceduresListForRebate, setProceduresListForRebate] = useState<
     number[]
   >([]);
+
   const [proceduresWithRebate, setProceduresWithRebate] = useState<number[]>(
     []
   );
@@ -349,21 +378,55 @@ const CreateReportForm = () => {
           {/* <div className="hidden md:block"></div> */}
 
           <div className="form-input-label-holder">
+            <label>Patient Name</label>
+            <Autocomplete
+              freeSolo
+              options={patientsFound}
+              onInputChange={(event, newInputValue) => {
+                searchPatientsByName(newInputValue);
+              }}
+              renderInput={(params: any) => (
+                <TextField
+                  {...params}
+                  InputProps={{
+                    ...params.InputProps,
+                  }}
+                />
+              )}
+              getOptionLabel={(option) => {
+                return (option as IPatient).patientName;
+              }}
+              renderOption={(props, option) => (
+                <MenuItem {...props}>
+                  <div className="rounded flex items-center space-x-5 px-3 py-2">
+                    <img
+                      src={UserIcon}
+                      className="w-10 rounded-[10px]"
+                      alt=""
+                    />
+
+                    <div>
+                      <p className="font-semibold text-sm">
+                        {option.patientName}
+                      </p>
+                      <p className="text-xs mt-2">
+                        {option.patientFacilityCode.substr(0, 5)} .{" "}
+                        {option.patientAge} Years
+                      </p>
+                    </div>
+                  </div>
+                </MenuItem>
+              )}
+            />
+          </div>
+
+          <div className="form-input-label-holder">
             <label>Patient ID</label>
             <input
               {...register("patientId")}
               name="patientId"
               placeholder="AGA/453"
               className="ce-input"
-            />
-          </div>
-
-          <div className="form-input-label-holder">
-            <label>Patient Name</label>
-            <input
-              className="ce-input"
-              {...register("patientName")}
-              placeholder="Adepoju Deborah "
             />
           </div>
 

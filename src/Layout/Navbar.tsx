@@ -5,8 +5,10 @@ import DummyUserIcon from "../assets/images/temp/dummy-user-icon2.svg";
 import { ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from "../assets/icons/logout.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IAppState } from "../Store/store";
+import HamIcon from "../assets/icons/hamburger.svg";
+import { toggleSidebar } from "../Store/Shared/actions";
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -16,10 +18,11 @@ const Navbar = () => {
   };
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const userDetails = useSelector((state: IAppState) => state.auth.user);
 
   const viewProfile = () => {
-    // navigate("/reports/" + x);
     handleClose();
   };
 
@@ -34,10 +37,21 @@ const Navbar = () => {
 
   return (
     <nav className="sticky z-50 bg-[#F6F9F8] top-0 px-5 pt-4 md:px-6 md:pt-6 pb-2 flex justify-between">
-      <div>
-        <h3 className="text-xl">Dashboard</h3>
+      <div className="flex">
+        <button
+          onClick={() => {
+            dispatch(toggleSidebar());
+          }}
+          className="btn-icon lg:hidden"
+        >
+          <img src={HamIcon} alt="" />
+        </button>
 
-        <div className=""></div>
+        <div className="hidden md:block">
+          <h3 className="text-xl">Dashboard</h3>
+
+          <div className=""></div>
+        </div>
       </div>
 
       <div className="flex items-center space-x-4">

@@ -10,15 +10,35 @@ import ManagementIcon from "../assets/icons/management-nav.svg";
 import SettingsIcon from "../assets/icons/settings.svg";
 import "./Layout.scss";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IAppState } from "../Store/store";
 import { UserTypeEnum } from "../Models/auth.models";
+import { closeSidebar } from "../Store/Shared/actions";
+import CloseIcon from '../assets/icons/x.png'
 
 const Sidebar = () => {
   const userDetails = useSelector((state: IAppState) => state.auth.user);
+  const sidebarOpen = useSelector(
+    (state: IAppState) => state.shared.sidebarOpen
+  );
+
+  const dispatch = useDispatch();
 
   return (
-    <aside className="px-4 py-10 md:px-6 md:py-14 md:pr-10 bg-ce-green w-[80%] max-w-[300px] h-screen fixed left-0 top-0 z-50 lg:w-[25%] lg:max-w-[300px] text-sm text-white">
+    <aside
+      className={`px-4 py-10 md:px-6 md:py-14 md:pr-10 bg-ce-green w-[80%] max-w-[300px] h-screen fixed top-0 [z-index:51] duration-500 lg:w-[25%] lg:max-w-[300px] text-sm text-white overflow-y-auto ${
+        sidebarOpen ? "left-0" : "left-[-100%]"
+      }`}
+    >
+      <button
+        className="btn-icon block ml-auto mb-4 mr-2 bg-white"
+        onClick={() => {
+          dispatch(closeSidebar());
+        }}
+      >
+        <img src={CloseIcon} className="w-5" alt="" />
+      </button>
+
       <div className="flex items-center space-x-3">
         <img src={DummyLogo} alt="Facility Logo" />
         <p className="font-medium  leading-5">AGAPE DIAGNOSTIC CENTER</p>

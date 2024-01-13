@@ -140,3 +140,14 @@ button.btn-icon {
 .centered-modal {
   @apply absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[90%] max-w-[450px];
 }
+
+// autocomplete
+
+.MuiOutlinedInput-root {
+  padding: 0 !important;
+}
+
+.MuiAutocomplete-input {
+  padding: 10px 12px !important;
+
+}
