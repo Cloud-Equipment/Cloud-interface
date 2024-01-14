@@ -11,6 +11,7 @@ export interface IAppState {
 
 const reducers = combineReducers({ auth: authReducer, shared: sharedReducer });
 
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Store = createStore(reducers, (composeWithDevTools() as any));
 
