@@ -1,0 +1,154 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap");
+
+button.btn-icon {
+  @apply outline-none hover:scale-[1.03];
+}
+.ce-btn {
+  @apply text-white bg-ce-green outline-none px-4 py-2 rounded-[6px] text-sm;
+}
+.ce-btn-text {
+  @apply text-ce-green outline-none px-4 py-2 rounded-[6px] text-sm;
+}
+
+.ce-btn-outline {
+  @apply text-ce-green border-ce-green border-solid border outline-none px-4 py-2 rounded-[6px] text-sm;
+}
+
+.ce-heading-2 {
+  @apply font-medium text-lg;
+}
+
+.ce-btn-icon {
+  @apply flex space-x-2 items-center pr-6;
+
+  img {
+    @apply w-5;
+  }
+}
+
+.search-input-container {
+  position: relative;
+
+  input {
+    @apply outline-ce-green bg-[#F8F8FA] rounded-[30px] px-[20px] py-[12px] w-full;
+  }
+
+  img {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.export-btn {
+  @apply bg-[#54D4BD] text-[white] flex items-center text-xs w-fit px-4 py-2 rounded gap-2;
+}
+
+// table
+.ce-table-holder {
+  @apply border-[#E5E5E5] border border-solid bg-[#FBFBFB] rounded-[20px] p-[16px];
+  overflow-x: auto;
+
+  .table-heading {
+    @apply font-medium mb-[14px];
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+
+    thead {
+      @apply bg-ce-lgreen;
+
+      th {
+        @apply text-[#282828] text-left;
+        white-space: nowrap;
+      }
+    }
+
+    tbody {
+      tr {
+        background-color: white;
+      }
+
+      td {
+        @apply text-[#525252] text-nowrap;
+        border-bottom: 1px solid #e1e1e1;
+      }
+    }
+
+    th,
+    td {
+      padding: 12px;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+    }
+  }
+}
+
+.sort-container {
+  @apply bg-[#F8F8FA] gap-4 rounded-[20px] flex px-5 py-2.5 items-center;
+
+  .sort-text {
+    @apply text-xs;
+  }
+
+  .sort-value {
+    @apply text-[#2C3647] text-sm;
+  }
+}
+
+// inputs
+.form-input-label-holder {
+  @apply grid gap-2;
+
+  label {
+    @apply font-medium text-sm text-greyText2;
+  }
+}
+
+.ce-input {
+  border: 1px solid rgba(99, 119, 138, 0.5);
+  margin: 2px 0;
+  @apply px-3 rounded-lg py-2.5 focus:border-ce-green outline-none;
+}
+
+.ce-input::placeholder,
+.ce-input::-moz-placeholder {
+  @apply text-sm text-[#42526B];
+}
+
+.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border: 1px solid #0e5f50 !important;
+}
+
+.MuiSelect-select {
+  padding: 10px 12px !important;
+}
+
+.MuiInputBase-root {
+  border-radius: 8px !important;
+}
+
+.SelectListItem .MuiSelect-select {
+  padding: 6px 10px !important;
+  background-color: red !important;
+}
+
+.centered-modal {
+  @apply absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[90%] max-w-[450px];
+}
+
+// autocomplete
+
+.MuiOutlinedInput-root {
+  padding: 0 !important;
+}
+
+.MuiAutocomplete-input {
+  padding: 10px 12px !important;
+
+}
