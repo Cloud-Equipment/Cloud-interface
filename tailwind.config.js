@@ -3,6 +3,7 @@ module.exports = {
   content: [
     './apps/cloud-equipment/src/**/*.{js,jsx,ts,tsx}',
     './libs/auth/src/**/*.{js,jsx,ts,tsx}',
+    './libs/reports/src/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
     extend: {

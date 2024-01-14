@@ -1,11 +1,11 @@
-// import DailyProcedureTracker from "../../../components/Reports/DailyProcedureTracker";
-// import CreateReportForm from "../../../components/Reports/CreateReportForm";
+import { DailyProcedureTracker } from '@cloud-equipment/reports';
+import { CreateReportForm } from '@cloud-equipment/reports';
 
 const NewReport = () => {
   return (
     <>
-      {/* <DailyProcedureTracker />
-      <CreateReportForm /> */}
+      <DailyProcedureTracker />
+      <CreateReportForm />
     </>
   );
 };
