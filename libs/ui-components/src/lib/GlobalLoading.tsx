@@ -12,7 +12,11 @@ const GlobalLoading = () => {
     <>
       {loading && (
         <div
-          style={{ width: '100vw', zIndex: 9999 }}
+          style={{
+            width: '100vw',
+            zIndex: 9999,
+            backgroundColor: 'rgb(184 184 184 / 32%)',
+          }}
           className="fixed h-screen top-0 left-0 grid place-items-center"
         >
           <BallTriangle

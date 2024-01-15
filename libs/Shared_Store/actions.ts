@@ -23,3 +23,15 @@ export const toggleSidebar = () => {
     type: SharedActions.TOGGLE_SIDEBAR,
   };
 };
+
+export const setLoading = () => {
+  return {
+    type: SharedActions.SET_LOADING,
+  };
+};
+
+export const clearLoading = () => {
+  return {
+    type: SharedActions.CLEAR_LOADING,
+  };
+};

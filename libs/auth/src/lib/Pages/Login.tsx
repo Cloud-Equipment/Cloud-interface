@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import * as jwtDecode from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../Store/actions';
-import { setLoading, clearLoading } from '@cloud-equipment/models';
+import { setLoading, clearLoading } from '@cloud-equipment/shared_store';
 import { IUser } from '@cloud-equipment/models';
 import api from '@cloud-equipment/api';
 

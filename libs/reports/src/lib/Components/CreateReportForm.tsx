@@ -12,9 +12,8 @@ import {
   IPatient,
   IDiscount,
   IUser,
-  setLoading,
-  clearLoading,
 } from '@cloud-equipment/models';
+import { setLoading, clearLoading } from '@cloud-equipment/shared_store';
 import { ReportsPriceBreakdown } from './ReportsPriceBreakdown';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -378,7 +377,7 @@ const CreateReportForm = () => {
     <section className=" p-5 md:p-10 xl:px-20 ">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="[box-shadow:_0px_4px_40px_0px_#0D95891A] bg-white rounded-2xl p-5 md:p-8"
+        className="[box-shadow:_0px_4px_40px_0px_#0D95891A] bg-white rounded-2xl p-5 md:p-8 max-w-[1000px] mx-auto"
       >
         <div className="border-b-[2px] pb-1 border-b-solid border-borderLine">
           <h4 className="font-bold text-xl">Patient Details</h4>
@@ -677,6 +676,7 @@ const CreateReportForm = () => {
           subTotal={subTotal}
           discount={totalDiscount}
           total={total}
+          containerStyles="mt-10"
         ></ReportsPriceBreakdown>
 
         <button className="p-3 lg:px-6 ce-btn bg-greenText block w-[80%] mx-auto mt-10 max-w-[500px]">

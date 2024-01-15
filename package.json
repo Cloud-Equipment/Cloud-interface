@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "one": "npx nx serve cloud-equipment"
+    "one": "npx nx serve cloud-equipment",
+    "two": "npx nx serve superadmin"
   },
   "private": true,
   "dependencies": {
