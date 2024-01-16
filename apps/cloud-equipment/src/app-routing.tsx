@@ -6,7 +6,7 @@ import { IAppState } from './Store/store';
 
 const ProtectedRoute = () => {
   const isAuthenticated = useSelector((state: IAppState) => state.auth.user);
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/auth/login" />;
 };
 
 export const AppRouting = () => {
