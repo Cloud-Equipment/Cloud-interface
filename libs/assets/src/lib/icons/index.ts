@@ -24,6 +24,8 @@ import View from './view.svg';
 import WhiteArrowUp from './white-arrow-up.svg';
 import WhitePlus from './white-plus.png';
 import X from './x.png';
+import EditPrice from './edit-price.svg';
+import Delete from './delete.svg';
 
 export {
   BoxCloseIcon,
@@ -52,4 +54,6 @@ export {
   WhiteArrowUp,
   WhitePlus,
   X,
+  Delete,
+  EditPrice,
 };

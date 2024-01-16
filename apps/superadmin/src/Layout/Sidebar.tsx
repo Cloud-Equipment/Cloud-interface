@@ -7,7 +7,6 @@ import { closeSidebar } from '@cloud-equipment/shared_store';
 import * as Assets from '@cloud-equipment/assets';
 
 const Sidebar = () => {
-  const userDetails = useSelector((state: IAppState) => state.auth.user);
   const sidebarOpen = useSelector(
     (state: IAppState) => state.shared.sidebarOpen
   );
@@ -57,54 +56,45 @@ const Sidebar = () => {
           <span>Reports</span>
         </NavLink>
 
-        {userDetails?.userType === UserTypeEnum.FACILITY_ADMIN ? (
-          <>
-            <div className="mt-2 flex items-center justify-between">
-              <NavLink
-                to="/management"
-                className="px-4 py-3 flex items-center space-x-3"
-              >
-                <img src={Assets.Icons.ManagementNav} alt="" />
-                <span>Management</span>
-              </NavLink>
+        <div className="mt-2 flex items-center justify-between">
+          <NavLink
+            to="/management"
+            className="px-4 py-3 flex items-center space-x-3"
+          >
+            <img src={Assets.Icons.ManagementNav} alt="" />
+            <span>Management</span>
+          </NavLink>
 
-              <button>
-                <img src={Assets.Icons.WhiteArrowUp} alt="" />
-              </button>
-            </div>
+          <button>
+            <img src={Assets.Icons.WhiteArrowUp} alt="" />
+          </button>
+        </div>
 
-            <div className="grid pl-[52px] text-[#FFFFFF8F] gap-4 py-2 font-medium">
-              <NavLink
-                onClick={handleCloseSidebar}
-                className="hover:text-white"
-                to="/management/users"
-              >
-                Manage Users
-              </NavLink>
-              <NavLink
-                onClick={handleCloseSidebar}
-                className="hover:text-white"
-                to="/management/users"
-              >
-                Manage Price
-              </NavLink>
-              <NavLink
-                onClick={handleCloseSidebar}
-                className="hover:text-white"
-                to="/management/users"
-              >
-                Manage Patients
-              </NavLink>
-            </div>
+        <div className="grid pl-[52px] text-[#FFFFFF8F] gap-4 py-2 font-medium">
+          <NavLink
+            onClick={handleCloseSidebar}
+            className="hover:text-white"
+            to="/management/users"
+          >
+            Manage Users
+          </NavLink>
 
-            <NavLink onClick={handleCloseSidebar} to="." className="main-icon">
-              <img src={Assets.Icons.Settings} alt="" />
-              <span>Request Equipment</span>
-            </NavLink>
-          </>
-        ) : (
-          <></>
-        )}
+          <NavLink
+            onClick={handleCloseSidebar}
+            className="hover:text-white"
+            to="/management/users"
+          >
+            Manage Patients
+          </NavLink>
+
+          <NavLink
+            onClick={handleCloseSidebar}
+            className="hover:text-white"
+            to="/management/price"
+          >
+            Price Management
+          </NavLink>
+        </div>
 
         <NavLink onClick={handleCloseSidebar} to="." className="main-icon">
           <img src={Assets.Icons.Settings} alt="" />
