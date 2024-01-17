@@ -3,6 +3,7 @@ import Reports from './Reports/Reports';
 import NewReport from './Reports/NewReport';
 import UserManagement from './UserManagement/UserManagement';
 import { ViewReport } from './Reports/ViewReport';
+import { PriceManagement } from '@cloud-equipment/price';
 
 export const MainRouting = () => {
   return useRoutes([
@@ -26,25 +27,17 @@ export const MainRouting = () => {
       path: '/management/users',
       element: <UserManagement />,
     },
-    // {
-    //   path: "/manage-role",
-    //   element: <ManageRoles />,
-    // },
-    // {
-    //   path: "/report-details/:id",
-    //   element: <ReportDetails />,
-    // },
-    // {
-    //   path: "/new-report",
-    //   element: <ReportUploader />,
-    // },
-    // {
-    //   path: "procedure-management",
-    //   element: <ManageProceduresList />,
-    // },
-    // {
-    //   path: "procedure-management/*",
-    //   element: <ManageProceduresList />,
-    // },
+    {
+      path: 'price',
+      element: <PriceManagement />,
+    },
+    {
+      path: 'price/approved',
+      element: <PriceManagement />,
+    },
+    {
+      path: 'price/pending',
+      element: <PriceManagement />,
+    },
   ]);
 };

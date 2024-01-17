@@ -59,7 +59,7 @@ const UserManagement = () => {
           <div className="grid mt-6 gap-5 grid-cols-[1fr_1fr] lg:flex items-center lg:justify-between">
             <div className="col-span-2 lg:col-span-[unset] lg:w-[50%] search-input-container">
               <input placeholder="Search for Patient Name" />
-              <img src={Assets.Icons.Search} />
+              <img src={Assets.Icons.Search} alt="search icon" />
             </div>
 
             <div className="sort-container">
