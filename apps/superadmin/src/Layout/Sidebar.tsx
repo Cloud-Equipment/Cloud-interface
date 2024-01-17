@@ -86,6 +86,13 @@ const Sidebar = () => {
           >
             Manage Patients
           </NavLink>
+          <NavLink
+            onClick={handleCloseSidebar}
+            className="hover:text-white"
+            to="/management/facility"
+          >
+            Manage Facility
+          </NavLink>
 
           <NavLink
             onClick={handleCloseSidebar}
