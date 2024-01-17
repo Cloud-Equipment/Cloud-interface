@@ -26,6 +26,7 @@ import WhitePlus from './white-plus.png';
 import X from './x.png';
 import EditPrice from './edit-price.svg';
 import Delete from './delete.svg';
+import UploadIcon1 from './uploadIcon1.svg';
 
 export {
   BoxCloseIcon,
@@ -56,4 +57,5 @@ export {
   X,
   Delete,
   EditPrice,
+  UploadIcon1,
 };
