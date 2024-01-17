@@ -1,0 +1,41 @@
+import React from 'react';
+
+import { Dayjs } from 'dayjs';
+import { DatePicker, DatePickerProps } from '@mui/x-date-pickers/DatePicker';
+import cx from 'classnames';
+
+interface IDatePickerProps extends DatePickerProps<Dayjs> {
+  label: string | React.ReactElement;
+  containerClass?: string;
+  className?: string;
+}
+
+const DatePickerComponent: React.FC<IDatePickerProps> = ({
+  label,
+  className,
+  containerClass,
+  ...rest
+}) => {
+  return (
+    <div
+      className={cx(
+        { 'flex flex-col gap-3': !!label },
+        { [`${containerClass}`]: !!containerClass },
+        'mt-3'
+      )}
+    >
+      <label className="block font-inter text-xs capitalize font-normal leading-[1.25rem] text-neutral-600">
+        {label}
+      </label>
+      <DatePicker
+        className={cx(
+          'py-2.5 pr-2 pl-3 rounded-lg focus:outline-none w-full h-full border',
+          className
+        )}
+        {...rest}
+      />
+    </div>
+  );
+};
+
+export default DatePickerComponent;
