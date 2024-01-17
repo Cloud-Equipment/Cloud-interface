@@ -1,5 +1,5 @@
 import { useRoutes } from 'react-router-dom';
-import PriceManagement from './Price/PriceManagement';
+import { PriceManagement } from '@cloud-equipment/price';
 
 export const ManagementRouting = () => {
   return useRoutes([

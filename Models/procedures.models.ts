@@ -66,3 +66,11 @@ export interface IMedservice {
   dateModified: Date;
   facilityId: string;
 }
+
+export interface ICreateProcedure {
+  medServiceCategoryId: number;
+  medServiceName: string;
+  medServiceDescription: string;
+  price: number;
+  facilityId: string;
+}

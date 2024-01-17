@@ -16,12 +16,13 @@
     "baseUrl": ".",
     "paths": {
       "@cloud-equipment/api": ["libs/api/api.ts"],
-      "@cloud-equipment/assets": ["libs/assets/src/index.ts"],
+      "@cloud-equipment/assets": ["libs/assets/index.ts"],
       "@cloud-equipment/auth": ["libs/auth/src/index.ts"],
       "@cloud-equipment/shared_store": ["libs/Shared_Store/index.ts"],
       "@cloud-equipment/environments": ["environments/environments.ts"],
       "@cloud-equipment/models": ["Models/index.ts"],
       "@cloud-equipment/reports": ["libs/reports/src/index.ts"],
+      "@cloud-equipment/price": ["libs/price/index.ts"],
       "@cloud-equipment/ui-components": ["libs/ui-components/index.ts"]
     }
   },
