@@ -6,13 +6,16 @@ import {
   Modal,
   TablePagination,
 } from '@mui/material';
-import { IMedservice } from 'Models/procedures.models';
-import { _getPrices } from '../../../services/price.service';
+import { IMedservice } from '@cloud-equipment/models';
+import { _getPrices } from './services/procedures.service';
 import React, { useEffect, useState } from 'react';
 import * as Assets from '@cloud-equipment/assets';
 import moment from 'moment';
 import numeral from 'numeral';
 import { NavTab } from '@cloud-equipment/ui-components';
+import NewProcedureModal from './NewProcedureModal';
+import DeleteProdecureModal from './DeleteProdecureModal';
+import ApprovePriceModal from './ApprovePriceModal';
 
 const PriceManagement = () => {
   // table
@@ -23,9 +26,13 @@ const PriceManagement = () => {
 
   //   menu
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [selectedProcedure, setSelectedProcedure] =
+    useState<null | IMedservice>(null);
 
-  //   modal
-  const [inviteUserModalOpen, setInviteUserModalOpen] = React.useState(false);
+  //   modals
+  const [priceModalOpen, setPriceMOdalOpen] = React.useState(false);
+  const [deleteModalOpen, setDeleteMOdalOpen] = React.useState(false);
+  const [approveModalOpen, setApproveMOdalOpen] = React.useState(false);
 
   //   table
   const handleChangePage = (event: any, newPage: number) => {
@@ -40,7 +47,6 @@ const PriceManagement = () => {
   const getPrices = () => {
     _getPrices(currentPage, 0, pageSize)
       .then((res) => {
-        console.log(res);
         if (res.data.success) {
           setPricesList(res.data.data);
         }
@@ -49,41 +55,94 @@ const PriceManagement = () => {
   };
 
   //   menu
-  const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleActionClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    x: IMedservice
+  ) => {
     setAnchorEl(event.currentTarget);
+    setSelectedProcedure(x);
   };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
-  //   modal
-  const openInviteUserModal = () => setInviteUserModalOpen(true);
-  const closeInviteUserModal = () => setInviteUserModalOpen(false);
+  const handleEditClick = () => {
+    handleMenuClose();
+    if (false) {
+      setPriceMOdalOpen(true);
+    } else {
+      setApproveMOdalOpen(true);
+    }
+  };
+
+  const handleDeleteClick = () => {
+    handleMenuClose();
+    setDeleteMOdalOpen(true);
+  };
+  const handleApproveClick = () => {
+    handleMenuClose();
+    setApproveMOdalOpen(true);
+  };
+
+  //   modals
+  const openPriceModal = () => {
+    setSelectedProcedure(null);
+    setPriceMOdalOpen(true);
+  };
+
+  const closePriceModal = () => setPriceMOdalOpen(false);
+  const closeDeleteModal = () => setDeleteMOdalOpen(false);
+  const closeApproveModal = () => setApproveMOdalOpen(false);
 
   useEffect(() => {
     getPrices();
   }, [pageSize, currentPage]);
-
   //   tabs
 
   return (
     <>
-      <Modal open={inviteUserModalOpen} onClose={closeInviteUserModal}>
-        <div>{/* <InviteUserModal onClose={closeInviteUserModal} /> */}</div>
+      <Modal open={priceModalOpen} onClose={closePriceModal}>
+        <div>
+          {
+            <NewProcedureModal
+              procedureToEdit={selectedProcedure}
+              onClose={closePriceModal}
+            />
+          }
+        </div>
+      </Modal>
+      <Modal open={deleteModalOpen} onClose={closeDeleteModal}>
+        <div>
+          {
+            <DeleteProdecureModal
+              procedureToEdit={selectedProcedure!}
+              onClose={closeDeleteModal}
+            />
+          }
+        </div>
+      </Modal>
+      <Modal open={approveModalOpen}>
+        <div>
+          {
+            <ApprovePriceModal
+              procedureData={selectedProcedure!}
+              onClose={closeApproveModal}
+            />
+          }
+        </div>
       </Modal>
 
       <section className="ce-px ce-py">
         <div className="flex justify-end gap-4 flex-wrap mt-5">
-          <button onClick={openInviteUserModal} className="ce-btn">
+          {priceModalOpen}
+          <button onClick={openPriceModal} className="ce-btn">
             New Price/ Test
           </button>
         </div>
 
         <div className="p-[16px] bg-[white] mt-[20px] rounded-[20px]">
-          <h4 className="ce-heading-2">Price History</h4>
-
-          <div className="grid mt-6 gap-5 grid-cols-[1fr_1fr] lg:flex items-center lg:justify-between">
+          <div className="grid  gap-5 grid-cols-[1fr_1fr] lg:flex items-center lg:justify-between">
             <div className="col-span-2 lg:col-span-[unset] lg:w-[50%] search-input-container">
               <input placeholder="Search for Patient Name" />
               <img src={Assets.Icons.Search} alt="Search Icon" />
@@ -103,7 +162,14 @@ const PriceManagement = () => {
             </button>
           </div>
 
-          <NavTab />
+          <NavTab
+            links={[
+              { label: 'All Prices', href: '/management/price' },
+              { label: 'Approved Prices', href: '/management/price/approved' },
+              { label: 'Pending Prices', href: '/management/price/pending' },
+            ]}
+            wrapperClass="mt-6"
+          />
 
           <div className="mt-10 ce-table-holder">
             <h5 className="table-heading">Team members- 5</h5>
@@ -132,7 +198,10 @@ const PriceManagement = () => {
                     <td>{'Enabled'}</td>
                     <td>
                       <div>
-                        <button onClick={handleActionClick} className="w-6">
+                        <button
+                          onClick={(e) => handleActionClick(e, item)}
+                          className="w-6"
+                        >
                           <img src={Assets.Icons.Menudots} alt="" />
                         </button>
                         <Menu
@@ -143,13 +212,13 @@ const PriceManagement = () => {
                             'aria-labelledby': 'basic-button',
                           }}
                         >
-                          <MenuItem onClick={handleMenuClose}>
+                          <MenuItem onClick={handleEditClick}>
                             <ListItemIcon>
                               <img src={Assets.Icons.EditPrice} alt="" />
                             </ListItemIcon>
                             <ListItemText>Edit Price</ListItemText>
                           </MenuItem>
-                          <MenuItem onClick={handleMenuClose}>
+                          <MenuItem onClick={handleDeleteClick}>
                             <ListItemIcon>
                               <img src={Assets.Icons.Delete} alt="" />
                             </ListItemIcon>

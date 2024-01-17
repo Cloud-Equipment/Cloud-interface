@@ -1,15 +1,23 @@
 button.btn-icon {
   @apply outline-none hover:scale-[1.03];
 }
+
 .ce-btn {
-  @apply text-white bg-ce-green outline-none px-4 py-2 rounded-[6px] text-sm hover:bg-[#134138] duration-700;
+  @apply text-white outline-none px-4 py-2 rounded-[6px] text-sm  duration-700;
+
+  background-color: #0e5f50;
 }
+
+.ce-btn:hover {
+  background-color: #134138;
+}
+
 .ce-btn-text {
   @apply text-ce-green outline-none px-4 py-2 rounded-[6px] text-sm;
 }
 
 .ce-btn-outline {
-  @apply text-ce-green border-ce-green border-solid border outline-none px-4 py-2 rounded-[6px] text-sm;
+  @apply text-ce-green border-ce-green border-solid border outline-none px-4 py-2 rounded-[6px] text-sm hover:bg-ce-green hover:text-white;
 }
 
 .ce-heading-2 {
@@ -158,4 +166,13 @@ button.btn-icon {
 
 .MuiMenu-paper {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;
+}
+
+// Mui tabs
+.MuiTab-root.Mui-selected {
+  color: #54d4bd !important;
+}
+
+.MuiTabs-indicator {
+  background-color: #54d4bd !important;
 }

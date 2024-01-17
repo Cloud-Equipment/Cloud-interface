@@ -30,10 +30,9 @@ export const InviteUserModal = ({ onClose }: any) => {
           toast.error(response.data.msg);
         }
       })
-      .catch((err) => {
-        toast.error('User Invitation Failed');
-      });
+      .catch(() => {});
   };
+  
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}

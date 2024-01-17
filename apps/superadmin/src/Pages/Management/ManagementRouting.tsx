@@ -3,7 +3,7 @@ import { lazy } from 'react';
 import { useRoutes } from 'react-router-dom';
 
 import { Routes } from '../../routes';
-import PriceManagement from './Price/PriceManagement';
+import { PriceManagement } from '@cloud-equipment/price';
 const ManageFacility = lazy(() => import('./Facility/ManageFacility'));
 const AddNewFacility = lazy(() => import('./Facility/AddNewFacility'));
 
