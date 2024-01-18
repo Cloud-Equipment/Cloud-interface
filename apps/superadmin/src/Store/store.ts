@@ -9,10 +9,13 @@ export interface IAppState {
   shared: ISharedState;
 }
 
-const reducers = combineReducers({ auth: authReducer, shared: sharedReducer });
-
+const reducers = combineReducers({
+  auth: authReducer,
+  shared: sharedReducer,
+  account: (state = { accountType: 0 }) => state,
+});
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Store = createStore(reducers, (composeWithDevTools() as any));
+const Store = createStore(reducers, composeWithDevTools() as any);
 
 export default Store;
