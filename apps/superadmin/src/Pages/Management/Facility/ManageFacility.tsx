@@ -9,12 +9,11 @@ import {
   Modal,
   TablePagination,
 } from '@mui/material';
-import moment from 'moment';
-import numeral from 'numeral';
+
 import { createColumnHelper } from '@tanstack/react-table';
 
 import * as Assets from '@cloud-equipment/assets';
-import { NavTab, Button } from '@cloud-equipment/ui-components';
+import { Button } from '@cloud-equipment/ui-components';
 import { Routes } from '../../../routes';
 import { Table } from '../../../components';
 import queries from '../../../services/queries/manageFacility';
@@ -54,7 +53,9 @@ const columns = [
   }),
   columnHelper.accessor('elipsis', {
     cell: ({ row }) => {
-      const cb = (e) => {};
+      const cb = (e: React.MouseEvent<HTMLButtonElement>) => {
+        console.log('e', e);
+      };
       return <DropDown {...{ cb }} />;
     },
     header: '',
