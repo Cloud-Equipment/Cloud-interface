@@ -29,7 +29,7 @@ const DatePickerComponent: React.FC<IDatePickerProps> = ({
       </label>
       <DatePicker
         className={cx(
-          'py-2.5 pr-2 pl-3 rounded-lg focus:outline-none w-full h-full border',
+          'py-2.5 pr-2 pl-3 rounded-lg focus:outline-none w-full border h-12 [&_input]:h-4',
           className
         )}
         {...rest}

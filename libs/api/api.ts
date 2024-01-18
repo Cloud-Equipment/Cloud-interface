@@ -1,7 +1,13 @@
-import axios, { AxiosResponse } from 'axios';
-import { environment } from '../../environments/environments';
+import axios, {
+  AxiosResponse,
+  AxiosError,
+  InternalAxiosRequestConfig,
+} from 'axios';
 import { toast } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
+
+import { environment } from '../../environments/environments';
 import { ApiResponse } from '../../Models/api.models';
 
 const api = axios.create({
@@ -10,7 +16,7 @@ const api = axios.create({
 
 // Request interceptor
 api.interceptors.request.use(
-  (config) => {
+  (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     // Add auth headers to the request config
     const token = localStorage.getItem('token');
     if (token) {
@@ -19,7 +25,7 @@ api.interceptors.request.use(
 
     return config;
   },
-  (error) => {
+  (error: AxiosError): Promise<AxiosError> => {
     // Handle request error
     return Promise.reject(error);
   }
@@ -36,6 +42,7 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
+    // TODO: Logout for a 401 unauthorized status code
     const errorMessage = error.response?.data?.message || 'An error occurred';
     toast.error(errorMessage);
     return Promise.reject(error);

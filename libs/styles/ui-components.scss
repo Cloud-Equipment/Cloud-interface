@@ -72,7 +72,7 @@ button.btn-icon {
     border-spacing: 0 8px;
 
     thead {
-      @apply bg-ce-lgreen;
+      @apply bg-ce-lgreen rounded-lg;
 
       th {
         @apply text-[#282828] text-left;

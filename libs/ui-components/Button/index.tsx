@@ -11,7 +11,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variants = {
   primary:
-    'bg-primary-100 hover:opacity-85 border-primary-100 hover:border-primary-100 text-white',
+    'bg-primary-150 hover:opacity-85 border-primary-100 hover:border-primary-100 text-white !rounded-md',
   neutral: '',
   tertiary: '',
 };
@@ -22,17 +22,19 @@ const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
   icon,
   iconAfter,
+  type = 'button',
   ...props
 }) => {
   return (
     <button
       {...props}
-      className={cx(
-        `border px-6 py-3 rounded-md font-manrope font-semibold text-sm justify-center items-center shadow-buttonShadow ${
-          icon || iconAfter ? 'flex gap-1.5' : ''
-        } ${variants[variant]}`,
-        className
-      )}
+      // className={cx(
+      //   `border px-6 py-3 rounded-md font-manrope font-semibold text-sm justify-center items-center shadow-buttonShadow`,
+      //   // icon || iconAfter ? 'flex gap-1.5' : '',
+      //   variants[variant],
+      //   className
+      // )}
+      className={`px-6 py-3 font-manrope !rounded-md font-semibold text-sm justify-center items-center shadow-buttonShadow ${variants[variant]} ${className} `}
     >
       {icon ? <img alt="" src={icon} /> : null}
       {label}

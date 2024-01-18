@@ -22,10 +22,14 @@ module.exports = {
         borderLine: '#EAECF0',
         primary: {
           100: '#0D5F50',
+          150: '#54D4BD',
         },
         secondary: {
           100: '#32324D',
           150: ' #F3F3FF',
+          200: '#EAECF0',
+          250: '#1A1A1A',
+          300: '#292929',
         },
         neutral: {
           100: '#DCDCE4',

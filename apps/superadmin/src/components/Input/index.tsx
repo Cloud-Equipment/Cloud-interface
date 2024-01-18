@@ -30,7 +30,7 @@ const FormInput: React.FC<InputProps> = ({
       ) : null}
       <input
         className={cx(
-          'py-2.5 pr-2 pl-3 rounded-lg focus:outline-none w-full h-full border',
+          'py-2.5 pr-2 pl-3 rounded-lg focus:outline-none w-full h-12 border',
           className
         )}
         id={id}

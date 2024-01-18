@@ -2,6 +2,32 @@ import { useCallback, useMemo } from 'react';
 
 import { useDropzone } from 'react-dropzone';
 
+const baseStyle = (
+  borderColor: string,
+  borderStyle: string,
+  borderWidth: number,
+  color: string
+) => ({
+  flex: 1,
+  display: 'flex',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  flexDirection: 'column' as any,
+  alignItems: 'center',
+  padding: '15px',
+  borderWidth: borderWidth,
+  borderRadius: 4,
+  borderColor: borderColor,
+  borderStyle: borderStyle,
+  backgroundColor: '#fafafa',
+  color: color,
+  outline: 'none',
+  transition: 'border .24s ease-in-out',
+  cursor: 'pointer',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  textAlign: 'center' as any,
+  height: '100%',
+});
+
 const focusedStyle = {
   borderColor: '#2196f3',
 };
@@ -21,6 +47,8 @@ interface FileUploadProps {
   uploadIcon?: string;
   uploadLabel?: string;
   uploadRestrictionText?: string;
+  borderWidth?: number;
+  color?: string;
 }
 const FileUpload = ({
   containerClass,
@@ -29,26 +57,9 @@ const FileUpload = ({
   uploadIcon,
   uploadLabel = "Drag 'n' drop some files here, or click to select files",
   uploadRestrictionText,
+  color = '#54d4bd',
+  borderWidth = 2,
 }: FileUploadProps) => {
-  const baseStyle = {
-    flex: 1,
-    display: 'flex',
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    flexDirection: 'column' as any,
-    alignItems: 'center',
-    padding: '15px',
-    borderWidth: 2,
-    borderRadius: 4,
-    borderColor: borderColor,
-    borderStyle: borderStyle,
-    backgroundColor: '#fafafa',
-    color: borderColor,
-    outline: 'none',
-    transition: 'border .24s ease-in-out',
-    cursor: 'pointer',
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    textAlign: 'center' as any,
-  };
   const onDrop = useCallback((acceptedFiles: File[]) => {
     console.log('accepted', acceptedFiles);
     // Do something with the files
@@ -56,31 +67,31 @@ const FileUpload = ({
   const {
     getRootProps,
     getInputProps,
-    isDragActive,
+    // isDragActive,
     acceptedFiles,
     isFocused,
     isDragAccept,
     isDragReject,
-    isFileDialogActive,
+    // isFileDialogActive,
   } = useDropzone({ onDrop, accept: { 'image/*': [] } });
 
   const style = useMemo(
     () => ({
-      ...baseStyle,
+      ...baseStyle(borderColor, borderStyle, borderWidth, color),
       ...(isFocused ? focusedStyle : {}),
       ...(isDragAccept ? acceptStyle : {}),
       ...(isDragReject ? rejectStyle : {}),
     }),
     [isFocused, isDragAccept, isDragReject]
   );
+
   const files = useMemo(() => {
-    return acceptedFiles.map((file) => (
+    return acceptedFiles.map((file: File & { [key: string]: any }) => (
       <li key={file.path}>
         {file.path} - {file.size} bytes
       </li>
     ));
   }, [acceptedFiles.length]);
-  console.log('files', files);
 
   return (
     <div className={containerClass}>
@@ -93,7 +104,8 @@ const FileUpload = ({
             {uploadIcon && (
               <img alt="upload icon" src={uploadIcon} className="w-30 h-30" />
             )}
-            <p>{uploadLabel}</p>
+            <p dangerouslySetInnerHTML={{ __html: uploadLabel }} className="" />
+            <p className="text-secondary-300">{uploadRestrictionText}</p>
           </>
         )}
       </div>

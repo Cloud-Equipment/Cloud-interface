@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import {
@@ -11,23 +11,63 @@ import {
 } from '@mui/material';
 import moment from 'moment';
 import numeral from 'numeral';
+import { createColumnHelper } from '@tanstack/react-table';
 
-import { IMedservice } from 'Models/procedures.models';
-import { _getPrices } from '../../../services/price.service';
 import * as Assets from '@cloud-equipment/assets';
 import { NavTab, Button } from '@cloud-equipment/ui-components';
 import { Routes } from '../../../routes';
+import { Table } from '../../../components';
+import queries from '../../../services/queries/manageFacility';
+import { Facility } from '../../../services/queries/manageFacility/types';
+
+type FacilityTableColumns = Pick<
+  Facility,
+  'id' | 'facilityName' | 'city' | 'addressLine1' | 'postalCode' | 'dateCreated'
+> & { elipsis: 'elipsis' };
+
+const columnHelper = createColumnHelper<FacilityTableColumns>();
+
+const columns = [
+  columnHelper.accessor('id', {
+    header: 'Facility ID',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('facilityName', {
+    header: 'First Name',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('city', {
+    header: 'Email',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('addressLine1', {
+    header: 'Facility Address',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('postalCode', {
+    header: 'Phone Number',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('dateCreated', {
+    header: 'Last Login',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('elipsis', {
+    cell: ({ row }) => {
+      const cb = (e) => {};
+      return <DropDown {...{ cb }} />;
+    },
+    header: '',
+  }),
+];
 
 const ManageFacility = () => {
   const navigate = useNavigate();
-  // table
-  const [currentPage, setCurrentPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-  const [total, setTotal] = useState(0);
-  const [pricesList, setPricesList] = useState<IMedservice[] | null>(null);
 
-  //   menu
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const { useGetFacilities } = queries;
+  const { isLoading, data } = useGetFacilities(
+    `/api/facility-manager/getallfacilities`
+  );
 
   //   modal
   const [inviteUserModalOpen, setInviteUserModalOpen] = React.useState(false);
@@ -36,44 +76,16 @@ const ManageFacility = () => {
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
     newPage: number
-  ) => {
-    setCurrentPage(newPage);
-  };
+  ) => {};
 
   const handleChangeRowsPerPage = (event: any) => {
-    setCurrentPage(0);
-    setPageSize(parseInt(event.target.value, 10));
-  };
-
-  const getPrices = () => {
-    _getPrices(currentPage, 0, pageSize)
-      .then((res) => {
-        console.log(res);
-        if (res.data.success) {
-          setPricesList(res.data.data);
-        }
-      })
-      .catch((err) => {});
-  };
-
-  //   menu
-  const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
+    // setCurrentPage(0);
+    // setPageSize(parseInt(event.target.value, 10));
   };
 
   //   modal
   const openInviteUserModal = () => setInviteUserModalOpen(true);
   const closeInviteUserModal = () => setInviteUserModalOpen(false);
-
-  useEffect(() => {
-    getPrices();
-  }, [pageSize, currentPage]);
-
-  //   tabs
 
   return (
     <>
@@ -87,18 +99,21 @@ const ManageFacility = () => {
 
           <div className="grid mt-6 gap-5 grid-cols-[1fr_1fr] lg:flex items-center lg:justify-between">
             <div className="col-span-2 lg:col-span-[unset] lg:w-[30%] search-input-container">
-              <input placeholder="Enter Email Address/Customer ID" />
+              <input
+                placeholder="Enter Email Address/Customer ID"
+                className="border"
+              />
               <img src={Assets.Icons.Search} alt="Search Icon" />
             </div>
 
-            <div className="sort-container">
+            <div className="sort-container border">
               <span className="sort-text">Users From:</span>
 
               <span className="sort-value">Facilities</span>
 
               <img src={Assets.Icons.SolidArrowDown} alt="" />
             </div>
-            <div className="sort-container">
+            <div className="sort-container border">
               <span className="sort-text">Date:</span>
 
               <span className="sort-value">This Month</span>
@@ -110,92 +125,22 @@ const ManageFacility = () => {
               <img src={Assets.Icons.ExportIcon} alt="" />
               <span>Filters</span>
             </button>
-            {/* <Button label="Add Facilities" /> */}
-            <button
-              onClick={() => navigate(Routes.management.addFacility)}
-              className="ce-btn"
-            >
-              Add Facilities
-            </button>
+            <Button
+              className="!bg-primary-100 !rounded-md"
+              onClick={() =>
+                navigate(`/management${Routes.management.addFacility}`)
+              }
+              label="Add Facilities"
+            />
           </div>
 
-          <div className="px-8 py-3 rounded-[20px] mt-10  bg-white">
-            <div className=" ce-table-holder">
-              <h5 className="table-heading">Facilities - 5</h5>
-
-              <table>
-                <thead>
-                  <tr className="bg-secondary-150 w-full">
-                    <th>Facility ID</th>
-                    <th>Facility Name</th>
-                    <th>Email</th>
-                    <th>Facility Address</th>
-                    <th>Phone Number</th>
-                    <th>Last Login</th>
-                    {/* take this out */}
-                    <th>Action</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {pricesList?.map((item, index) => (
-                    <tr key={index}>
-                      <td>
-                        {moment(item.dateCreated).format(
-                          'DD-MM-YYYY . HH:mm:ss'
-                        )}
-                      </td>
-                      <td>{item.medServiceName}</td>
-                      <td>{item.medServiceCategoryId}</td>
-                      <td>₦{numeral(item.price).format('0,0.00')}</td>
-                      <td>{'Enabled'}</td>
-                      <td>{'Enabled'}</td>
-                      <td>
-                        <div>
-                          <button onClick={handleActionClick} className="w-6">
-                            <img src={Assets.Icons.Menudots} alt="" />
-                          </button>
-                          <Menu
-                            anchorEl={anchorEl}
-                            open={Boolean(anchorEl)}
-                            onClose={handleMenuClose}
-                            MenuListProps={{
-                              'aria-labelledby': 'basic-button',
-                            }}
-                          >
-                            <MenuItem onClick={handleMenuClose}>
-                              <ListItemIcon></ListItemIcon>
-                              <ListItemText>
-                                View Facility Activities
-                              </ListItemText>
-                            </MenuItem>
-                            <MenuItem onClick={handleMenuClose}>
-                              <ListItemIcon></ListItemIcon>
-                              <ListItemText>Enable User</ListItemText>
-                            </MenuItem>
-                            <MenuItem onClick={handleMenuClose}>
-                              <ListItemIcon></ListItemIcon>
-                              <ListItemText>Disable User</ListItemText>
-                            </MenuItem>
-                          </Menu>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              <TablePagination
-                component="div"
-                count={total}
-                page={currentPage}
-                labelRowsPerPage="Items per page"
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                rowsPerPage={pageSize}
-              />
-            </div>
-          </div>
+          <Table
+            loading={isLoading}
+            data={data}
+            columns={columns}
+            tableHeading="Facilities - 5"
+            tableHeadingColorClassName="!bg-secondary-150"
+          />
         </div>
       </section>
     </>
@@ -203,3 +148,58 @@ const ManageFacility = () => {
 };
 
 export default ManageFacility;
+
+const DropDown = ({
+  cb,
+}: {
+  cb: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}) => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    cb(event);
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <div>
+      <button
+        onClick={(e) => {
+          handleActionClick(e);
+        }}
+        className="w-6"
+      >
+        <img src={Assets.Icons.Menudots} alt="" />
+      </button>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={handleMenuClose}>
+          <ListItemIcon></ListItemIcon>
+          <ListItemText>View Facility Activities</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={handleMenuClose}>
+          <ListItemIcon></ListItemIcon>
+          <ListItemText>Enable User</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={handleMenuClose}>
+          <ListItemIcon></ListItemIcon>
+          <ListItemText>Disable User</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={handleMenuClose}>
+          <ListItemIcon></ListItemIcon>
+          <ListItemText>Enable EMR</ListItemText>
+        </MenuItem>
+      </Menu>
+    </div>
+  );
+};

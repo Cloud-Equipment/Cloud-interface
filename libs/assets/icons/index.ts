@@ -29,6 +29,7 @@ import Delete from './delete.svg';
 import UploadIcon1 from './uploadIcon1.svg';
 import ModalConfirm from './modal-confirm.svg';
 import ModalWarn from './modal-warn.svg';
+import UploadIcon2 from './uploadIcon2.svg';
 
 export {
   BoxCloseIcon,
@@ -62,4 +63,5 @@ export {
   UploadIcon1,
   ModalConfirm,
   ModalWarn,
+  UploadIcon2,
 };
