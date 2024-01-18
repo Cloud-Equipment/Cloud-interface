@@ -11,11 +11,28 @@ import * as Assets from '@cloud-equipment/assets';
 import { Button } from '@cloud-equipment/ui-components';
 
 interface FormProps {
+  facilityTypeId: number;
+  facilityName: string;
+  addressLine1: string;
+  addressLine2: string;
+  postalCode: number;
+  city: string;
+  stateId: number;
+  countryId: number;
+  isActive: boolean;
+  dateCreated: string | Date;
+  rebatePercent: number;
+  logoPath: string;
   [key: string]: any;
 }
+
 const AddNewFacility = () => {
   const { register, handleSubmit, control, getValues, setValue, watch } =
     useForm<FormProps>();
+
+  const onSubmit = (data: FormProps) => {
+    console.log('data', data);
+  };
 
   return (
     <section className="ce-px ce-py">
@@ -23,7 +40,12 @@ const AddNewFacility = () => {
         <h4 className="ce-heading-2">Management &gt; Facilities </h4>
         <div className="min-h-screen px-8 py-3 rounded-[20px] mt-10  bg-white border shadow-pageFormShadow">
           <h4 className="">Create New Facility</h4>
-          <form className="">
+          <form
+            className=""
+            onSubmit={handleSubmit(onSubmit, (err) =>
+              console.log('error', err)
+            )}
+          >
             {/* REFACTOR: the layout is similar, try to compose it */}
             <div className="mb-10">
               <h5 className="">Facility Information</h5>
@@ -37,24 +59,49 @@ const AddNewFacility = () => {
                     uploadIcon={Assets.Icons.UploadIcon1}
                     containerClass="w-4/12"
                     uploadLabel="Click to Upload facility Logo"
+                    // onChange={}
                   />
                 </div>
-                <Input label="Facility ID" containerClass="flex-1" />
+                <Input
+                  label="Facility ID"
+                  containerClass="flex-1"
+                  {...register('facilityTypeId', {
+                    required: 'Facility ID is required ',
+                  })}
+                />
               </div>
-              <Input label="Name of Facility" containerClass="flex-1" />
+              <Input
+                label="Name of Facility"
+                containerClass="flex-1"
+                {...register('facilityName', {
+                  required: 'Facility Name is required ',
+                })}
+              />
               <TextArea
                 rows={5}
                 label="Address of Facility"
                 placeholder="Address of Facility"
                 containerClass="mt-1"
+                {...register('addressLine1', {
+                  required: 'Facility Name is required ',
+                })}
               />
               <div className="flex gap-24 my-4">
-                <DatePicker
-                  label="Registration Date "
-                  containerClass="flex-1"
-                />
                 <Controller
-                  name="Country"
+                  name="dateCreated"
+                  control={control}
+                  // defaultValue={0}
+                  render={({ field }) => (
+                    <DatePicker
+                      label="Registration Date "
+                      containerClass="flex-1"
+                      {...{ field }}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name="countryId"
                   control={control}
                   defaultValue={0}
                   render={({ field }) => (
@@ -77,7 +124,7 @@ const AddNewFacility = () => {
               </div>
               <div className="flex gap-24 my-4">
                 <Controller
-                  name="State"
+                  name="stateId"
                   control={control}
                   defaultValue={0}
                   render={({ field }) => (
@@ -101,20 +148,33 @@ const AddNewFacility = () => {
                   label="City"
                   containerClass="flex-1"
                   placeholder="Enter City"
+                  {...register('city', {
+                    required: 'City is required ',
+                  })}
                 />
               </div>
               <div className="flex gap-24 my-4">
-                <Input label="Email of Facility" containerClass="flex-1" />
+                <Input
+                  label="Email of Facility"
+                  containerClass="flex-1"
+                  {...register('facilityEmail', {
+                    required: 'Facility Email is required ',
+                  })}
+                />
                 <Input
                   label="Phone Number of facility"
                   containerClass="flex-1"
+                  {...register('facilityPhoneNo', {
+                    required: 'Facility Phone Number is required ',
+                  })}
                 />
               </div>
               <div className="flex gap-24 my-4">
                 <Controller
-                  name="facilityType"
+                  name="facilityTypeId"
                   control={control}
                   defaultValue={0}
+                  rules={{ required: 'Facility Type is required' }}
                   render={({ field }) => (
                     <Select
                       options={[
@@ -136,6 +196,9 @@ const AddNewFacility = () => {
                   label="Rebate Percentage"
                   placeholder="Input Rebate Percentage"
                   containerClass="flex-1"
+                  {...register('rebatePercent', {
+                    required: 'Rebate Percentage is required ',
+                  })}
                 />
               </div>
               <div className="flex gap-24 my-4">
@@ -143,11 +206,17 @@ const AddNewFacility = () => {
                   label="Number of User "
                   placeholder="Input Number of User"
                   containerClass="flex-1"
+                  {...register('rebatePercent', {
+                    required: 'Rebate Percentage is required ',
+                  })}
                 />
                 <Input
                   label="Phone Number of Admin "
                   placeholder="+234 08143626356"
                   containerClass="flex-1"
+                  {...register('Admin Phone Number', {
+                    required: 'Admin Phone Number is required ',
+                  })}
                 />
               </div>
             </div>
@@ -162,12 +231,16 @@ const AddNewFacility = () => {
                     uploadIcon={Assets.Icons.UploadIcon1}
                     containerClass="w-6/12"
                     uploadLabel="Click to Upload Image"
+                    // onChange={}
                   />
                 </div>
                 <Input
                   label="Admin First Name*"
                   placeholder=""
                   containerClass="flex-1"
+                  {...register('adminFirstName', {
+                    required: "Admin's First Name is required ",
+                  })}
                 />
               </div>
               <div className="flex gap-24 my-4">
@@ -176,6 +249,9 @@ const AddNewFacility = () => {
                   label="Admin Email"
                   placeholder="myname@example.com"
                   containerClass="flex-1"
+                  {...register('adminLastName', {
+                    required: "Admin's Last Name is required ",
+                  })}
                 />
               </div>
               <div className="flex gap-24 my-4">
@@ -183,6 +259,9 @@ const AddNewFacility = () => {
                   label="Admin Role"
                   containerClass="flex-1"
                   placeholder="Enter your Admin role in full"
+                  {...register('adminRole', {
+                    required: "Admin's Role is required ",
+                  })}
                 />
                 <div className="flex-1"></div>
               </div>
@@ -191,6 +270,9 @@ const AddNewFacility = () => {
                 label="Comment"
                 placeholder="Leave a Note"
                 containerClass="my-1"
+                {...register('comment', {
+                  required: 'comment ',
+                })}
               />
             </div>
             <div className="mb-10">
@@ -207,6 +289,7 @@ const AddNewFacility = () => {
                   borderStyle="solid"
                   borderWidth={1}
                   color="#1A1A1A"
+                  // onChange={}
                 />
                 <FileUpload
                   uploadIcon={Assets.Icons.UploadIcon2}
