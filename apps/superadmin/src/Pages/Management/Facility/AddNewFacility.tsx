@@ -65,6 +65,7 @@ const AddNewFacility = () => {
                     uploadIcon={Assets.Icons.UploadIcon1}
                     containerClass="w-4/12"
                     uploadLabel="Click to Upload facility Logo"
+                    setFile={(file) => setValue('facilityLogo', file)}
                     // onChange={}
                   />
                 </div>

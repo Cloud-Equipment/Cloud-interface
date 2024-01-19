@@ -49,6 +49,7 @@ interface FileUploadProps {
   uploadRestrictionText?: string;
   borderWidth?: number;
   color?: string;
+  setFile?: (file: File) => void;
 }
 const FileUpload = ({
   containerClass,
@@ -59,6 +60,7 @@ const FileUpload = ({
   uploadRestrictionText,
   color = '#54d4bd',
   borderWidth = 2,
+  setFile = () => {},
 }: FileUploadProps) => {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     console.log('accepted', acceptedFiles);
@@ -73,7 +75,7 @@ const FileUpload = ({
     isDragAccept,
     isDragReject,
     // isFileDialogActive,
-  } = useDropzone({ onDrop, accept: { 'image/*': [] } });
+  } = useDropzone({ onDrop, accept: { 'image/*': [] }, maxFiles: 1 });
 
   const style = useMemo(
     () => ({
@@ -86,11 +88,14 @@ const FileUpload = ({
   );
 
   const files = useMemo(() => {
-    return acceptedFiles.map((file: File & { [key: string]: any }) => (
-      <li key={file.path}>
-        {file.path} - {file.size} bytes
-      </li>
-    ));
+    return acceptedFiles.map((file: File & { [key: string]: any }) => {
+      setFile(file);
+      return (
+        <li key={file.path}>
+          {file.path} - {file.size} bytes
+        </li>
+      );
+    });
   }, [acceptedFiles.length]);
 
   return (
