@@ -52,11 +52,15 @@ const columns = [
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor('elipsis', {
-    cell: ({ row }) => {
+    cell: ({
+      row: {
+        original: { id },
+      },
+    }) => {
       const cb = (e: React.MouseEvent<HTMLButtonElement>) => {
-        console.log('e', e);
+        // console.log('e', e);
       };
-      return <DropDown {...{ cb }} />;
+      return <ManageFacilityDropDown {...{ cb, id }} />;
     },
     header: '',
   }),
@@ -151,11 +155,14 @@ const ManageFacility = () => {
 export default ManageFacility;
 
 // TODO: Move this to it's own file
-const DropDown = ({
+const ManageFacilityDropDown = ({
   cb,
+  id,
 }: {
   cb: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  id: string;
 }) => {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -165,6 +172,10 @@ const DropDown = ({
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleMenuAction = () => {
+    navigate(`/management/facility/viewFacility/${id}/about`);
   };
 
   return (
@@ -185,19 +196,19 @@ const DropDown = ({
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleMenuClose}>
+        <MenuItem onClick={handleMenuAction}>
           <ListItemIcon></ListItemIcon>
           <ListItemText>View Facility Activities</ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleMenuClose}>
+        <MenuItem onClick={handleMenuAction}>
           <ListItemIcon></ListItemIcon>
           <ListItemText>Enable User</ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleMenuClose}>
+        <MenuItem onClick={handleMenuAction}>
           <ListItemIcon></ListItemIcon>
           <ListItemText>Disable User</ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleMenuClose}>
+        <MenuItem onClick={handleMenuAction}>
           <ListItemIcon></ListItemIcon>
           <ListItemText>Enable EMR</ListItemText>
         </MenuItem>

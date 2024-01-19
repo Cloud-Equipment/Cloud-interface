@@ -37,22 +37,28 @@ const AddNewFacility = () => {
   return (
     <section className="ce-px ce-py">
       <div className="p-[16px] mt-[20px] rounded-[20px]">
-        <h4 className="ce-heading-2">Management &gt; Facilities </h4>
-        <div className="min-h-screen px-8 py-3 rounded-[20px] mt-10  bg-white border shadow-pageFormShadow">
-          <h4 className="">Create New Facility</h4>
+        <BreadCrumb />
+        <div className="min-h-screen w-[90%] mx-auto px-8 py-3 rounded-[20px] mt-10  bg-white border shadow-pageFormShadow">
+          <h4 className="text-neutral-350 font-manrope text-[2rem] font-bold leading-[44px] mt-4 mb-10">
+            Create New Facility
+          </h4>
           <form
-            className=""
+            className="w-[90%] mx-auto"
             onSubmit={handleSubmit(onSubmit, (err) =>
               console.log('error', err)
             )}
           >
             {/* REFACTOR: the layout is similar, try to compose it */}
-            <div className="mb-10">
-              <h5 className="">Facility Information</h5>
-              <p className="mb-5">
-                You are to populate the Rebate Amount to efficiency calculate a
-                deduction
-              </p>
+            <div className="mb-10 flex flex-col gap-10">
+              <div className="flex flex-col gap-1">
+                <h5 className="font-playfair text-[1.375rem] font-bold leading-[28px] text-secondary-350">
+                  Facility Information
+                </h5>
+                <p className="mb-5 font-dmsans text-sm font-normal leading-[20px] text-neutral-300">
+                  You are to populate the Rebate Amount to efficiency calculate
+                  a deduction
+                </p>
+              </div>
               <div className="flex gap-2">
                 <div className="flex-1">
                   <FileUpload
@@ -221,10 +227,14 @@ const AddNewFacility = () => {
               </div>
             </div>
             <div className="mb-10">
-              <h5 className="">Admin Information</h5>
-              <p className="mb-5 border-b-2">
-                You are to populate the Admin Information Aspect
-              </p>
+              <div className="flex flex-col gap-1">
+                <h5 className="font-playfair text-[1.375rem] font-bold leading-[28px] text-secondary-350">
+                  Admin Information
+                </h5>
+                <p className="mb-5 font-dmsans text-sm font-normal leading-[20px] text-neutral-300">
+                  You are to populate the Admin Information Aspect
+                </p>
+              </div>
               <div className="flex gap-24">
                 <div className="flex-1">
                   <FileUpload
@@ -276,10 +286,14 @@ const AddNewFacility = () => {
               />
             </div>
             <div className="mb-10">
-              <h5 className="">Document Upload</h5>
-              <p className="mb-5 border-b-2">
-                You are to populate the Admin Information Aspect
-              </p>
+              <div className="flex flex-col gap-1">
+                <h5 className="font-playfair text-[1.375rem] font-bold leading-[28px] text-secondary-350">
+                  Document Upload
+                </h5>
+                <p className="mb-5 font-dmsans text-sm font-normal leading-[20px] text-neutral-300">
+                  You are to populate the Admin Information Aspect
+                </p>
+              </div>
               <div className="flex gap-24">
                 <FileUpload
                   uploadIcon={Assets.Icons.UploadIcon2}
@@ -302,7 +316,9 @@ const AddNewFacility = () => {
                 />
               </div>
             </div>
-            <p className="my-3">Add New Document</p>
+            <p className="mt-3 mb-10 flex items-center gap-2 cursor-pointer font-dmsans text-sm font-medium leading-[1.5rem text-primary-100]">
+              <img alt="icon" src={Assets.Icons.PlusIcon} /> Add New Document
+            </p>
             <Button
               // className="bg-primary-150 hover:opacity-85 border-none text-white rounded-xl"
               label="Create Facility"
@@ -317,3 +333,7 @@ const AddNewFacility = () => {
 };
 
 export default AddNewFacility;
+
+const BreadCrumb = () => {
+  return <h4 className="ce-heading-2">Management &gt; Facilities </h4>;
+};

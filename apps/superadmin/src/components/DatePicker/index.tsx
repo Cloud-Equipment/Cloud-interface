@@ -19,12 +19,12 @@ const DatePickerComponent: React.FC<IDatePickerProps> = ({
   return (
     <div
       className={cx(
-        { 'flex flex-col gap-3': !!label },
+        { 'flex flex-col gap-1': !!label },
         { [`${containerClass}`]: !!containerClass },
         'mt-3'
       )}
     >
-      <label className="block font-inter text-xs capitalize font-normal leading-[1.25rem] text-neutral-600">
+      <label className="block font-manrope text-[1rem] capitalize font-normal leading-[1.25rem] text-secondary-500">
         {label}
       </label>
       <DatePicker

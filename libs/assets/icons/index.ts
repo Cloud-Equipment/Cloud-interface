@@ -30,6 +30,13 @@ import UploadIcon1 from './uploadIcon1.svg';
 import ModalConfirm from './modal-confirm.svg';
 import ModalWarn from './modal-warn.svg';
 import UploadIcon2 from './uploadIcon2.svg';
+import CopyIcon from './copyIcon.svg';
+import EditIcon from './editIcon.svg';
+import MailIcon from './mailIcon.svg';
+import UserIcon from './mgt-user-icon.svg';
+import PhoneIcon from './phoneIcon.svg';
+import WarningIcon from './warningIcon.svg';
+import PlusIcon from './plusIcon.svg';
 
 export {
   BoxCloseIcon,
@@ -64,4 +71,11 @@ export {
   ModalConfirm,
   ModalWarn,
   UploadIcon2,
+  CopyIcon,
+  EditIcon,
+  MailIcon,
+  UserIcon,
+  PhoneIcon,
+  WarningIcon,
+  PlusIcon,
 };

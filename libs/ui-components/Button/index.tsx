@@ -10,13 +10,14 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const variants = {
   primary:
     'bg-primary-150 hover:opacity-85 border-primary-100 hover:border-primary-100 text-white !rounded-md',
-  neutral: '',
+  neutral:
+    'bg-white hover:opacity-85 border-primary-100 hover:border-primary-100 text-primary-100 !rounded-md',
   tertiary: '',
 };
 
 const Button: React.FC<ButtonProps> = ({
   label,
-  className,
+  className = '',
   variant = 'primary',
   icon,
   iconAfter,
@@ -32,7 +33,9 @@ const Button: React.FC<ButtonProps> = ({
       //   variants[variant],
       //   className
       // )}
-      className={`px-6 py-3 font-manrope !rounded-md font-semibold text-sm justify-center items-center shadow-buttonShadow ${variants[variant]} ${className} `}
+      className={`px-6 py-3 font-manrope !rounded-md font-semibold text-sm justify-center items-center shadow-buttonShadow ${
+        variants[variant]
+      } ${className} ${icon || iconAfter ? 'flex gap-2' : ''}`}
     >
       {icon ? <img alt="" src={icon} /> : null}
       {label}

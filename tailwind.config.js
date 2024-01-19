@@ -11,6 +11,9 @@ module.exports = {
     extend: {
       fontFamily: {
         manrope: ['Manrope'],
+        dmsans: ['DM Sans'],
+        playfair: ['Playfair Display'],
+        nunito: ['Nunito Sans'],
       },
       colors: {
         'ce-green': '#0E5F50',
@@ -23,6 +26,9 @@ module.exports = {
         primary: {
           100: '#0D5F50',
           150: '#54D4BD',
+          200: '#F6F9F8',
+          250: '#EEFFFC',
+          300: '#48BF53',
         },
         secondary: {
           100: '#32324D',
@@ -30,14 +36,26 @@ module.exports = {
           200: '#EAECF0',
           250: '#1A1A1A',
           300: '#292929',
+          350: '#101828',
+          400: '#1C2221',
+          450: '#EAEAEF',
+          500: '#40484F',
         },
         neutral: {
           100: '#DCDCE4',
+          150: '#9D99AC',
+          200: '#344054',
+          300: '#667085',
+          350: '#271E4A',
+          400: 'rgba(39, 30, 74, 0.8)',
+          450: '#8E8EA9',
+          500: '#666687',
         },
       },
       boxShadow: {
         buttonShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.04)',
         pageFormShadow: '0px 4px 15px 0px rgba(216, 210, 252, 0.15)',
+        facilityMediaCard: '0px 1px 4px 0px rgba(26, 26, 67, 0.1)',
       },
     },
   },
