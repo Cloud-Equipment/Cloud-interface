@@ -6,19 +6,20 @@ import { Routes } from '../../routes';
 import { PriceManagement } from '@cloud-equipment/price';
 const ManageFacility = lazy(() => import('./Facility/ManageFacility'));
 const AddNewFacility = lazy(() => import('./Facility/AddNewFacility'));
+const ManageEquipment = lazy(() => import('./Equipment/Equipment'));
 
 export const ManagementRouting = () => {
   return useRoutes([
     {
-      path: 'price',
+      path: 'medservices',
       element: <PriceManagement />,
     },
     {
-      path: 'price/approved',
+      path: 'medservices/approved',
       element: <PriceManagement />,
     },
     {
-      path: 'price/pending',
+      path: 'medservices/pending',
       element: <PriceManagement />,
     },
     {
@@ -28,6 +29,10 @@ export const ManagementRouting = () => {
     {
       path: Routes.management.addFacility,
       element: <AddNewFacility />,
+    },
+    {
+      path: Routes.management.equipment,
+      element: <ManageEquipment />,
     },
   ]);
 };

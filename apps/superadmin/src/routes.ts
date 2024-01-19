@@ -5,5 +5,6 @@ export const Routes: IRoutes = {
   management: {
     manageFacility: '/facility',
     addFacility: '/facility/addFacility',
+    equipment: '/equipment',
   },
 };

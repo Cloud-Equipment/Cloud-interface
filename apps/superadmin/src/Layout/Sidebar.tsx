@@ -2,7 +2,6 @@ import { NavLink } from 'react-router-dom';
 import './Layout.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { IAppState } from '../Store/store';
-import { UserTypeEnum } from '@cloud-equipment/models';
 import { closeSidebar } from '@cloud-equipment/shared_store';
 import * as Assets from '@cloud-equipment/assets';
 
@@ -70,40 +69,69 @@ const Sidebar = () => {
           </button>
         </div>
 
-        <div className="grid pl-[52px] text-[#FFFFFF8F] gap-4 py-2 font-medium">
+        <div className="grid pl-6 text-[#FFFFFF8F] gap-1 py-2 font-medium">
           <NavLink
             onClick={handleCloseSidebar}
-            className="hover:text-white"
+            className="hover:bg-[#FFFFFF0F] rounded-xl py-2 px-5"
             to="/management/users"
           >
-            Manage Users
+            Patients
           </NavLink>
 
           <NavLink
             onClick={handleCloseSidebar}
-            className="hover:text-white"
+            className="hover:bg-[#FFFFFF0F] rounded-xl py-2 px-5"
             to="/management/users"
           >
-            Manage Patients
+            Users
           </NavLink>
+
           <NavLink
             onClick={handleCloseSidebar}
-            className="hover:text-white"
+            className="hover:bg-[#FFFFFF0F] rounded-xl py-2 px-5"
             to="/management/facility"
           >
-            Manage Facility
+            Facilities
           </NavLink>
 
           <NavLink
             onClick={handleCloseSidebar}
-            className="hover:text-white"
-            to="/management/price"
+            className="hover:bg-[#FFFFFF0F] rounded-xl py-2 px-5"
+            to="/management/discount"
           >
-            Price Management
+            Discounts
+          </NavLink>
+
+          <NavLink
+            onClick={handleCloseSidebar}
+            className="hover:bg-[#FFFFFF0F] rounded-xl py-2 px-5"
+            to="/management/medservices"
+          >
+            Medservices
+          </NavLink>
+
+          <NavLink
+            onClick={handleCloseSidebar}
+            className="hover:bg-[#FFFFFF0F] rounded-xl py-2 px-5"
+            to="/management/reports"
+          >
+            Report Entries
+          </NavLink>
+
+          <NavLink
+            onClick={handleCloseSidebar}
+            className="hover:bg-[#FFFFFF0F] rounded-xl py-2 px-5"
+            to="/management/equipment"
+          >
+            Equipment
           </NavLink>
         </div>
 
-        <NavLink onClick={handleCloseSidebar} to="." className="main-icon">
+        <NavLink
+          onClick={handleCloseSidebar}
+          to="/settings"
+          className="main-icon"
+        >
           <img src={Assets.Icons.Settings} alt="" />
           <span>Settings</span>
         </NavLink>

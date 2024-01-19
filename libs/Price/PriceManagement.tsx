@@ -164,9 +164,9 @@ const PriceManagement = () => {
 
           <NavTab
             links={[
-              { label: 'All Prices', href: '/management/price' },
-              { label: 'Approved Prices', href: '/management/price/approved' },
-              { label: 'Pending Prices', href: '/management/price/pending' },
+              { label: 'All Prices', href: '/management/medservices' },
+              { label: 'Approved Prices', href: '.' },
+              { label: 'Pending Prices', href: '.' },
             ]}
             wrapperClass="mt-6"
           />
