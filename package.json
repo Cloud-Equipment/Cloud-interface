@@ -19,6 +19,7 @@
     "@tanstack/react-query-devtools": "^5.17.15",
     "@tanstack/react-table": "^8.11.6",
     "autoprefixer": "^10.4.16",
+    "classnames": "^2.5.1",
     "dayjs": "^1.11.10",
     "jwt-decode": "^4.0.0",
     "moment": "^2.30.1",

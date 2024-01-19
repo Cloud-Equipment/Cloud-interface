@@ -15,19 +15,20 @@ const Payment = lazy(() => import('./Facility/Payment'));
 const Equipment = lazy(() => import('./Facility/Equipment'));
 const Tickets = lazy(() => import('./Facility/Tickets'));
 const Reviews = lazy(() => import('./Facility/Reviews'));
+const ManageEquipment = lazy(() => import('./Equipment/Equipment'));
 
 export const ManagementRouting = () => {
   return useRoutes([
     {
-      path: 'price',
+      path: 'medservices',
       element: <PriceManagement />,
     },
     {
-      path: 'price/approved',
+      path: 'medservices/approved',
       element: <PriceManagement />,
     },
     {
-      path: 'price/pending',
+      path: 'medservices/pending',
       element: <PriceManagement />,
     },
     {
@@ -69,6 +70,10 @@ export const ManagementRouting = () => {
     {
       path: Routes.management.viewFacilityReviews,
       element: <Reviews />,
+    },
+    {
+      path: Routes.management.equipment,
+      element: <ManageEquipment />,
     },
   ]);
 };

@@ -36,14 +36,11 @@ button.btn-icon {
   position: relative;
 
   input {
-    @apply outline-ce-green bg-[#F8F8FA] rounded-[30px] px-[20px] py-[12px] w-full;
+    @apply outline-none focus:border-ce-green bg-[#F8F8FA] rounded-[30px] px-5 py-2.5 w-full;
   }
 
   img {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
+    @apply absolute right-5 top-[50%] -translate-y-[50%] w-5;
   }
 }
 

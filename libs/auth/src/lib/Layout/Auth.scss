@@ -6,8 +6,7 @@
     ),
     url(../../../../assets/images/auth/auth-banner.png);
   background-size: cover;
- 
-  
+
   @apply hidden lg:flex lg:h-[calc(100vh-76px)] justify-end flex-col;
 }
 

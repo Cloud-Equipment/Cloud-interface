@@ -37,6 +37,7 @@ import UserIcon from './mgt-user-icon.svg';
 import PhoneIcon from './phoneIcon.svg';
 import WarningIcon from './warningIcon.svg';
 import PlusIcon from './plusIcon.svg';
+import * as Dashboard from './dashboard';
 
 export {
   BoxCloseIcon,
@@ -78,4 +79,5 @@ export {
   PhoneIcon,
   WarningIcon,
   PlusIcon,
+  Dashboard,
 };

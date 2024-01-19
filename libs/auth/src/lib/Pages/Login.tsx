@@ -2,26 +2,27 @@ import React from 'react';
 import * as Assets from '@cloud-equipment/assets';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { environment } from '@cloud-equipment/environments';
 import { toast } from 'react-toastify';
 import * as jwtDecode from 'jwt-decode';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess } from '../Store/actions';
 import { setLoading, clearLoading } from '@cloud-equipment/shared_store';
 import { IUser } from '@cloud-equipment/models';
-import api from '@cloud-equipment/api';
+import { _login, _superadminLogin } from '../services/auth.service';
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
 
+  const accountType = useSelector(
+    (state: { account: { accountType: 0 | 1 } }) => state.account.accountType
+  );
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (data: any) => {
     dispatch(setLoading());
-    api
-      .post(`${environment.baseUrl}/user-manager/account/login`, data)
+    (accountType === 0 ? _superadminLogin(data) : _login(data))
       .then((response) => {
         if (response.data.success) {
           toast.success(response.data.msg);

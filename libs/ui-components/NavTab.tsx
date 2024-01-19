@@ -43,7 +43,7 @@ function LinkTab(props: LinkTabProps) {
 
 export const NavTab: React.FC<{
   links: LinkTabProps[];
-  wrapperClass: string;
+  wrapperClass?: string;
 }> = ({ links, wrapperClass }) => {
   const [value, setValue] = React.useState(0);
 

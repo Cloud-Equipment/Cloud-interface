@@ -19,10 +19,12 @@ module.exports = {
         'ce-green': '#0E5F50',
         'ce-lgreen': '#EEFFFC',
         greenText: '#54D4BD',
+        lightGreen: '#EEFFFC',
         blackText: '#40484F',
         greyText: '#8F9AA3',
         greyText2: '#667085',
         borderLine: '#EAECF0',
+        greyBg: '#F7F7F7',
         primary: {
           100: '#0D5F50',
           150: '#54D4BD',

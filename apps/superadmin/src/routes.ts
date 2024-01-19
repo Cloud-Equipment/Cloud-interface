@@ -13,5 +13,6 @@ export const Routes: IRoutes = {
     viewFacilityEquipments: '/facility/viewFacility/:id/equipment',
     viewFacilityTickets: '/facility/viewFacility/:id/tickets',
     viewFacilityReviews: '/facility/viewFacility/:id/reviews',
+    equipment: '/equipment',
   },
 };
