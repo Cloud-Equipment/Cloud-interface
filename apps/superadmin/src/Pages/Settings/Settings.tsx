@@ -22,7 +22,7 @@ const Settings = () => {
   const userDetails = useSelector((state: IAppState) => state.auth.user);
 
   useEffect(() => {
-    setValue('email', userDetails!.email);
+    setValue('email', userDetails?.email ?? '' );
   }, []);
 
   const onSubmit = (data: FormProps) => {
