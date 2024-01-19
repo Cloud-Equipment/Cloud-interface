@@ -6,6 +6,7 @@ module.exports = {
     './libs/auth/src/**/*.{js,jsx,ts,tsx}',
     './libs/reports/src/**/*.{js,jsx,ts,tsx}',
     './libs/price/**/*.{js,jsx,ts,tsx}',
+    './libs/ui-components/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
     extend: {

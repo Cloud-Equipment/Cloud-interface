@@ -13,7 +13,7 @@ const variants = {
   primary:
     'bg-primary-150 hover:opacity-85 border-primary-100 hover:border-primary-100 text-white !rounded-md',
   neutral:
-    'bg-white hover:opacity-85 border-primary-100 hover:border-primary-100 text-primary-100 !rounded-md',
+    'bg-white hover:opacity-85 border border-primary-100 hover:border-primary-100 text-primary-100 !rounded-md',
   tertiary: '',
 };
 
@@ -28,16 +28,10 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      {...props}
-      // className={cx(
-      //   `border px-6 py-3 rounded-md font-manrope font-semibold text-sm justify-center items-center shadow-buttonShadow`,
-      //   // icon || iconAfter ? 'flex gap-1.5' : '',
-      //   variants[variant],
-      //   className
-      // )}
       className={`px-6 py-3 font-manrope !rounded-md font-semibold text-sm justify-center items-center shadow-buttonShadow ${
         variants[variant]
       } ${className} ${icon || iconAfter ? 'flex gap-2' : ''}`}
+      {...props}
     >
       {icon ? <img alt="" src={icon} /> : null}
       {label}
