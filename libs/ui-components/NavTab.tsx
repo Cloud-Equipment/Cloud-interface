@@ -1,8 +1,9 @@
 import * as React from 'react';
+
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function samePageLinkNavigation(
   event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -45,6 +46,7 @@ export const NavTab: React.FC<{
   links: LinkTabProps[];
   wrapperClass?: string;
 }> = ({ links, wrapperClass }) => {
+  const params = useParams();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -59,6 +61,15 @@ export const NavTab: React.FC<{
       setValue(newValue);
     }
   };
+
+  // persist tab selection on page refresh
+  React.useEffect(() => {
+    let activeTabIndex = links.findIndex((link) => {
+      let len = `${link.href}`.split('/').length;
+      return `${link.href}`.split('/')[len - 1] === params['*'];
+    });
+    setValue(Math.max(activeTabIndex, 0));
+  }, []);
 
   return (
     <div className={`${wrapperClass}`}>
