@@ -40,6 +40,7 @@ import PlusIcon from './plusIcon.svg';
 import FacilityWarningIcon from './facilityWarningIcon.svg';
 import EnableEMRIcon from './EnableEMRIcon.svg';
 import * as Dashboard from './dashboard';
+import FileUpload from './file-upload.svg';
 
 export {
   BoxCloseIcon,
@@ -84,4 +85,5 @@ export {
   Dashboard,
   FacilityWarningIcon,
   EnableEMRIcon,
+  FileUpload,
 };

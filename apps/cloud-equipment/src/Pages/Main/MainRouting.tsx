@@ -1,8 +1,6 @@
 import { useRoutes } from 'react-router-dom';
-import Reports from './Reports/Reports';
-import NewReport from './Reports/NewReport';
+import { Reports } from '@cloud-equipment/reports';
 import UserManagement from './UserManagement/UserManagement';
-import { ViewReport } from './Reports/ViewReport';
 import { PriceManagement } from '@cloud-equipment/price';
 
 export const MainRouting = () => {
@@ -12,31 +10,23 @@ export const MainRouting = () => {
     //   element: <Dashboard />,
     // },
     {
-      path: '/reports',
+      path: '/reports/*',
       element: <Reports />,
-    },
-    {
-      path: '/reports/new',
-      element: <NewReport />,
-    },
-    {
-      path: '/reports/:id',
-      element: <ViewReport />,
     },
     {
       path: '/management/users',
       element: <UserManagement />,
     },
     {
-      path: 'price',
+      path: '/price',
       element: <PriceManagement />,
     },
     {
-      path: 'price/approved',
+      path: '/price/approved',
       element: <PriceManagement />,
     },
     {
-      path: 'price/pending',
+      path: '/price/pending',
       element: <PriceManagement />,
     },
   ]);
