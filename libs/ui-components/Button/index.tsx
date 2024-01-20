@@ -14,7 +14,7 @@ const variants = {
     'bg-primary-150 hover:opacity-85 border-primary-100 hover:border-primary-100 text-white !rounded-md',
   neutral:
     'bg-white hover:opacity-85 border border-primary-100 hover:border-primary-100 text-primary-100 !rounded-md',
-  tertiary: '',
+  tertiary: 'bg-primary-200 hover:opacity-85 text-primary-150',
 };
 
 const Button: React.FC<ButtonProps> = ({

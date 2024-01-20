@@ -1,7 +1,12 @@
 import { useState } from 'react';
 
-import { useParams } from 'react-router-dom';
-import { Modal } from '@mui/material';
+import {
+  Modal,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material';
 import { createColumnHelper } from '@tanstack/react-table';
 
 import { Table } from '../../../../components';
@@ -76,16 +81,11 @@ const columns = [
         original: { id },
       },
     }) => {
-      return (
-        <button
-          onClick={(e) => {
-            console.log('clicked');
-          }}
-          className="w-6"
-        >
-          <img src={Assets.Icons.Menudots} alt="" />
-        </button>
-      );
+      // REFACTOR: is this necessary
+      const cb = (e: React.MouseEvent<HTMLButtonElement>) => {
+        // console.log('e', e);
+      };
+      return <ManageStaffDropDown {...{ cb, id }} />;
     },
     header: '',
   }),
@@ -157,7 +157,6 @@ const ViewFacility = () => {
             data={data}
             columns={columns}
             tableHeading="Team members - 5"
-            tableHeadingColorClassName=""
           />
         </div>
       </div>
@@ -179,6 +178,57 @@ const ViewFacility = () => {
 };
 
 export default ViewFacility;
+
+const ManageStaffDropDown = ({
+  cb,
+  id,
+}: {
+  cb: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  id: string;
+}) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    cb(event);
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMenuAction = () => {};
+
+  return (
+    <div>
+      <button
+        onClick={(e) => {
+          handleActionClick(e);
+        }}
+        className="w-6"
+      >
+        <img src={Assets.Icons.Menudots} alt="" />
+      </button>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={() => {}}>
+          <ListItemIcon></ListItemIcon>
+          <ListItemText>Disable User</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={() => {}}>
+          <ListItemIcon></ListItemIcon>
+          <ListItemText>Enable 2FA</ListItemText>
+        </MenuItem>
+      </Menu>
+    </div>
+  );
+};
 
 const InviteModal = ({
   open,

@@ -37,6 +37,8 @@ import UserIcon from './mgt-user-icon.svg';
 import PhoneIcon from './phoneIcon.svg';
 import WarningIcon from './warningIcon.svg';
 import PlusIcon from './plusIcon.svg';
+import FacilityWarningIcon from './facilityWarningIcon.svg';
+import EnableEMRIcon from './EnableEMRIcon.svg';
 import * as Dashboard from './dashboard';
 
 export {
@@ -80,4 +82,6 @@ export {
   WarningIcon,
   PlusIcon,
   Dashboard,
+  FacilityWarningIcon,
+  EnableEMRIcon,
 };

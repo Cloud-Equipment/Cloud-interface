@@ -43,6 +43,10 @@ module.exports = {
           400: '#1C2221',
           450: '#EAEAEF',
           500: '#40484F',
+          550: '161616',
+          600: '8F9AA3',
+          650: '#F1F1F1',
+          700: '#8F9AA3',
         },
         neutral: {
           100: '#DCDCE4',
@@ -54,6 +58,29 @@ module.exports = {
           450: '#8E8EA9',
           500: '#666687',
         },
+        tertiary: {
+          100: ' #CB455B',
+        },
+      },
+      keyframes: {
+        shimmer: {
+          '0%': {
+            'background-position': '-1000px 0',
+          },
+          '100%': {
+            'background-position': '1000px 0',
+          },
+        },
+      },
+      animation: {
+        shimmer: 'shimmer 2s infinite linear',
+      },
+      backgroundSize: {
+        '1000px': '1000px 100%',
+      },
+      backgroundImage: {
+        shimmer:
+          'linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%)',
       },
       boxShadow: {
         buttonShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.04)',

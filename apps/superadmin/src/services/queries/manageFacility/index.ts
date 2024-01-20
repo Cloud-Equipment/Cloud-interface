@@ -44,64 +44,44 @@ const useGetFacilities = (
   return { isLoading, data, isSuccess, error };
 };
 
-// const useGetOrder = (
-//   options: Omit<
-//     UseQueryOptions<any, unknown, any, string[]>,
-//     "initialData" | "queryFn" | "queryKey"
-//   > = {},
-//   id?: string,
-// ) => {
-//   const hash = [keys.read, `${id}`];
-//   const {
-//     isLoading,
-//     data,
-//     isSuccess,
-//     error,
-//     ...rest
-//   }: UseQueryResult<ORDER_API_RESPONSE, unknown> = useQuery(
-//     hash,
-//     () => apiMethods.get({ url: `${baseUrl}/orders/${id}` }),
-//     {
-//       ...options,
-//       onSuccess: () => {},
-//       onError: () => {},
-//     },
-//   );
-//   return { isLoading, data, isSuccess, error, ...rest };
-// };
+const useCreateFacility = (options = {}) => {
+  const queryClient = useQueryClient();
 
-// const useUpdateOrderStatus = (options = {}) => {
-//   const queryClient = useQueryClient();
+  const mutation = useMutation({
+    ...options,
+    mutationKey: [keys.create],
+    mutationFn: async (data: any) => {
+      console.log('data in mutation', data);
+      return apiMethods.post({
+        url: '/api/facility-manager/createfacility',
+        body: data,
+        auth: true,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [keys.read] });
+    },
+  });
+  const { mutate, isSuccess, isError, data, isPending } = mutation;
 
-//   const { mutate, isLoading, data, isSuccess } = useMutation(apiMethods.patch, {
-//     ...options,
-//     mutationKey: [keys.create],
-//     onSuccess: () => {
-//       queryClient.invalidateQueries([keys.read]);
-//     },
-//     onError: () => {},
-//   });
-
-//   return {
-//     mutate: (bodyArg: { status: StatusTypes; id: string }) => {
-//       const { status, id } = bodyArg;
-//       const body = {
-//         status: status,
-//       };
-//       return mutate({
-//         url: `${baseUrl}/orders/${id}/${statusObject?.route}`,
-//         body,
-//       });
-//     },
-//     isLoading,
-//     data,
-//     isSuccess,
-//   };
-// };
+  return {
+    mutateFn: (bodyArg: any) => {
+      return mutate(bodyArg, {
+        onSuccess: () => {
+          console.log('success from mutate');
+        },
+      });
+    },
+    data,
+    isSuccess,
+    isError,
+    isLoading: isPending,
+  };
+};
 
 const queries = {
   useGetFacilities,
-  // useUpdateOrderStatus,
+  useCreateFacility,
   // useGetOrder,
 };
 

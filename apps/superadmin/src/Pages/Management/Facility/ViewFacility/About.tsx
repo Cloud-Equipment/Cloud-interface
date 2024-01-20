@@ -1,4 +1,4 @@
-const ViewFacility = () => {
+const About = () => {
   return (
     <div className="bg-white px-3.5 py-5 rounded-[20px]">
       <div className="flex flex-col gap-5">
@@ -71,7 +71,7 @@ const ViewFacility = () => {
   );
 };
 
-export default ViewFacility;
+export default About;
 
 // TODO: Move to their own components
 const TitleSubField = ({

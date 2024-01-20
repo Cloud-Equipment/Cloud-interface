@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import {
@@ -18,7 +18,9 @@ import { Routes } from '../../../routes';
 import { Table } from '../../../components';
 import queries from '../../../services/queries/manageFacility';
 import { Facility } from '../../../services/queries/manageFacility/types';
+import { ActionsModal } from '../../../Modals';
 
+export type ActionModalType = null | 'enableUser' | 'enableEMR' | 'disableUser';
 type FacilityTableColumns = Pick<
   Facility,
   'id' | 'facilityName' | 'city' | 'addressLine1' | 'postalCode' | 'dateCreated'
@@ -26,7 +28,7 @@ type FacilityTableColumns = Pick<
 
 const columnHelper = createColumnHelper<FacilityTableColumns>();
 
-const columns = [
+const columns = (handleActionsModalView: (view: ActionModalType) => void) => [
   columnHelper.accessor('id', {
     header: 'Facility ID',
     cell: (info) => info.getValue(),
@@ -57,10 +59,11 @@ const columns = [
         original: { id },
       },
     }) => {
+      // REFACTOR: is this necessary
       const cb = (e: React.MouseEvent<HTMLButtonElement>) => {
         // console.log('e', e);
       };
-      return <ManageFacilityDropDown {...{ cb, id }} />;
+      return <ManageFacilityDropDown {...{ cb, id, handleActionsModalView }} />;
     },
     header: '',
   }),
@@ -75,7 +78,11 @@ const ManageFacility = () => {
   );
 
   //   modal
-  const [inviteUserModalOpen, setInviteUserModalOpen] = React.useState(false);
+  const [actionsModal, setActionsModal] = React.useState<{
+    currentView: ActionModalType;
+  }>({
+    currentView: null,
+  });
 
   //   table
   const handleChangePage = (
@@ -88,16 +95,16 @@ const ManageFacility = () => {
     // setPageSize(parseInt(event.target.value, 10));
   };
 
-  //   modal
-  const openInviteUserModal = () => setInviteUserModalOpen(true);
-  const closeInviteUserModal = () => setInviteUserModalOpen(false);
+  const handleActionsModalView = (view: ActionModalType) => {
+    setActionsModal({ currentView: view });
+  };
+
+  const closeModal = () => {
+    setActionsModal({ currentView: null });
+  };
 
   return (
     <>
-      <Modal open={inviteUserModalOpen} onClose={closeInviteUserModal}>
-        <div>{/* <InviteUserModal onClose={closeInviteUserModal} /> */}</div>
-      </Modal>
-
       <section className="ce-px ce-py">
         <div className="p-[16px] mt-[20px] rounded-[20px]">
           <h4 className="ce-heading-2">Management &gt; Facilites </h4>
@@ -142,12 +149,17 @@ const ManageFacility = () => {
           <Table
             loading={isLoading}
             data={data}
-            columns={columns}
+            columns={columns(handleActionsModalView)}
             tableHeading="Facilities - 5"
             tableHeadingColorClassName="!bg-secondary-150"
           />
         </div>
       </section>
+      <ManageFacilityActionsModal
+        open={!!actionsModal.currentView}
+        onClose={closeModal}
+        currentView={actionsModal.currentView}
+      />
     </>
   );
 };
@@ -158,9 +170,11 @@ export default ManageFacility;
 const ManageFacilityDropDown = ({
   cb,
   id,
+  handleActionsModalView,
 }: {
   cb: (e: React.MouseEvent<HTMLButtonElement>) => void;
   id: string;
+  handleActionsModalView: (view: ActionModalType) => void;
 }) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -175,7 +189,7 @@ const ManageFacilityDropDown = ({
   };
 
   const handleMenuAction = () => {
-    navigate(`/management/facility/viewFacility/${id}/about`);
+    navigate(`/management/facility/view/${id}/about`);
   };
 
   return (
@@ -200,19 +214,33 @@ const ManageFacilityDropDown = ({
           <ListItemIcon></ListItemIcon>
           <ListItemText>View Facility Activities</ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleMenuAction}>
+        <MenuItem onClick={() => handleActionsModalView('enableUser')}>
           <ListItemIcon></ListItemIcon>
           <ListItemText>Enable User</ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleMenuAction}>
+        <MenuItem onClick={() => handleActionsModalView('disableUser')}>
           <ListItemIcon></ListItemIcon>
           <ListItemText>Disable User</ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleMenuAction}>
+        <MenuItem onClick={() => handleActionsModalView('enableEMR')}>
           <ListItemIcon></ListItemIcon>
           <ListItemText>Enable EMR</ListItemText>
         </MenuItem>
       </Menu>
     </div>
+  );
+};
+
+const ManageFacilityActionsModal = ({
+  open,
+  onClose,
+  currentView,
+}: ModalProps & { currentView: ActionModalType }) => {
+  return (
+    <Modal {...{ open, onClose }}>
+      <div className="">
+        <ActionsModal {...{ onClose, currentView }} />
+      </div>
+    </Modal>
   );
 };

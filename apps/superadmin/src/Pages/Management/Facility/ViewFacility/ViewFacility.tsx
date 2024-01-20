@@ -1,9 +1,12 @@
+import { Suspense } from 'react';
+
 import { useParams } from 'react-router-dom';
+import { Switch } from '@mui/material';
 
 import { Button, NavTab } from '@cloud-equipment/ui-components';
-import { ViewFacilityRouting } from './ViewFacilityRouting';
 import * as Assets from '@cloud-equipment/assets';
 import { copyToClipboard } from '../../../../utils';
+import { ViewFacilityRouting } from './ViewFacilityRouting';
 
 const ViewFacility = () => {
   const { id } = useParams();
@@ -69,10 +72,11 @@ const ViewFacility = () => {
             />
           </div>
           <div className="flex">No 4, Karu L.G.A., Nasarawa State</div>
-          <div className="flex justify-between">
-            <div className="flex gap-4">
-              <img alt="" src={Assets.Icons.WarningIcon} /> Blacklist Facility
+          <div className="flex">
+            <div className="flex gap-4 flex-1">
+              <img alt="" src={Assets.Icons.WarningIcon} /> Blacklist Facility{' '}
             </div>
+            <Switch size="small" />
           </div>
         </div>
         <div className="flex">
@@ -123,7 +127,10 @@ const ViewFacility = () => {
           />
         </div>
 
-        <ViewFacilityRouting />
+        {/*TODO: Add appropriate loader  */}
+        <Suspense fallback={<h3>Loading SubPages</h3>}>
+          <ViewFacilityRouting />
+        </Suspense>
       </div>
     </div>
   );
