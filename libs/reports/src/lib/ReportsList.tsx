@@ -8,7 +8,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import * as Assets from '@cloud-equipment/assets';
 
-const Reports = () => {
+const ReportsList = () => {
   const [data, setData] = useState<IProcedure[]>([]);
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -214,4 +214,4 @@ const Reports = () => {
   );
 };
 
-export default Reports;
+export default ReportsList;

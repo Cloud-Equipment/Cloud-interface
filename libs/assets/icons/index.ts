@@ -38,6 +38,7 @@ import PhoneIcon from './phoneIcon.svg';
 import WarningIcon from './warningIcon.svg';
 import PlusIcon from './plusIcon.svg';
 import * as Dashboard from './dashboard';
+import FileUpload from './file-upload.svg';
 
 export {
   BoxCloseIcon,
@@ -80,4 +81,5 @@ export {
   WarningIcon,
   PlusIcon,
   Dashboard,
+  FileUpload,
 };

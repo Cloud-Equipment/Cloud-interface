@@ -79,7 +79,7 @@ const Settings = () => {
           />
         </div>
 
-        <div className="my-5 2xl:my-8 grid grid-cols-[auto_auto] justify-between gap-x-3 gap-y-5 xl:gap-y-7 md:w-[55%]">
+        <div className="my-5 2xl:my-8 grid grid-cols-[auto_auto] justify-between gap-x-3 md:gap-x-10 gap-y-5 xl:gap-y-7 md:w-fit 2xl:w-[55%]">
           <p className="font-medium">Admin Position</p>
 
           <p className="font-semibold text-sm text-center text-greyText2 bg-greyBg rounded-xl px-3 py-2">
