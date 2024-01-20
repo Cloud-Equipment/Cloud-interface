@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Assets from '@cloud-equipment/assets';
-import DashboardCard from '../../components/dashboard/DashboardCard';
-import DashboardCalendar from '../../components/dashboard/DashboardCalendar';
+import { DashboardCard } from '@cloud-equipment/ui-components';
+import { DashboardCalendar } from '@cloud-equipment/ui-components';
 
 const Dashboard = () => {
   return (
@@ -67,7 +67,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className='bg-white rounded-[20px]'>
+      <div className="bg-white rounded-[20px]">
         <DashboardCalendar />
       </div>
     </section>

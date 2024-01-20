@@ -1,4 +1,3 @@
-import CreateReportForm from './lib/Components/CreateReportForm';
-import DailyProcedureTracker from './lib/Components/DailyProcedureTracker';
+import Reports from './lib/Reports';
 
-export { CreateReportForm, DailyProcedureTracker };
+export { Reports };

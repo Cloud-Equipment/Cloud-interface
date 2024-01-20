@@ -41,3 +41,9 @@ export const _approvePrice = async (id: string) => {
     `${environment.baseUrl}/service-manager/medServices/appprove/${id}`
   );
 };
+
+export const _getAllFacilities = async () => {
+  return api.get<ApiResponse>(
+    `${environment.baseUrl}/api/facility-manager/getallfacilities`
+  );
+};

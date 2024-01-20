@@ -11,7 +11,7 @@ const DashboardCard = ({ text, figure, icon }: DashboardCardProps) => {
   return (
     <div className="rounded-[20px] p-3 bg-white">
       <div className="flex gap-4 items-center">
-        <img className="w-12" src={icon} alt="" />
+        <img className="w-10" src={icon} alt="" />
         <p>{text}</p>
       </div>
 

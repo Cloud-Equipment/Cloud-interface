@@ -8,6 +8,7 @@ import { PriceManagement } from '@cloud-equipment/price';
 const ManageFacility = lazy(() => import('./Facility/ManageFacility'));
 const AddNewFacility = lazy(() => import('./Facility/AddNewFacility'));
 const ViewFacility = lazy(() => import('./Facility/ViewFacility/ViewFacility'));
+const Equipment = lazy(() => import('./Equipment/Equipment'));
 
 export const ManagementRouting = () => {
   return useRoutes([
@@ -34,6 +35,10 @@ export const ManagementRouting = () => {
     {
       path: Routes.management.viewFacility,
       element: <ViewFacility />,
+    },
+    {
+      path: Routes.management.equipment,
+      element: <Equipment />,
     },
   ]);
 };

@@ -1,5 +1,6 @@
 import {
   _createPrice,
+  _getAllFacilities,
   _getMedserviceCategories,
 } from './services/procedures.service';
 import React, { useEffect, useState } from 'react';
@@ -10,8 +11,9 @@ import {
   ICreateProcedure,
   IMedService,
   IMedserviceCategory,
+  IUser,
 } from '@cloud-equipment/models';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { clearLoading, setLoading } from '@cloud-equipment/shared_store';
 import * as Assets from '@cloud-equipment/assets';
 
@@ -26,10 +28,19 @@ const NewProcedureModal = ({
   const dispatch = useDispatch();
   const [view, setView] = useState<'form' | 'confirm'>('form');
 
-  // const userDetails = useSelector((state: IAppState) => state.auth.user);
+  const accountType = useSelector(
+    (state: { account: { accountType: 0 | 1 } }) => state.account.accountType
+  );
+
+  const userDetails = useSelector(
+    (state: { auth: { user: IUser } }) => state.auth.user
+  );
   const [categoriesList, setCategoriesList] = useState<IMedserviceCategory[]>(
     []
   );
+  const [facilitiesList, setFacilitiesList] = useState<
+    { id: string; facilityName: string }[]
+  >([]);
 
   const onSubmit = () => {
     setView('confirm');
@@ -37,7 +48,13 @@ const NewProcedureModal = ({
 
   const submitData = () => {
     dispatch(setLoading());
-    _createPrice(getValues() as ICreateProcedure)
+
+    const payload = { ...(getValues() as ICreateProcedure) };
+    if (accountType === 1) {
+      payload.facilityId = userDetails?.FACILITY_ID;
+    }
+
+    _createPrice(payload)
       .then((response) => {
         if (response.data.success) {
           toast.error(response.data.msg);
@@ -62,8 +79,22 @@ const NewProcedureModal = ({
       .catch(() => {});
   };
 
+  const getAllFacilities = () => {
+    _getAllFacilities()
+      .then((res: any) => {
+        if (res.data.success) {
+          setCategoriesList(res.data.data);
+        }
+      })
+      .catch(() => {});
+  };
+
   useEffect(() => {
     getAllCategories();
+    if (accountType === 0) {
+      getAllFacilities();
+    }
+
     if (procedureToEdit) {
       setValue('medServiceCategoryId', procedureToEdit.medServiceCategoryId);
       setValue('medServiceName', procedureToEdit.medServiceName);
@@ -76,6 +107,31 @@ const NewProcedureModal = ({
       {view === 'form' ? (
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-5">
           <h4>Add New Price/Procedure</h4>
+
+          {accountType === 0 ? (
+            <div className="form-input-label-holder">
+              <label className="px-5">Facility</label>
+              <Controller
+                name="facilityId"
+                control={control}
+                defaultValue={0}
+                render={({ field }) => (
+                  <Select {...field}>
+                    <MenuItem value={0} disabled>
+                      Choose Facility
+                    </MenuItem>
+                    {facilitiesList.map((x, i) => (
+                      <MenuItem key={i} value={x.id}>
+                        {x.facilityName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+            </div>
+          ) : (
+            <></>
+          )}
 
           <div className="form-input-label-holder">
             <label className="px-5">Medservice Category</label>

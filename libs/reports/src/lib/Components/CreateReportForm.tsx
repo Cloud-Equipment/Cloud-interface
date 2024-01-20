@@ -377,7 +377,7 @@ const CreateReportForm = () => {
     <section className=" p-5 md:p-10 xl:px-20 ">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="[box-shadow:_0px_4px_40px_0px_#0D95891A] bg-white rounded-2xl p-5 md:p-8 max-w-[1000px] mx-auto"
+        className="[box-shadow:_0px_4px_40px_0px_#0D95891A] bg-white rounded-2xl p-5 md:p-8 mx-auto md:w-[80%] 2xl:max-w-[1100px]"
       >
         <div className="border-b-[2px] pb-1 border-b-solid border-borderLine">
           <h4 className="font-bold text-xl">Patient Details</h4>
