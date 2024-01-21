@@ -165,8 +165,6 @@ const queries = {
   useCreateFacility,
   useCreateUser,
   useGetFacilityUser,
-  useGetAllFacilities,
-  // useGetOrder,
 };
 
 export default queries;
