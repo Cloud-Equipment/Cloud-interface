@@ -78,13 +78,13 @@ const Sidebar = () => {
             Patients
           </NavLink>
 
-          <NavLink
+          {/* <NavLink
             onClick={handleCloseSidebar}
             className="hover:bg-[#FFFFFF0F] rounded-xl py-2 px-5"
             to="/management/users"
           >
             Users
-          </NavLink>
+          </NavLink> */}
 
           <NavLink
             onClick={handleCloseSidebar}
