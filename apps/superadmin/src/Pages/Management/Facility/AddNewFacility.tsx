@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { Controller, useForm } from 'react-hook-form';
 import { Modal } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Input,
@@ -33,11 +34,11 @@ interface FormProps {
 
 const AddNewFacility = () => {
   const [showAddMediaModal, setShowAddMediaModal] = useState(false);
+  const navigate = useNavigate();
   const { useCreateFacility } = queries;
-  const { mutateFn, isError, isSuccess, isLoading } = useCreateFacility();
+  const { mutateFn, isLoading } = useCreateFacility();
 
-  const { register, handleSubmit, control, getValues, setValue, watch } =
-    useForm<FormProps>();
+  const { register, handleSubmit, control, setValue } = useForm<FormProps>();
 
   const onSubmit = (data: FormProps) => {
     const {
@@ -61,18 +62,16 @@ const AddNewFacility = () => {
       addressLine2,
       postalCode,
       city,
-      stateId,
-      countryId,
-      isActive: true,
-      dateCreated: new Date(),
+      stateId: Number(stateId),
+      countryId: Number(countryId),
       rebatePercent,
-      logoPath,
+      logoPath: '',
     };
-    mutateFn(dataToSubmit);
+    mutateFn(dataToSubmit, () => {
+      navigate('/management/facility');
+    });
   };
 
-  console.log('isLoading', isLoading);
-  console.log('isSuccess', isSuccess);
   return (
     <>
       <section className="ce-px ce-py">
@@ -164,10 +163,10 @@ const AddNewFacility = () => {
                       <Select
                         options={[
                           {
-                            value: 'hey',
+                            value: 1,
                             label: 'hey',
                             categoryName: 'categoryName',
-                            categoryId: 'categoryId',
+                            categoryId: 1,
                           },
                         ]}
                         label="Country "
@@ -187,10 +186,10 @@ const AddNewFacility = () => {
                       <Select
                         options={[
                           {
-                            value: 'hey',
+                            value: 1,
                             label: 'hey',
                             categoryName: 'categoryName',
-                            categoryId: 'categoryId',
+                            categoryId: 1,
                           },
                         ]}
                         label="State"
@@ -381,7 +380,12 @@ const AddNewFacility = () => {
               >
                 <img alt="icon" src={Assets.Icons.PlusIcon} /> Add New Document
               </p>
-              <Button label="Create Facility" variant="primary" type="submit" />
+              <Button
+                label="Create Facility"
+                variant="primary"
+                type="submit"
+                loading={isLoading}
+              />
             </form>
           </div>
         </div>

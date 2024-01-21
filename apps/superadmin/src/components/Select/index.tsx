@@ -46,6 +46,7 @@ const SelectDropdown: React.FC<any> = <T extends string>({
       >
         <MenuItem value={''}>Select {label}</MenuItem>
         {options.map((x, i) => (
+          // REFACTOR: Change this to value and label
           <MenuItem key={i} value={x.categoryId}>
             {x.categoryName}
           </MenuItem>

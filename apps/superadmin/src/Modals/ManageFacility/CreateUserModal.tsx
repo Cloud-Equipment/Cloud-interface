@@ -1,16 +1,21 @@
+import { useEffect, useState } from 'react';
+
 import { Controller, useForm } from 'react-hook-form';
-import { showToast } from '../../utils/toast';
+import cryptoRandomString from 'crypto-random-string';
+import generator from 'generate-password-ts';
+import { useParams } from 'react-router-dom';
 
 import { Select, Input } from '../../components';
 
 import { clearLoading, setLoading } from '@cloud-equipment/shared_store';
 import * as Assets from '@cloud-equipment/assets';
 import { Button } from '@cloud-equipment/ui-components';
+import queries from '../../services/queries/manageFacility';
 
 interface FormProps {
   email: string;
-  role: string;
-  [key: string]: string;
+  roles: string[];
+  [key: string]: string | string[];
 }
 
 const CreateUserModal = ({
@@ -20,12 +25,40 @@ const CreateUserModal = ({
   onClose: () => void;
   procedureToEdit?: any;
 }) => {
-  const { register, handleSubmit, control, getValues, setValue, watch } =
-    useForm<FormProps>();
+  const { id } = useParams();
+  const [autogeneratePassword, setAutogeneratePassword] = useState(false);
+
+  const { useCreateUser } = queries;
+  const { isLoading, mutateFn } = useCreateUser();
+
+  const { register, handleSubmit, control, setValue } = useForm<FormProps>();
 
   const onSubmit = (data: FormProps) => {
-    console.log('Data', data);
+    const dataToSubmit = {
+      ...data,
+      facilityId: id,
+      roles: [data.roles],
+    };
+    mutateFn(dataToSubmit, () => {
+      onClose();
+    });
   };
+
+  // auto generate password
+  useEffect(() => {
+    if (autogeneratePassword) {
+      setValue(
+        'password',
+        generator.generate({
+          length: 15,
+          numbers: true,
+          symbols: true,
+        })
+      );
+    } else {
+      setValue('password', '');
+    }
+  }, [autogeneratePassword]);
 
   return (
     <div className="bg-white p-10 lg:p-14 centered-modal-large">
@@ -40,7 +73,7 @@ const CreateUserModal = ({
             containerClass=""
             placeholder="website@mongoro.com"
             {...register('firstName', {
-              required: 'Email is required ',
+              required: 'First Name is required ',
             })}
           />
           <Input
@@ -53,9 +86,27 @@ const CreateUserModal = ({
           />
 
           <label className="flex col-span-2 gap-2">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={autogeneratePassword}
+              onChange={() => setAutogeneratePassword((prev) => !prev)}
+            />
             <p>Autogenerate Password</p>
           </label>
+
+          {!autogeneratePassword && (
+            <div className="col-span-2">
+              <Input
+                label="Password*"
+                containerClass=""
+                type="password"
+                placeholder=""
+                {...register('password', {
+                  required: 'Password is required ',
+                })}
+              />
+            </div>
+          )}
 
           <Input
             label="Email Address*"
@@ -69,53 +120,65 @@ const CreateUserModal = ({
             label="Mobile Number*"
             containerClass=""
             placeholder="+234 08143626356"
-            {...register('email', {
-              required: 'Email is required ',
+            {...register('phone', {
+              required: 'Mobile Number is required ',
             })}
           />
 
           <Controller
             name="gender"
             control={control}
-            defaultValue={''}
+            // defaultValue={''}
             render={({ field }) => (
               <Select
                 options={[
                   {
-                    value: 'hey',
-                    label: 'hey',
-                    categoryName: 'categoryName',
-                    categoryId: 'categoryId',
+                    categoryName: 'Male',
+                    categoryId: 'Male',
+                  },
+                  {
+                    categoryName: 'Female',
+                    categoryId: 'Female',
                   },
                 ]}
                 label="Gender"
                 placeHolder="Select Gender"
-                {...field}
+                {...{ field }}
               />
             )}
           />
           <Controller
-            name="userType"
+            name="roles"
             control={control}
-            defaultValue={''}
+            // defaultValue={''}
             render={({ field }) => (
               <Select
                 options={[
                   {
-                    value: 'hey',
-                    label: 'hey',
-                    categoryName: 'categoryName',
-                    categoryId: 'categoryId',
+                    value: 'Receptionist',
+                    label: 'Receptionist',
+                    categoryName: 'Receptionist',
+                    categoryId: 'Receptionist',
+                  },
+                  {
+                    value: 'FacilityAdmin',
+                    label: 'Admin',
+                    categoryName: 'Admin',
+                    categoryId: 'FacilityAdmin',
                   },
                 ]}
-                label="User Type"
-                placeHolder="Select User Type"
-                {...field}
+                label="Role Type"
+                placeHolder="Select Role Type"
+                {...{ field }}
               />
             )}
           />
           <div className="">
-            <Button label="Create User" className="bg-primary-150 md:w-[65%]" />
+            <Button
+              label="Create User"
+              className="bg-primary-150 md:w-[65%]"
+              loading={isLoading}
+            />
           </div>
         </div>
       </form>

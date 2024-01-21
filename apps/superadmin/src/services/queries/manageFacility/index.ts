@@ -7,10 +7,11 @@ import {
 } from '@tanstack/react-query';
 
 import apiMethods from '../../api';
-import { Facility } from './types';
-import { ApiResponse } from 'Models/api.models';
+import { Facility, FacilityUser } from './types';
+import { ApiResponse, PaginationData } from 'Models/api.models';
 import keys from './keys';
 import { environment } from '@cloud-equipment/environments';
+import { showToast } from '../../../utils/toast';
 
 const { baseUrl } = environment;
 // /api/facility-manager/getallfacilities
@@ -51,7 +52,6 @@ const useCreateFacility = (options = {}) => {
     ...options,
     mutationKey: [keys.create],
     mutationFn: async (data: any) => {
-      console.log('data in mutation', data);
       return apiMethods.post({
         url: '/api/facility-manager/createfacility',
         body: data,
@@ -65,10 +65,75 @@ const useCreateFacility = (options = {}) => {
   const { mutate, isSuccess, isError, data, isPending } = mutation;
 
   return {
-    mutateFn: (bodyArg: any) => {
+    mutateFn: (bodyArg: any, successCb: () => void) => {
       return mutate(bodyArg, {
-        onSuccess: () => {
-          console.log('success from mutate');
+        onSuccess: (res) => {
+          showToast('Facility Created Successfully', 'success');
+          setTimeout(() => {
+            successCb();
+          }, 1500);
+        },
+      });
+    },
+    data,
+    isSuccess,
+    isError,
+    isLoading: isPending,
+  };
+};
+
+const useGetFacilityUser = (
+  url: string,
+  body: any,
+  options: Omit<
+    UseQueryOptions<any, unknown, any, string[]>,
+    'initialData' | 'queryFn' | 'queryKey'
+  > = {},
+  pageNumber: string = '1'
+) => {
+  const hash = [keys.read, 'users', `${pageNumber}`];
+  const {
+    isLoading,
+    data,
+    isSuccess,
+    error,
+  }: UseQueryResult<PaginationData<FacilityUser>, unknown> = useQuery({
+    queryKey: hash,
+    queryFn: () =>
+      apiMethods
+        .post({ url, body, auth: true })
+        .then((res: ApiResponse<PaginationData<FacilityUser>>) => res.data),
+  });
+  return { isLoading, data, isSuccess, error };
+};
+
+const useCreateUser = (options = {}) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...options,
+    mutationKey: [keys.create],
+    mutationFn: async (data: any) => {
+      return apiMethods.post({
+        url: '/user-manager/account/user/register',
+        body: data,
+        auth: true,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [keys.read, 'users'] });
+    },
+  });
+  const { mutate, isSuccess, isError, data, isPending } = mutation;
+
+  return {
+    mutateFn: (bodyArg: any, successCb: () => void) => {
+      return mutate(bodyArg, {
+        onSuccess: (res) => {
+          showToast('User Created Successfully', 'success');
+          setTimeout(() => {
+            successCb?.();
+          }, 1500);
         },
       });
     },
@@ -82,7 +147,8 @@ const useCreateFacility = (options = {}) => {
 const queries = {
   useGetFacilities,
   useCreateFacility,
-  // useGetOrder,
+  useCreateUser,
+  useGetFacilityUser,
 };
 
 export default queries;

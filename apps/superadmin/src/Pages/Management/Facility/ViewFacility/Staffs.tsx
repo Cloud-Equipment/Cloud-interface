@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 import {
   Modal,
@@ -8,38 +8,13 @@ import {
   ListItemText,
 } from '@mui/material';
 import { createColumnHelper } from '@tanstack/react-table';
+import { useParams } from 'react-router-dom';
 
 import { Table } from '../../../../components';
 import { InviteUserModal, CreateUserModal } from '../../../../Modals';
 import { Button } from '@cloud-equipment/ui-components';
 import * as Assets from '@cloud-equipment/assets';
-
-const data = [
-  {
-    dateTimeAdded: '01-12-2023 . 10:23.27',
-    name: 'Emmanuel Abdullahi S.',
-    email: 'emmanuel@ce.io',
-    '2FaStatus': 'Enabled',
-    role: 'Receptionist',
-    lastLogin: 'Sep 26, 2023, 12:41PM',
-  },
-  {
-    dateTimeAdded: '01-12-2023 . 10:23.27',
-    name: 'Emmanuel Abdullahi S.',
-    email: 'emmanuel@ce.io',
-    '2FaStatus': 'Enabled',
-    role: 'Receptionist',
-    lastLogin: 'Sep 26, 2023, 12:41PM',
-  },
-  {
-    dateTimeAdded: '01-12-2023 . 10:23.27',
-    name: 'Emmanuel Abdullahi S.',
-    email: 'emmanuel@ce.io',
-    '2FaStatus': 'Enabled',
-    role: 'Receptionist',
-    lastLogin: 'Sep 26, 2023, 12:41PM',
-  },
-];
+import queries from '.././../../../services/queries/manageFacility';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -92,10 +67,37 @@ const columns = [
 ];
 
 const ViewFacility = () => {
+  const { id } = useParams();
+  const { useGetFacilityUser } = queries;
+  const { isLoading, data } = useGetFacilityUser(
+    '/user-manager/account/user/getallusersfacility?currentPage=1&startIndex=1&pageSize=10',
+    { facilityId: id },
+    {},
+    '1'
+  );
+
   const [modalsState, setModalsState] = useState({
     inviteModal: false,
     createModal: false,
   });
+
+  const memoizedDate = useMemo(() => {
+    if (data && data?.resultItem?.length > 0) {
+      return data?.resultItem.map(
+        ({ firstName, lastName, role, lastLogin, dateCreated, id }) => ({
+          name: `${firstName} ${lastName}`,
+          email: '',
+          '2FaStatus': 'Enabled',
+          role: role || 'Receptionist',
+          lastLogin,
+          dateTimeAdded: dateCreated,
+          id,
+        })
+      );
+    }
+    return [];
+  }, [data]);
+
   return (
     <>
       <div className="bg-white px-3.5 py-5 rounded-[20px]">
@@ -153,10 +155,10 @@ const ViewFacility = () => {
 
           {/* Table */}
           <Table
-            loading={false}
-            data={data}
+            loading={isLoading}
+            data={memoizedDate}
             columns={columns}
-            tableHeading="Team members - 5"
+            tableHeading={`Team members - ${memoizedDate?.length}`}
           />
         </div>
       </div>

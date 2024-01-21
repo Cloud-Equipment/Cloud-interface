@@ -1,12 +1,14 @@
 import React, { ReactElement } from 'react';
 
 // import cx from 'classnames';
+import { Loader } from '../index';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string | ReactElement;
   variant?: 'primary' | 'neutral' | 'tertiary';
   icon?: string;
   iconAfter?: string;
+  loading?: boolean;
 }
 
 const variants = {
@@ -24,15 +26,20 @@ const Button: React.FC<ButtonProps> = ({
   icon,
   iconAfter,
   type = 'button',
+  loading,
   ...props
 }) => {
   return (
     <button
+      disabled={loading}
       className={`px-6 py-3 font-manrope !rounded-md font-semibold text-sm justify-center items-center shadow-buttonShadow ${
-        variants[variant]
-      } ${className} ${icon || iconAfter ? 'flex gap-2' : ''}`}
+        loading ? 'cursor-progress opacity-85' : ''
+      } ${variants[variant]} ${className} ${
+        icon || iconAfter || loading ? 'flex gap-2' : ''
+      }`}
       {...props}
     >
+      {loading ? <Loader /> : null}
       {icon ? <img alt="" src={icon} /> : null}
       {label}
       {iconAfter ? <img alt="" src={iconAfter} /> : null}

@@ -14,3 +14,12 @@ export interface Facility {
   rebatePercent: number;
   logoPath: string;
 }
+
+export interface FacilityUser {
+  id: string;
+  firstName: string;
+  lastName: string;
+  role: string; //Change to appropriate roles
+  lastLogin: string;
+  dateCreated: string;
+}
