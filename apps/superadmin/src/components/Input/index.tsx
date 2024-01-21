@@ -18,13 +18,13 @@ const FormInput = forwardRef<HTMLInputElement, InputProps<any>>(
         className={cx(
           { 'flex flex-col gap-1': !!label },
           { [`${containerClass}`]: !!containerClass },
-          'mt-3'
+          // 'mt-3'
         )}
       >
         {label ? (
           <label
             htmlFor={id}
-            className="block font-manrope text-[1rem] capitalize font-normal leading-[1.25rem] text-secondary-500"
+            className="block font-manrope text-sm capitalize font-medium leading-[1.25rem] text-secondary-500"
           >
             {label}
           </label>

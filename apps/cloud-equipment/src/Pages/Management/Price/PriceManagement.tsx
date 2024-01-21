@@ -7,7 +7,7 @@ import {
   TablePagination,
 } from '@mui/material';
 import { IMedservice } from '@cloud-equipment/models';
-import { _getPrices } from './services/procedures.service';
+import { _getPrices } from '../../../services/procedures.service';
 import React, { useEffect, useState } from 'react';
 import * as Assets from '@cloud-equipment/assets';
 import moment from 'moment';

@@ -70,42 +70,7 @@ const columns = [
 const Equipment = () => {
   const navigate = useNavigate();
 
-  const data = {
-    data: [
-      {
-        id: '1419b8cb-ed30-4958-9650-c1121b3cb482',
-        numberOfUsers: null,
-        facilityTypeId: 0,
-        facilityName: 'Clarnin',
-        addressLine1: 'Alagomei, Lagos',
-        addressLine2: 'string',
-        postalCode: 0,
-        city: 'Lagos',
-        stateId: 0,
-        countryId: 0,
-        isActive: true,
-        dateCreated: '2024-01-12T07:38:48.806',
-        rebatePercent: 0.1,
-        logoPath: 'string',
-      },
-      {
-        id: '16b6b80e-5145-4609-9334-fdc7aebc7de6',
-        numberOfUsers: null,
-        facilityTypeId: 1,
-        facilityName: 'Jole Facility',
-        addressLine1: 'string',
-        addressLine2: 'string',
-        postalCode: 0,
-        city: 'Lorem',
-        stateId: 0,
-        countryId: 0,
-        isActive: true,
-        dateCreated: '2024-01-13T21:08:13.69',
-        rebatePercent: 0.025,
-        logoPath: 'string',
-      },
-    ],
-  };
+  const data = null;
 
   return (
     <>

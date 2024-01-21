@@ -1,6 +1,6 @@
 import React from 'react';
-import * as Assets from '../assets';
-import { IMedservice } from '../../Models';
+import * as Assets from '@cloud-equipment/assets';
+import { IMedservice } from '@cloud-equipment/models';
 import moment from 'moment';
 import numeral from 'numeral';
 import { FormControlLabel, Checkbox } from '@mui/material';

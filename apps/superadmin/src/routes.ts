@@ -14,5 +14,7 @@ export const Routes: IRoutes = {
     viewFacilityTickets: '/facility/view/:id/tickets',
     viewFacilityReviews: '/facility/view/:id/reviews',
     equipment: '/equipment',
+    patient: '/patients/*',
+    discount: '/discounts',
   },
 };

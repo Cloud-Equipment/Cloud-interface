@@ -73,7 +73,7 @@ const Sidebar = () => {
           <NavLink
             onClick={handleCloseSidebar}
             className="hover:bg-[#FFFFFF0F] rounded-xl py-2 px-5"
-            to="/management/users"
+            to="/management/patients"
           >
             Patients
           </NavLink>
@@ -97,7 +97,7 @@ const Sidebar = () => {
           <NavLink
             onClick={handleCloseSidebar}
             className="hover:bg-[#FFFFFF0F] rounded-xl py-2 px-5"
-            to="/management/discount"
+            to="/management/discounts"
           >
             Discounts
           </NavLink>
@@ -110,13 +110,13 @@ const Sidebar = () => {
             Medservices
           </NavLink>
 
-          <NavLink
+          {/* <NavLink
             onClick={handleCloseSidebar}
             className="hover:bg-[#FFFFFF0F] rounded-xl py-2 px-5"
             to="/management/reports"
           >
             Report Entries
-          </NavLink>
+          </NavLink> */}
 
           <NavLink
             onClick={handleCloseSidebar}

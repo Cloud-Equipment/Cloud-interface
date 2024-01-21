@@ -32,7 +32,7 @@ export const InviteUserModal = ({ onClose }: any) => {
       })
       .catch(() => {});
   };
-  
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
