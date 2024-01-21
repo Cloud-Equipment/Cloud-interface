@@ -69,11 +69,8 @@ const PriceManagement = () => {
 
   const handleEditClick = () => {
     handleMenuClose();
-    if (false) {
-      setPriceMOdalOpen(true);
-    } else {
-      setApproveMOdalOpen(true);
-    }
+    setApproveMOdalOpen(true);
+    setPriceMOdalOpen(true);
   };
 
   const handleDeleteClick = () => {

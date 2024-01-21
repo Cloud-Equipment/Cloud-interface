@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { environment } from '@cloud-equipment/environments';
-import api from '@cloud-equipment/api';
+import { axiosInstance } from '@cloud-equipment/api';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Autocomplete, MenuItem, TextField } from '@mui/material';
 import { Checkbox, ListItemText } from '@mui/material';
@@ -20,6 +20,7 @@ import { useDispatch } from 'react-redux';
 import { AxiosResponse } from 'axios';
 import * as Assets from '@cloud-equipment/assets';
 import { useNavigate } from 'react-router-dom';
+import patientQueries from '../queries/patients';
 
 const CreateReportForm = () => {
   const userDetails = useSelector(
@@ -31,12 +32,14 @@ const CreateReportForm = () => {
   const navigate = useNavigate();
 
   const patientId = watch('patientId');
+  const [patientName, setPatientName] = useState('');
 
-  const [isNewPatient, setIsNewPatient] = useState(true); // whether the patient was fetched
+  const { useGetPatientById, useSearchPatientByName } = patientQueries;
+  const { mutateFn: mutateFn_fetchPatientById } = useGetPatientById(patientId);
+  const { data: patientsFound, mutateFn: mutateFn_fetchPatientByName } =
+    useSearchPatientByName(patientName);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedPatient, setSelectedPatient] = useState<IPatient | null>(null);
-  const [patientsFound, setPatientsFound] = useState<Array<IPatient>>([]);
 
   const [facilityDiscounts, setFacilityDiscounts] = useState<IDiscount[]>([]);
   const [procedureDiscounts, setProcedureDiscounts] = useState<IDiscount[]>([]);
@@ -45,54 +48,40 @@ const CreateReportForm = () => {
   const [totalDiscount, setTotalDiscount] = useState(0);
   const [total, setTotal] = useState(0);
 
-  const searchPatientsByName = async (searchTerm: string) => {
-    if (!searchTerm) return;
-    const url = `${environment.baseUrl}/patient/getpatientbyname`;
-    try {
-      const response = await api.get(url, {
-        params: { patientName: searchTerm },
-      });
-
-      if (response.data.success) {
-        setPatientsFound(response.data.data);
-      }
-    } catch (error) {
-      setPatientsFound([]);
-    }
+  const handlePatientFound = (patient: IPatient) => {
+    setSelectedPatient(patient);
+    setValue('patientPhone', patient.patientPhone);
+    setValue('patientAge', patient.patientAge);
+    // setValue('patientAddress', patient.patientAddress);
+    setValue('patientGenderId', patient.patientGenderId);
+    setValue('patientEmail', patient.patientEmail);
   };
 
-  const FetchPatient = async () => {
-    // 1404174
-    const url = `${environment.baseUrl}/patient/getpatientbyuniqueid/${patientId}`;
-
-    return api
-      .get(url)
-      .then((res) => {
-        if (res.data.success && res.data.data) {
-          setIsNewPatient(false);
-          setSelectedPatient(res.data.data);
-          setValue('patientPhone', res.data.data?.patientPhone);
-          setValue('patientAge', res.data.data?.patientAge);
-          setValue('patientAddress', res.data.data?.patientAddress);
-          setValue('patientGenderId', res.data.data?.patientGenderId);
-          setValue('patientEmail', res.data.data?.patientEmail);
-        } else {
-          setIsNewPatient(true);
-        }
-      })
-      .catch((err) => {
-        setIsNewPatient(true);
-      });
+  const clearPatientFound = () => {
+    setValue('patientPhone', '');
+    setValue('patientAge', '');
+    setValue('patientAddress', '');
+    setValue('patientGenderId', '');
+    setValue('patientEmail', '');
   };
 
   useEffect(() => {
-    if (patientId) {
-      FetchPatient();
+    if (patientId && !patientName) {
+      mutateFn_fetchPatientById({}, (res) => {
+        if (res.data) {
+          handlePatientFound(res.data);
+        } else {
+          clearPatientFound();
+        }
+      });
+    } else {
+      if (patientName) {
+        mutateFn_fetchPatientByName({}, (res) => {});
+      }
     }
-  }, [patientId]);
+  }, [patientId, patientName]);
 
-  const handleSelect = (selectedPatient: IPatient) => {
-    setIsNewPatient(false);
+  const handleSelectedPatientFromSearch = (selectedPatient: IPatient) => {
     setValue('patientId', selectedPatient?.patientUniqueID);
     setValue('patientName', selectedPatient?.patientName);
     setValue('patientPhone', selectedPatient?.patientPhone);
@@ -106,7 +95,7 @@ const CreateReportForm = () => {
   const fetchAllDiscounts = () => {
     const url = `${environment.baseUrl}/payment/discounts/getactivediscount/facilityId`;
 
-    api
+    axiosInstance
       .get(url, { params: { facilityId: userDetails?.FACILITY_ID } })
       .then((res: AxiosResponse<ApiResponse<IDiscount[]>>) => {
         if (res.data.success) {
@@ -178,7 +167,7 @@ const CreateReportForm = () => {
 
   const FetchProedure = () => {
     const url = `${environment.baseUrl}/service-manager/medServices/getall`;
-    api
+    axiosInstance
       .get(url)
       .then((res: AxiosResponse) => {
         setProceduresList(res.data.data);
@@ -188,7 +177,7 @@ const CreateReportForm = () => {
 
   const FetchCategory = () => {
     const url = `${environment.baseUrl}/service-manager/medServiceCategory/getactivemedservicecategory`;
-    api
+    axiosInstance
       .get(url)
       .then((res: AxiosResponse) => {
         setCategoriesList(res.data.data);
@@ -233,14 +222,11 @@ const CreateReportForm = () => {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (data_: any) => {
     const createProcedure = (patientId: number) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const proceduresToSubmit: any[] = [];
       selectedProcedures.forEach((x) => {
         const rebateInfo = proceduresWithRebate.find((y) => y === x);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const item_: any = {
           patientId: patientId,
           medServiceId: x,
@@ -267,7 +253,7 @@ const CreateReportForm = () => {
       });
       dispatch(setLoading());
 
-      api
+      axiosInstance
         .post(
           `${environment.baseUrl}/service-manager/procedures/create`,
           proceduresToSubmit
@@ -279,7 +265,8 @@ const CreateReportForm = () => {
         .finally(() => dispatch(clearLoading()));
     };
 
-    if (isNewPatient) {
+    // eslint-disable-next-line no-constant-condition
+    if (false) {
       const data = {
         patientFacilityCode: userDetails?.FACILITY_ID,
         patientName: data_.patientName,
@@ -293,12 +280,11 @@ const CreateReportForm = () => {
         dateOfBirth: '2024-01-03T08:37:00.151Z',
       };
       dispatch(setLoading());
-      api
+      axiosInstance
         .post(`${environment.baseUrl}/patient/createpatient`, data)
         .then((response) => {
           if (response) {
             createProcedure(response.data.data.patientUniqueID);
-            setIsNewPatient(false);
           }
         })
         .catch((err) => {})
@@ -394,9 +380,14 @@ const CreateReportForm = () => {
             <label>Patient Name</label>
             <Autocomplete
               freeSolo
-              options={patientsFound}
+              options={patientsFound ?? []}
               onInputChange={(event, newInputValue) => {
-                searchPatientsByName(newInputValue);
+                setPatientName(newInputValue);
+              }}
+              onChange={(event, selectedOption) => {
+                handleSelectedPatientFromSearch(
+                  selectedOption as unknown as any
+                );
               }}
               renderInput={(params: any) => (
                 <TextField
@@ -409,7 +400,7 @@ const CreateReportForm = () => {
               getOptionLabel={(option) => {
                 return (option as IPatient).patientName;
               }}
-              renderOption={(props, option) => (
+              renderOption={(props, option: any) => (
                 <MenuItem {...props}>
                   <div className="rounded flex items-center space-x-5 px-3 py-2">
                     <img

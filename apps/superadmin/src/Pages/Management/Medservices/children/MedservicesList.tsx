@@ -120,7 +120,7 @@ const MedservicesList = () => {
         <div className="mt-10 ce-table-holder">
           <Table
             // loading={isLoading}
-            data={null}
+            data={data || []}
             columns={columns(() => {})}
             tableHeading="Facilities - 5"
             tableHeadingColorClassName="!bg-secondary-150"

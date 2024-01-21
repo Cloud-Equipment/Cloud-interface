@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 
-import { useRoutes } from 'react-router-dom';
+import { Navigate, useRoutes } from 'react-router-dom';
 
 import { Routes } from '../../routes';
 
@@ -14,6 +14,10 @@ const Medservices = lazy(() => import('./Medservices/Medservices'));
 
 export const ManagementRouting = () => {
   return useRoutes([
+    {
+      path: '',
+      element: <Navigate to="patients" />,
+    },
     {
       path: 'medservices/*',
       element: <Medservices />,

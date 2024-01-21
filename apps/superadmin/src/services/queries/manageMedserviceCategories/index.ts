@@ -23,7 +23,7 @@ const useGetAllMedserviceCategories = (
   options: Omit<
     UseQueryOptions<any, unknown, any, string[]>,
     'initialData' | 'queryFn' | 'queryKey'
-  > = {},
+  > = {}
 ) => {
   const hash = [keys.getAll];
   const {
@@ -74,16 +74,84 @@ const useCreateMedserviceCategory = (options = {}) => {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [keys.read] });
+      queryClient.invalidateQueries({ queryKey: [keys.getAll] });
     },
   });
   const { mutate, isSuccess, isError, data, isPending } = mutation;
 
   return {
-    mutateFn: (bodyArg: any) => {
+    mutateFn: (bodyArg: any, cb: () => void) => {
       return mutate(bodyArg, {
         onSuccess: () => {
-          //   console.log('success from mutate');
+          cb?.();
+        },
+      });
+    },
+    data,
+    isSuccess,
+    isError,
+    isLoading: isPending,
+  };
+};
+
+const useUpdateMedserviceCategory = (id: string, options = {}) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...options,
+    mutationKey: [keys.update],
+    mutationFn: async (data: any) => {
+      return apiMethods.put({
+        url: `/service-manager/medServiceCategory/editservicecategory/${id}`,
+        body: data,
+        // auth: true,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [keys.getAll] });
+    },
+  });
+  const { mutate, isSuccess, isError, data, isPending } = mutation;
+
+  return {
+    mutateFn: (bodyArg: any, cb: () => void) => {
+      return mutate(bodyArg, {
+        onSuccess: () => {
+          cb?.();
+        },
+      });
+    },
+    data,
+    isSuccess,
+    isError,
+    isLoading: isPending,
+  };
+};
+
+const useDeleteMedserviceCategory = (id: string, options = {}) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...options,
+    mutationKey: [keys.update],
+    mutationFn: async () => {
+      return apiMethods.delete({
+        url: `/service-manager/medServiceCategory/deletemedcategory/${id}`,
+        body: {},
+        auth: true,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [keys.getAll] });
+    },
+  });
+  const { mutate, isSuccess, isError, data, isPending } = mutation;
+
+  return {
+    mutateFn: (bodyArg: any, cb: () => void) => {
+      return mutate(bodyArg, {
+        onSuccess: () => {
+          cb?.();
         },
       });
     },
@@ -98,6 +166,8 @@ const queries = {
   useGetAllMedserviceCategories,
   useCreateMedserviceCategory,
   useGetMedserviceCategoryById,
+  useUpdateMedserviceCategory,
+  useDeleteMedserviceCategory,
 };
 
 export default queries;

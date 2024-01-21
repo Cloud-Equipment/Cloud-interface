@@ -1,5 +1,5 @@
 import { IMedserviceCategory } from 'Models/procedures.models';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as Assets from '@cloud-equipment/assets';
 import { Input, TextArea } from '../../../../components';
@@ -19,12 +19,28 @@ const CategoryModal = ({
   const { mutateFn, isError, isSuccess, isLoading } =
     useCreateMedserviceCategory();
 
+  const { useUpdateMedserviceCategory } = queries;
+  const {
+    mutateFn: mutateFn_update,
+    isError: isError_update,
+    isSuccess: isSuccess_update,
+    isLoading: isLoading_update,
+  } = useUpdateMedserviceCategory(categoryToEdit?.categoryId.toString() ?? '');
+
+  useEffect(() => {
+    if (categoryToEdit) {
+      setValue('categoryName', categoryToEdit?.categoryName);
+    }
+  }, []);
+
   const onSubmit = () => {
     setView(2);
   };
 
   const submitData = () => {
-    mutateFn(getValues());
+    categoryToEdit
+      ? mutateFn_update(getValues(), () => onClose())
+      : mutateFn(getValues(), () => onClose());
   };
 
   const [view, setView] = useState<1 | 2>(1);

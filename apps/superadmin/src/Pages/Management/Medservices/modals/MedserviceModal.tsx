@@ -45,7 +45,7 @@ const MedserviceModal = ({
   };
 
   const submitData = () => {
-    mutateFn(getValues());
+    mutateFn(getValues(), () => onClose());
   };
 
   useEffect(() => {

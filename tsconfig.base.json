@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@cloud-equipment/api": ["libs/api/api.ts"],
+      "@cloud-equipment/api": ["libs/api/index.ts"],
       "@cloud-equipment/assets": ["libs/assets/index.ts"],
       "@cloud-equipment/auth": ["libs/auth/src/index.ts"],
       "@cloud-equipment/shared_store": ["libs/Shared_Store/index.ts"],

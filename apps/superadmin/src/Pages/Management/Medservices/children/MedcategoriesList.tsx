@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-
-import { useNavigate } from 'react-router-dom';
 import {
   ListItemIcon,
   ListItemText,
@@ -13,12 +11,11 @@ import {
 import { createColumnHelper } from '@tanstack/react-table';
 
 import * as Assets from '@cloud-equipment/assets';
-import { Button } from '@cloud-equipment/ui-components';
-import { Routes } from '../../../../routes';
 import { Table } from '../../../../components';
 import queries from '../../../../services/queries/manageMedserviceCategories';
 import { IMedserviceCategory } from '../../../../services/queries/manageMedserviceCategories/types';
 import CategoryModal from '../modals/CategoryModal';
+import DeleteCategoryModal from '../modals/DeleteCategoryModal';
 // import { ActionsModal } from '../../../Modals';
 
 type ActionModalType = null | 'edit' | 'delete';
@@ -28,7 +25,7 @@ type MedserviceCategoryTableColumns = IMedserviceCategory & {
 
 const columnHelper = createColumnHelper<MedserviceCategoryTableColumns>();
 
-const columns = (handleActionsModalView: (view: ActionModalType) => void) => [
+const columns = (handleActions: (view: ActionModalType) => void) => [
   columnHelper.accessor('categoryId', {
     header: 'Category ID',
     cell: (info) => info.getValue(),
@@ -52,9 +49,7 @@ const columns = (handleActionsModalView: (view: ActionModalType) => void) => [
         // console.log('e', e);
       };
       return (
-        <MenuDropdown
-          {...{ cb, categoryInfo: original, handleActionsModalView }}
-        />
+        <MenuDropdown {...{ cb, categoryInfo: original, handleActions }} />
       );
     },
     header: '',
@@ -62,21 +57,10 @@ const columns = (handleActionsModalView: (view: ActionModalType) => void) => [
 ];
 
 const MedCategoriesList = () => {
-  const navigate = useNavigate();
-
   const { useGetAllMedserviceCategories } = queries;
   const { isLoading, data } = useGetAllMedserviceCategories(
     `/service-manager/medServiceCategory/getallcategory`
   );
-
-  //   modal
-  const [categoryModalOpen, setCategoryModalOpen] = useState(false);
-
-  //   modal
-  const openCategoryModal = () => {
-    setCategoryModalOpen(true);
-  };
-  const closeCategoryModal = () => setCategoryModalOpen(false);
 
   return (
     <>
@@ -101,15 +85,11 @@ const MedCategoriesList = () => {
             loading={isLoading}
             data={data}
             columns={columns(() => {})}
-            tableHeading="Facilities - 5"
+            tableHeading="Medical Categories"
             tableHeadingColorClassName="!bg-secondary-150"
           />
         </div>
       </div>
-
-      <Modal open={categoryModalOpen} onClose={closeCategoryModal}>
-        <div>{<CategoryModal onClose={closeCategoryModal} />}</div>
-      </Modal>
     </>
   );
 };
@@ -120,13 +100,12 @@ export default MedCategoriesList;
 const MenuDropdown = ({
   cb,
   categoryInfo,
-  handleActionsModalView,
+  handleActions,
 }: {
   cb: (e: React.MouseEvent<HTMLButtonElement>) => void;
   categoryInfo: IMedserviceCategory;
-  handleActionsModalView: (view: ActionModalType) => void;
+  handleActions: (view: ActionModalType) => void;
 }) => {
-  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -137,6 +116,20 @@ const MenuDropdown = ({
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
+  //   modal
+  const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+  const [categoryDeleteModalOpen, setCategoryDeleteModalOpen] = useState(false);
+
+  const openCategoryModal = () => {
+    setCategoryModalOpen(true);
+  };
+  const openCategoryDeleteModal = () => {
+    setCategoryDeleteModalOpen(true);
+  };
+
+  const closeCategoryModal = () => setCategoryModalOpen(false);
+  const closeCategoryDeleteModal = () => setCategoryDeleteModalOpen(false);
 
   return (
     <div>
@@ -156,29 +149,47 @@ const MenuDropdown = ({
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={() => handleActionsModalView('edit')}>
+        <MenuItem
+          onClick={() => {
+            openCategoryModal();
+            handleMenuClose();
+          }}
+        >
           <ListItemIcon></ListItemIcon>
           <ListItemText>Edit Category</ListItemText>
         </MenuItem>
-        <MenuItem onClick={() => handleActionsModalView('delete')}>
+        <MenuItem
+          onClick={() => {
+            openCategoryDeleteModal();
+            handleMenuClose();
+          }}
+        >
           <ListItemIcon></ListItemIcon>
           <ListItemText>Delete Category</ListItemText>
         </MenuItem>
       </Menu>
+
+      <Modal open={categoryModalOpen} onClose={closeCategoryModal}>
+        <div>
+          {
+            <CategoryModal
+              categoryToEdit={categoryInfo}
+              onClose={closeCategoryModal}
+            />
+          }
+        </div>
+      </Modal>
+
+      <Modal open={categoryDeleteModalOpen} onClose={closeCategoryDeleteModal}>
+        <div>
+          {
+            <DeleteCategoryModal
+              categoryToDelete={categoryInfo}
+              onClose={closeCategoryDeleteModal}
+            />
+          }
+        </div>
+      </Modal>
     </div>
   );
 };
-
-// const ManageFacilityActionsModal = ({
-//   open,
-//   onClose,
-//   currentView,
-// }: ModalProps & { currentView: ActionModalType }) => {
-//   return (
-//     <Modal {...{ open, onClose }}>
-//       <div className="">
-//         <ActionsModal {...{ onClose, currentView }} />
-//       </div>
-//     </Modal>
-//   );
-// };

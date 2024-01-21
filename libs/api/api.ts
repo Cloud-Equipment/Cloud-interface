@@ -10,12 +10,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import { environment } from '../../environments/environments';
 import { ApiResponse } from '../../Models/api.models';
 
-const api = axios.create({
+const axiosInstance = axios.create({
   baseURL: environment.baseUrl,
 });
 
 // Request interceptor
-api.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     // Add auth headers to the request config
     const token = localStorage.getItem('token');
@@ -32,7 +32,7 @@ api.interceptors.request.use(
 );
 
 // Response interceptor
-api.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (response: AxiosResponse<ApiResponse>) => {
     // Modify response data here
     if (response.data.success) {
@@ -49,4 +49,4 @@ api.interceptors.response.use(
   }
 );
 
-export default api;
+export default axiosInstance;

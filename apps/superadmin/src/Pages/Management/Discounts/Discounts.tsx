@@ -138,7 +138,7 @@ const Discounts = () => {
           <div className="mt-10 ce-table-holder">
             <Table
               loading={isLoading}
-              data={data}
+              data={data || []}
               columns={columns(() => {})}
               tableHeading="Facilities - 5"
               tableHeadingColorClassName="!bg-secondary-150"
