@@ -7,9 +7,11 @@ import {
   FileUpload,
   Select,
 } from '../../../components';
+import { useNavigate } from 'react-router-dom';
 
 const ViewPatient = () => {
   const [patientDetails, setPatientDetails] = useState<any>({});
+  const navigate = useNavigate();
 
   return (
     <section className="ce-px ce-py">
@@ -17,7 +19,7 @@ const ViewPatient = () => {
         <div className="flex justify-between">
           <h3 className="text-2xl">Profile</h3>
 
-          <button>
+          <button onClick={() => navigate(-1)}>
             <img src={Assets.Icons.BoxCloseIcon} alt="" />
           </button>
         </div>
@@ -40,7 +42,7 @@ const ViewPatient = () => {
           </div>
         </div>
 
-        <h5 className='text-lg font-medium mt-10'>Patient Information</h5>
+        <h5 className="text-lg font-medium mt-10">Patient Information</h5>
 
         <div className="mt-10 [box-shadow:0px_4px_12px_0px_#0D5F5026] rounded-lg p-4 md:px-10 grid md:grid-cols-3 2xl:grid-cols-5 gap-4 2xl:gap-10">
           <div>

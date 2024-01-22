@@ -11,13 +11,6 @@ import { IMedservice } from './types';
 import { ApiResponse } from 'Models/api.models';
 import keys from './keys';
 
-/**
- * @description get all medservice
- * @param url
- * @param options
- * @param pageNumber
- * @returns
- */
 const useGetMedservice = (
   url: string,
   options: Omit<
@@ -85,7 +78,42 @@ const useCreateMedservice = (options = {}) => {
     mutateFn: (bodyArg: any, cb: () => void) => {
       return mutate(bodyArg, {
         onSuccess: () => {
-            // console.log('sdnfsdfsdfsdfsdfsd')
+          // console.log('sdnfsdfsdfsdfsdfsd')
+          cb?.();
+        },
+      });
+    },
+    data,
+    isSuccess,
+    isError,
+    isLoading: isPending,
+  };
+};
+
+const useApproveMedservice = (url: string, options = {}) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...options,
+    mutationKey: [keys.update],
+    mutationFn: async (data: any) => {
+      return apiMethods.post({
+        url,
+        body: data,
+        auth: true,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [keys.read] });
+    },
+  });
+  const { mutate, isSuccess, isError, data, isPending } = mutation;
+
+  return {
+    mutateFn: (bodyArg: any, cb: () => void) => {
+      return mutate(bodyArg, {
+        onSuccess: () => {
+          // console.log('sdnfsdfsdfsdfsdfsd')
           cb?.();
         },
       });
@@ -101,6 +129,7 @@ const queries = {
   useGetMedservice,
   useCreateMedservice,
   useGetMedserviceById,
+  useApproveMedservice,
 };
 
 export default queries;

@@ -5,13 +5,14 @@ import { IPatient } from '../../../services/queries/managePatients/types';
 import queries from '../../../services/queries/managePatients/';
 import { createColumnHelper } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
+import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
 
 type PatientTableColumns = IPatient & { lastLogin: string; elipsis: 'elipsis' };
 type ActionModalType = null | 'edit' | 'delete';
 
 const columnHelper = createColumnHelper<PatientTableColumns>();
 
-const columns = (handleActionsModalView: (view: ActionModalType) => void) => [
+const columns = (handleActionsView: () => void) => [
   columnHelper.accessor('patientUniqueID', {
     header: 'User ID',
     cell: (info) => info.getValue(),
@@ -36,21 +37,24 @@ const columns = (handleActionsModalView: (view: ActionModalType) => void) => [
     header: 'Last Login',
     cell: (info) => info.getValue(),
   }),
-  //   columnHelper.accessor('elipsis', {
-  //     cell: ({ row }) => {
-  //       const cb = (e: React.MouseEvent<HTMLButtonElement>) => {
-  //         console.log('e', e);
-  //       };
-  //       return <DropDown {...{ cb }} />;
-  //     },
-  //     header: '',
-  //   }),
+  columnHelper.accessor('elipsis', {
+    cell: ({ row: { original } }) => {
+      // REFACTOR: is this necessary
+      const cb = (e: React.MouseEvent<HTMLButtonElement>) => {
+        // console.log('e', e);
+      };
+      return (
+        <MenuDropdown {...{ cb, patientData: original, handleActionsView }} />
+      );
+    },
+    header: '',
+  }),
 ];
 
 const PatientsList = () => {
   const navigate = useNavigate();
   const { useGetPatients } = queries;
-  const { isLoading, data } = useGetPatients(`/patient/getallpatients`);
+  const { isLoading, data } = useGetPatients(`/patient/getallpateints`);
 
   return (
     <section className="ce-px ce-py">
@@ -81,20 +85,76 @@ const PatientsList = () => {
           </button>
         </div>
 
-        <div className="mt-10 ce-table-holder">
-          <h5 className="table-heading">Patients List</h5>
-
-          <Table
-            loading={isLoading}
-            data={data}
-            columns={columns(() => {})}
-            tableHeading="Facilities - 5"
-            tableHeadingColorClassName="!bg-secondary-150"
-          />
-        </div>
+        <Table
+          loading={isLoading}
+          data={data}
+          columns={columns(() => {})}
+          tableHeading="Patients List"
+          tableHeadingColorClassName="!bg-secondary-150"
+        />
       </div>
     </section>
   );
 };
 
 export default PatientsList;
+
+// TODO: Move this to it's own file
+const MenuDropdown = ({
+  cb,
+  patientData,
+  handleActionsView,
+}: {
+  cb: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  patientData: IPatient;
+  handleActionsView: () => void;
+}) => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
+
+  const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    cb(event);
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const viewPatient = () => {
+    navigate(`/management/patients/view/${patientData.patientUniqueID}`);
+  };
+
+  return (
+    <div>
+      <button
+        onClick={(e) => {
+          handleActionClick(e);
+        }}
+        className="w-6"
+      >
+        <img src={Assets.Icons.Menudots} alt="" />
+      </button>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem
+          onClick={() => {
+            viewPatient();
+            handleMenuClose();
+          }}
+        >
+          <ListItemIcon>
+            <img src={Assets.Icons.EditPrice} alt="" />
+          </ListItemIcon>
+          <ListItemText>View Patient</ListItemText>
+        </MenuItem>
+      </Menu>
+    </div>
+  );
+};

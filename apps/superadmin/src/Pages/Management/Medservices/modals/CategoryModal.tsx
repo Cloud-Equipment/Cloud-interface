@@ -75,6 +75,7 @@ const CategoryModal = ({
               <TextArea
                 {...register('categoryDescription', {})}
                 label="Category Description"
+                rows={5}
               />
 
               <button className="ce-btn bg-greenText">
