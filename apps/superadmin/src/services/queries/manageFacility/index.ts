@@ -41,6 +41,28 @@ const useGetFacilities = (
   }: UseQueryResult<ApiResponse<Facility>, unknown> = useQuery({
     queryKey: hash,
     queryFn: () => apiMethods.get({ url }).then((res: ApiResponse) => res.data),
+    ...options,
+  });
+  return { isLoading, data, isSuccess, error };
+};
+const useGetOneFacility = (
+  url: string,
+  options: Omit<
+    UseQueryOptions<any, unknown, any, string[]>,
+    'initialData' | 'queryFn' | 'queryKey'
+  > = {},
+  facilityId: string | undefined
+) => {
+  const hash = [keys.readOne, `${facilityId}`];
+  const {
+    isLoading,
+    data,
+    isSuccess,
+    error,
+  }: UseQueryResult<Facility, unknown> = useQuery({
+    queryKey: hash,
+    queryFn: () => apiMethods.get({ url }).then((res: ApiResponse) => res.data),
+    enabled: !!facilityId,
   });
   return { isLoading, data, isSuccess, error };
 };
@@ -149,6 +171,7 @@ const queries = {
   useCreateFacility,
   useCreateUser,
   useGetFacilityUser,
+  useGetOneFacility,
 };
 
 export default queries;

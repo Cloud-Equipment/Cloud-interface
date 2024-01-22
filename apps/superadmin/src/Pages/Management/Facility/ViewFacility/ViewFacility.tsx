@@ -5,11 +5,23 @@ import { Switch } from '@mui/material';
 
 import { Button, NavTab } from '@cloud-equipment/ui-components';
 import * as Assets from '@cloud-equipment/assets';
-import { copyToClipboard } from '../../../../utils';
+import { copyToClipboard, formatDate } from '../../../../utils';
 import { ViewFacilityRouting } from './ViewFacilityRouting';
+import queries from '../../../../services/queries/manageFacility';
 
 const ViewFacility = () => {
   const { id } = useParams();
+
+  const { useGetOneFacility } = queries;
+  const { isLoading, data } = useGetOneFacility(
+    `/api/facility-manager/getfacility/${id}`,
+    {},
+    id
+  );
+
+  if (isLoading) {
+    return <h1>Loading</h1>;
+  }
   return (
     <div className="flex min-h-screen w-[95%] mx-auto gap-6 pt-6 bg-primary-200 font-manrope">
       <div className="w-[27%] bg-white rounded-[20px] min-h-[450px] px-3.5 py-5 flex flex-col">
@@ -20,7 +32,7 @@ const ViewFacility = () => {
               Agape Laboratory
             </h5>
             <p className="text-sm font-normal leading-[1.1875rem] text-neutral-150">
-              Added on Oct 23, 2023
+              Added on {formatDate(data?.dateCreated, false)}
             </p>
           </div>
           <div className="font-dmsans text-neutral-200 text-sm font-normal leading-[1.125rem]">
@@ -71,7 +83,7 @@ const ViewFacility = () => {
               onClick={() => copyToClipboard('234(0)812345667')}
             />
           </div>
-          <div className="flex">No 4, Karu L.G.A., Nasarawa State</div>
+          <div className="flex">{data?.addressLine1}e</div>
           <div className="flex">
             <div className="flex gap-4 flex-1">
               <img alt="" src={Assets.Icons.WarningIcon} /> Blacklist Facility{' '}

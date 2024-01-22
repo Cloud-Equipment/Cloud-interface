@@ -19,6 +19,7 @@ import { Table } from '../../../components';
 import queries from '../../../services/queries/manageFacility';
 import { Facility } from '../../../services/queries/manageFacility/types';
 import { ActionsModal } from '../../../Modals';
+import { formatDate } from '../../../utils';
 
 export type ActionModalType = null | 'enableUser' | 'enableEMR' | 'disableUser';
 type FacilityTableColumns = Pick<
@@ -51,7 +52,7 @@ const columns = (handleActionsModalView: (view: ActionModalType) => void) => [
   }),
   columnHelper.accessor('dateCreated', {
     header: 'Last Login',
-    cell: (info) => info.getValue(),
+    cell: (info) => formatDate(info.getValue()),
   }),
   columnHelper.accessor('elipsis', {
     cell: ({

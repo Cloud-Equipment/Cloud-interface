@@ -29,7 +29,7 @@ interface FormProps {
   dateCreated: string | Date;
   rebatePercent: number;
   logoPath: File;
-  [key: string]: any;
+  [key: string]: any; //TODO: Remove this when all fields have been done on the backend
 }
 
 const AddNewFacility = () => {

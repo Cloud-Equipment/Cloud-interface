@@ -13,7 +13,7 @@ import queries from '../../services/queries/manageFacility';
 
 interface FormProps {
   email: string;
-  roles: string[];
+  roles: string[]; //TODO: when we add an enum of all possible roles, this should be derived from it
   [key: string]: string | string[];
 }
 

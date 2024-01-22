@@ -2,18 +2,15 @@ import { Controller, useForm } from 'react-hook-form';
 import { showToast } from '../../utils/toast';
 
 import { Select, Input } from '../../components';
-import {
-  ICreateProcedure,
-  IMedService,
-  IMedserviceCategory,
-} from '@cloud-equipment/models';
+import { IMedService } from '@cloud-equipment/models';
 import { clearLoading, setLoading } from '@cloud-equipment/shared_store';
 import * as Assets from '@cloud-equipment/assets';
 import { Button } from '@cloud-equipment/ui-components';
 
 interface FormProps {
   email: string;
-  role: string;
+  roles: string[];
+  urlToRedirectUserTo: string;
 }
 
 const InviteUserModal = ({
@@ -45,17 +42,22 @@ const InviteUserModal = ({
         />
 
         <Controller
-          name="role"
+          name="roles"
           control={control}
-          defaultValue={''}
           render={({ field }) => (
             <Select
               options={[
                 {
-                  value: 'hey',
-                  label: 'hey',
-                  categoryName: 'categoryName',
-                  categoryId: 'categoryId',
+                  value: 'Receptionist',
+                  label: 'Receptionist',
+                  categoryName: 'Receptionist',
+                  categoryId: 'Receptionist',
+                },
+                {
+                  value: 'FacilityAdmin',
+                  label: 'Admin',
+                  categoryName: 'Admin',
+                  categoryId: 'FacilityAdmin',
                 },
               ]}
               label="Choose Role"
@@ -63,6 +65,15 @@ const InviteUserModal = ({
               {...field}
             />
           )}
+        />
+
+        <Input
+          label="URL Link"
+          containerClass=""
+          placeholder="link@website.com"
+          {...register('urlToRedirectUserTo', {
+            required: 'Url Link is required ',
+          })}
         />
 
         <Button label="Invite Team Member" className="bg-primary-150" />
