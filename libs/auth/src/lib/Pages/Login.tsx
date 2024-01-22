@@ -23,7 +23,7 @@ const Login = () => {
   const onSubmit = (data: any) => {
     dispatch(setLoading());
     (accountType === 0 ? _superadminLogin(data) : _login(data))
-      .then((response) => {
+      .then((response: any) => {
         if (response.data.success) {
           toast.success(response.data.msg);
 

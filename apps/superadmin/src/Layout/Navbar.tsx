@@ -23,6 +23,7 @@ const Navbar = () => {
   };
 
   const logout = () => {
+    // dispatch(logo)
     navigate('/auth/login');
     handleClose();
   };
@@ -64,7 +65,7 @@ const Navbar = () => {
 
           <div className="flex-1">
             <p className="font-bold text-blackText">Emma Taylor</p>
-            <p className="text-greyText text-sm">{userDetails?.userType}</p>
+            <p className="text-greyText text-sm">Superadmin</p>
           </div>
 
           <button onClick={handleClick} className="btn-icon">

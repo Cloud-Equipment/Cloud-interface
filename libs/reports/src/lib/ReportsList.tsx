@@ -1,27 +1,88 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ListItemIcon, ListItemText, TablePagination } from '@mui/material';
-import { environment } from '@cloud-equipment/environments';
-import axios, { AxiosResponse } from 'axios';
-import { IProcedure, ApiResponse } from '@cloud-equipment/models';
+import { IProcedure } from '@cloud-equipment/models';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import * as Assets from '@cloud-equipment/assets';
+import queries from './queries/reports';
+import { createColumnHelper } from '@tanstack/react-table';
+import { Table } from '@cloud-equipment/ui-components';
+
+export type ActionType =
+  | null
+  | 'view'
+  | 'shareResult'
+  | 'confirmTest'
+  | 'uploadResult';
+type ReportTableColumns = IProcedure & { elipsis: 'elipsis' };
+
+const columnHelper = createColumnHelper<ReportTableColumns>();
+
+const columns = (handleActions: (view: ActionType) => void) => [
+  columnHelper.accessor('date', {
+    header: 'Date and Time',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('medServiceName', {
+    header: 'Procedure/Test Ordered',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('patientAge', {
+    header: 'Age of Patient',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('referrerName', {
+    header: "Referrer's Name",
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('refererHospital', {
+    header: "Referrer's Hospital",
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('phoneNo', {
+    header: 'Phone Number',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('elipsis', {
+    cell: ({
+      row: {
+        original: { procedureEntryId },
+      },
+    }) => {
+      // REFACTOR: is this necessary
+      const cb = (e: React.MouseEvent<HTMLButtonElement>) => {
+        // console.log('e', e);
+      };
+      return (
+        <ReportsListDropdown
+          {...{
+            cb,
+            procedureEntryId: procedureEntryId.toString(),
+            handleActions,
+          }}
+        />
+      );
+    },
+    header: '',
+  }),
+];
 
 const ReportsList = () => {
-  const [data, setData] = useState<IProcedure[]>([]);
-
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
 
+  const { useGetReports } = queries;
+  const { isLoading, data } = useGetReports({
+    pageSize,
+    currentPage,
+    startIndex: 1,
+  });
+
   const [selectedProcedure, setSelectedProcedure] = useState<null | IProcedure>(
     null
   );
-
-  useEffect(() => {
-    fetchList();
-  }, [currentPage, pageSize]);
 
   const handleChangePage = (event: any, newPage: number) => {
     setCurrentPage(newPage);
@@ -32,52 +93,8 @@ const ReportsList = () => {
     setPageSize(parseInt(event.target.value, 10));
   };
 
-  const fetchList = () => {
-    const url = `${environment.baseUrl}/service-manager/procedures/getAllPaged`;
-    axios
-      .get(url, {
-        params: {
-          currentPage: currentPage + 1,
-          startIndex: currentPage * pageSize + 1,
-          pageSize,
-        },
-      })
-      .then((res: AxiosResponse<ApiResponse>) => {
-        if (res.data.success === true) {
-          setData(res.data?.data?.resultItem ?? []);
-          setTotal(res.data?.data?.totalCount ?? 0);
-        }
-      });
-  };
-
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement>,
-    selectedProcedure: IProcedure
-  ) => {
-    setAnchorEl(event.currentTarget);
-    setSelectedProcedure(selectedProcedure);
-  };
-
-  const handleViewClick = () => {
-    navigate('/reports/' + selectedProcedure?.procedureEntryId);
-    handleClose();
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const dateFormat = (inputDateString: Date) => {
-    const inputDate = new Date(inputDateString);
-
-    const day = inputDate.getDate().toString().padStart(2, '0');
-    const month = (inputDate.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
-    const year = inputDate.getFullYear();
-
-    const formattedDate = `${day}-${month}-${year}`;
-    return formattedDate;
+  const handleActionsClick = (view: ActionType) => {
+    console.log(view);
   };
 
   const navigate = useNavigate();
@@ -127,79 +144,15 @@ const ReportsList = () => {
         <div className="mt-10 ce-table-holder">
           <h5 className="table-heading">All Report</h5>
 
-          <table>
-            <thead>
-              <tr>
-                <th>Date & Time</th>
-                <th>Procedure/Test Ordered</th>
-                <th>Age of Patient</th>
-                <th>Referrer's Name</th>
-                <th>Referrer's Hospital</th>
-                <th>Phone Number</th>
-                <th>Amount</th>
-                <th></th>
-              </tr>
-            </thead>
+          <Table
+            loading={isLoading}
+            data={data || []}
+            columns={columns(handleActionsClick)}
+            tableHeading="Facilities - 5"
+            tableHeadingColorClassName="!bg-secondary-150"
+          />
 
-            <tbody>
-              {data.map((item, index) => (
-                <tr key={index}>
-                  <td>{dateFormat(item.date)}</td>
-                  <td>{item.medServiceName}</td>
-                  <td>{item.patientAge}</td>
-                  <td>{item.referrerName}</td>
-                  <td>{item.refererHospital}</td>
-                  <td>{item.phoneNo}</td>
-                  <td>NGN {item.amount}</td>
-                  <td>
-                    <div>
-                      <button
-                        onClick={(e) => handleClick(e, item)}
-                        className="w-6"
-                      >
-                        <img src={Assets.Icons.Menudots} alt="" />
-                      </button>
-                      <Menu
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
-                        MenuListProps={{
-                          'aria-labelledby': 'basic-button',
-                        }}
-                      >
-                        <MenuItem onClick={handleViewClick}>
-                          <ListItemIcon>
-                            <img src={Assets.Icons.View} alt="" />
-                          </ListItemIcon>
-                          <ListItemText>View Profile</ListItemText>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                          <ListItemIcon>
-                            <img src={Assets.Icons.Share} alt="" />
-                          </ListItemIcon>
-                          <ListItemText>Share Result</ListItemText>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                          <ListItemIcon>
-                            <img src={Assets.Icons.Confirm} alt="" />
-                          </ListItemIcon>
-                          <ListItemText>Confirm Test</ListItemText>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                          <ListItemIcon>
-                            <img src={Assets.Icons.Upload} alt="" />
-                          </ListItemIcon>
-                          <ListItemText>Upload Result</ListItemText>
-                        </MenuItem>
-                      </Menu>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          <TablePagination
+          {/* <TablePagination
             component="div"
             count={total}
             page={currentPage}
@@ -207,7 +160,7 @@ const ReportsList = () => {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
             rowsPerPage={pageSize}
-          />
+          /> */}
         </div>
       </div>
     </section>
@@ -215,3 +168,67 @@ const ReportsList = () => {
 };
 
 export default ReportsList;
+
+const ReportsListDropdown = ({
+  cb,
+  procedureEntryId,
+  handleActions,
+}: {
+  cb: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  procedureEntryId: string;
+  handleActions: (view: ActionType) => void;
+}) => {
+  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    cb(event);
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMenuAction = () => {
+    navigate(`/reports/view/${procedureEntryId}`);
+  };
+
+  return (
+    <div>
+      <button
+        onClick={(e) => {
+          handleActionClick(e);
+        }}
+        className="w-6"
+      >
+        <img src={Assets.Icons.Menudots} alt="" />
+      </button>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={handleMenuAction}>
+          <ListItemIcon></ListItemIcon>
+          <ListItemText>View </ListItemText>
+        </MenuItem>
+        <MenuItem onClick={() => handleActions('shareResult')}>
+          <ListItemIcon></ListItemIcon>
+          <ListItemText>Share Result</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={() => handleActions('confirmTest')}>
+          <ListItemIcon></ListItemIcon>
+          <ListItemText>Confirm Test</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={() => handleActions('uploadResult')}>
+          <ListItemIcon></ListItemIcon>
+          <ListItemText>Upload Result</ListItemText>
+        </MenuItem>
+      </Menu>
+    </div>
+  );
+};

@@ -29,7 +29,15 @@ const NewReport = () => {
     <>
       <DailyProcedureTracker />
 
-      {view === 0 ? <CreateReportOptions /> : <CreateReportForm />}
+      {view === 0 ? (
+        <CreateReportOptions
+          onViewFormClick={() => {
+            setView(1);
+          }}
+        />
+      ) : (
+        <CreateReportForm />
+      )}
     </>
   );
 };

@@ -1,6 +1,6 @@
 import { Navigate, useRoutes } from 'react-router-dom';
 import { Auth } from '@cloud-equipment/auth';
-import { Main } from './Pages/Main/Main';
+import { Main } from './Pages/Main';
 import { useSelector } from 'react-redux';
 import { IAppState } from './Store/store';
 

@@ -3,7 +3,11 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import * as Assets from '@cloud-equipment/assets';
 
-const CreateReportOptions = () => {
+const CreateReportOptions = ({
+  onViewFormClick,
+}: {
+  onViewFormClick: () => void;
+}) => {
   const userDetails = useSelector(
     (state: { auth: { user: IUser } }) => state.auth.user
   );
@@ -27,7 +31,10 @@ const CreateReportOptions = () => {
             </p>
           </div>
 
-          <div className="bg-white grid gap-3 rounded-[20px] px-5 py-6 md:px-6 md:py-10 ">
+          <div
+            onClick={onViewFormClick}
+            className="bg-white cursor-pointer grid gap-3 rounded-[20px] px-5 py-6 md:px-6 md:py-10 "
+          >
             <img
               className="block mx-auto w-[70px]"
               src={Assets.Icons.FileUpload}
@@ -42,9 +49,13 @@ const CreateReportOptions = () => {
           </div>
         </div>
 
-        <p className='text-sm mt-10 md:mt-14 text-center'>Need help getting started?</p>
+        <p className="text-sm mt-10 md:mt-14 text-center">
+          Need help getting started?
+        </p>
 
-        <p className='text-greenText mt-3 text-sm font-medium text-center'>Download sample spreadsheet template</p>
+        <p className="text-greenText mt-3 text-sm font-medium text-center">
+          Download sample spreadsheet template
+        </p>
       </div>
     </div>
   );

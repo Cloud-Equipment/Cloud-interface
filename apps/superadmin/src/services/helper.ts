@@ -6,4 +6,5 @@ export const getQueryKeys = (namespace: string) => ({
   patch: `${namespace}/patch`,
   put: `${namespace}/put`,
   delete: `${namespace}/delete`,
+  getAll: `${namespace}/getAll`, // for dropdowns that should have all (non-pagiated)
 });

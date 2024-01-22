@@ -14,13 +14,13 @@ const AuthNavbar = () => {
       </a>
 
       <div className="hidden md:flex space-x-3 items-center">
-        <NavLink to="/auth/login">Login</NavLink>
-        <NavLink to="/auth/register">
+        {/* <NavLink to="/auth/login">Login</NavLink> */}
+        {/* <NavLink to="/auth/register">
           <button className="ce-btn ce-btn-icon">
             <img src={Assets.Icons.User} alt="" />
             <span>Get Started</span>
           </button>
-        </NavLink>
+        </NavLink> */}
       </div>
     </nav>
   );

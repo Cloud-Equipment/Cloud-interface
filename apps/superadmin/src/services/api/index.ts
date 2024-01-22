@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { environment } from '@cloud-equipment/environments';
-import axiosInstance from '@cloud-equipment/api';
+import { axiosInstance } from '@cloud-equipment/api';
 
 type Request = {
   url: string;
@@ -11,12 +11,7 @@ type Request = {
 type PATCH_REQ = Omit<Request, 'auth'>;
 type GET_REQ = Partial<Omit<Request, 'body'>>;
 const { baseUrl } = environment;
-const del = async ({ url, body: data }: Request) =>
-  (
-    await axiosInstance.delete(url, {
-      data,
-    })
-  ).data;
+const del = async ({ url }: Request) => (await axiosInstance.delete(url)).data;
 
 const get = async ({ url = '', auth = true }: GET_REQ) => {
   return (await (auth ? axiosInstance.get(url) : axios.get(baseUrl + url)))

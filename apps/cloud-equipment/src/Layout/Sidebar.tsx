@@ -79,21 +79,21 @@ const Sidebar = () => {
                 className="hover:text-white"
                 to="/management/users"
               >
-                Manage Users
+                Users
+              </NavLink>
+              <NavLink
+                onClick={handleCloseSidebar}
+                className="hover:text-white"
+                to="/management/medservices"
+              >
+                Medservices
               </NavLink>
               <NavLink
                 onClick={handleCloseSidebar}
                 className="hover:text-white"
                 to="/management/users"
               >
-                Manage Price
-              </NavLink>
-              <NavLink
-                onClick={handleCloseSidebar}
-                className="hover:text-white"
-                to="/management/users"
-              >
-                Manage Patients
+                Patients
               </NavLink>
             </div>
 
