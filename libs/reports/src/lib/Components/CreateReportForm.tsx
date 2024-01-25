@@ -26,6 +26,8 @@ import patientQueries from '../queries/patients';
 import facilityQueries from '../queries/facilities';
 import categoriesQueries from '../queries/categories';
 import medserviceQueries from '../queries/medservices';
+import discountQueries from '../queries/discounts';
+import { Input } from '@cloud-equipment/ui-components';
 
 const CreateReportForm = () => {
   const userDetails = useSelector(
@@ -36,11 +38,7 @@ const CreateReportForm = () => {
     (state: { account: { accountType: 0 | 1 } }) => state.account.accountType
   );
 
-  const [facilityInfo, setFacilityInfo] = useState<{
-    FACILITY_ID: string;
-    FACILITY_REBATE_PERCENTAGE: string;
-  } | null>(null);
-
+  // if its superadmin
   const [selectedFacility, setSelectedFacility] = useState<IFacility | null>(
     null
   );
@@ -52,12 +50,6 @@ const CreateReportForm = () => {
   useEffect(() => {
     if (accountType === 0) {
       mutateFn_GetAllFacilities({}, () => {});
-    } else {
-      if (userDetails?.FACILITY_ID && userDetails?.FACILITY_REBATE_PERCENTAGE)
-        setFacilityInfo({
-          FACILITY_ID: userDetails.FACILITY_ID,
-          FACILITY_REBATE_PERCENTAGE: userDetails.FACILITY_REBATE_PERCENTAGE,
-        });
     }
   }, []);
 
@@ -123,29 +115,33 @@ const CreateReportForm = () => {
   }, [patientId, patientName]);
 
   //   discounts
-  const fetchAllDiscounts = () => {
-    const url = `${environment.baseUrl}/payment/discounts/getactivediscount/facilityId`;
+  const { useGetAllDiscountsForFacility } = discountQueries;
+  const { mutateFn: mutateFn_GetDiscountsForFacility, data: allDiscounts } =
+    useGetAllDiscountsForFacility(
+      accountType === 0
+        ? (selectedFacility?.id as string)
+        : (userDetails?.FACILITY_ID as string)
+    );
 
-    axiosInstance
-      .get(url, { params: { facilityId: userDetails?.FACILITY_ID } })
-      .then((res: AxiosResponse<ApiResponse<IDiscount[]>>) => {
-        if (res.data.success) {
-          const facDiscounts = [];
-          const proDiscounts = [];
+  useEffect(() => {
+    if (accountType === 1 || (accountType === 0 && selectedFacility?.id)) {
+      mutateFn_GetDiscountsForFacility({}, (res) => {
+        const facDiscounts = [];
+        const proDiscounts = [];
 
-          for (const item of res.data.data) {
-            if (item.discountTypeId === 1) {
-              facDiscounts.push(item);
-            } else {
-              proDiscounts.push(item);
-            }
+        for (const item of res.data.data) {
+          if (item.discountTypeId === 1) {
+            facDiscounts.push(item);
+          } else {
+            proDiscounts.push(item);
           }
-
-          setFacilityDiscounts(facDiscounts);
-          setProcedureDiscounts(proDiscounts);
         }
+
+        setFacilityDiscounts(facDiscounts);
+        setProcedureDiscounts(proDiscounts);
       });
-  };
+    }
+  }, [selectedFacility]);
 
   // medservices with query
   const { useGetAllMedserviceCategories } = categoriesQueries;
@@ -205,10 +201,6 @@ const CreateReportForm = () => {
     } = event;
     setSelectedProcedures(value as number[]);
   };
-
-  useEffect(() => {
-    fetchAllDiscounts();
-  }, []);
 
   //   rebates
   const [proceduresListForRebate, setProceduresListForRebate] = useState<
@@ -482,12 +474,16 @@ const CreateReportForm = () => {
 
           <div className="form-input-label-holder">
             <label>Patient Mobile Number</label>
-            <input
-              {...register('patientPhone')}
-              className="ce-input"
-              placeholder="+234 08143626356"
-            />
+            <input {...register('patientPhone')} className="ce-input" />
           </div>
+          <Input
+            label="Patient Mobile Number"
+            placeholder="+234 08143626356"
+            containerClass="flex-1"
+            {...register('facilityTypeId', {
+              required: 'Facility ID is required',
+            })}
+          />
 
           <div className="form-input-label-holder">
             <label>Gender</label>
