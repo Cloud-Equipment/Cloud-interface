@@ -234,6 +234,7 @@ const CreateReportForm = () => {
   };
 
   const onSubmit = (data_: any) => {
+    const facilityId = accountType === 0? selectedFacility?.id : userDetails.FACILITY_ID
     const createProcedure = (patientId: number) => {
       const proceduresToSubmit: any[] = [];
       selectedProcedures.forEach((x) => {
@@ -249,15 +250,15 @@ const CreateReportForm = () => {
           )?.price,
           remarks: data_?.remarks,
           entryUserId: userDetails?.USER_ID,
-          facilityId: userDetails?.FACILITY_ID,
+          facilityId: facilityId,
           procedureDiscountId: 0,
           faclityDiscountId: 0,
         };
         if (rebateInfo) {
           item_.rebate = {
-            facilityId: userDetails?.FACILITY_ID,
+            facilityId: facilityId,
             rebatePercent: 5,
-            refererHospital: userDetails?.FACILITY_ID,
+            refererHospital: facilityId,
             refererName: data_.refererName,
             refererEmail: data_.refererEmail,
             refererPhone: data_.refererPhone,
@@ -280,10 +281,10 @@ const CreateReportForm = () => {
     };
 
     // eslint-disable-next-line no-constant-condition
-    if (false) {
+    if (!data_.patientId) {
       const data = {
-        patientFacilityCode: userDetails?.FACILITY_ID,
-        patientName: data_.patientName,
+        patientFacilityCode: facilityId,
+        patientName: patientName,
         patientAge: Number(data_.patientAge) || 10,
         patientEmail: data_.patientEmail,
         patientPhone: data_.patientPhone,
@@ -314,6 +315,18 @@ const CreateReportForm = () => {
     let _total = 0;
     let _totalDiscount = 0;
 
+    let facilityRebate = 0;
+
+    if (
+      (accountType === 0 && selectedFacility?.rebatePercent) ||
+      (accountType === 1 && userDetails?.FACILITY_REBATE_PERCENTAGE)
+    ) {
+      facilityRebate =
+        accountType === 0
+          ? Number(selectedFacility!.rebatePercent)
+          : Number(userDetails!.FACILITY_REBATE_PERCENTAGE);
+    }
+
     for (const procedureId of selectedProcedures) {
       // get the price of the procedureId
       let price = proceduresList?.find(
@@ -325,7 +338,7 @@ const CreateReportForm = () => {
       // and change the price
       const rebateInfo = proceduresWithRebate?.find((x) => x === procedureId);
       if (rebateInfo) {
-        price = price - Number(userDetails!.FACILITY_REBATE_PERCENTAGE) * price;
+        price = price - facilityRebate * price;
       }
 
       // check if there's procedure based discount
@@ -348,7 +361,7 @@ const CreateReportForm = () => {
     setSubTotal(_subTotal);
     setTotal(_total);
     setTotalDiscount(_totalDiscount);
-  }, [selectedProcedures, proceduresWithRebate]);
+  }, [selectedProcedures, proceduresWithRebate, selectedFacility]);
 
   // populate the dropdown for rebates selection based on the selected procedures
   useEffect(() => {
@@ -462,26 +475,17 @@ const CreateReportForm = () => {
             />
           </div>
 
-          <div className="form-input-label-holder">
-            <label>Patient ID</label>
-            <input
-              {...register('patientId')}
-              name="patientId"
-              placeholder="AGA/453"
-              className="ce-input"
-            />
-          </div>
+          <Input
+            label="Patient ID"
+            placeholder="+234 08143626356"
+            {...register('patientId')}
+          />
 
-          <div className="form-input-label-holder">
-            <label>Patient Mobile Number</label>
-            <input {...register('patientPhone')} className="ce-input" />
-          </div>
           <Input
             label="Patient Mobile Number"
             placeholder="+234 08143626356"
-            containerClass="flex-1"
-            {...register('facilityTypeId', {
-              required: 'Facility ID is required',
+            {...register('patientPhone', {
+              required: 'Patient Phone Number is required',
             })}
           />
 
@@ -503,29 +507,28 @@ const CreateReportForm = () => {
             />
           </div>
 
-          <div className="form-input-label-holder">
-            <label>Age of the Patient</label>
-            <input {...register('patientAge')} className="ce-input" />
-          </div>
+          <Input
+            label="Age of the Patient"
+            {...register('patientAge', { required: 'Patient age is required' })}
+            type="number"
+          />
 
-          <div className="form-input-label-holder">
-            <label>Patient Email</label>
-            <input
-              type="email"
-              className="ce-input"
-              placeholder="patient@cloudequipment.io"
-              {...register('patientEmail')}
-            />
-          </div>
+          <Input
+            label="Patient Email"
+            placeholder="patient@cloudequipment.io"
+            {...register('patientEmail', {
+              required: 'Patient email is required',
+            })}
+            type="email"
+          />
 
-          <div className="form-input-label-holder">
-            <label>Address</label>
-            <input
-              className="ce-input"
-              {...register('patientAddress')}
-              placeholder="No 24, W. F. Kumuyi Street,"
-            />
-          </div>
+          <Input
+            label="Patient Address"
+            placeholder="No 24, W. F. Kumuyi Street,"
+            {...register('patientAddress', {
+              required: 'Patient address is required',
+            })}
+          />
 
           <div className="form-input-label-holder">
             <label>Procedure category</label>
@@ -629,7 +632,11 @@ const CreateReportForm = () => {
                     (x: IMedservice) =>
                       x.medServiceId === proceduresWithRebate[index]
                   )?.price ?? 0) *
-                  Number(userDetails!.FACILITY_REBATE_PERCENTAGE)
+                  Number(
+                    accountType === 0
+                      ? selectedFacility?.rebatePercent ?? 0
+                      : userDetails!.FACILITY_REBATE_PERCENTAGE
+                  )
                 }
                 readOnly
               />
@@ -657,46 +664,30 @@ const CreateReportForm = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-5 md:gap-8 mt-8 md:mt-10">
-          <div className="form-input-label-holder">
-            <label>Referer Name</label>
-            <input
-              className="ce-input"
-              {...register('refererName')}
-              placeholder="Adepoju Deborah"
-            />
-          </div>
-          <div className="form-input-label-holder">
-            <label>refererName</label>
-            <input
-              className="ce-input"
-              //   {...register("refererName")}
-              placeholder="Adepoju Deborah "
-            />
-          </div>
-          <div className="form-input-label-holder">
-            <label>Referer's Hospital/Laboratory</label>
-            <input
-              className="ce-input"
-              {...register('refererHospital')}
-              placeholder="Fountain Care "
-            />
-          </div>
-          <div className="form-input-label-holder">
-            <label>Referer Email Address</label>
-            <input
-              className="ce-input"
-              {...register('refererEmail')}
-              placeholder="email@example.io"
-            />
-          </div>
-          <div className="form-input-label-holder">
-            <label>Referer Phone</label>
-            <input
-              className="ce-input"
-              {...register('refererPhone')}
-              placeholder="+234 90292929 "
-            />
-          </div>
+          <Input
+            label="Patient Address"
+            placeholder="Adepoju Deborah"
+            {...register('refererName')}
+          />
+
+          <Input
+            label="Referer's Hospital/Laboratory"
+            placeholder="Fountain Care"
+            {...register('refererHospital')}
+          />
+
+          <Input
+            label="Referer Email Address"
+            placeholder="email@example.io"
+            {...register('refererEmail')}
+          />
+
+          <Input
+            label="Referer Phone"
+            placeholder="+234 90292929"
+            {...register('refererPhone')}
+          />
+
           <div className="form-input-label-holder md:col-span-2">
             <label>Remarks</label>
             <textarea

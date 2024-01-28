@@ -35,7 +35,7 @@ const useGetReports = (
       queryFn: () =>
         apiClient
           .get({ url, params: _params })
-          .then((res: ApiResponse) => res.data),
+          .then((res: ApiResponse) => res.data.resultItem),
     });
 
   return { isLoading, data, isSuccess, error };
