@@ -1,11 +1,14 @@
 import React from 'react';
 import * as Assets from '@cloud-equipment/assets';
 import { DashboardCard } from '@cloud-equipment/ui-components';
-import { DashboardCalendar } from '@cloud-equipment/ui-components';
+import DashboardCalendar from '../../components/dashboard/DashboardCalendar';
+import AppointmentTimeLine from '../../components/dashboard/AppointmentTimeLine';
+import PatientActivityChart from '../../components/dashboard/PatientActivityChart';
+import MonthlyRevenueChart from '../../components/dashboard/MonthlyRevenueChart';
 
 const Dashboard = () => {
   return (
-    <section className="ce-px ce-py grid xl:grid-cols-[1fr_400px] gap-5">
+    <section className="ce-px ce-py grid xl:grid-cols-[1fr_auto] gap-5">
       <div>
         <div className="md:flex justify-between md:items-center gap-4">
           <div className="flex gap-2 items-center">
@@ -65,10 +68,16 @@ const Dashboard = () => {
             figure={20}
           />
         </div>
+
+        <div className="grid xl:grid-cols-2 mt-5 gap-5">
+          <PatientActivityChart />
+          <MonthlyRevenueChart />
+        </div>
       </div>
 
-      <div className="bg-white rounded-[20px]">
+      <div className="bg-white rounded-[20px] px-3 grid gap-x-5 md:grid-cols-2 xl:grid-cols-[unset]">
         <DashboardCalendar />
+        <AppointmentTimeLine />
       </div>
     </section>
   );

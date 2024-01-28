@@ -5,7 +5,6 @@ export { default as Input } from './Input';
 export { default as TableSkeleton } from './TableSkeleton';
 export { default as Loader } from './Loader';
 import { NavTab } from './NavTab';
-import DashboardCalendar from './dashboard/DashboardCalendar';
-import DashboardCard from './dashboard/DashboardCard';
+import { default as DashboardCard } from './DashboardCard';
 
-export { GlobalLoading, NavTab, DashboardCalendar, DashboardCard };
+export { GlobalLoading, NavTab, DashboardCard };

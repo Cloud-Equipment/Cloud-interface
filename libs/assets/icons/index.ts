@@ -41,8 +41,10 @@ import FacilityWarningIcon from './facilityWarningIcon.svg';
 import EnableEMRIcon from './EnableEMRIcon.svg';
 import * as Dashboard from './dashboard';
 import FileUpload from './file-upload.svg';
+import ArrowRight from './arrow-right.svg';
 
 export {
+  ArrowRight,
   BoxCloseIcon,
   Confirm,
   DashboardNav,
