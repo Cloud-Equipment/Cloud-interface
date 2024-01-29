@@ -43,6 +43,10 @@ const Medservices = () => {
                 label: 'Medical Categories',
                 href: '/management/medservices/categories',
               },
+              {
+                label: 'Price Change Request',
+                href: '/management/medservices/price-change-request',
+              },
             ]}
             wrapperClass="mt-6"
           />
