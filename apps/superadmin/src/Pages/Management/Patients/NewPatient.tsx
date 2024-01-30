@@ -38,6 +38,7 @@ interface FormProps {
   //
   // registrationTime: any;
   // registrationDate: any;
+  [key: string]: any;
 }
 
 const NewPatient = () => {
