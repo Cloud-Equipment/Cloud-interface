@@ -7,4 +7,6 @@ export { default as Loader } from './Loader';
 import { NavTab } from './NavTab';
 export { default as DashboardCard } from './DashboardCard';
 
-export { GlobalLoading, NavTab };
+import { NavTab2 } from './NavTab2';
+
+export { GlobalLoading, NavTab, NavTab2 };

@@ -15,7 +15,7 @@ const AddMoreDocumentModal = ({
           className="w-20 h-20"
           src={Assets.Icons.FacilityWarningIcon}
         />
-        <p className="">Are you sure you want to enable this Facility?</p>
+        <p className="">Are you sure you want to disable this Facility?</p>
 
         <div className="flex gap-4 justify-center">
           <Button variant="tertiary" label="Cancel" onClick={onClose} />

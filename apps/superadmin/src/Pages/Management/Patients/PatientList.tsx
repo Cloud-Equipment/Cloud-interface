@@ -1,14 +1,15 @@
 import React from 'react';
-import { Table } from '../../../components';
-import * as Assets from '@cloud-equipment/assets';
-import { IPatient } from '../../../services/queries/managePatients/types';
-import queries from '../../../services/queries/managePatients/';
+
 import { createColumnHelper } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
 import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
 
+import { Table } from '../../../components';
+import * as Assets from '@cloud-equipment/assets';
+import { IPatient } from '../../../services/queries/managePatients/types';
+import queries from '../../../services/queries/managePatients/';
+
 type PatientTableColumns = IPatient & { lastLogin: string; elipsis: 'elipsis' };
-type ActionModalType = null | 'edit' | 'delete';
 
 const columnHelper = createColumnHelper<PatientTableColumns>();
 
@@ -103,11 +104,9 @@ export default PatientsList;
 const MenuDropdown = ({
   cb,
   patientData,
-  handleActionsView,
 }: {
   cb: (e: React.MouseEvent<HTMLButtonElement>) => void;
   patientData: IPatient;
-  handleActionsView: () => void;
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();

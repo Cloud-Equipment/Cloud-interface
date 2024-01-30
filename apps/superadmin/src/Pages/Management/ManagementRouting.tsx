@@ -10,6 +10,7 @@ const ViewFacility = lazy(() => import('./Facility/ViewFacility/ViewFacility'));
 const Equipment = lazy(() => import('./Equipment/Equipment'));
 const Patients = lazy(() => import('./Patients/Patients'));
 const Discounts = lazy(() => import('./Discounts/Discounts'));
+const FacilityDiscounts = lazy(() => import('./Discounts/FacilitiesList'));
 const Medservices = lazy(() => import('./Medservices/Medservices'));
 
 export const ManagementRouting = () => {
@@ -41,6 +42,10 @@ export const ManagementRouting = () => {
     {
       path: Routes.management.patient,
       element: <Patients />,
+    },
+    {
+      path: Routes.management.discountFacility, //this should be facility
+      element: <FacilityDiscounts />,
     },
     {
       path: Routes.management.discount,

@@ -78,7 +78,10 @@ const Sidebar = () => {
             Facilities
           </NavLink>
 
-          <NavLink onClick={handleCloseSidebar} to="/management/discounts">
+          <NavLink
+            onClick={handleCloseSidebar}
+            to="/management/facility/discounts"
+          >
             Discounts
           </NavLink>
 
