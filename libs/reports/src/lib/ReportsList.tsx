@@ -141,27 +141,13 @@ const ReportsList = () => {
           </button>
         </div>
 
-        <div className="mt-10 ce-table-holder">
-          <h5 className="table-heading">All Report</h5>
-
-          <Table
-            loading={isLoading}
-            data={data || []}
-            columns={columns(handleActionsClick)}
-            tableHeading="Facilities - 5"
-            tableHeadingColorClassName="!bg-secondary-150"
-          />
-
-          {/* <TablePagination
-            component="div"
-            count={total}
-            page={currentPage}
-            labelRowsPerPage="Items per page"
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            rowsPerPage={pageSize}
-          /> */}
-        </div>
+        <Table
+          loading={isLoading}
+          data={data || []}
+          columns={columns(handleActionsClick)}
+          tableHeading="All Reports"
+          tableHeadingColorClassName="!bg-secondary-150"
+        />
       </div>
     </section>
   );

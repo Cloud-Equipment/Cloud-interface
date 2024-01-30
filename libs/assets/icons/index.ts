@@ -42,8 +42,10 @@ import EnableEMRIcon from './EnableEMRIcon.svg';
 import * as Dashboard from './dashboard';
 import FileUpload from './file-upload.svg';
 import NoTableData from './noTableData.svg';
+import ArrowRight from './arrow-right.svg';
 
 export {
+  ArrowRight,
   BoxCloseIcon,
   Confirm,
   DashboardNav,

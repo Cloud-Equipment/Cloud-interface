@@ -73,26 +73,17 @@ const Sidebar = () => {
               </button>
             </div>
 
-            <div className="grid pl-[52px] text-[#FFFFFF8F] gap-4 py-2 font-medium">
-              <NavLink
-                onClick={handleCloseSidebar}
-                className="hover:text-white"
-                to="/management/users"
-              >
+            <div className="grid text-[#FFFFFF8F] gap-2 px-[25px] py-2 font-medium subnavs">
+              <NavLink onClick={handleCloseSidebar} to="/management/users">
                 Users
               </NavLink>
               <NavLink
                 onClick={handleCloseSidebar}
-                className="hover:text-white"
                 to="/management/medservices"
               >
                 Medservices
               </NavLink>
-              <NavLink
-                onClick={handleCloseSidebar}
-                className="hover:text-white"
-                to="/management/users"
-              >
+              <NavLink onClick={handleCloseSidebar} to="/management/patients">
                 Patients
               </NavLink>
             </div>
