@@ -14,7 +14,7 @@ export const ReportsRouting = () => {
       element: <NewReport />,
     },
     {
-      path: '/:id',
+      path: '/view/:id',
       element: <ViewReport />,
     },
   ]);
