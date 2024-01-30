@@ -5,8 +5,14 @@ import DashboardCalendar from '../../components/dashboard/DashboardCalendar';
 import AppointmentTimeLine from '../../components/dashboard/AppointmentTimeLine';
 import PatientActivityChart from '../../components/dashboard/PatientActivityChart';
 import MonthlyRevenueChart from '../../components/dashboard/MonthlyRevenueChart';
+import queries from '../../services/queries/dashboard';
 
 const Dashboard = () => {
+  const { useGetDashboardSummary } = queries;
+  const { isLoading, data: DashboardSummary } = useGetDashboardSummary(
+    `/dashboard-manager/superadmin/cards`
+  );
+
   return (
     <section className="ce-px ce-py grid xl:grid-cols-[1fr_auto] gap-5">
       <div>
@@ -30,42 +36,42 @@ const Dashboard = () => {
           <DashboardCard
             icon={Assets.Icons.Dashboard.Calendar}
             text="Referred Patient"
-            figure={20}
+            figure={DashboardSummary?.referredPatient ?? 0}
           />
           <DashboardCard
             icon={Assets.Icons.Dashboard.RedCalendar}
             text="In-Patient Today"
-            figure={20}
+            figure={DashboardSummary?.inpatientToday ?? 0}
           />
           <DashboardCard
             icon={Assets.Icons.Dashboard.RedTelephone}
             text="Manage Facilities"
-            figure={20}
+            figure={DashboardSummary?.manageFacilities ?? 0}
           />
           <DashboardCard
             icon={Assets.Icons.Dashboard.Equipment}
             text="Equipment Management"
-            figure={20}
+            figure={DashboardSummary?.manageEquip ?? 0}
           />
           <DashboardCard
             icon={Assets.Icons.Dashboard.Procedure}
             text="Procedure Management"
-            figure={20}
+            figure={DashboardSummary?.procedureManage ?? 0}
           />
           <DashboardCard
             icon={Assets.Icons.Dashboard.Price}
             text="Price Management"
-            figure={20}
+            figure={DashboardSummary?.priceMgt ?? 0}
           />
           <DashboardCard
             icon={Assets.Icons.Dashboard.Calendar}
             text="Discounts Management"
-            figure={20}
+            figure={DashboardSummary?.dsicountMgt ?? 0}
           />
           <DashboardCard
             icon={Assets.Icons.Dashboard.Facilities}
             text="Facilities Report"
-            figure={20}
+            figure={DashboardSummary?.manageFacilities ?? 0}
           />
         </div>
 

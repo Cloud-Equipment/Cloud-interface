@@ -19,7 +19,7 @@ const DashboardCard = ({ text, figure, icon }: DashboardCardProps) => {
         <p className="font-medium text-3xl">{figure}</p>
         <div className="flex items-center gap-1">
           <img src={Assets.Icons.Dashboard.TrendUp} alt="" />
-          <span className="text-greenText text-sm">40%</span>
+          <span className="text-greenText text-sm">0%</span>
           <span className="text-greyText text-xs">from last week</span>
         </div>
       </div>
