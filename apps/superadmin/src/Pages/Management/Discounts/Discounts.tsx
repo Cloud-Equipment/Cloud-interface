@@ -89,7 +89,7 @@ const Discounts = () => {
   const [discountModal, setDiscountModal] = useState<{
     currentView: 'create' | 'view' | 'edit' | null;
   }>({
-    currentView: 'view',
+    currentView: null,
   });
 
   const [actionsModal, setActionsModal] = React.useState<{
