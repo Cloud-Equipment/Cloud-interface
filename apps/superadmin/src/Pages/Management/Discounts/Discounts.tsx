@@ -1,30 +1,41 @@
 import React, { useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, useParams } from 'react-router-dom';
 import { createColumnHelper } from '@tanstack/react-table';
+import {
+  Modal,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material';
 
 import * as Assets from '@cloud-equipment/assets';
-import { Button } from '@cloud-equipment/ui-components';
-import { Routes } from '../../../routes';
+import { Button, NavTab2 } from '@cloud-equipment/ui-components';
 import { Table } from '../../../components';
 import { IDiscount } from '../../../services/queries/manageDiscounts/types';
 import queries from '../../../services/queries/manageDiscounts';
 import DiscountModal from './DiscountModal';
-import { Modal } from '@mui/material';
+import { DiscountsActionModalType } from '../../../Modals';
 
-export type ActionModalType = null | 'view' | 'edit' | 'delete';
+export type DiscountsActionModalType = null | 'create' | 'approve' | 'reject';
+export type DiscountModalViews = 'create' | 'view' | 'edit' | null;
 
 type DiscountTableColumns = Pick<
   IDiscount,
-  'startDate' | 'discountName' | 'discountCode' | 'endDate'
+  | 'startDate'
+  | 'discountName'
+  | 'discountCode'
+  | 'endDate'
+  | 'isActive'
+  | 'discountId'
 > & { elipsis: 'elipsis'; discountCategory: string };
 
 const columnHelper = createColumnHelper<DiscountTableColumns>();
 
-const columns = (handleActionsModalView: (view: ActionModalType) => void) => [
+const columns = (handleApproveModal: (value: DiscountModalViews) => void) => [
   columnHelper.accessor('startDate', {
-    header: 'Start Date',
+    header: 'Date Created',
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor('discountCategory', {
@@ -43,28 +54,31 @@ const columns = (handleActionsModalView: (view: ActionModalType) => void) => [
     header: 'Expiration Date',
     cell: (info) => info.getValue(),
   }),
-  //   columnHelper.accessor('elipsis', {
-  //     cell: ({
-  //       row: {
-  //         original: { id },
-  //       },
-  //     }) => {
-  //       // REFACTOR: is this necessary
-  //       const cb = (e: React.MouseEvent<HTMLButtonElement>) => {
-  //         // console.log('e', e);
-  //       };
-  //       return <ManageFacilityDropDown {...{ cb, id, handleActionsModalView }} />;
-  //     },
-  //     header: '',
-  //   }),
+  columnHelper.accessor('isActive', {
+    header: 'Status',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('elipsis', {
+    cell: ({
+      row: {
+        original: { discountId },
+      },
+    }) => {
+      return (
+        <ManageFacilityDropDown id={discountId} {...{ handleApproveModal }} />
+      );
+    },
+    header: '',
+  }),
 ];
 
 const Discounts = () => {
-  const navigate = useNavigate();
+  const params = useParams();
 
   const { useGetDiscounts } = queries;
   const { isLoading, data } = useGetDiscounts(
-    `/payment/discounts/getalldiscount`
+    `/payment/discounts/getactivediscount/facilityId?facilityId=${params?.id}`,
+    { staleTime: 1000, enabled: !!params?.id }
   );
 
   const [selectedDiscount, setSelectedDiscount] = useState<null | IDiscount>(
@@ -72,7 +86,17 @@ const Discounts = () => {
   );
 
   //   modal
-  const [discountModalOpen, setDiscountModalOpen] = useState(false);
+  const [discountModal, setDiscountModal] = useState<{
+    currentView: 'create' | 'view' | 'edit' | null;
+  }>({
+    currentView: 'view',
+  });
+
+  const [actionsModal, setActionsModal] = React.useState<{
+    currentView: DiscountsActionModalType;
+  }>({
+    currentView: null,
+  });
 
   //   table
   const handleChangePage = (
@@ -83,10 +107,13 @@ const Discounts = () => {
   //   modal
   const openDiscountModal = () => {
     setSelectedDiscount(null);
-    setDiscountModalOpen(true);
+    setDiscountModal({ currentView: 'create' });
   };
-  const closeDiscountModal = () => setDiscountModalOpen(false);
 
+  const closeDiscountModal = () => setDiscountModal({ currentView: null });
+  const closeActionsModal = () => setActionsModal({ currentView: null });
+
+  // Pagination
   const handleChangeRowsPerPage = (event: any) => {
     // setCurrentPage(0);
     // setPageSize(parseInt(event.target.value, 10));
@@ -94,12 +121,25 @@ const Discounts = () => {
 
   return (
     <>
-      <Modal open={discountModalOpen} onClose={closeDiscountModal}>
+      {/* Create Discount Modal */}
+      <Modal open={!!discountModal.currentView} onClose={closeDiscountModal}>
         <div>
           {
             <DiscountModal
               discountData={selectedDiscount}
               onClose={closeDiscountModal}
+              type={discountModal.currentView}
+            />
+          }
+        </div>
+      </Modal>
+      {/* view/approve discount modal */}
+      <Modal open={!!actionsModal.currentView} onClose={closeDiscountModal}>
+        <div>
+          {
+            <DiscountsActionModalType
+              onClose={closeActionsModal}
+              currentView={actionsModal.currentView}
             />
           }
         </div>
@@ -115,16 +155,16 @@ const Discounts = () => {
         <div className="p-[16px] bg-[white] mt-[20px] rounded-[20px]">
           <h5 className="font-semibold text-lg">Available Discounts</h5>
 
-          <div className="grid mt-5 gap-5 grid-cols-[1fr_1fr] lg:flex items-center lg:justify-between">
+          <div className="grid my-5 gap-5 grid-cols-[1fr_1fr] lg:flex items-center lg:justify-between">
             <div className="col-span-2 lg:col-span-[unset] lg:w-[50%] search-input-container">
-              <input placeholder="Search for Patient Name" />
+              <input placeholder="Search for Services" />
               <img src={Assets.Icons.Search} alt="Search Icon" />
             </div>
 
             <div className="sort-container">
-              <span className="sort-text">Sort by:</span>
+              <span className="sort-text">All Category:</span>
 
-              <span className="sort-value">Newest to Oldest</span>
+              <span className="sort-value">Show All</span>
 
               <img src={Assets.Icons.SolidArrowDown} alt="" />
             </div>
@@ -134,16 +174,34 @@ const Discounts = () => {
               <span>Export</span>
             </button>
           </div>
-
-          <div className="mt-10 ce-table-holder">
-            <Table
-              loading={isLoading}
-              data={data || []}
-              columns={columns(() => {})}
-              tableHeading="Facilities - 5"
-              tableHeadingColorClassName="!bg-secondary-150"
-            />
-          </div>
+          <NavTab2
+            links={[
+              {
+                label: 'All Discount',
+                param: 'all',
+                selected: false,
+              },
+              {
+                label: 'Approved Discount',
+                param: 'approved',
+                selected: false,
+              },
+              {
+                label: 'Pending Discount',
+                param: 'pending',
+                selected: false,
+              },
+            ]}
+            wrapperClass=""
+          />
+          <Table
+            loading={isLoading}
+            data={data || []}
+            columns={columns((value: DiscountModalViews) =>
+              setDiscountModal({ currentView: value })
+            )}
+            tableHeading={`Discounts -`}
+          />
         </div>
       </section>
     </>
@@ -151,3 +209,60 @@ const Discounts = () => {
 };
 
 export default Discounts;
+
+const ManageFacilityDropDown = ({
+  id,
+  handleApproveModal,
+}: {
+  id: string;
+  handleApproveModal: (value: DiscountModalViews) => void;
+}) => {
+  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMenuAction = () => {
+    navigate(`/management/discounts`);
+  };
+
+  return (
+    <div>
+      <button
+        onClick={(e) => {
+          handleActionClick(e);
+        }}
+        className="w-6"
+      >
+        <img src={Assets.Icons.Menudots} alt="" />
+      </button>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={handleMenuAction}>
+          <ListItemIcon></ListItemIcon>
+          <ListItemText>View Discounts</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={() => handleApproveModal('view')}>
+          <ListItemIcon></ListItemIcon>
+          <ListItemText>Approve Discounts</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={() => handleApproveModal('edit')}>
+          <ListItemIcon></ListItemIcon>
+          <ListItemText>Edit Discounts</ListItemText>
+        </MenuItem>
+      </Menu>
+    </div>
+  );
+};

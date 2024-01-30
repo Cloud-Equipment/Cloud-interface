@@ -1,16 +1,16 @@
 import React from 'react';
 
-import { Dayjs } from 'dayjs';
-import { DatePicker, DatePickerProps } from '@mui/x-date-pickers/DatePicker';
+import dayjs, { Dayjs } from 'dayjs';
+import { TimePicker, TimePickerProps } from '@mui/x-date-pickers/TimePicker';
 import cx from 'classnames';
 
-interface IDatePickerProps extends DatePickerProps<Dayjs | any> {
+interface ITimePickerProps extends TimePickerProps<Dayjs | any> {
   label: string | React.ReactElement;
   containerClass?: string;
   className?: string;
 }
 
-const DatePickerComponent: React.FC<IDatePickerProps> = ({
+const TimePickerComponent: React.FC<ITimePickerProps> = ({
   label,
   className,
   containerClass,
@@ -27,7 +27,8 @@ const DatePickerComponent: React.FC<IDatePickerProps> = ({
       <label className="block font-manrope text-[1rem] capitalize font-normal leading-[1.25rem] text-secondary-500">
         {label}
       </label>
-      <DatePicker
+      <TimePicker
+        defaultValue={dayjs(new Date())}
         className={cx(
           'py-2.5 pr-2 pl-3 rounded-lg focus:outline-none w-full border h-12 [&_input]:h-4',
           className
@@ -38,4 +39,4 @@ const DatePickerComponent: React.FC<IDatePickerProps> = ({
   );
 };
 
-export default DatePickerComponent;
+export default TimePickerComponent;

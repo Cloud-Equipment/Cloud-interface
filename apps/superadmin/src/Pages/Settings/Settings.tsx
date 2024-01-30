@@ -8,25 +8,26 @@ import { useSelector } from 'react-redux';
 import { IAppState } from '../../Store/store';
 
 interface FormProps {
+  id: string;
   firstName: string;
   lastName: string;
-  phone: string;
-  email: string;
-  twoFA: boolean;
+  twoFactorEnabled: boolean;
+  phoneNumber: string;
+  email?: string;
 }
 
 const Settings = () => {
-  const { register, handleSubmit, control, getValues, setValue, watch } =
-    useForm<FormProps>();
+  const { register, handleSubmit, setValue } = useForm<FormProps>();
 
   const userDetails = useSelector((state: IAppState) => state.auth.user);
 
   useEffect(() => {
-    setValue('email', userDetails?.email ?? '' );
+    setValue('email', userDetails?.email ?? '');
   }, []);
 
   const onSubmit = (data: FormProps) => {
-    // console.log('data', data);
+    data.id = userDetails?.USER_ID || '';
+    console.log('data', data);
   };
 
   return (
@@ -66,13 +67,14 @@ const Settings = () => {
           <Input
             label="Phone Number"
             containerClass="flex-1"
-            {...register('phone', {
+            {...register('phoneNumber', {
               required: 'Phone Number is required',
             })}
           />
           <Input
             label="Email Address"
             containerClass="flex-1"
+            disabled
             {...register('email', {
               required: 'Email Address is required',
             })}
@@ -94,7 +96,9 @@ const Settings = () => {
 
           <p className="font-medium">Two-Factor Authentication</p>
 
-          <Switch />
+          <Switch
+            onChange={(e) => setValue('twoFactorEnabled', e.target.checked)}
+          />
         </div>
 
         <Button

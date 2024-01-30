@@ -23,7 +23,7 @@ const SelectDropdown: React.FC<any> = <T extends string>({
     <div
       className={cx(
         { 'flex flex-col gap-1': !!label },
-        { [`${containerClass}`]: !!containerClass },
+        { [`${containerClass}`]: !!containerClass }
         // 'mt-3'
       )}
     >
@@ -44,7 +44,7 @@ const SelectDropdown: React.FC<any> = <T extends string>({
         inputProps={{ 'aria-label': 'Without label' }}
         {...field}
       >
-        <MenuItem value={''}>Select {label}</MenuItem>
+        <MenuItem value={''}>{label}</MenuItem>
         {options.map((x, i) => (
           // REFACTOR: Change this to value and label
           <MenuItem key={i} value={x.categoryId}>

@@ -41,6 +41,7 @@ import FacilityWarningIcon from './facilityWarningIcon.svg';
 import EnableEMRIcon from './EnableEMRIcon.svg';
 import * as Dashboard from './dashboard';
 import FileUpload from './file-upload.svg';
+import NoTableData from './noTableData.svg';
 
 export {
   BoxCloseIcon,
@@ -86,4 +87,5 @@ export {
   FacilityWarningIcon,
   EnableEMRIcon,
   FileUpload,
+  NoTableData,
 };

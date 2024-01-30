@@ -97,7 +97,7 @@ const Sidebar = () => {
           <NavLink
             onClick={handleCloseSidebar}
             className="hover:bg-[#FFFFFF0F] rounded-xl py-2 px-5"
-            to="/management/discounts"
+            to="/management/facility/discounts"
           >
             Discounts
           </NavLink>

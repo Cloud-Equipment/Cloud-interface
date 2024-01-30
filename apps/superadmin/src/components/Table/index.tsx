@@ -6,6 +6,7 @@ import {
 import type { ColumnDef } from '@tanstack/react-table';
 
 import TableSkeleton from '../TableSkeleton';
+import * as Assets from '@cloud-equipment/assets';
 
 interface ReactTableProps<T extends object> {
   data: T[];
@@ -50,17 +51,26 @@ const Table: React.FC<any> = <T extends object>({
             </tr>
           ))}
         </thead>
-        <tbody className="">
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td className="" key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
+        {data.length > 0 ? (
+          <tbody className="">
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td className="" key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        ) : (
+          <div className="flex items-center justify-center">
+            <div className="flex flex-col items-center justify-center w-full">
+              <img src={Assets.Icons.NoTableData} alt="" />
+              <h5 className="">No Data Yet</h5>
+            </div>
+          </div>
+        )}
       </table>
     </div>
   );

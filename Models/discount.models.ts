@@ -1,12 +1,15 @@
 export interface IDiscount {
-  discountId: number;
+  discountTypeId: number;
   discountName: string;
   discountCode: string;
   discountPercent: number;
-  facilityId: string;
   procedureId: number;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  facilityId: string;
+  [key: string]: any; //TODO: Take this out when endpoint payload matches UI
+  discountId: string;
+  endDate: string;
   isActive: boolean;
-  discountTypeId: number;
+
+  description: string;
 }

@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { environment } from '../../environments/environments';
 import { ApiResponse } from '../../Models/api.models';
+import { showToast } from '../../apps/superadmin/src/utils/toast';
 
 const axiosInstance = axios.create({
   baseURL: environment.baseUrl,
@@ -37,14 +38,15 @@ axiosInstance.interceptors.response.use(
     // Modify response data here
     if (response.data.success) {
     } else {
-      toast.error(response.data.msg);
+      // toast.error(response.data.msg);
+      showToast(response?.data?.msg || 'An error occured', 'error');
     }
     return response;
   },
   (error) => {
     // TODO: Logout for a 401 unauthorized status code
     const errorMessage = error.response?.data?.message || 'An error occurred';
-    toast.error(errorMessage);
+    showToast(errorMessage || 'An error occured', 'error');
     return Promise.reject(error);
   }
 );
