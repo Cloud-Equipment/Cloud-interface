@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 import { environment } from '@cloud-equipment/environments';
 import { axiosInstance } from '@cloud-equipment/api';
@@ -7,6 +7,7 @@ type Request = {
   url: string;
   body: any;
   auth: boolean;
+  config?: AxiosRequestConfig<any>;
 };
 type PATCH_REQ = Omit<Request, 'auth'>;
 type GET_REQ = Partial<Omit<Request, 'body'>>;
@@ -18,10 +19,10 @@ const get = async ({ url = '', auth = true }: GET_REQ) => {
     .data;
 };
 
-const post = async ({ url, body, auth = true }: Request) => {
+const post = async ({ url, body, auth = true, config = {} }: Request) => {
   return (
     await (auth
-      ? axiosInstance.post(url, body)
+      ? axiosInstance.post(url, body, { ...config })
       : axios.post(baseUrl + url, body))
   ).data;
 };

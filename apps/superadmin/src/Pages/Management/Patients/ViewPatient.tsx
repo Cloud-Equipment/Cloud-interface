@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { createColumnHelper } from '@tanstack/react-table';
 
 import * as Assets from '@cloud-equipment/assets';
 import { FileUpload } from '../../../components';
 import { Button } from '@cloud-equipment/ui-components';
 import { Table } from '../../../components';
+import queries from '../../../services/queries/managePatients';
 
 type PatientTableColumns = { [key: string]: string } & {
   lastLogin: string;
@@ -43,9 +44,15 @@ const columns = [
 ];
 
 const ViewPatient = () => {
+  const params = useParams();
   const [patientDetails, setPatientDetails] = useState<any>({});
   const navigate = useNavigate();
+  const { useGetOnePatient } = queries;
+  const { data, isLoading } = useGetOnePatient(
+    `/patient/getpatientbyuniqueid/${params?.id}`
+  );
 
+  console.log('data', data);
   return (
     <section className="ce-px ce-py">
       <div className="bg-white rounded-[20px] px-4 py-8">
@@ -65,8 +72,10 @@ const ViewPatient = () => {
             // onChange={}
           />
 
-          <p className="text-greyText2 mt-3">User ID: AGP/453</p>
-          <p className="font-semibold text-lg">Emma Ummuna</p>
+          <p className="text-greyText2 mt-3">
+            User ID: {data?.patientUniqueID || '-'}
+          </p>
+          <p className="font-semibold text-lg">{data?.patientName || '-'}</p>
 
           <div className="mt-10 flex items-center gap-3 flex-wrap">
             <Button label="New Appointment" onClick={() => {}} />
@@ -84,51 +93,77 @@ const ViewPatient = () => {
         <div className="mt-10 [box-shadow:0px_4px_12px_0px_#0D5F5026] rounded-lg py-4 px-16 grid md:grid-cols-3 2xl:grid-cols-6 gap-4 2xl:gap-10">
           <TitleSubtitle
             title="Registration Date & Time"
-            subtitle={`${patientDetails?.phoneNo}`}
+            subtitle={`${data?.registrationDate || '-'}`}
           />
 
-          <TitleSubtitle title="Patient ID" subtitle={`-`} />
+          <TitleSubtitle
+            title="Patient ID"
+            subtitle={`${data?.patientUniqueID || '-'}`}
+          />
 
-          <TitleSubtitle title="Phone Number" subtitle={`-`} />
+          <TitleSubtitle
+            title="Phone Number"
+            subtitle={`${data?.patientPhone || '-'}`}
+          />
 
           <TitleSubtitle
             title="Email"
-            subtitle={`${patientDetails?.patientAge}`}
+            subtitle={`${data?.patientEmail || '-'}`}
           />
 
-          <TitleSubtitle title="Gender" subtitle={`-`} />
+          <TitleSubtitle
+            title="Gender"
+            subtitle={`${data?.patientGenderId || '-'}`}
+          />
 
           <TitleSubtitle
             title="Date of Birth"
-            subtitle={patientDetails?.medServiceName}
+            subtitle={`${data?.dateOfBirth || '-'}`}
           />
+
+          <TitleSubtitle title="Age" subtitle={`${data?.patientAge || '-'}`} />
 
           <TitleSubtitle
-            title="Age"
-            subtitle={`${patientDetails?.medServiceName || '-'}`}
+            title="Marital Status"
+            subtitle={data?.maritalStatusId || `-`}
           />
-
-          <TitleSubtitle title="Marital Status" subtitle={`-`} />
 
           <TitleSubtitle
             title="Address"
-            subtitle={`-`}
+            subtitle={`${data?.address || '-'}`}
             className="2xl:col-span-4"
           />
 
-          <TitleSubtitle title="Emergency contact Name" subtitle={`-`} />
+          <TitleSubtitle
+            title="Emergency contact Name"
+            subtitle={`${data?.emergencyContactFirstname || '-'} ${
+              data?.emergencyContactLastName || '-'
+            }`}
+          />
 
-          <TitleSubtitle title="Contact Number" subtitle={`-`} />
+          <TitleSubtitle
+            title="Contact Number"
+            subtitle={`${data?.emergencyContactNumber || '-'}`}
+          />
 
-          <TitleSubtitle title="Relationship" subtitle={`-`} />
+          <TitleSubtitle
+            title="Relationship"
+            subtitle={`${data?.emergencyContactRelationship || '-'}`}
+          />
 
-          <TitleSubtitle title="Reason for Registration" subtitle={`-`} />
+          <TitleSubtitle
+            title="Reason for Registration"
+            subtitle={`${data?.reasonForRegistration || '-'}`}
+          />
 
-          <TitleSubtitle title="Taken Drugs" subtitle={`-`} />
+          <TitleSubtitle
+            title="Taken Drugs"
+            subtitle={`${data?.takingMedication || '-'}`}
+          />
 
           <TitleSubtitle
             title="Address Information"
-            subtitle={`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`}
+            subtitle={`${data?.address || '-'}`}
             className="col-span-6"
           />
         </div>
@@ -150,12 +185,14 @@ const TitleSubtitle = ({
   subtitle,
   className = '',
 }: {
-  [key: string]: string;
+  title: string;
+  subtitle: string | number;
+  className?: string;
 }) => {
   return (
     <div className={className}>
       <p className="text-base font-medium">{title}</p>
-      <p className="text-greyText2">{subtitle}</p>
+      <p className="text-greyText2">{subtitle || '-'}</p>
     </div>
   );
 };

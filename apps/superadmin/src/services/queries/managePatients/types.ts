@@ -8,11 +8,19 @@ export interface IPatient {
   aboutPatient: string;
   maritalStatusId: number;
   bloodGroupId: number;
-  dateOfBirth: Date;
-  dateOfDeath: Date;
+  dateOfBirth: string;
+  dateOfDeath: string;
   address: string;
   isActive: boolean;
   imagePath: string;
   patientUniqueID: string;
-  
+  emergencyContactFirstname: string;
+  emergencyContactLastName: string;
+  emergencyContactNumber: string;
+  emergencyContactRelationship: string;
+  paymentType: string;
+  reasonForRegistration: string;
+  takingMedication: boolean;
+  additionalNotes: string;
+  registrationDate: string;
 }
