@@ -1,10 +1,11 @@
 import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IAppState } from '../Store/store';
 import { toggleSidebar } from '@cloud-equipment/shared_store';
 import * as Assets from '@cloud-equipment/assets';
 import { useState, MouseEvent } from 'react';
+import { getPageName } from './navbar-config';
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -13,10 +14,10 @@ const Navbar = () => {
     setAnchorEl(event.currentTarget);
   };
 
+  const location = useLocation();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const userDetails = useSelector((state: IAppState) => state.auth.user);
 
   const viewProfile = () => {
     handleClose();
@@ -32,6 +33,8 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
+  const currentPageName = getPageName(location.pathname);
+
   return (
     <nav className="sticky z-50 bg-[#F6F9F8] top-0 px-5 pt-4 md:px-6 md:pt-6 pb-2 flex justify-between">
       <div className="flex">
@@ -45,7 +48,7 @@ const Navbar = () => {
         </button>
 
         <div className="hidden md:block">
-          <h3 className="text-xl">Dashboard</h3>
+          <h3 className="text-xl">{currentPageName}</h3>
 
           <div className=""></div>
         </div>

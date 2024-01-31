@@ -31,10 +31,10 @@ const columns = (handleActionsView: () => void) => [
     header: 'Medical Category',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('facilityId', {
-    header: 'Facility ID',
-    cell: (info) => info.getValue(),
-  }),
+  // columnHelper.accessor('facilityId', {
+  //   header: 'Facility ID',
+  //   cell: (info) => info.getValue(),
+  // }),
   columnHelper.accessor('medServiceName', {
     header: 'Medservice Name',
     cell: (info) => info.getValue(),
