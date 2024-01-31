@@ -15,6 +15,7 @@ import * as Assets from '@cloud-equipment/assets';
 import { Button } from '@cloud-equipment/ui-components';
 import queries from '../../../services/queries/manageFacility';
 import { AddMoreDocumentModal } from '../../../Modals';
+import { FacilityValidations } from '../../../schemas';
 
 interface FormProps {
   facilityTypeId: number;
@@ -25,10 +26,24 @@ interface FormProps {
   city: string;
   stateId: number;
   countryId: number;
+  rebatePercent: number;
+
+  facilityCECode: string;
+  facilityStatusId: number;
+  enableEMR: boolean;
+  facilityAdmin: {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    activationCode: string;
+    isFacilityAdmin: boolean;
+  };
+  roles: string[];
+  logoPath: File;
+
   isActive: boolean;
   dateCreated: string | Date;
-  rebatePercent: number;
-  logoPath: File;
   [key: string]: any; //TODO: Remove this when all fields have been done on the backend
 }
 
@@ -50,11 +65,24 @@ const AddNewFacility = () => {
       city,
       stateId,
       countryId,
+      rebatePercent,
+      facilityCECode,
+      facilityStatusId,
+      enableEMR,
+      facilityAdmin: {
+        email,
+        password,
+        firstName,
+        lastName,
+        activationCode,
+        isFacilityAdmin,
+      },
+      roles,
       isActive,
       dateCreated,
-      rebatePercent,
       logoPath,
     } = data;
+    console.log('roles', roles);
     const dataToSubmit = {
       facilityTypeId: Number(facilityTypeId),
       facilityName,
@@ -65,6 +93,18 @@ const AddNewFacility = () => {
       stateId: Number(stateId),
       countryId: Number(countryId),
       rebatePercent,
+      facilityCECode,
+      facilityStatusId,
+      enableEMR,
+      facilityAdmin: {
+        email,
+        password,
+        firstName,
+        lastName,
+        activationCode,
+        isFacilityAdmin,
+      },
+      roles: [roles],
       logoPath: '',
     };
     mutateFn(dataToSubmit, () => {
@@ -99,7 +139,7 @@ const AddNewFacility = () => {
                   </p>
                 </div>
                 <div className="flex gap-2">
-                  <div className="flex-1">
+                  <div className="w-[50%]">
                     <FileUpload
                       uploadIcon={Assets.Icons.UploadIcon1}
                       containerClass="w-4/12"
@@ -108,13 +148,14 @@ const AddNewFacility = () => {
                       // onChange={}
                     />
                   </div>
-                  <Input
+
+                  {/* <Input
                     label="Facility ID"
                     containerClass="flex-1"
                     {...register('facilityTypeId', {
                       required: 'Facility ID is required',
                     })}
-                  />
+                  /> */}
                 </div>
                 <Input
                   label="Name of Facility"
@@ -187,8 +228,8 @@ const AddNewFacility = () => {
                         options={[
                           {
                             value: 1,
-                            label: 'hey',
-                            categoryName: 'categoryName',
+                            label: 'Lagos',
+                            categoryName: 'Lagos',
                             categoryId: 1,
                           },
                         ]}
@@ -222,7 +263,7 @@ const AddNewFacility = () => {
                     label="Email of Facility"
                     containerClass="flex-1"
                     {...register('facilityEmail', {
-                      // required: 'Facility Email is required ',
+                      required: 'Facility Email is required ',
                     })}
                   />
                   <Input
@@ -235,18 +276,23 @@ const AddNewFacility = () => {
                 </div>
                 <div className="flex gap-24 my-4">
                   <Controller
-                    name="facilityType"
+                    name="facilityTypeId"
                     control={control}
-                    defaultValue={0}
                     rules={{ required: 'Facility Type is required' }}
                     render={({ field }) => (
                       <Select
                         options={[
                           {
-                            value: 'hey',
-                            label: 'hey',
-                            categoryName: 'categoryName',
-                            categoryId: 'categoryId',
+                            value: 1,
+                            label: 'Facilities Discount',
+                            categoryName: 'Facilities Discount',
+                            categoryId: 1,
+                          },
+                          {
+                            value: 0,
+                            label: 'Procedure Discount',
+                            categoryName: 'Procedure Discount',
+                            categoryId: 0,
                           },
                         ]}
                         label="Facility Type"
@@ -278,8 +324,8 @@ const AddNewFacility = () => {
                     label="Phone Number of Admin "
                     placeholder="+234 08143626356"
                     containerClass="flex-1"
-                    {...register('Admin Phone Number', {
-                      // required: 'Admin Phone Number is required ',
+                    {...register('facilityAdmin.phone', {
+                      required: 'Admin Phone Number is required ',
                     })}
                   />
                 </div>
@@ -306,19 +352,25 @@ const AddNewFacility = () => {
                     label="Admin First Name*"
                     placeholder=""
                     containerClass="flex-1"
-                    {...register('adminFirstName', {
-                      // required: "Admin's First Name is required ",
+                    {...register('facilityAdmin.firstName', {
+                      required: "Admin's First Name is required ",
                     })}
                   />
                 </div>
                 <div className="flex gap-24 my-4">
-                  <Input label="Admin Last Name*" containerClass="flex-1" />
+                  <Input
+                    label="Admin Last Name*"
+                    containerClass="flex-1"
+                    {...register('facilityAdmin.lastName', {
+                      required: "Admin's Last Name is required ",
+                    })}
+                  />
                   <Input
                     label="Admin Email"
                     placeholder="myname@example.com"
                     containerClass="flex-1"
-                    {...register('adminLastName', {
-                      // required: "Admin's Last Name is required ",
+                    {...register('facilityAdmin.email', {
+                      required: "Admin's email is required ",
                     })}
                   />
                 </div>
@@ -327,11 +379,19 @@ const AddNewFacility = () => {
                     label="Admin Role"
                     containerClass="flex-1"
                     placeholder="Enter your Admin role in full"
-                    {...register('adminRole', {
-                      // required: "Admin's Role is required ",
+                    {...register('roles', {
+                      required: "Admin's Role is required ",
                     })}
                   />
-                  <div className="flex-1"></div>
+                  <Input
+                    label="Admin Password"
+                    containerClass="flex-1"
+                    type="password"
+                    placeholder="Enter your Admin password"
+                    {...register('facilityAdmin.password', {
+                      required: "Admin's password is required ",
+                    })}
+                  />
                 </div>
                 <TextArea
                   rows={5}
@@ -339,7 +399,7 @@ const AddNewFacility = () => {
                   placeholder="Leave a Note"
                   containerClass="my-1"
                   {...register('comment', {
-                    // required: 'comment ',
+                    required: 'comment ',
                   })}
                 />
               </div>

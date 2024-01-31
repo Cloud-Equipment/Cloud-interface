@@ -18,36 +18,48 @@ const Settings = () => {
     {},
     `${userDetails?.USER_ID}`
   );
-  const { data } = useGetSettings(
+  const { data } = useGetSettings<{ email: string }>(
     `/user-manager/account/ceuser/getsuperadminbyid?saId=${userDetails?.USER_ID}`,
     userDetails?.USER_ID,
     {}
   );
-  console.log('data', data);
+  // console.log('data', data);
 
-  const { register, handleSubmit, setValue, reset, control } = useForm<
-    ISettings & { email: string }
-  >({
-    // defaultValues: data,
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    reset,
+    control,
+    formState: { errors },
+  } = useForm<ISettings & { email: string }>({
     defaultValues: useMemo(() => {
-      return data;
+      return {
+        id: data?.id,
+        firstName: data?.firstName,
+        lastName: data?.lastName,
+        twoFactorEnabled: data?.twoFactorEnabled || false,
+        phoneNumber: data?.phoneNumber,
+        email: data?.email,
+      };
     }, [data]),
   });
 
-  useEffect(() => {
-    reset(data);
-  }, [data]);
+  console.log(errors);
 
   useEffect(() => {
-    if (userDetails && data) {
-      setValue('email', userDetails?.email ?? '');
-      setValue('email', userDetails?.email ?? '');
-    }
-  }, [data, userDetails]);
+    reset({
+      id: data?.id,
+      firstName: data?.firstName,
+      lastName: data?.lastName,
+      twoFactorEnabled: data?.twoFactorEnabled || false,
+      phoneNumber: data?.phoneNumber,
+      email: data?.email,
+    });
+  }, [data]);
 
   const onSubmit = (data: ISettings) => {
     data.id = userDetails?.USER_ID || '';
-    console.log('data', data);
     mutateFn(data, () => {});
   };
 
@@ -72,6 +84,7 @@ const Settings = () => {
 
         <div className="mt-4 2xl:mt-6 grid gap-5 2xl:gap-7 md:grid-cols-2">
           <Input
+            className="active:border-primary-100 focus:outline-primary-100"
             label="First Name"
             containerClass="flex-1"
             {...register('firstName', {
@@ -79,6 +92,7 @@ const Settings = () => {
             })}
           />
           <Input
+            className="active:border-primary-100 focus:outline-primary-100"
             label="Last Name"
             containerClass="flex-1"
             {...register('lastName', {
@@ -86,6 +100,7 @@ const Settings = () => {
             })}
           />
           <Input
+            className="active:border-primary-100 focus:outline-primary-100"
             label="Phone Number"
             containerClass="flex-1"
             {...register('phoneNumber', {
@@ -93,6 +108,7 @@ const Settings = () => {
             })}
           />
           <Input
+            className="active:border-primary-100 focus:outline-primary-100"
             label="Email Address"
             containerClass="flex-1"
             disabled

@@ -10,11 +10,7 @@ import apiMethods from '../../api';
 import { Facility, FacilityUser } from './types';
 import { ApiResponse, PaginationData } from 'Models/api.models';
 import keys from './keys';
-// import { environment } from '@cloud-equipment/environments';
 import { showToast } from '../../../utils/toast';
-
-// const { baseUrl } = environment;
-// /api/facility-manager/getallfacilities
 
 /**
  * @description get all facilities

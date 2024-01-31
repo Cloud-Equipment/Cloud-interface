@@ -1,4 +1,18 @@
+import { useParams } from 'react-router-dom';
+
+import queries from '../../../../services/queries/manageFacility';
+import { formatDate } from '../../../../utils';
+
 const About = () => {
+  const { id } = useParams();
+
+  const { useGetOneFacility } = queries;
+  const { data } = useGetOneFacility(
+    `/api/facility-manager/getfacility/${id}`,
+    {},
+    id
+  );
+
   return (
     <div className="bg-white px-3.5 py-5 rounded-[20px]">
       <div className="flex flex-col gap-5">
@@ -11,32 +25,47 @@ const About = () => {
             deduction
           </p>
         </div>
-        <TitleSubField title="Facility Name" subtitle="Agape Laboratory" />
+        <TitleSubField
+          title="Facility Name"
+          subtitle={`${data?.facilityName || '-'}`}
+        />
         <TitleSubField
           title="Address"
-          subtitle="No 4, Karu L.G.A., Nasarawa State"
+          subtitle={`${data?.addressLine1 || '-'}`}
         />
         <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
           <TitleSubField
             title="Registration Date & Time"
-            subtitle="15th January, 2024. 15:03am"
+            subtitle={formatDate(data?.dateCreated)}
           />
-          <TitleSubField title="Facility ID" subtitle="CE/FE/001" />
+          <TitleSubField
+            title="Facility ID"
+            subtitle={`${data?.facilityCECode || '-'}`}
+          />
           <TitleSubField
             title="Phone Number of Facility"
-            subtitle="+234 70 34522211"
+            subtitle={data?.phone || '-'}
           />
           <TitleSubField
             title="Email of facility"
-            subtitle="johnsmith@gmail.com"
+            subtitle={data?.email || '-'}
           />
 
-          <TitleSubField title="Facility Type" subtitle="Laboratory" />
-          <TitleSubField title="Rebate Percentage" subtitle="5%" />
-          <TitleSubField title="Number of User" subtitle="5" />
+          <TitleSubField
+            title="Facility Type"
+            subtitle={data?.facilityTypeId || '-'}
+          />
+          <TitleSubField
+            title="Rebate Percentage"
+            subtitle={data?.rebatePercent || '-'}
+          />
+          <TitleSubField
+            title="Number of User"
+            subtitle={data?.numberOfUsers || '-'}
+          />
           <TitleSubField
             title="Phone Number of admin"
-            subtitle="+234 70 34522211"
+            subtitle={data?.adminPhoneNumber || '-'}
           />
         </div>
       </div>
@@ -80,7 +109,7 @@ const TitleSubField = ({
   variant = '1',
 }: {
   title: string;
-  subtitle: string;
+  subtitle: string | number;
   variant?: '1' | '2';
 }) => {
   const variants = {
