@@ -7,58 +7,50 @@ import {
 } from '@tanstack/react-query';
 
 import apiMethods from '../../api';
-import { IPatient } from './types';
+import { ISettings } from './types';
 import { ApiResponse } from 'Models/api.models';
 import keys from './keys';
 import { showToast } from '../../../utils/toast';
 
-const useGetPatients = (
+const useGetSettings = (
   url: string,
-  options: Omit<
-    UseQueryOptions<any, unknown, any, string[]>,
-    'initialData' | 'queryFn' | 'queryKey'
-  > = {},
-
-  pageNumber: string = '1'
-) => {
-  const hash = [keys.read, `${pageNumber}`];
-  const { isLoading, data, isSuccess, error }: UseQueryResult<IPatient[]> =
-    useQuery({
-      queryKey: hash,
-      queryFn: () =>
-        apiMethods.get({ url }).then((res: ApiResponse) => res.data),
-    });
-  return { isLoading, data, isSuccess, error };
-};
-
-const useGetOnePatient = (
-  url: string,
+  body?: string,
   options: Omit<
     UseQueryOptions<any, unknown, any, string[]>,
     'initialData' | 'queryFn' | 'queryKey'
   > = {}
 ) => {
   const hash = [keys.read];
-  const { isLoading, data, isSuccess, error }: UseQueryResult<IPatient> =
+  const { isLoading, data, isSuccess, error }: UseQueryResult<ISettings> =
     useQuery({
       queryKey: hash,
       queryFn: () =>
-        apiMethods.get({ url }).then((res: ApiResponse) => res.data),
+        apiMethods
+          .post({
+            url,
+            body,
+            auth: true,
+            config: {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            },
+          })
+          .then((res: ApiResponse) => res.data),
     });
   return { isLoading, data, isSuccess, error };
 };
 
-const useCreatePatient = (options = {}) => {
+const useUpdateSettings = (options = {}, id?: string) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     ...options,
     mutationKey: [keys.create],
-    mutationFn: async (data: any) => {
-      return apiMethods.post({
-        url: '/patient/createpatient',
+    mutationFn: async (data: ISettings) => {
+      return apiMethods.patch({
+        url: `/user-manager/account/ceuser/update?userId=${id}`,
         body: data,
-        auth: true,
       });
     },
     onSuccess: () => {
@@ -68,10 +60,11 @@ const useCreatePatient = (options = {}) => {
   const { mutate, isSuccess, isError, data, isPending } = mutation;
 
   return {
-    mutateFn: (bodyArg: any, successCb: () => void) => {
+    mutateFn: (bodyArg: ISettings, successCb: () => void) => {
       return mutate(bodyArg, {
         onSuccess: (res) => {
-          showToast('Patient Created Successfully', 'success');
+          console.log('res', res);
+          showToast('Settings Updated Successfully', 'success');
           setTimeout(() => {
             successCb?.();
           }, 1500);
@@ -86,9 +79,8 @@ const useCreatePatient = (options = {}) => {
 };
 
 const queries = {
-  useGetPatients,
-  useCreatePatient,
-  useGetOnePatient,
+  useGetSettings,
+  useUpdateSettings,
 };
 
 export default queries;

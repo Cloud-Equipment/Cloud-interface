@@ -1,33 +1,54 @@
-import React, { useEffect } from 'react';
-import { Input } from '../../components';
-import { useForm } from 'react-hook-form';
+import { useEffect, useMemo } from 'react';
+
+import { Controller, useForm } from 'react-hook-form';
 import { Switch } from '@mui/material';
+import { useSelector } from 'react-redux';
+
+import { Input } from '../../components';
 import { Button, NavTab } from '@cloud-equipment/ui-components';
 import * as Assets from '@cloud-equipment/assets';
-import { useSelector } from 'react-redux';
 import { IAppState } from '../../Store/store';
-
-interface FormProps {
-  id: string;
-  firstName: string;
-  lastName: string;
-  twoFactorEnabled: boolean;
-  phoneNumber: string;
-  email?: string;
-}
+import { ISettings } from '../../services/queries/manageSettings/types';
+import queries from '../../services/queries/manageSettings';
 
 const Settings = () => {
-  const { register, handleSubmit, setValue } = useForm<FormProps>();
-
+  const { useUpdateSettings, useGetSettings } = queries;
   const userDetails = useSelector((state: IAppState) => state.auth.user);
+  const { mutateFn, isLoading } = useUpdateSettings(
+    {},
+    `${userDetails?.USER_ID}`
+  );
+  const { data } = useGetSettings(
+    `/user-manager/account/ceuser/getsuperadminbyid?saId=${userDetails?.USER_ID}`,
+    userDetails?.USER_ID,
+    {}
+  );
+  console.log('data', data);
+
+  const { register, handleSubmit, setValue, reset, control } = useForm<
+    ISettings & { email: string }
+  >({
+    // defaultValues: data,
+    defaultValues: useMemo(() => {
+      return data;
+    }, [data]),
+  });
 
   useEffect(() => {
-    setValue('email', userDetails?.email ?? '');
-  }, []);
+    reset(data);
+  }, [data]);
 
-  const onSubmit = (data: FormProps) => {
+  useEffect(() => {
+    if (userDetails && data) {
+      setValue('email', userDetails?.email ?? '');
+      setValue('email', userDetails?.email ?? '');
+    }
+  }, [data, userDetails]);
+
+  const onSubmit = (data: ISettings) => {
     data.id = userDetails?.USER_ID || '';
     console.log('data', data);
+    mutateFn(data, () => {});
   };
 
   return (
@@ -83,26 +104,25 @@ const Settings = () => {
 
         <div className="my-5 2xl:my-8 grid grid-cols-[auto_auto] justify-between gap-x-3 md:gap-x-10 gap-y-5 xl:gap-y-7 md:w-fit 2xl:w-[55%]">
           <p className="font-medium">Admin Position</p>
-
           <p className="font-semibold text-sm text-center text-greyText2 bg-greyBg rounded-xl px-3 py-2">
             {userDetails?.userType}
           </p>
-
           <p className="font-medium">Password</p>
-
           <p className="font-semibold text-sm bg-lightGreen text-center text-greenText rounded-xl px-3 py-2">
             Change Password
           </p>
-
           <p className="font-medium">Two-Factor Authentication</p>
-
-          <Switch
-            onChange={(e) => setValue('twoFactorEnabled', e.target.checked)}
+          <Controller
+            name="twoFactorEnabled"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Switch checked={value} onChange={onChange} />
+            )}
           />
         </div>
 
         <Button
-          // className="bg-primary-150 hover:opacity-85 border-none text-white rounded-xl"
+          loading={isLoading}
           label="Save changes"
           variant="primary"
           type="submit"
