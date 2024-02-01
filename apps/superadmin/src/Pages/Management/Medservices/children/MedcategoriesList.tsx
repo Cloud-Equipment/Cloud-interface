@@ -26,15 +26,15 @@ type MedserviceCategoryTableColumns = IMedserviceCategory & {
 const columnHelper = createColumnHelper<MedserviceCategoryTableColumns>();
 
 const columns = (handleActions: (view: ActionModalType) => void) => [
-  columnHelper.accessor('categoryId', {
-    header: 'Category ID',
-    cell: (info) => info.getValue(),
-  }),
+  // columnHelper.accessor('categoryId', {
+  //   header: 'Category ID',
+  //   cell: (info) => info.getValue(),
+  // }),
   columnHelper.accessor('categoryName', {
     header: 'Category Name',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('description', {
+  columnHelper.accessor('categoryDescription', {
     header: 'Description of Category',
     cell: (info) => info.getValue(),
   }),

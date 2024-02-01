@@ -29,7 +29,7 @@ const MedserviceModal = ({
 
   const { useGetAllFacilities } = facilityQueries;
   const { isLoading: facilitiesLoading, data: facilitiesList } =
-    useGetAllFacilities(`/api/facility-manager/getallfacilities`);
+    useGetAllFacilities(`/facility-manager/facility/getallfacilities`);
 
   const { useGetAllMedserviceCategories } = categoryQueries;
   const { isLoading: categoriesLoading, data: categoriesList } =
