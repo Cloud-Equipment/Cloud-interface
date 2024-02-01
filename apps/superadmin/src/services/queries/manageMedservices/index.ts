@@ -13,6 +13,7 @@ import keys from './keys';
 
 const useGetMedservice = (
   url: string,
+  body: { currentPage: number; startIndex: number; pageSize: number },
   options: Omit<
     UseQueryOptions<any, unknown, any, string[]>,
     'initialData' | 'queryFn' | 'queryKey'

@@ -30,9 +30,9 @@ const Medservices = () => {
         <div>{<CategoryModal onClose={closeCategoryModal} />}</div>
       </Modal>
 
-      <Modal open={medserviceModalOpen} onClose={closeMedserviceModal}>
+      {/* <Modal open={medserviceModalOpen} onClose={closeMedserviceModal}>
         <div>{<MedserviceModal onClose={closeMedserviceModal} />}</div>
-      </Modal>
+      </Modal> */}
 
       <section className="ce-px ce-py">
         <div className="flex justify-between items-end">
@@ -56,9 +56,10 @@ const Medservices = () => {
               New Category
             </button>
           ) : (
-            <button onClick={openMedserviceModal} className="ce-btn ">
-              New Price/Test
-            </button>
+            // <button onClick={openMedserviceModal} className="ce-btn ">
+            //   New Price/Test
+            // </button>
+            <></>
           )}
         </div>
 
