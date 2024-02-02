@@ -97,7 +97,11 @@ const Sidebar = () => {
           <></>
         )}
 
-        <NavLink onClick={handleCloseSidebar} to="." className="main-icon">
+        <NavLink
+          onClick={handleCloseSidebar}
+          to="/settings"
+          className="main-icon"
+        >
           <img src={Assets.Icons.Settings} alt="" />
           <span>Settings</span>
         </NavLink>

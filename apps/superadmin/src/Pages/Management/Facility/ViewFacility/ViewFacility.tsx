@@ -14,7 +14,7 @@ const ViewFacility = () => {
 
   const { useGetOneFacility } = queries;
   const { isLoading, data } = useGetOneFacility(
-    `/api/facility-manager/getfacility/${id}`,
+    `/facility-manager/facility/getfacility/${id}`,
     {},
     id
   );

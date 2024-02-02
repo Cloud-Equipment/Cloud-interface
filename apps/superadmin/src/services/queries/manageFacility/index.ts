@@ -41,6 +41,39 @@ const useGetFacilities = (
   });
   return { isLoading, data, isSuccess, error };
 };
+
+const useGetFacilityTypes = (
+  url: string,
+  options: Omit<
+    UseQueryOptions<any, unknown, any, string[]>,
+    'initialData' | 'queryFn' | 'queryKey'
+  > = {}
+) => {
+  const hash = [keys.readFacilityTypes];
+  const {
+    isLoading,
+    data,
+    isSuccess,
+    error,
+  }: UseQueryResult<ApiResponse<Facility>, unknown> = useQuery({
+    queryKey: hash,
+    queryFn: () =>
+      apiMethods
+        .get({ url })
+        .then((res: ApiResponse) =>
+          res.data.map((data: { [key: string]: string }) => ({
+            ...data,
+            value: data.typeId,
+            label: data.typeName,
+            categoryName: data.typeName,
+            categoryId: data.typeId,
+          }))
+        ),
+    ...options,
+  });
+  return { isLoading, data, isSuccess, error };
+};
+
 const useGetOneFacility = (
   url: string,
   options: Omit<
@@ -87,7 +120,7 @@ const useCreateFacility = (options = {}) => {
     mutationKey: [keys.create],
     mutationFn: async (data: any) => {
       return apiMethods.post({
-        url: '/api/facility-manager/createfacility',
+        url: '/facility-manager/facility/createfacility',
         body: data,
         auth: true,
       });
@@ -185,6 +218,7 @@ const queries = {
   useGetFacilityUser,
   useGetOneFacility,
   useGetAllFacilities,
+  useGetFacilityTypes,
 };
 
 export default queries;

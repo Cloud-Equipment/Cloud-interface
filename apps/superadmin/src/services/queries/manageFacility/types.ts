@@ -17,6 +17,7 @@ export interface Facility {
   facilityStatusId: number;
   facilityAdminId?: string;
   enableEMR: boolean;
+  [key: string]: any;
 }
 
 export interface FacilityUser {

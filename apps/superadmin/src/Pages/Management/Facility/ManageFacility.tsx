@@ -75,7 +75,7 @@ const ManageFacility = () => {
 
   const { useGetFacilities } = queries;
   const { isLoading, data } = useGetFacilities(
-    `/api/facility-manager/getallfacilities`
+    `/facility-manager/facility/getallfacilities`
   );
 
   //   modal
@@ -149,7 +149,7 @@ const ManageFacility = () => {
 
           <Table
             loading={isLoading}
-            data={data}
+            data={data || []}
             columns={columns(handleActionsModalView)}
             tableHeading="Facilities - 5"
             tableHeadingColorClassName="!bg-secondary-150"

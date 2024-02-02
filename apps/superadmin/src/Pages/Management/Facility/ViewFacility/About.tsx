@@ -8,7 +8,7 @@ const About = () => {
 
   const { useGetOneFacility } = queries;
   const { data } = useGetOneFacility(
-    `/api/facility-manager/getfacility/${id}`,
+    `/facility-manager/facility/getfacility/${id}`,
     {},
     id
   );

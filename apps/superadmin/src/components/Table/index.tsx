@@ -51,7 +51,7 @@ const Table: React.FC<any> = <T extends object>({
             </tr>
           ))}
         </thead>
-        {data.length > 0 ? (
+        {data.length > 0 && (
           <tbody className="">
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
@@ -63,15 +63,16 @@ const Table: React.FC<any> = <T extends object>({
               </tr>
             ))}
           </tbody>
-        ) : (
-          <div className="flex items-center justify-center">
-            <div className="flex flex-col items-center justify-center w-full">
-              <img src={Assets.Icons.NoTableData} alt="" />
-              <h5 className="">No Data Yet</h5>
-            </div>
-          </div>
         )}
       </table>
+      {data.length === 0 && (
+        <tbody className="flex items-center justify-center border py-10 w-full">
+          <div className="flex flex-col items-center justify-center w-full">
+            <img src={Assets.Icons.NoTableData} alt="" />
+            <h5 className="">No Data Yet</h5>
+          </div>
+        </tbody>
+      )}
     </div>
   );
 };

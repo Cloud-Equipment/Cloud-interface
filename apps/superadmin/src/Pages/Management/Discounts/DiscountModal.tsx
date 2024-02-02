@@ -118,9 +118,15 @@ const DiscountModal = ({
                 <Select
                   options={[
                     {
+                      value: 1,
+                      label: 'Facilities Discount',
+                      categoryName: 'Facilities Discount',
+                      categoryId: 1,
+                    },
+                    {
                       value: 0,
-                      label: 'hey',
-                      categoryName: 'categoryName',
+                      label: 'Flat Rate',
+                      categoryName: 'Flat Rate',
                       categoryId: 0,
                     },
                   ]}
@@ -138,9 +144,15 @@ const DiscountModal = ({
                 <Select
                   options={[
                     {
+                      value: 1,
+                      label: 'Flat Rate',
+                      categoryName: 'Flat Rate',
+                      categoryId: 1,
+                    },
+                    {
                       value: 0,
-                      label: 'hey',
-                      categoryName: 'categoryName',
+                      label: 'Percentage',
+                      categoryName: 'Percentage',
                       categoryId: 0,
                     },
                   ]}

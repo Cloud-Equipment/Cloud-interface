@@ -27,7 +27,8 @@ interface FormProps {
   stateId: number;
   countryId: number;
   rebatePercent: number;
-
+  facilityEmail: string;
+  facilityPhone: string;
   facilityCECode: string;
   facilityStatusId: number;
   enableEMR: boolean;
@@ -38,21 +39,29 @@ interface FormProps {
     lastName: string;
     activationCode: string;
     isFacilityAdmin: boolean;
+    phoneNumber: string;
+    roles: string[];
   };
+  comment: string;
   roles: string[];
   logoPath: File;
 
   isActive: boolean;
   dateCreated: string | Date;
-  [key: string]: any; //TODO: Remove this when all fields have been done on the backend
+  // [key: string]: any; //TODO: Remove this when all fields have been done on the backend
+  numberOfUsers: number;
 }
 
 const AddNewFacility = () => {
   const [showAddMediaModal, setShowAddMediaModal] = useState(false);
   const navigate = useNavigate();
-  const { useCreateFacility } = queries;
+  const { useCreateFacility, useGetFacilityTypes } = queries;
   const { mutateFn, isLoading } = useCreateFacility();
+  const { isLoading: isFacilityTypesLoading, data } = useGetFacilityTypes(
+    '/facility-manager/facility-types/getall'
+  );
 
+  // console.log('data', data);
   const { register, handleSubmit, control, setValue } = useForm<FormProps>();
 
   const onSubmit = (data: FormProps) => {
@@ -66,6 +75,8 @@ const AddNewFacility = () => {
       stateId,
       countryId,
       rebatePercent,
+      facilityEmail,
+      facilityPhone,
       facilityCECode,
       facilityStatusId,
       enableEMR,
@@ -76,13 +87,17 @@ const AddNewFacility = () => {
         lastName,
         activationCode,
         isFacilityAdmin,
+        phoneNumber,
+        roles,
       },
-      roles,
+      comment,
+      logoPath,
+
       isActive,
       dateCreated,
-      logoPath,
+      numberOfUsers,
     } = data;
-    console.log('roles', roles);
+
     const dataToSubmit = {
       facilityTypeId: Number(facilityTypeId),
       facilityName,
@@ -96,6 +111,9 @@ const AddNewFacility = () => {
       facilityCECode,
       facilityStatusId,
       enableEMR,
+      facilityEmail,
+      facilityPhone,
+      comment,
       facilityAdmin: {
         email,
         password,
@@ -103,6 +121,7 @@ const AddNewFacility = () => {
         lastName,
         activationCode,
         isFacilityAdmin,
+        phoneNumber,
       },
       roles: [roles],
       logoPath: '',
@@ -205,8 +224,8 @@ const AddNewFacility = () => {
                         options={[
                           {
                             value: 1,
-                            label: 'hey',
-                            categoryName: 'categoryName',
+                            label: 'Nigeria',
+                            categoryName: 'Nigeria',
                             categoryId: 1,
                           },
                         ]}
@@ -269,7 +288,7 @@ const AddNewFacility = () => {
                   <Input
                     label="Phone Number of facility"
                     containerClass="flex-1"
-                    {...register('facilityPhoneNo', {
+                    {...register('facilityPhone', {
                       // required: 'Facility Phone Number is required ',
                     })}
                   />
@@ -281,20 +300,7 @@ const AddNewFacility = () => {
                     rules={{ required: 'Facility Type is required' }}
                     render={({ field }) => (
                       <Select
-                        options={[
-                          {
-                            value: 1,
-                            label: 'Facilities Discount',
-                            categoryName: 'Facilities Discount',
-                            categoryId: 1,
-                          },
-                          {
-                            value: 0,
-                            label: 'Procedure Discount',
-                            categoryName: 'Procedure Discount',
-                            categoryId: 0,
-                          },
-                        ]}
+                        options={data || []}
                         label="Facility Type"
                         placeholder="Select Facility Type"
                         containerClass="flex-1"
@@ -316,15 +322,15 @@ const AddNewFacility = () => {
                     label="Number of User "
                     placeholder="Input Number of User"
                     containerClass="flex-1"
-                    {...register('rebatePercent', {
-                      required: 'Rebate Percentage is required ',
+                    {...register('numberOfUsers', {
+                      required: 'Number Of Users is required ',
                     })}
                   />
                   <Input
                     label="Phone Number of Admin "
                     placeholder="+234 08143626356"
                     containerClass="flex-1"
-                    {...register('facilityAdmin.phone', {
+                    {...register('facilityAdmin.phoneNumber', {
                       required: 'Admin Phone Number is required ',
                     })}
                   />
@@ -379,7 +385,7 @@ const AddNewFacility = () => {
                     label="Admin Role"
                     containerClass="flex-1"
                     placeholder="Enter your Admin role in full"
-                    {...register('roles', {
+                    {...register('facilityAdmin.roles', {
                       required: "Admin's Role is required ",
                     })}
                   />
