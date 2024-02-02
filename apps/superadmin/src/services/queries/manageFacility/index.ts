@@ -55,20 +55,18 @@ const useGetFacilityTypes = (
     data,
     isSuccess,
     error,
-  }: UseQueryResult<ApiResponse<Facility>, unknown> = useQuery({
+  }: UseQueryResult<Record<string, string>[], unknown> = useQuery({
     queryKey: hash,
     queryFn: () =>
-      apiMethods
-        .get({ url })
-        .then((res: ApiResponse) =>
-          res.data.map((data: { [key: string]: string }) => ({
-            ...data,
-            value: data.typeId,
-            label: data.typeName,
-            categoryName: data.typeName,
-            categoryId: data.typeId,
-          }))
-        ),
+      apiMethods.get({ url }).then((res: ApiResponse) =>
+        res.data.map((data: { [key: string]: string }) => ({
+          ...data,
+          value: data.typeId,
+          label: data.typeName,
+          categoryName: data.typeName,
+          categoryId: data.typeId,
+        }))
+      ),
     ...options,
   });
   return { isLoading, data, isSuccess, error };

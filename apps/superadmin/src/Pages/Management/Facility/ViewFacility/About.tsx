@@ -6,12 +6,23 @@ import { formatDate } from '../../../../utils';
 const About = () => {
   const { id } = useParams();
 
-  const { useGetOneFacility } = queries;
+  const { useGetOneFacility, useGetFacilityTypes } = queries;
   const { data } = useGetOneFacility(
     `/facility-manager/facility/getfacility/${id}`,
     {},
     id
   );
+
+  const { data: facilityTypes } = useGetFacilityTypes(
+    `/facility-manager/facility-types/getall`
+  );
+
+  function getFacilityNameFromId(id: string) {
+    if (facilityTypes) {
+      return facilityTypes.find((type) => type.typeId === id)?.typeName;
+    }
+    return;
+  }
 
   return (
     <div className="bg-white px-3.5 py-5 rounded-[20px]">
@@ -53,7 +64,7 @@ const About = () => {
 
           <TitleSubField
             title="Facility Type"
-            subtitle={data?.facilityTypeId || '-'}
+            subtitle={getFacilityNameFromId(`${data?.facilityTypeId}`) || '-'}
           />
           <TitleSubField
             title="Rebate Percentage"

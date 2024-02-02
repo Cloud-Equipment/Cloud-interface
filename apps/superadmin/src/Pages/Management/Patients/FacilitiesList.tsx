@@ -75,7 +75,7 @@ const ManageFacility = () => {
 
   const { useGetFacilities } = queries;
   const { isLoading, data } = useGetFacilities(
-    `/api/facility-manager/getallfacilities`
+    `/facility-manager/facility/getallfacilities`
   );
 
   //   table
