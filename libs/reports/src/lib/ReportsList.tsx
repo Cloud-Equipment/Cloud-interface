@@ -8,6 +8,7 @@ import * as Assets from '@cloud-equipment/assets';
 import queries from './queries/reports';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Table } from '@cloud-equipment/ui-components';
+import moment from 'moment';
 
 export type ActionType =
   | null
@@ -22,25 +23,30 @@ const columnHelper = createColumnHelper<ReportTableColumns>();
 const columns = (handleActions: (view: ActionType) => void) => [
   columnHelper.accessor('date', {
     header: 'Date and Time',
-    cell: (info) => info.getValue(),
+    cell: (info) => moment(info.getValue()).format('DD-MM-YYYY . HH:mm:ss'),
   }),
   columnHelper.accessor('medServiceName', {
     header: 'Procedure/Test Ordered',
+    cell: (info) => info.getValue(),
+  }),
+
+  // columnHelper.accessor('referrerName', {
+  //   header: "Referrer's Name",
+  //   cell: (info) => info.getValue(),
+  // }),
+  // columnHelper.accessor('refererHospital', {
+  //   header: "Referrer's Hospital",
+  //   cell: (info) => info.getValue(),
+  // }),
+  columnHelper.accessor('patientName', {
+    header: 'Patient Name',
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor('patientAge', {
     header: 'Age of Patient',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('referrerName', {
-    header: "Referrer's Name",
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor('refererHospital', {
-    header: "Referrer's Hospital",
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor('phoneNo', {
+  columnHelper.accessor('patientPhone', {
     header: 'Phone Number',
     cell: (info) => info.getValue(),
   }),
