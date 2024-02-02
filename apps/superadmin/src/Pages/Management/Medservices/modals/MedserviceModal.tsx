@@ -1,17 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import { MenuItem, Select } from '@mui/material';
-import {
-  ICreateProcedure,
-  IMedService,
-  IMedserviceCategory,
-  IUser,
-} from '@cloud-equipment/models';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearLoading, setLoading } from '@cloud-equipment/shared_store';
+import { IMedService } from '@cloud-equipment/models';
 import * as Assets from '@cloud-equipment/assets';
-import facilityQueries from '../../../../services/queries/manageFacility';
 import categoryQueries from '../../../../services/queries/manageMedserviceCategories';
 import medserviceQueries from '../../../../services/queries/manageMedservices';
 import { Input, TextArea } from '../../../../components';
@@ -19,17 +10,15 @@ import { Input, TextArea } from '../../../../components';
 const MedserviceModal = ({
   onClose,
   procedureToEdit,
+  facilityId,
 }: {
   onClose: () => void;
   procedureToEdit?: IMedService;
+  facilityId: string;
 }) => {
   const { register, handleSubmit, control, getValues, setValue } = useForm();
 
   const [view, setView] = useState<1 | 2>(1);
-
-  const { useGetAllFacilities } = facilityQueries;
-  const { isLoading: facilitiesLoading, data: facilitiesList } =
-    useGetAllFacilities(`/api/facility-manager/getallfacilities`);
 
   const { useGetAllMedserviceCategories } = categoryQueries;
   const { isLoading: categoriesLoading, data: categoriesList } =
@@ -37,15 +26,33 @@ const MedserviceModal = ({
       `/service-manager/medServiceCategory/getallcategory`
     );
 
-  const { useCreateMedservice } = medserviceQueries;
+  const { useCreateMedservice, useUpdateMedservice } = medserviceQueries;
   const { mutateFn, isError, isSuccess, isLoading } = useCreateMedservice();
+  const {
+    mutateFn: mutateFn_update,
+    isError: isError_update,
+    isSuccess: isSuccess_update,
+    isLoading: isLoading_update,
+  } = useUpdateMedservice(procedureToEdit?.medServiceId as number);
 
   const onSubmit = () => {
     setView(2);
   };
 
   const submitData = () => {
-    mutateFn(getValues(), () => onClose());
+    if (procedureToEdit) {
+      mutateFn_update(
+        {
+          ...getValues(),
+          facilityId,
+          medServiceId: procedureToEdit?.medServiceId,
+          new_price: Number(getValues()?.new_price ?? null),
+        },
+        () => onClose()
+      );
+    } else {
+      mutateFn({ ...getValues(), facilityId }, () => onClose());
+    }
   };
 
   useEffect(() => {
@@ -61,27 +68,6 @@ const MedserviceModal = ({
       {view === 1 ? (
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-5">
           <h4>Add New Price/Procedure</h4>
-
-          <div className="form-input-label-holder">
-            <label className="px-5">Facility</label>
-            <Controller
-              name="facilityId"
-              control={control}
-              defaultValue={0}
-              render={({ field }) => (
-                <Select {...field}>
-                  <MenuItem value={0} disabled>
-                    Choose Facility
-                  </MenuItem>
-                  {facilitiesList?.map((x, i) => (
-                    <MenuItem key={i} value={x.id}>
-                      {x.facilityName}
-                    </MenuItem>
-                  ))}
-                </Select>
-              )}
-            />
-          </div>
 
           <div className="form-input-label-holder">
             <label className="px-5">Medservice Category</label>
@@ -113,10 +99,23 @@ const MedserviceModal = ({
 
           <Input
             label="Test/Diagnostic Price"
+            readOnly={!!procedureToEdit}
             {...register('price', {
               required: 'Medservice Price is required',
             })}
             type="number"
+          />
+
+          {procedureToEdit ? (
+            <Input label="New Price" {...register('new_price')} type="number" />
+          ) : (
+            <></>
+          )}
+
+          <TextArea
+            label="Description"
+            rows={20}
+            {...register('medServiceDescription')}
           />
 
           <button className="ce-btn !bg-greenText mt-3 py-3">

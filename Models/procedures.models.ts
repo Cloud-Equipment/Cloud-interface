@@ -7,6 +7,7 @@ export interface IProcedure {
   referrersName: null;
   referrersFacility: null;
   phoneNumber: null;
+  patientPhone: null;
   facilityDiscountPercent: number;
   facilityDiscountCodeName: null;
   fprocedureDiscountPercent: number;

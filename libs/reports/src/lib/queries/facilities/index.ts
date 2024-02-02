@@ -24,7 +24,7 @@ const useGetAllFacilities = (options = {}) => {
     mutationKey: [keys.getAll],
     mutationFn: async () => {
       const response = await apiClient.get({
-        url: `/api/facility-manager/getallfacilities`,
+        url: `/facility-manager/facility/getallfacilities`,
         auth: true,
       });
 

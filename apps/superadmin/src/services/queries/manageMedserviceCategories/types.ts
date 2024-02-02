@@ -5,5 +5,5 @@ export interface IMedserviceCategory {
   updatedAt?: Date;
   isActive: boolean;
   status: string;
-  description: string;
+  categoryDescription: string;
 }
