@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 
 import { Controller, useForm } from 'react-hook-form';
-import { Switch } from '@mui/material';
+import { Switch, Modal } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import { Input } from '@cloud-equipment/ui-components';
@@ -139,9 +139,18 @@ const Settings = () => {
         />
       </form>
 
-      <div className="border mt-10"></div>
+      <div className="mt-10 py-10 flex justify-end">
+        <div className="flex flex-col text-[0.6875rem] font-normal leading-[21px] text-secondary-500">
+          <div className="">
+            About | Developers | Terms of Use | Privacy Policy | Settings
+          </div>
+          <div className="">@ 2023 Peddlesoft, Inc</div>
+        </div>
+      </div>
     </section>
   );
 };
 
 export default Settings;
+
+const SettingsModal = () => {};
