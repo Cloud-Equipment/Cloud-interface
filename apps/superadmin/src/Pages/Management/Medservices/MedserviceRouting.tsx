@@ -9,6 +9,6 @@ export const MedserviceRouting = () => {
     { path: '', element: <FacilitiesList /> },
     { path: '/facilities/:id', element: <MedservicesList /> },
     { path: '/categories', element: <MedcategoriesList /> },
-    { path: '/price-change-request', element: <PriceChangeRequest /> },
+    { path: '/price-change-request/:id', element: <PriceChangeRequest /> },
   ]);
 };

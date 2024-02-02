@@ -26,15 +26,33 @@ const MedserviceModal = ({
       `/service-manager/medServiceCategory/getallcategory`
     );
 
-  const { useCreateMedservice } = medserviceQueries;
+  const { useCreateMedservice, useUpdateMedservice } = medserviceQueries;
   const { mutateFn, isError, isSuccess, isLoading } = useCreateMedservice();
+  const {
+    mutateFn: mutateFn_update,
+    isError: isError_update,
+    isSuccess: isSuccess_update,
+    isLoading: isLoading_update,
+  } = useUpdateMedservice(procedureToEdit?.medServiceId as number);
 
   const onSubmit = () => {
     setView(2);
   };
 
   const submitData = () => {
-    mutateFn({ ...getValues(), facilityId }, () => onClose());
+    if (procedureToEdit) {
+      mutateFn_update(
+        {
+          ...getValues(),
+          facilityId,
+          medServiceId: procedureToEdit?.medServiceId,
+          new_price: Number(getValues()?.new_price ?? null),
+        },
+        () => onClose()
+      );
+    } else {
+      mutateFn({ ...getValues(), facilityId }, () => onClose());
+    }
   };
 
   useEffect(() => {
@@ -81,14 +99,22 @@ const MedserviceModal = ({
 
           <Input
             label="Test/Diagnostic Price"
+            readOnly={!!procedureToEdit}
             {...register('price', {
               required: 'Medservice Price is required',
             })}
             type="number"
           />
 
+          {procedureToEdit ? (
+            <Input label="New Price" {...register('new_price')} type="number" />
+          ) : (
+            <></>
+          )}
+
           <TextArea
             label="Description"
+            rows={20}
             {...register('medServiceDescription')}
           />
 

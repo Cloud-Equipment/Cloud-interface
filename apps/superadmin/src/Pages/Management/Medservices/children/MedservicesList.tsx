@@ -18,7 +18,9 @@ import { IMedservice } from '../../../../services/queries/manageMedservices/type
 import ApproveMedserviceModal from '../modals/ApproveMedserviceModal';
 import MedserviceModal from '../modals/MedserviceModal';
 import DeleteMedserviceModal from '../modals/DeleteMedserviceModal';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { formatDate } from '../../../../utils';
+import numeral from 'numeral';
 
 type MedserviceTableColumns = IMedservice & { elipsis: 'elipsis' };
 
@@ -27,7 +29,7 @@ const columnHelper = createColumnHelper<MedserviceTableColumns>();
 const columns = (handleActionsView: () => void) => [
   columnHelper.accessor('dateCreated', {
     header: 'Date & Time Added',
-    cell: (info) => info.getValue(),
+    cell: (info) => formatDate(info.getValue()?.toString()),
   }),
   columnHelper.accessor('medServiceCategoryId', {
     header: 'Medical Category',
@@ -43,7 +45,7 @@ const columns = (handleActionsView: () => void) => [
   }),
   columnHelper.accessor('price', {
     header: 'Price',
-    cell: (info) => info.getValue(),
+    cell: (info) => `₦${numeral(info.getValue()).format('0,0.00')}`,
   }),
   columnHelper.accessor('status', {
     header: 'Status',
@@ -195,6 +197,8 @@ const MenuDropdown = ({
   const closeEditModal = () => setEditModalOpen(false);
   const closeDeleteModal = () => setDeleteModalOpen(false);
 
+  const navigate = useNavigate();
+
   return (
     <div>
       <button
@@ -213,7 +217,7 @@ const MenuDropdown = ({
           'aria-labelledby': 'basic-button',
         }}
       >
-        {medserviceData.status?.toLowerCase() === 'approved' ? (
+        {medserviceData.status?.toLowerCase() !== 'approved' ? (
           <MenuItem
             onClick={() => {
               openEditModal();
@@ -244,6 +248,20 @@ const MenuDropdown = ({
         ) : (
           <></>
         )}
+
+        <MenuItem
+          onClick={() => {
+            navigate(
+              `/management/medservices/price-change-request/${medserviceData.medServiceId}`
+            );
+            handleMenuClose();
+          }}
+        >
+          <ListItemIcon>
+            <img src={Assets.Icons.EditPrice} alt="" />
+          </ListItemIcon>
+          <ListItemText>View Price History </ListItemText>
+        </MenuItem>
 
         {/* <MenuItem
           onClick={() => {

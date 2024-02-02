@@ -27,7 +27,7 @@ const ApproveMedserviceModal = ({
   const { isLoading, data, mutateFn } = useApproveMedservice(
     `/service-manager/medServices/approvedisapprove?priceChangeRequestId=${
       procedureData.medServiceId
-    }&statusFlag=${isApproving ? 'APPROVE' : 'REJECT'}`
+    }&statusFlag=${isApproving ? 'a' : 'r'}`
   );
   const { register, handleSubmit, control, getValues, setValue } = useForm();
 
