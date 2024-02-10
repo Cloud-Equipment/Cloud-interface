@@ -31,15 +31,15 @@ h6 {
 // mui list
 .MuiList-root {
   li {
-    padding: 14px 20px !important;
-
+    padding: 14px 25px !important;
+    color: #344054 !important;
     &:hover {
-      background-color: #eefffc;
+      background-color: #54d4bd;
+      color: #fff !important;
     }
 
     span {
       font-size: 14px !important;
-      color: #344054 !important;
     }
   }
 }

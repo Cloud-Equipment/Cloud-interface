@@ -24,6 +24,7 @@ import View from './view.svg';
 import WhiteArrowUp from './white-arrow-up.svg';
 import WhitePlus from './white-plus.png';
 import X from './x.png';
+import SupportImage from './supportImage.png';
 import EditPrice from './edit-price.svg';
 import Delete from './delete.svg';
 import UploadIcon1 from './uploadIcon1.svg';
@@ -44,6 +45,13 @@ import FileUpload from './file-upload.svg';
 import NoTableData from './noTableData.svg';
 import ArrowRight from './arrow-right.svg';
 import ViewPaymentDetails from './viewPaymentDetails.svg';
+import SuccessfulPasswordChange from './successfulPasswordChange.svg';
+import WhitePlusIcon from './WhitePlusIcon.svg';
+import ExclamationIcon from './exclamationIcon.svg';
+import UploadIconInModal from './uploadIconInModal.svg';
+import WhiteCheckmark from './whiteCheckmark.svg';
+import FilterIcon from './filterIcon.svg';
+import ArrowUpIcon from './arrowUpIcon.svg';
 
 export {
   ArrowRight,
@@ -92,4 +100,12 @@ export {
   FileUpload,
   NoTableData,
   ViewPaymentDetails,
+  SuccessfulPasswordChange,
+  SupportImage,
+  WhitePlusIcon,
+  ExclamationIcon,
+  UploadIconInModal,
+  WhiteCheckmark,
+  FilterIcon,
+  ArrowUpIcon,
 };
