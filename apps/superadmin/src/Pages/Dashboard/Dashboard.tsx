@@ -75,7 +75,7 @@ const Dashboard = () => {
           />
         </div>
 
-        <div className="grid xl:grid-cols-2 mt-5 gap-5">
+        <div className="grid 2xl:grid-cols-2 mt-5 gap-5">
           <PatientActivityChart />
           <MonthlyRevenueChart />
         </div>

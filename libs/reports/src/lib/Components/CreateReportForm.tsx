@@ -6,9 +6,6 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Autocomplete, MenuItem, TextField } from '@mui/material';
 import { Checkbox, ListItemText } from '@mui/material';
 import {
-  IMedService,
-  IMedserviceCategory,
-  ApiResponse,
   IPatient,
   IDiscount,
   IUser,
@@ -19,7 +16,6 @@ import { setLoading, clearLoading } from '@cloud-equipment/shared_store';
 import { ReportsPriceBreakdown } from './ReportsPriceBreakdown';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { AxiosResponse } from 'axios';
 import * as Assets from '@cloud-equipment/assets';
 import { useNavigate } from 'react-router-dom';
 import patientQueries from '../queries/patients';
@@ -234,7 +230,8 @@ const CreateReportForm = () => {
   };
 
   const onSubmit = (data_: any) => {
-    const facilityId = accountType === 0? selectedFacility?.id : userDetails.FACILITY_ID
+    const facilityId =
+      accountType === 0 ? selectedFacility?.id : userDetails.FACILITY_ID;
     const createProcedure = (patientId: number) => {
       const proceduresToSubmit: any[] = [];
       selectedProcedures.forEach((x) => {

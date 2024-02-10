@@ -98,6 +98,40 @@ button.btn-icon {
   }
 }
 
+.dashboard-table-holder {
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+
+    thead {
+      @apply bg-[#54D4BD];
+
+      th {
+        @apply text-white text-left;
+        white-space: nowrap;
+      }
+    }
+
+    tbody {
+      td {
+        @apply text-[#525252] text-nowrap;
+        border-bottom: 1px solid #e1e1e1;
+      }
+    }
+
+    th,
+    td {
+      padding: 12px;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+    }
+  }
+}
+
 .sort-container {
   @apply bg-[#F8F8FA] gap-4 rounded-[20px] flex px-5 py-2.5 items-center;
 

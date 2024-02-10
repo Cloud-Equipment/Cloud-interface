@@ -30,9 +30,10 @@ const Sidebar = () => {
       </button>
 
       <div className="flex items-center space-x-3">
-
         <img src={Assets.Icons.Favicon} alt="Facility Logo" />
-        <p className="font-medium  leading-5 text-lg">Cloud Equipment SUPERADMIN</p>
+        <p className="font-medium  leading-5 text-lg">
+          Cloud Equipment SUPERADMIN
+        </p>
       </div>
 
       <p className="mt-10 px-4">MAIN</p>
