@@ -9,6 +9,5 @@ export interface IMedservice {
   dateCreated: Date;
   dateModified: Date;
   facilityId: string;
-  facilityName: string;
   status: string;
 }

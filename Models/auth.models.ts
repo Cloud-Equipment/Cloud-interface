@@ -7,6 +7,7 @@ export interface IUser {
   USER_ID: string;
   'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': UserTypeEnum;
   FACILITY_REBATE_PERCENTAGE: string;
+  USER_FULLNAME: string;
 }
 
 export enum UserTypeEnum {

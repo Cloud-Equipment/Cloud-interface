@@ -63,7 +63,9 @@ const Navbar = () => {
           />
 
           <div className="flex-1">
-            <p className="font-bold text-blackText">Emma Taylor</p>
+            <p className="font-bold text-blackText">
+              {userDetails?.USER_FULLNAME}
+            </p>
             <p className="text-greyText text-sm">{userDetails?.userType}</p>
           </div>
 
