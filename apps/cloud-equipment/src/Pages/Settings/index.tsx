@@ -1,28 +1,28 @@
 import { useEffect, useMemo } from 'react';
 
 import { Controller, useForm } from 'react-hook-form';
-import { Switch } from '@mui/material';
+import { Switch, Modal } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { Input } from '../../components';
+import { Input } from '@cloud-equipment/ui-components';
 import { Button, NavTab } from '@cloud-equipment/ui-components';
 import * as Assets from '@cloud-equipment/assets';
 import { IAppState } from '../../Store/store';
-import { ISettings } from '../../services/queries/manageSettings/types';
-import queries from '../../services/queries/manageSettings';
+// import { ISettings } from '../../services/queries/manageSettings/types';
+// import queries from '../../services/queries/manageSettings';
 
 const Settings = () => {
-  const { useUpdateSettings, useGetSettings } = queries;
-  const userDetails = useSelector((state: IAppState) => state.auth.user);
-  const { mutateFn, isLoading } = useUpdateSettings(
-    {},
-    `${userDetails?.USER_ID}`
-  );
-  const { data } = useGetSettings<{ email: string }>(
-    `/user-manager/account/ceuser/getsuperadminbyid?saId=${userDetails?.USER_ID}`,
-    userDetails?.USER_ID,
-    {}
-  );
+  // const { useUpdateSettings, useGetSettings } = queries;
+  // const userDetails = useSelector((state: IAppState) => state.auth.user);
+  // const { mutateFn, isLoading } = useUpdateSettings(
+  //   {},
+  //   `${userDetails?.USER_ID}`
+  // );
+  // const { data } = useGetSettings<{ email: string }>(
+  //   `/user-manager/account/ceuser/getsuperadminbyid?saId=${userDetails?.USER_ID}`,
+  //   userDetails?.USER_ID,
+  //   {}
+  // );
 
   const {
     register,
@@ -31,47 +31,42 @@ const Settings = () => {
     reset,
     control,
     formState: { errors },
-  } = useForm<ISettings & { email: string }>({
-    defaultValues: useMemo(() => {
-      return {
-        id: data?.id,
-        firstName: data?.firstName,
-        lastName: data?.lastName,
-        twoFactorEnabled: data?.twoFactorEnabled || false,
-        phoneNumber: data?.phoneNumber,
-        email: data?.email,
-      };
-    }, [data]),
+  } = useForm({
+    // defaultValues: useMemo(() => {
+    //   return {
+    //     id: data?.id,
+    //     firstName: data?.firstName,
+    //     lastName: data?.lastName,
+    //     twoFactorEnabled: data?.twoFactorEnabled || false,
+    //     phoneNumber: data?.phoneNumber,
+    //     email: data?.email,
+    //   };
+    // }, [data]),
   });
 
-  console.log(errors);
+  // useEffect(() => {
+  //   reset({
+  //     id: data?.id,
+  //     firstName: data?.firstName,
+  //     lastName: data?.lastName,
+  //     twoFactorEnabled: data?.twoFactorEnabled || false,
+  //     phoneNumber: data?.phoneNumber,
+  //     email: data?.email,
+  //   });
+  // }, [data]);
 
-  useEffect(() => {
-    reset({
-      id: data?.id,
-      firstName: data?.firstName,
-      lastName: data?.lastName,
-      twoFactorEnabled: data?.twoFactorEnabled || false,
-      phoneNumber: data?.phoneNumber,
-      email: data?.email,
-    });
-  }, [data]);
-
-  const onSubmit = (data: ISettings) => {
-    data.id = userDetails?.USER_ID || '';
-    mutateFn(data, () => {});
-  };
+  // const onSubmit = (data: ISettings) => {
+  //   data.id = userDetails?.USER_ID || '';
+  //   mutateFn(data, () => {});
+  // };
 
   return (
     <section className="ce-px ce-py">
-      <form
-        onSubmit={handleSubmit(onSubmit, (err) => {})}
-        className="bg-white px-4 pb-6 md:px-6 md:pb-8 pt-2 rounded-[20px] mx-auto md:w-[80%] 2xl:max-w-[1100px]"
-      >
+      <form className="bg-white px-4 pb-6 md:px-6 md:pb-8 pt-2 rounded-[20px] mx-auto md:w-[80%] 2xl:max-w-[1100px]">
         <NavTab
           links={[
             { label: 'General Settings', href: '.' },
-            { label: 'Security', href: '.' },
+            { label: 'Security', href: '/security' },
           ]}
         />
 
@@ -117,10 +112,10 @@ const Settings = () => {
           />
         </div>
 
-        <div className="my-5 2xl:my-8 grid grid-cols-[auto_auto] justify-between gap-x-3 md:gap-x-10 gap-y-5 xl:gap-y-7 md:w-fit 2xl:w-[55%]">
+        <div className="my-5 2xl:my-8 grid grid-cols-[auto_auto] justify-between gap-x-3 md:gap-x-2 gap-y-5 xl:gap-y-5 md:w-fit 2xl:w-[55%]">
           <p className="font-medium">Admin Position</p>
           <p className="font-semibold text-sm text-center text-greyText2 bg-greyBg rounded-xl px-3 py-2">
-            {userDetails?.userType}
+            {'userDetails?.userType'}
           </p>
           <p className="font-medium">Password</p>
           <p className="font-semibold text-sm bg-lightGreen text-center text-greenText rounded-xl px-3 py-2">
@@ -137,14 +132,25 @@ const Settings = () => {
         </div>
 
         <Button
-          loading={isLoading}
+          loading={false}
           label="Save changes"
           variant="primary"
           type="submit"
         />
       </form>
+
+      <div className="mt-10 py-10 flex justify-end">
+        <div className="flex flex-col text-[0.6875rem] font-normal leading-[21px] text-secondary-500">
+          <div className="">
+            About | Developers | Terms of Use | Privacy Policy | Settings
+          </div>
+          <div className="">@ 2023 Peddlesoft, Inc</div>
+        </div>
+      </div>
     </section>
   );
 };
 
 export default Settings;
+
+const SettingsModal = () => {};

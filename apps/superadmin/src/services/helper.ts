@@ -1,6 +1,7 @@
 export const getQueryKeys = (namespace: string) => ({
   create: `${namespace}/create`,
   read: `${namespace}/read`,
+  readFacilityTypes: `${namespace}/readFacilityTypes`,
   readOne: `${namespace}/readOne`,
   update: `${namespace}/update`,
   patch: `${namespace}/patch`,

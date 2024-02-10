@@ -17,7 +17,7 @@ const FormInput = forwardRef<HTMLInputElement, InputProps<any>>(
       <div
         className={cx(
           { 'flex flex-col gap-1': !!label },
-          { [`${containerClass}`]: !!containerClass },
+          { [`${containerClass}`]: !!containerClass }
           // 'mt-3'
         )}
       >

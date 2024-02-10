@@ -1,8 +1,9 @@
 export interface Facility {
   id: string;
-  numberOfUsers?: number | null;
+  numberOfUsers?: number;
   facilityTypeId: number;
   facilityName: string;
+  facilityCECode: string;
   addressLine1: string;
   addressLine2: string;
   postalCode: number;
@@ -12,7 +13,11 @@ export interface Facility {
   isActive: boolean;
   dateCreated: string;
   rebatePercent: number;
-  logoPath: string;
+  logoPath?: string;
+  facilityStatusId: number;
+  facilityAdminId?: string;
+  enableEMR: boolean;
+  [key: string]: any;
 }
 
 export interface FacilityUser {

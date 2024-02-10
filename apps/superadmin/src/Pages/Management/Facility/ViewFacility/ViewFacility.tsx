@@ -14,11 +14,11 @@ const ViewFacility = () => {
 
   const { useGetOneFacility } = queries;
   const { isLoading, data } = useGetOneFacility(
-    `/api/facility-manager/getfacility/${id}`,
+    `/facility-manager/facility/getfacility/${id}`,
     {},
     id
   );
-
+  console.log('data', data);
   if (isLoading) {
     return <h1>Loading</h1>;
   }
@@ -29,7 +29,7 @@ const ViewFacility = () => {
           <div className="rounded-full w-14 h-14 border"></div>
           <div className="">
             <h5 className=" font-medium text-2xl leading-[2.0625rem]">
-              Agape Laboratory
+              {data?.facilityName || '-'}
             </h5>
             <p className="text-sm font-normal leading-[1.1875rem] text-neutral-150">
               Added on {formatDate(data?.dateCreated, false)}
@@ -42,7 +42,7 @@ const ViewFacility = () => {
         <div className="my-10">
           <div className="rounded-full w-16 h-16 border"></div>
           <h5 className="text-2xl font-medium leading-[2.0625rem] text-secondary-350">
-            Emmanuel Abubakar
+            {data?.adminFirstname} {data?.adminLastname}
           </h5>
           <p className="text-neutral-150 text-sm font-normal leading-[1.1875rem]">
             Chief Medical Doctor
@@ -51,39 +51,40 @@ const ViewFacility = () => {
         <div className="[&>div]:text-sm [&>div]:font-normal [&>div]:leading-[1.1875rem] [&>div]:text-secondary-400 [&>div]:border-b [&>div]:border-secondary-200 [&>div]:mb-5 [&>div]:pb-4">
           <div className="flex justify-between">
             <div className="flex gap-4">
-              <img alt="" src={Assets.Icons.UserIcon} className="" /> CE/001{' '}
+              <img alt="" src={Assets.Icons.UserIcon} className="" />{' '}
+              {data?.facilityCECode || '-'}{' '}
             </div>
             <img
               src={Assets.Icons.CopyIcon}
               className="cursor-pointer"
-              onClick={() => copyToClipboard('CE/001')}
+              onClick={() => copyToClipboard(data?.facilityCECode || '')}
               alt=""
             />
           </div>
           <div className="flex justify-between">
             <div className="flex gap-4">
               <img alt="" src={Assets.Icons.MailIcon} className="" />{' '}
-              devendrac11@gmail.com{' '}
+              {data?.facilityEmail}{' '}
             </div>
             <img
               src={Assets.Icons.CopyIcon}
               className="cursor-pointer"
               alt=""
-              onClick={() => copyToClipboard('devendrac11@gmail.com')}
+              onClick={() => copyToClipboard(data?.facilityEmail)}
             />
           </div>
           <div className="flex justify-between">
             <div className="flex gap-4">
-              <img alt="" src={Assets.Icons.PhoneIcon} /> 234(0)812345667{' '}
+              <img alt="" src={Assets.Icons.PhoneIcon} /> {data?.facilityPhone}{' '}
             </div>
             <img
               src={Assets.Icons.CopyIcon}
               className="cursor-pointer"
               alt=""
-              onClick={() => copyToClipboard('234(0)812345667')}
+              onClick={() => copyToClipboard(data?.facilityPhone)}
             />
           </div>
-          <div className="flex">{data?.addressLine1}e</div>
+          <div className="flex">{data?.addressLine1}</div>
           <div className="flex">
             <div className="flex gap-4 flex-1">
               <img alt="" src={Assets.Icons.WarningIcon} /> Blacklist Facility{' '}

@@ -43,6 +43,7 @@ import * as Dashboard from './dashboard';
 import FileUpload from './file-upload.svg';
 import NoTableData from './noTableData.svg';
 import ArrowRight from './arrow-right.svg';
+import ViewPaymentDetails from './viewPaymentDetails.svg';
 
 export {
   ArrowRight,
@@ -90,4 +91,5 @@ export {
   EnableEMRIcon,
   FileUpload,
   NoTableData,
+  ViewPaymentDetails,
 };

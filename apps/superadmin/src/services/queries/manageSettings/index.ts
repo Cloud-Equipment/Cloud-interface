@@ -12,7 +12,7 @@ import { ApiResponse } from 'Models/api.models';
 import keys from './keys';
 import { showToast } from '../../../utils/toast';
 
-const useGetSettings = (
+const useGetSettings = <T extends object>(
   url: string,
   body?: string,
   options: Omit<
@@ -21,7 +21,7 @@ const useGetSettings = (
   > = {}
 ) => {
   const hash = [keys.read];
-  const { isLoading, data, isSuccess, error }: UseQueryResult<ISettings> =
+  const { isLoading, data, isSuccess, error }: UseQueryResult<ISettings & T> =
     useQuery({
       queryKey: hash,
       queryFn: () =>
@@ -63,7 +63,6 @@ const useUpdateSettings = (options = {}, id?: string) => {
     mutateFn: (bodyArg: ISettings, successCb: () => void) => {
       return mutate(bodyArg, {
         onSuccess: (res) => {
-          console.log('res', res);
           showToast('Settings Updated Successfully', 'success');
           setTimeout(() => {
             successCb?.();
