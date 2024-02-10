@@ -11,7 +11,6 @@ export { default as DashboardCard } from './DashboardCard';
 export { default as DatePicker } from './DatePicker';
 export { default as FileUpload } from './FileUpload';
 export { default as FileUploadWithModal } from './FileUploadWithModal';
-export { default as Select } from './Select';
 export { default as TextArea } from './TextArea';
 export { default as TimePicker } from './TimePicker';
 
