@@ -9,8 +9,9 @@ import {
   FileUploadWithModal,
   Table,
 } from '@cloud-equipment/ui-components';
+import { formatDate } from '@cloud-equipment/utils';
 
-// import queries from '../../../services/queries/managePatients';
+import queries from '../../../services/queries/managePatients';
 
 type PatientTableColumns = { [key: string]: string } & {
   lastLogin: string;
@@ -49,13 +50,12 @@ const columns = [
 const ViewPatient = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const [patientDetails, setPatientDetails] = useState<any>({});
 
-  // const { useGetOnePatient } = queries;
-  // const { data, isLoading } = useGetOnePatient(
-  //   `/patient/getpatientbyuniqueid/${params?.id}`
-  // );
-  const data: any = {};
+  const { useGetPatientById } = queries;
+  const { data, isLoading } = useGetPatientById(
+    `/patient/getpatientbyuniqueid/${params.id}`,
+    { enabled: !!params.id }
+  );
 
   return (
     <>
@@ -92,6 +92,9 @@ const ViewPatient = () => {
                 label="Edit Profile"
                 className="border-primary-150 text-secondary-400"
                 variant="neutral"
+                onClick={() =>
+                  navigate(`/management/patient/edit/${params.id}`)
+                }
               />
             </div>
           </div>
@@ -101,7 +104,7 @@ const ViewPatient = () => {
           <div className="mt-10 [box-shadow:0px_4px_12px_0px_#0D5F5026] rounded-lg py-4 px-16 grid md:grid-cols-3 2xl:grid-cols-6 gap-4 2xl:gap-10">
             <TitleSubtitle
               title="Registration Date & Time"
-              subtitle={`${data?.registrationDate || '-'}`}
+              subtitle={`${formatDate(data?.registrationDate) || '-'}`}
             />
 
             <TitleSubtitle
@@ -126,7 +129,7 @@ const ViewPatient = () => {
 
             <TitleSubtitle
               title="Date of Birth"
-              subtitle={`${data?.dateOfBirth || '-'}`}
+              subtitle={`${formatDate(data?.dateOfBirth) || '-'}`}
             />
 
             <TitleSubtitle
@@ -169,7 +172,7 @@ const ViewPatient = () => {
 
             <TitleSubtitle
               title="Taken Drugs"
-              subtitle={`${data?.takingMedication || '-'}`}
+              subtitle={`${data?.takingMedication ? 'Yes' : 'No' || '-'}`}
             />
 
             <TitleSubtitle

@@ -37,15 +37,15 @@ const useGetPatients = (
   return { isLoading, data, isSuccess, error };
 };
 
-const useDisableUser = (options = {}) => {
+const useCreatePatient = (options = {}) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     ...options,
     mutationKey: [keys.create],
-    mutationFn: async (data: any) => {
+    mutationFn: async (data: IPatient) => {
       return apiMethods.post({
-        url: `/user-manager/account/user/disableuser?userId=${data?.id}`,
+        url: `/patient/createpatient`,
         body: data,
         auth: true,
       });
@@ -57,12 +57,12 @@ const useDisableUser = (options = {}) => {
   const { mutate, isSuccess, isError, data, isPending } = mutation;
 
   return {
-    mutateFn: (bodyArg: any, successCb?: () => void) => {
+    mutateFn: (bodyArg: IPatient, successCb: (res: any) => void) => {
       return mutate(bodyArg, {
         onSuccess: (res) => {
-          showToast(res.message || 'User Disabled Successfully', 'success');
+          showToast(res.message || 'Patient Created Successfully', 'success');
           setTimeout(() => {
-            successCb?.();
+            successCb?.(res);
           }, 1500);
         },
       });
@@ -73,16 +73,16 @@ const useDisableUser = (options = {}) => {
     isLoading: isPending,
   };
 };
-
-const useEnableUser = (options = {}) => {
+const useEditPatient = (options = {}) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     ...options,
     mutationKey: [keys.create],
-    mutationFn: async (data: any) => {
+    mutationFn: async (data: IPatient) => {
+      const { patientUniqueID } = data;
       return apiMethods.post({
-        url: `/user-manager/account/user/enableuser?userId=${data?.id}`,
+        url: `/patient/updatepatient/${patientUniqueID}`,
         body: data,
         auth: true,
       });
@@ -94,12 +94,12 @@ const useEnableUser = (options = {}) => {
   const { mutate, isSuccess, isError, data, isPending } = mutation;
 
   return {
-    mutateFn: (bodyArg: any, successCb?: () => void) => {
+    mutateFn: (bodyArg: IPatient, successCb: (res: any) => void) => {
       return mutate(bodyArg, {
         onSuccess: (res) => {
-          showToast(res.message || 'User Enabled Successfully', 'success');
+          showToast(res.message || 'Patient Updated Successfully', 'success');
           setTimeout(() => {
-            successCb?.();
+            successCb?.(res);
           }, 1500);
         },
       });
@@ -111,51 +111,35 @@ const useEnableUser = (options = {}) => {
   };
 };
 
-const useUpdateUser = (options = {}) => {
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation({
-    ...options,
-    mutationKey: [keys.create],
-    mutationFn: async (data: any) => {
-      const { id } = data;
-      return apiMethods.patch({
-        url: `/user-manager/account/user/update?userId=${id}`,
-        body: data,
-      });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [keys.read] });
-    },
-  });
-  const { mutate, isSuccess, isError, data, isPending } = mutation;
-
-  return {
-    mutateFn: (bodyArg: any, successCb: () => void) => {
-      return mutate(bodyArg, {
-        onSuccess: (res) => {
-          showToast(
-            res.message || 'User details updated Successfully',
-            'success'
-          );
-          setTimeout(() => {
-            successCb?.();
-          }, 1500);
-        },
-      });
-    },
+const useGetPatientById = (
+  url: string,
+  options: Omit<
+    UseQueryOptions<any, unknown, any, string[]>,
+    'initialData' | 'queryFn' | 'queryKey'
+  > = {}
+) => {
+  const hash = [keys.readOne];
+  const {
+    isLoading,
     data,
     isSuccess,
-    isError,
-    isLoading: isPending,
-  };
+    error,
+  }: UseQueryResult<IPatient, unknown> = useQuery({
+    queryKey: hash,
+    queryFn: () =>
+      apiMethods
+        .get({ url, auth: true })
+        .then((res: ApiResponse<IPatient>) => res.data),
+    ...options,
+  });
+  return { isLoading, data, isSuccess, error };
 };
 
 const queries = {
   useGetPatients,
-  useUpdateUser,
-  useDisableUser,
-  useEnableUser,
+  useCreatePatient,
+  useGetPatientById,
+  useEditPatient,
 };
 
 export default queries;

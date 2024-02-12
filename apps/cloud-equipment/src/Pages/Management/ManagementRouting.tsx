@@ -11,6 +11,9 @@ const ViewPatients = lazy(
 const AddPatient = lazy(
   () => import('../../Pages/Management/Patients/AddPatient')
 );
+const EditPatient = lazy(
+  () => import('../../Pages/Management/Patients/EditPatient')
+);
 const ViewPatient = lazy(
   () => import('../../Pages/Management/Patients/ViewPatient')
 );
@@ -46,8 +49,8 @@ export const ManagementRouting = () => {
       element: <ViewPatient />,
     },
     {
-      path: '/manage-user',
-      element: <ViewPatient />,
+      path: '/patient/edit/:id',
+      element: <EditPatient />,
     },
   ]);
 };

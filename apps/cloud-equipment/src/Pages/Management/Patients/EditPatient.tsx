@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
 import { Controller, useForm } from 'react-hook-form';
 import { Modal } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import dayjs, { Dayjs } from 'dayjs';
 
 import * as Assets from '@cloud-equipment/assets';
 import {
@@ -19,6 +20,7 @@ import { AddPatientModal } from '../../../Modals';
 import { IAppState } from '../../../Store/store';
 import queries from '../../../services/queries/managePatients';
 
+// Move to it's own file since it is being used in edit and create
 interface FormProps {
   patientFacilityCode: string;
   patientName: string;
@@ -31,8 +33,8 @@ interface FormProps {
   aboutPatient: string;
   maritalStatusId: number;
   bloodGroupId: number;
-  dateOfBirth: string;
-  dateOfDeath: string;
+  dateOfBirth: string | Dayjs | null;
+  dateOfDeath: string | Dayjs | null;
   address: string;
   isActive: boolean;
   imagePath: string;
@@ -42,9 +44,9 @@ interface FormProps {
   emergencyContactRelationship: string;
   paymentType: string;
   reasonForRegistration: string;
-  takingMedication: string;
+  takingMedication: string | boolean; //REFACTOR: Use the appropriate type here
   additionalNotes: string;
-  registrationDate: string;
+  registrationDate: string | Dayjs | null;
   patientUniqueID: string;
   //
   // registrationTime: any;
@@ -58,11 +60,82 @@ const NewPatient = () => {
   const navigate = useNavigate();
   const params = useParams();
 
-  const { useCreatePatient } = queries;
-  const { mutateFn, isLoading } = useCreatePatient();
+  const { useEditPatient, useGetPatientById } = queries;
 
-  const { register, handleSubmit, control, getValues, setValue } =
-    useForm<FormProps>();
+  const { data, isLoading: getPatientLoading } = useGetPatientById(
+    `/patient/getpatientbyuniqueid/${params?.id}`
+  );
+
+  const { mutateFn, isLoading } = useEditPatient();
+
+  const { register, handleSubmit, control, getValues, reset } =
+    useForm<FormProps>({
+      defaultValues: useMemo(() => {
+        return {
+          // "patientUniqueID": data.,
+          patientFacilityCode: data?.patientFacilityCode,
+          patientName: `${data?.patientName}`,
+          firstName: `${data?.patientName.split(' ')[0]}`,
+          lastName: `${data?.patientName.split(' ')[1]}`,
+          patientAge: data?.patientAge,
+          patientEmail: data?.patientEmail,
+          patientPhone: data?.patientPhone,
+          patientGenderId: data?.patientGenderId,
+          aboutPatient: data?.aboutPatient,
+          maritalStatusId: data?.maritalStatusId,
+          bloodGroupId: data?.bloodGroupId,
+          dateOfBirth: data?.dateOfBirth ? dayjs(data?.dateOfBirth) : null,
+          dateOfDeath: data?.dateOfDeath ? dayjs(data?.dateOfDeath) : null,
+          address: data?.address,
+          isActive: data?.isActive,
+          imagePath: '',
+          emergencyContactFirstname: data?.emergencyContactFirstname,
+          emergencyContactLastName: data?.emergencyContactLastName,
+          emergencyContactNumber: data?.emergencyContactNumber,
+          emergencyContactRelationship: data?.emergencyContactRelationship,
+          paymentType: data?.paymentType,
+          reasonForRegistration: data?.reasonForRegistration,
+          takingMedication: data?.takingMedication,
+          additionalNotes: data?.additionalNotes,
+          registrationDate: data?.registrationDate
+            ? dayjs(data?.registrationDate)
+            : null,
+        };
+      }, [data]),
+    });
+
+  useEffect(() => {
+    reset({
+      // "patientUniqueID": data.,
+      patientFacilityCode: data?.patientFacilityCode,
+      patientName: `${data?.patientName}`,
+      firstName: `${data?.patientName.split(' ')[0]}`,
+      lastName: `${data?.patientName.split(' ')[1]}`,
+      patientAge: data?.patientAge,
+      patientEmail: data?.patientEmail,
+      patientPhone: data?.patientPhone,
+      patientGenderId: data?.patientGenderId,
+      aboutPatient: data?.aboutPatient,
+      maritalStatusId: data?.maritalStatusId,
+      bloodGroupId: data?.bloodGroupId,
+      dateOfBirth: data?.dateOfBirth ? dayjs(data?.dateOfBirth) : null,
+      dateOfDeath: data?.dateOfDeath ? dayjs(data?.dateOfDeath) : null,
+      address: data?.address,
+      isActive: data?.isActive,
+      imagePath: '',
+      emergencyContactFirstname: data?.emergencyContactFirstname,
+      emergencyContactLastName: data?.emergencyContactLastName,
+      emergencyContactNumber: data?.emergencyContactNumber,
+      emergencyContactRelationship: data?.emergencyContactRelationship,
+      paymentType: data?.paymentType,
+      reasonForRegistration: data?.reasonForRegistration,
+      takingMedication: data?.takingMedication ? 'yes' : 'no',
+      additionalNotes: data?.additionalNotes,
+      registrationDate: data?.registrationDate
+        ? dayjs(data?.registrationDate)
+        : null,
+    });
+  }, [data]);
 
   const [createPatientModalPromptIsOpen, setCreatePatientModalPromptIsOpen] =
     useState(false);
@@ -87,7 +160,7 @@ const NewPatient = () => {
       maritalStatusId,
       dateOfBirth,
       address,
-      // patientUniqueID,
+      patientUniqueID,
       emergencyContactFirstname,
       emergencyContactLastName,
       emergencyContactNumber,
@@ -109,7 +182,7 @@ const NewPatient = () => {
       maritalStatusId,
       dateOfBirth,
       address,
-      // patientUniqueID,
+      patientUniqueID,
       emergencyContactFirstname,
       emergencyContactLastName,
       emergencyContactNumber,
@@ -131,7 +204,6 @@ const NewPatient = () => {
       /**
        * end point is expecting these but they are not in the UI
        */
-
       /**
        * endpoint is not expecting these but they are in the UI
        */
@@ -140,9 +212,11 @@ const NewPatient = () => {
        * endpoint is not expecting these but they are in the UI
        */
     };
+    console.log('data', data);
     mutateFn(data, (res) => {
       onClose();
-      navigate(`/management/patient/${res.data.patientUniqueID}`);
+      console.log('res is', res);
+      // navigate(`/management/patient/${}`);
     });
   };
 

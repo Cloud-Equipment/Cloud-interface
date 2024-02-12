@@ -1,3 +1,5 @@
+import { Dayjs } from 'dayjs';
+
 export interface IPatient {
   patientFacilityCode: string;
   patientName: string;
@@ -8,8 +10,8 @@ export interface IPatient {
   aboutPatient: string;
   maritalStatusId: number;
   bloodGroupId: number;
-  dateOfBirth: string;
-  dateOfDeath: string;
+  dateOfBirth: string | Dayjs | null;
+  dateOfDeath?: string | Dayjs | null;
   address: string;
   isActive: boolean;
   imagePath: string;
@@ -21,6 +23,6 @@ export interface IPatient {
   reasonForRegistration: string;
   takingMedication: boolean;
   additionalNotes: string;
-  registrationDate: string;
-  patientUniqueID: string;
+  registrationDate: string | Dayjs | null;
+  patientUniqueID?: string;
 }

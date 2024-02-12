@@ -1,3 +1,4 @@
+import { Dayjs } from 'dayjs';
 import { showToast } from './toast';
 
 export { showToast };
@@ -18,8 +19,11 @@ export function copyToClipboard(str: string, cb?: () => void) {
  * @param returnIsToday - when true, it returns date - in this format: "8:58 PM, Today", else returns default format
  * @returns date - in this format: 8:58 PM, Jun 7, 2023
  */
-export function formatDate(dateString?: string, returnIsToday: boolean = true) {
-  if (!dateString) return '-';
+export function formatDate(
+  dateString?: string | Dayjs | null,
+  returnIsToday: boolean = true
+) {
+  if (!dateString || typeof dateString !== 'string') return '-';
   const date = new Date(dateString);
 
   const options: Intl.DateTimeFormatOptions = {

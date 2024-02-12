@@ -57,45 +57,43 @@ const Sidebar = () => {
           <span>Reports</span>
         </NavLink>
 
-        {userDetails?.userType === UserTypeEnum.FACILITY_ADMIN ? (
-          <>
-            <div className="mt-2 flex items-center justify-between">
-              <NavLink
-                to="/management"
-                className="px-4 py-3 flex items-center space-x-3"
-              >
-                <img src={Assets.Icons.ManagementNav} alt="" />
-                <span>Management</span>
-              </NavLink>
-
-              <button>
-                <img src={Assets.Icons.WhiteArrowUp} alt="" />
-              </button>
-            </div>
-
-            <div className="grid text-[#FFFFFF8F] gap-2 px-[25px] py-2 font-medium subnavs">
-              <NavLink onClick={handleCloseSidebar} to="/management/users">
-                Users
-              </NavLink>
-              <NavLink
-                onClick={handleCloseSidebar}
-                to="/management/medservices"
-              >
-                Medservices
-              </NavLink>
-              <NavLink onClick={handleCloseSidebar} to="/management/patients">
-                Patients
-              </NavLink>
-            </div>
-
-            <NavLink onClick={handleCloseSidebar} to="." className="main-icon">
-              <img src={Assets.Icons.Settings} alt="" />
-              <span>Request Equipment</span>
+        {/* NOTE: Revert this */}
+        {/* {true || userDetails?.userType === UserTypeEnum.FACILITY_ADMIN ? ( */}
+        <>
+          <div className="mt-2 flex items-center justify-between">
+            <NavLink
+              to="/management"
+              className="px-4 py-3 flex items-center space-x-3"
+            >
+              <img src={Assets.Icons.ManagementNav} alt="" />
+              <span>Management</span>
             </NavLink>
-          </>
-        ) : (
+
+            <button>
+              <img src={Assets.Icons.WhiteArrowUp} alt="" />
+            </button>
+          </div>
+
+          <div className="grid text-[#FFFFFF8F] gap-2 px-[25px] py-2 font-medium subnavs">
+            <NavLink onClick={handleCloseSidebar} to="/management/users">
+              Users
+            </NavLink>
+            <NavLink onClick={handleCloseSidebar} to="/management/medservices">
+              Medservices
+            </NavLink>
+            <NavLink onClick={handleCloseSidebar} to="/management/patients">
+              Patients
+            </NavLink>
+          </div>
+
+          <NavLink onClick={handleCloseSidebar} to="." className="main-icon">
+            <img src={Assets.Icons.Settings} alt="" />
+            <span>Request Equipment</span>
+          </NavLink>
+        </>
+        {/* ) : (
           <></>
-        )}
+        )} */}
 
         <NavLink
           onClick={handleCloseSidebar}

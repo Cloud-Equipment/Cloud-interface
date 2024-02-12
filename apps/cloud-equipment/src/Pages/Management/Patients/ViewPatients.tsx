@@ -68,7 +68,7 @@ const ViewPatients = () => {
     `/patient/getpatientbyhospitalid/${user?.FACILITY_ID}`,
     { enabled: !!user?.FACILITY_ID }
   );
-  console.log('data', data);
+
   return (
     <>
       <section className="ce-px ce-py">
@@ -204,7 +204,7 @@ const AddActionsDropdown = () => {
     } else if (action === 'new appointment') {
       navigate('');
     } else if (action === 'new report') {
-      navigate('');
+      navigate('/reports');
     }
     handleMenuClose();
   };
