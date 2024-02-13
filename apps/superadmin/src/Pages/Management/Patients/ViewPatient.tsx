@@ -52,7 +52,6 @@ const ViewPatient = () => {
     `/patient/getpatientbyuniqueid/${params?.id}`
   );
 
-  console.log('data', data);
   return (
     <section className="ce-px ce-py">
       <div className="bg-white rounded-[20px] px-4 py-8">

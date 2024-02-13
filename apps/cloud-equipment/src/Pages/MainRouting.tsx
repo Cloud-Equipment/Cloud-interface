@@ -22,7 +22,7 @@ export const MainRouting = () => {
       element: <Management />,
     },
     {
-      path: '/settings',
+      path: '/settings/*',
       element: <Settings />,
     },
   ]);

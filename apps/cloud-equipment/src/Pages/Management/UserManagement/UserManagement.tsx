@@ -1,15 +1,99 @@
 import React, { useState } from 'react';
+
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import {
   ListItemText,
   Menu,
   MenuItem,
   Modal,
   TablePagination,
+  ListItemIcon,
 } from '@mui/material';
+import { createColumnHelper } from '@tanstack/react-table';
+
 import { InviteUserModal } from './InviteUserModal';
+import { Enable2FAModal } from './Enforce2FaModal';
 import * as Assets from '@cloud-equipment/assets';
+import { Button, Table, Loader } from '@cloud-equipment/ui-components';
+import queries from '../../../services/queries/manageUsers';
+import { IAppState } from '../../../Store/store';
+import { formatDate } from '@cloud-equipment/utils';
+
+type IModalViews = null | 'inviteUser' | 'enable2Fa';
+const data = [
+  {
+    dateTimeAdded: 'dateTimeAdded',
+    name: 'name',
+    email: 'email',
+    '2FaStatus': '2FaStatus',
+    role: 'role',
+    lastLogin: '',
+  },
+];
+const columnHelper = createColumnHelper<any>();
+
+const columns = [
+  columnHelper.accessor('dateCreated', {
+    header: 'Date & Time Added',
+    cell: (info) => formatDate(info.getValue()),
+  }),
+  columnHelper.accessor('name', {
+    header: 'Name',
+    cell: ({ row: { original } }) => {
+      return `${original?.firstName} ${original?.lastName}`;
+    },
+  }),
+  columnHelper.accessor('email', {
+    header: 'Email Address',
+    cell: (info) => info.getValue() || '-',
+  }),
+  columnHelper.accessor('2FaStatus', {
+    header: '2FA Status',
+    cell: (info) => {
+      return (
+        <span className="flex gap-1 items-center">
+          <div className="w-[5px] h-[5px] bg-primary-300 rounded-full"></div>{' '}
+          {info.getValue()}
+        </span>
+      );
+    },
+  }),
+  columnHelper.accessor('role', {
+    header: 'Role',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('lastLogin', {
+    header: 'Last login',
+    cell: (info) => formatDate(info.getValue()),
+  }),
+  columnHelper.accessor('elipsis', {
+    cell: ({
+      row: {
+        original: { id, isActive, ...rest },
+      },
+    }) => {
+      // REFACTOR: is this necessary
+      const cb = (e: React.MouseEvent<HTMLButtonElement>) => {
+        // console.log('e', e);
+      };
+      return <ManageStaffDropDown {...{ cb, id, isActive, rest }} />;
+    },
+    header: '',
+  }),
+];
 
 const UserManagement = () => {
+  const { user } = useSelector((state: IAppState) => state.auth);
+
+  const { useGetUsers } = queries;
+  const { isLoading, data: userData } = useGetUsers(
+    '/user-manager/account/user/getallusersfacility?currentPage=1&startIndex=1&pageSize=10',
+    { facilityId: user ? user.FACILITY_ID : '' },
+    { enabled: !!user?.FACILITY_ID },
+    '1'
+  );
+
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
@@ -32,25 +116,49 @@ const UserManagement = () => {
     setAnchorEl(null);
   };
 
-  const [inviteUserModalOpen, setInviteUserModalOpen] = React.useState(false);
-  const openInviteUserModal = () => setInviteUserModalOpen(true);
-  const closeInviteUserModal = () => setInviteUserModalOpen(false);
+  const [modalViews, setModalViews] = useState<{ currentView: IModalViews }>({
+    currentView: null,
+  });
+  const openModal = (view: IModalViews) => {
+    setModalViews({ currentView: view });
+  };
+
+  const closeModal = () => {
+    setModalViews({ currentView: null });
+  };
 
   return (
     <>
-      <Modal open={inviteUserModalOpen} onClose={closeInviteUserModal}>
+      <Modal
+        open={modalViews.currentView === 'inviteUser'}
+        onClose={closeModal}
+      >
         <div>
-          <InviteUserModal onClose={closeInviteUserModal} />
+          <InviteUserModal onClose={closeModal} />
+        </div>
+      </Modal>
+      <Modal open={modalViews.currentView === 'enable2Fa'} onClose={closeModal}>
+        <div>
+          <Enable2FAModal onClose={closeModal} />
         </div>
       </Modal>
 
+      {/* Enable 2Fa Modal */}
+
       <section className="ce-px ce-py">
         <div className="flex justify-end gap-4 flex-wrap mt-5">
-          <button onClick={openInviteUserModal} className="ce-btn">
-            Invite User
+          <Button
+            label="Invite User"
+            className="!bg-primary-100 hover:!bg-primary-100"
+            onClick={() => openModal('inviteUser')}
+          />
+          <Button variant="neutral" label="Manage Roles" className="" />
+          <button
+            onClick={() => openModal('enable2Fa')}
+            className="ce-btn-text"
+          >
+            Enforce 2FA
           </button>
-          <button className="ce-btn-outline">Manage Roles</button>
-          <button className="ce-btn-text">Enforce 2FA</button>
         </div>
 
         <div className="p-[16px] bg-[white] mt-[20px] rounded-[20px]">
@@ -76,73 +184,21 @@ const UserManagement = () => {
             </button>
           </div>
 
-          <div className="mt-10 ce-table-holder">
-            <h5 className="table-heading">Team members- 5</h5>
-
-            <table>
-              <thead>
-                <tr>
-                  <th>Date & Time Added</th>
-                  <th>Name</th>
-                  <th>Email Address</th>
-                  <th>Role</th>
-                  <th>2FA Status</th>
-                  <th>Last Login</th>
-                  <th></th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {[1, 2, 3].map((item, index) => (
-                  <tr key={index}>
-                    <td>{'01-12-2023'}</td>
-                    <td>{'Emmanuel Abdullah'}</td>
-                    <td>{'emmanuel@cloud.io'}</td>
-                    <td>{'Receptionist'}</td>
-                    <td>{'Enabled'}</td>
-                    <td>{'Sep 26, 2023, 12:41 PM'}</td>
-                    <td>
-                      <div>
-                        <button
-                          //   id="basic-button"
-                          onClick={handleClick}
-                          className="w-6"
-                        >
-                          <img src={Assets.Icons.Menudots} alt="" />
-                        </button>
-                        <Menu
-                          //   id="basic-menu"
-                          anchorEl={anchorEl}
-                          open={open}
-                          onClose={handleClose}
-                          MenuListProps={{
-                            'aria-labelledby': 'basic-button',
-                          }}
-                        >
-                          <MenuItem onClick={handleClose}>
-                            <ListItemText>Disable User</ListItemText>
-                          </MenuItem>
-                          <MenuItem onClick={handleClose}>
-                            <ListItemText>Enable 2FA</ListItemText>
-                          </MenuItem>
-                        </Menu>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            <TablePagination
-              component="div"
-              count={total}
-              page={currentPage}
-              labelRowsPerPage="Items per page"
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              rowsPerPage={pageSize}
-            />
-          </div>
+          <Table
+            loading={false}
+            data={userData?.resultItem || []}
+            columns={columns}
+            tableHeading={`Team members - 5`}
+          />
+          <TablePagination
+            component="div"
+            count={total}
+            page={currentPage}
+            labelRowsPerPage="Items per page"
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            rowsPerPage={pageSize}
+          />
         </div>
       </section>
     </>
@@ -150,3 +206,97 @@ const UserManagement = () => {
 };
 
 export default UserManagement;
+
+const ManageStaffDropDown = ({
+  cb,
+  id,
+  isActive,
+  rest,
+}: {
+  cb: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  id: string;
+  isActive: boolean;
+  rest: { [key: string]: any };
+}) => {
+  const { useDisableUser, useEnableUser, useUpdateUser } = queries;
+  const { mutateFn: disableFn, isLoading: isDisableLoading } = useDisableUser();
+  const { mutateFn: enableFn, isLoading: isEnableLoading } = useEnableUser();
+  const { mutateFn: updateUserFn, isLoading: isUpdateLoading } =
+    useUpdateUser();
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    cb(event);
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMenuAction = () => {};
+
+  const data = {
+    id,
+    firstName: rest.firstName,
+    lastName: rest.lastName,
+    roles: [],
+    phoneNumber: null,
+    twoFactorEnabled: true,
+  };
+  return (
+    <div>
+      <button
+        onClick={(e) => {
+          handleActionClick(e);
+        }}
+        className="w-6"
+      >
+        <img src={Assets.Icons.Menudots} alt="" />
+      </button>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        {isActive ? (
+          <MenuItem onClick={() => disableFn({ id }, handleMenuClose)}>
+            <ListItemIcon>
+              {isDisableLoading ? (
+                <Loader />
+              ) : (
+                <img src={Assets.Icons.WhiteCheckmark} alt="" />
+              )}
+            </ListItemIcon>
+            <ListItemText>Disable User</ListItemText>
+          </MenuItem>
+        ) : (
+          <MenuItem onClick={() => enableFn({ id }, handleMenuClose)}>
+            <ListItemIcon>
+              {isEnableLoading ? (
+                <Loader />
+              ) : (
+                <img src={Assets.Icons.WhiteCheckmark} alt="" />
+              )}
+            </ListItemIcon>
+            <ListItemText>Enable User</ListItemText>
+          </MenuItem>
+        )}
+        <MenuItem onClick={() => updateUserFn(data, handleMenuClose)}>
+          <ListItemIcon>
+            {isUpdateLoading ? (
+              <Loader />
+            ) : (
+              <img src={Assets.Icons.WhiteCheckmark} alt="" />
+            )}
+          </ListItemIcon>
+          <ListItemText>Enable 2FA</ListItemText>
+        </MenuItem>
+      </Menu>
+    </div>
+  );
+};
