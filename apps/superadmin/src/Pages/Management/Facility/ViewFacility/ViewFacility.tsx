@@ -1,9 +1,9 @@
 import { Suspense } from 'react';
 
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Switch } from '@mui/material';
 
-import { Button, NavTab } from '@cloud-equipment/ui-components';
+import { Button, Loader, NavTab } from '@cloud-equipment/ui-components';
 import * as Assets from '@cloud-equipment/assets';
 import { copyToClipboard, formatDate } from '../../../../utils';
 import { ViewFacilityRouting } from './ViewFacilityRouting';
@@ -11,13 +11,16 @@ import queries from '../../../../services/queries/manageFacility';
 
 const ViewFacility = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  const { useGetOneFacility } = queries;
+  const { useGetOneFacility, useBlacklistFacility } = queries;
   const { isLoading, data } = useGetOneFacility(
     `/facility-manager/facility/getfacility/${id}`,
     {},
     id
   );
+  const { isLoading: isBlaclistFacilityLoading, mutateFn } =
+    useBlacklistFacility();
 
   if (isLoading) {
     return <h1>Loading</h1>;
@@ -89,7 +92,15 @@ const ViewFacility = () => {
             <div className="flex gap-4 flex-1">
               <img alt="" src={Assets.Icons.WarningIcon} /> Blacklist Facility{' '}
             </div>
-            <Switch size="small" />
+            {isBlaclistFacilityLoading && <Loader />}
+            <Switch
+              size="small"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                console.log(e.target.checked);
+                // TODO: Optimistic UI
+                mutateFn({ id: id });
+              }}
+            />
           </div>
         </div>
         <div className="flex">
@@ -97,6 +108,9 @@ const ViewFacility = () => {
             className="bg-primary-250 !text-primary-150"
             icon={Assets.Icons.EditIcon}
             label="Edit"
+            onClick={() =>
+              navigate(`/management/facility/editFacility/${data?.id}`)
+            }
           />
         </div>
       </div>

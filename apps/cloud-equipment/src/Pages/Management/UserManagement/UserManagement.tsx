@@ -21,16 +21,7 @@ import { IAppState } from '../../../Store/store';
 import { formatDate } from '@cloud-equipment/utils';
 
 type IModalViews = null | 'inviteUser' | 'enable2Fa';
-const data = [
-  {
-    dateTimeAdded: 'dateTimeAdded',
-    name: 'name',
-    email: 'email',
-    '2FaStatus': '2FaStatus',
-    role: 'role',
-    lastLogin: '',
-  },
-];
+
 const columnHelper = createColumnHelper<any>();
 
 const columns = [

@@ -13,15 +13,15 @@ const columns = [
     header: 'Date & Time Paid',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('name', {
+  columnHelper.accessor('reference', {
     header: 'Reference',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('email', {
+  columnHelper.accessor('amount', {
     header: 'Amount',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('role', {
+  columnHelper.accessor('channel', {
     header: 'Channel',
     cell: (info) => info.getValue(),
   }),

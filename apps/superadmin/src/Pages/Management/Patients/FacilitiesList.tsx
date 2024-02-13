@@ -120,7 +120,7 @@ const ManageFacility = () => {
             </div>
 
             <button className="filter-btn">
-              <img src={Assets.Icons.ExportIcon} alt="" />
+              <img src={Assets.Icons.FilterIcon} alt="" />
               <span>Filters</span>
             </button>
             <Button

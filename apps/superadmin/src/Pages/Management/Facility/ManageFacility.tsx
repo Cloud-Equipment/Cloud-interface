@@ -21,15 +21,26 @@ import { Facility } from '../../../services/queries/manageFacility/types';
 import { ActionsModal } from '../../../Modals';
 import { formatDate } from '../../../utils';
 
-export type ActionModalType = null | 'enableUser' | 'enableEMR' | 'disableUser';
+export type ActionModalType =
+  | null
+  | 'enableUser'
+  | 'enableEMR'
+  | 'disableUser'
+  | 'disableEMR';
 type FacilityTableColumns = Pick<
   Facility,
-  'id' | 'facilityName' | 'city' | 'addressLine1' | 'postalCode' | 'dateCreated'
+  | 'id'
+  | 'facilityName'
+  | 'city'
+  | 'addressLine1'
+  | 'postalCode'
+  | 'dateCreated'
+  | 'enableEMR'
 > & { elipsis: 'elipsis' };
 
 const columnHelper = createColumnHelper<FacilityTableColumns>();
 
-const columns = (handleActionsModalView: (view: ActionModalType) => void) => [
+const columns = [
   columnHelper.accessor('id', {
     header: 'Facility ID',
     cell: (info) => info.getValue(),
@@ -57,14 +68,14 @@ const columns = (handleActionsModalView: (view: ActionModalType) => void) => [
   columnHelper.accessor('elipsis', {
     cell: ({
       row: {
-        original: { id },
+        original: { id, enableEMR },
       },
     }) => {
       // REFACTOR: is this necessary
       const cb = (e: React.MouseEvent<HTMLButtonElement>) => {
         // console.log('e', e);
       };
-      return <ManageFacilityDropDown {...{ cb, id, handleActionsModalView }} />;
+      return <ManageFacilityDropDown {...{ cb, id, enableEMR }} />;
     },
     header: '',
   }),
@@ -78,13 +89,6 @@ const ManageFacility = () => {
     `/facility-manager/facility/getallfacilities`
   );
 
-  //   modal
-  const [actionsModal, setActionsModal] = React.useState<{
-    currentView: ActionModalType;
-  }>({
-    currentView: null,
-  });
-
   //   table
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
@@ -94,14 +98,6 @@ const ManageFacility = () => {
   const handleChangeRowsPerPage = (event: any) => {
     // setCurrentPage(0);
     // setPageSize(parseInt(event.target.value, 10));
-  };
-
-  const handleActionsModalView = (view: ActionModalType) => {
-    setActionsModal({ currentView: view });
-  };
-
-  const closeModal = () => {
-    setActionsModal({ currentView: null });
   };
 
   return (
@@ -150,17 +146,12 @@ const ManageFacility = () => {
           <Table
             loading={isLoading}
             data={data || []}
-            columns={columns(handleActionsModalView)}
+            columns={columns}
             tableHeading="Facilities - 5"
             tableHeadingColorClassName="!bg-secondary-150"
           />
         </div>
       </section>
-      <ManageFacilityActionsModal
-        open={!!actionsModal.currentView}
-        onClose={closeModal}
-        currentView={actionsModal.currentView}
-      />
     </>
   );
 };
@@ -171,11 +162,11 @@ export default ManageFacility;
 const ManageFacilityDropDown = ({
   cb,
   id,
-  handleActionsModalView,
+  enableEMR,
 }: {
   cb: (e: React.MouseEvent<HTMLButtonElement>) => void;
   id: string;
-  handleActionsModalView: (view: ActionModalType) => void;
+  enableEMR: boolean;
 }) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -193,8 +184,29 @@ const ManageFacilityDropDown = ({
     navigate(`/management/facility/view/${id}/about`);
   };
 
+  //   modal
+  const [actionsModal, setActionsModal] = React.useState<{
+    currentView: ActionModalType;
+  }>({
+    currentView: null,
+  });
+
+  const handleActionsModalView = (view: ActionModalType) => {
+    setActionsModal({ currentView: view });
+  };
+
+  const closeModal = () => {
+    setActionsModal({ currentView: null });
+  };
+
   return (
     <div>
+      <ManageFacilityActionsModal
+        open={!!actionsModal.currentView}
+        onClose={closeModal}
+        currentView={actionsModal.currentView}
+        id={id}
+      />
       <button
         onClick={(e) => {
           handleActionClick(e);
@@ -215,18 +227,29 @@ const ManageFacilityDropDown = ({
           <ListItemIcon></ListItemIcon>
           <ListItemText>View Facility Activities</ListItemText>
         </MenuItem>
+        {/* TODO: Logic for this guy */}
+        {/* {true ? ( */}
         <MenuItem onClick={() => handleActionsModalView('enableUser')}>
           <ListItemIcon></ListItemIcon>
-          <ListItemText>Enable User</ListItemText>
+          <ListItemText>Enable Facility</ListItemText>
         </MenuItem>
+        {/* ) : ( */}
         <MenuItem onClick={() => handleActionsModalView('disableUser')}>
           <ListItemIcon></ListItemIcon>
-          <ListItemText>Disable User</ListItemText>
+          <ListItemText>Disable Facility</ListItemText>
         </MenuItem>
-        <MenuItem onClick={() => handleActionsModalView('enableEMR')}>
-          <ListItemIcon></ListItemIcon>
-          <ListItemText>Enable EMR</ListItemText>
-        </MenuItem>
+        {/* )} */}
+        {!enableEMR ? (
+          <MenuItem onClick={() => handleActionsModalView('enableEMR')}>
+            <ListItemIcon></ListItemIcon>
+            <ListItemText>Enable EMR</ListItemText>
+          </MenuItem>
+        ) : (
+          <MenuItem onClick={() => handleActionsModalView('disableEMR')}>
+            <ListItemIcon></ListItemIcon>
+            <ListItemText>Disable EMR</ListItemText>
+          </MenuItem>
+        )}
       </Menu>
     </div>
   );
@@ -236,11 +259,12 @@ const ManageFacilityActionsModal = ({
   open,
   onClose,
   currentView,
-}: ModalProps & { currentView: ActionModalType }) => {
+  id,
+}: ModalProps & { currentView: ActionModalType; id: string }) => {
   return (
     <Modal {...{ open, onClose }}>
       <div className="">
-        <ActionsModal {...{ onClose, currentView }} />
+        <ActionsModal {...{ onClose, currentView, id }} />
       </div>
     </Modal>
   );

@@ -6,6 +6,7 @@ import { Routes } from '../../routes';
 
 const ManageFacility = lazy(() => import('./Facility/ManageFacility'));
 const AddNewFacility = lazy(() => import('./Facility/AddNewFacility'));
+const EditFacility = lazy(() => import('./Facility/EditFacility'));
 const ViewFacility = lazy(() => import('./Facility/ViewFacility/ViewFacility'));
 const Equipment = lazy(() => import('./Equipment/Equipment'));
 const Patients = lazy(() => import('./Patients/Patients'));
@@ -30,6 +31,10 @@ export const ManagementRouting = () => {
     {
       path: Routes.management.addFacility,
       element: <AddNewFacility />,
+    },
+    {
+      path: Routes.management.editFacility,
+      element: <EditFacility />,
     },
     {
       path: Routes.management.viewFacility,

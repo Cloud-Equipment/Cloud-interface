@@ -4,23 +4,6 @@ import { Button } from '@cloud-equipment/ui-components';
 export const Enable2FAModal = ({ onClose }: any) => {
   const onSubmit = (data: any) => {
     // axios
-    //   .post(`${environment.baseUrl}/user-manager/account/register`, {
-    //     ...data,
-    //     roles: [data.roles],
-    //     password: 'Qwerty1!',
-    //     firstName: 'Paul',
-    //     lastName: 'Peter',
-    //     facilityId: userDetails?.FACILITY_ID,
-    //   })
-    //   .then((response) => {
-    //     if (response.data.success) {
-    //       toast.success(response.data.msg);
-    //       onClose();
-    //     } else {
-    //       toast.error(response.data.msg);
-    //     }
-    //   })
-    //   .catch(() => {});
   };
 
   return (

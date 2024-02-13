@@ -5,6 +5,7 @@ export const Routes: IRoutes = {
   management: {
     manageFacility: '/facility',
     addFacility: '/facility/addFacility',
+    editFacility: '/facility/editFacility/:id',
     viewFacility: '/facility/view/:id/*',
     viewFacilityAbout: '/facility/view/:id/about',
     viewFacilityReport: '/facility/view/:id/report',

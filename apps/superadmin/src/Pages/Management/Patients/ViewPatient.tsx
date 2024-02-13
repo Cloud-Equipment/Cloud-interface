@@ -8,6 +8,7 @@ import { FileUpload } from '../../../components';
 import { Button } from '@cloud-equipment/ui-components';
 import { Table } from '../../../components';
 import queries from '../../../services/queries/managePatients';
+import { formatDate } from '@cloud-equipment/utils';
 
 type PatientTableColumns = { [key: string]: string } & {
   lastLogin: string;
@@ -19,7 +20,7 @@ const columnHelper = createColumnHelper<PatientTableColumns>();
 const columns = [
   columnHelper.accessor('dateAndTime', {
     header: 'Date & Time',
-    cell: (info) => info.getValue(),
+    cell: (info) => formatDate(info.getValue()),
   }),
   columnHelper.accessor('procedure', {
     header: 'Procedure/Test Ordered',
