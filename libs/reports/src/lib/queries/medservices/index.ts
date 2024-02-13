@@ -12,7 +12,7 @@ import keys from './keys';
 import { environment } from '@cloud-equipment/environments';
 import { IMedservice } from '@cloud-equipment/models';
 
-const useGetMedservicesForFacility = (options = {}) => {
+const useGetMedservicesForFacility = (facilityId: string, options = {}) => {
   const mutation = useMutation({
     ...options,
     mutationKey: [keys.getAll],
@@ -24,6 +24,18 @@ const useGetMedservicesForFacility = (options = {}) => {
 
       return response.data;
     },
+    // mutationFn: async () => {
+    //   const response = await apiClient.post({
+    //     url: `/service-manager/medServices/getallbyfacilitypaged?facilityId=${facilityId}`,
+    //     auth: true,
+    //     body: {
+    //       currentPage: 1,
+    //       startIndex: 1,
+    //       pageSize: 200,
+    //     },
+    //   });
+    //   return response.data;
+    // },
     onSuccess: () => {},
   });
   const { mutate, isSuccess, isError, data, isPending } = mutation;

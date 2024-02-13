@@ -21,6 +21,7 @@ import {
   // TimePicker,
   // TextArea,
   Button,
+  PhoneInputField,
 } from '@cloud-equipment/ui-components';
 import { IAppointmentCreate } from '../../services/queries/appointments/types';
 import medserviceQueries from '../../services/queries/medservices';
@@ -289,10 +290,10 @@ const AppointmentModal = ({
                 })}
               />
 
-              <Input
+              <PhoneInputField
+                control={control}
                 label="Patient Mobile Number"
-                placeholder="+2348138383838"
-                {...register('patientNumber')}
+                name="patientNumber"
               />
 
               <Input
