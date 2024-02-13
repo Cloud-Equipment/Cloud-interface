@@ -72,9 +72,8 @@ const EditFacility = () => {
       id
     );
 
-  const { register, handleSubmit, control, setValue } = useForm<
-    FormProps & any
-  >({
+  // TODO: Add appropriate type
+  const { register, handleSubmit, control, setValue, reset } = useForm<any>({
     defaultValues: useMemo(() => {
       return {
         id: getOneFacilityData?.id,
@@ -114,48 +113,43 @@ const EditFacility = () => {
     }, [getOneFacilityData]),
   });
 
-  useEffect(
-    function FillFormValues() {
-      return () => {
-        return {
-          id: getOneFacilityData?.id,
-          facilityTypeId: getOneFacilityData?.facilityTypeId,
-          facilityName: getOneFacilityData?.facilityName,
-          addressLine1: getOneFacilityData?.addressLine1,
-          addressLine2: getOneFacilityData?.addressLine2,
-          postalCode: getOneFacilityData?.postalCode,
-          city: getOneFacilityData?.city,
-          stateId: getOneFacilityData?.stateId,
-          countryId: getOneFacilityData?.countryId,
-          rebatePercent: getOneFacilityData?.rebatePercent,
-          facilityEmail: getOneFacilityData?.facilityEmail,
-          facilityPhone: getOneFacilityData?.facilityPhone,
-          facilityCECode: getOneFacilityData?.facilityCECode,
-          facilityStatusId: getOneFacilityData?.facilityStatusId,
-          enableEMR: getOneFacilityData?.enableEMR,
-          facilityAdmin: {
-            email: getOneFacilityData?.adminEmail,
-            password: '',
-            firstName: getOneFacilityData?.adminFirstname,
-            lastName: getOneFacilityData?.adminLastname,
-            activationCode: '',
-            isFacilityAdmin: '',
-            phoneNumber: getOneFacilityData?.adminPhone,
-            roles: getOneFacilityData?.adminRoles?.[0],
-          },
-          comment: getOneFacilityData?.comment,
-          roles: '',
-          logoPath: '',
+  useEffect(() => {
+    reset({
+      id: getOneFacilityData?.id,
+      facilityTypeId: getOneFacilityData?.facilityTypeId,
+      facilityName: getOneFacilityData?.facilityName,
+      addressLine1: getOneFacilityData?.addressLine1,
+      addressLine2: getOneFacilityData?.addressLine2,
+      postalCode: getOneFacilityData?.postalCode,
+      city: getOneFacilityData?.city,
+      stateId: getOneFacilityData?.stateId,
+      countryId: getOneFacilityData?.countryId,
+      rebatePercent: getOneFacilityData?.rebatePercent,
+      facilityEmail: getOneFacilityData?.facilityEmail,
+      facilityPhone: getOneFacilityData?.facilityPhone,
+      facilityCECode: getOneFacilityData?.facilityCECode,
+      facilityStatusId: getOneFacilityData?.facilityStatusId,
+      enableEMR: getOneFacilityData?.enableEMR,
+      facilityAdmin: {
+        email: getOneFacilityData?.adminEmail,
+        password: '',
+        firstName: getOneFacilityData?.adminFirstname,
+        lastName: getOneFacilityData?.adminLastname,
+        activationCode: '',
+        isFacilityAdmin: '',
+        phoneNumber: getOneFacilityData?.adminPhone,
+        roles: getOneFacilityData?.adminRoles?.[0],
+      },
+      comment: getOneFacilityData?.comment,
+      roles: '',
+      logoPath: '',
 
-          isActive: '',
-          dateCreated: '',
-          // [key: string]: anynumber, //TODO: Remove this when all fields have been done on the backend
-          numberOfUsers: getOneFacilityData?.numberOfUsers,
-        };
-      };
-    },
-    [getOneFacilityData]
-  );
+      isActive: '',
+      dateCreated: '',
+      // [key: string]: anynumber, //TODO: Remove this when all fields have been done on the backend
+      numberOfUsers: getOneFacilityData?.numberOfUsers,
+    });
+  }, [getOneFacilityData]);
 
   const onSubmit = (data: FormProps) => {
     const {

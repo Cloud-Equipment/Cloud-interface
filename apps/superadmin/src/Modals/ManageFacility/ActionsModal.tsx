@@ -10,7 +10,7 @@ const AddMoreDocumentModal = ({
   id,
 }: Omit<ModalProps, 'open'> & {
   currentView: ActionModalType;
-  id: string;
+  id?: string;
 }) => {
   const { useEnableEMR, useDisableEMR } = queries;
   const { isLoading: disableUserIsLoading, mutateFn: disableUserMutateFn } =
