@@ -1,17 +1,8 @@
-import {
-  useQuery,
-  UseQueryResult,
-  UseQueryOptions,
-  useQueryClient,
-  useMutation,
-} from '@tanstack/react-query';
-
+import { useMutation } from '@tanstack/react-query';
 import { apiClient } from '@cloud-equipment/api';
-import { ApiResponse } from 'Models/api.models';
 import keys from './keys';
 
 const useGetAllDiscountsForFacility = (facilityId: string, options = {}) => {
-    console.log(facilityId)
   const mutation = useMutation({
     ...options,
     mutationKey: [keys.getAll],

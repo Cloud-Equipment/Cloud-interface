@@ -38,11 +38,9 @@ export const ViewReport = () => {
           {reportDetails?.patientName}
         </p>
 
-        <p className="mt-5">User ID: {reportDetails?.patientId}</p>
+        {/* <p className="mt-5">User ID: {reportDetails?.patientId}</p> */}
 
-        <p className="mt-2 font-medium text-lg">{reportDetails?.patientName}</p>
-
-        <div className="flex items-center gap-3 flex-wrap">
+        <div className="flex items-center gap-3 mt-5 flex-wrap">
           <button className="ce-btn">New Appointment</button>
           <button className="ce-btn-text">Refer Patient</button>
           <button className="ce-btn-outline">Upload Result</button>
@@ -51,11 +49,11 @@ export const ViewReport = () => {
         <div className="mt-10 [box-shadow:0px_4px_12px_0px_#0D5F5026] rounded-lg p-4 md:px-10 grid md:grid-cols-3 2xl:grid-cols-5 gap-4 2xl:gap-10">
           <div>
             <p className="text-base font-medium">Phone Number</p>
-            <p className="text-greyText2">{reportDetails?.phoneNo}</p>
+            <p className="text-greyText2">{reportDetails?.patientPhone}</p>
           </div>
           <div>
             <p className="text-base font-medium">Email</p>
-            <p className="text-greyText2">{'-'}</p>
+            <p className="text-greyText2">{reportDetails?.patientEmail}</p>
           </div>
           <div>
             <p className="text-base font-medium">Gender</p>
@@ -99,7 +97,7 @@ export const ViewReport = () => {
             </div>
             <div>
               <p className="text-base font-medium">Referrer's Name</p>
-              <p className="text-greyText2">{reportDetails?.referrersName}</p>
+              <p className="text-greyText2">{reportDetails?.refererName}</p>
             </div>
             <div>
               <p className="text-base font-medium">Referrer's Email</p>
@@ -111,7 +109,7 @@ export const ViewReport = () => {
             </div>
             <div>
               <p className="text-base font-medium">Referrer's Number</p>
-              <p className="text-greyText2">{reportDetails?.phoneNumber}</p>
+              <p className="text-greyText2">{reportDetails?.refererPhone}</p>
             </div>
             <div>
               <p className="text-base font-medium md:col-span-2">Remarks</p>

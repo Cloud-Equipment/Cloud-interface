@@ -23,7 +23,11 @@ import facilityQueries from '../queries/facilities';
 import categoriesQueries from '../queries/categories';
 import medserviceQueries from '../queries/medservices';
 import discountQueries from '../queries/discounts';
-import { Input } from '@cloud-equipment/ui-components';
+import {
+  Input,
+  PhoneInputField,
+  TextArea,
+} from '@cloud-equipment/ui-components';
 
 const CreateReportForm = () => {
   const userDetails = useSelector(
@@ -147,7 +151,11 @@ const CreateReportForm = () => {
 
   const { useGetMedservicesForFacility } = medserviceQueries;
   const { data: proceduresList, mutateFn: mutateFn_GetMedservicesForFacility } =
-    useGetMedservicesForFacility();
+    useGetMedservicesForFacility(
+      (accountType === 0
+        ? selectedFacility?.id ?? ''
+        : userDetails?.FACILITY_ID ?? '') as string
+    );
 
   useEffect(() => {
     mutateFn_GetMedservicesForFacility({}, () => {});
@@ -255,7 +263,7 @@ const CreateReportForm = () => {
           item_.rebate = {
             facilityId: facilityId,
             rebatePercent: 5,
-            refererHospital: facilityId,
+            refererHospital: data_.refererHospital,
             refererName: data_.refererName,
             refererEmail: data_.refererEmail,
             refererPhone: data_.refererPhone,
@@ -285,11 +293,11 @@ const CreateReportForm = () => {
         patientAge: Number(data_.patientAge) || 10,
         patientEmail: data_.patientEmail,
         patientPhone: data_.patientPhone,
-        patientGenderId: 0,
+        patientGenderId: data_.patientGenderId,
         aboutPatient: '',
         maritalStatusId: 0,
         address: data_.patientAddress,
-        dateOfBirth: '2024-01-03T08:37:00.151Z',
+        // dateOfBirth: '2024-01-03T08:37:00.151Z',
       };
       dispatch(setLoading());
       axiosInstance
@@ -472,18 +480,10 @@ const CreateReportForm = () => {
             />
           </div>
 
-          <Input
-            label="Patient ID"
-            placeholder="+234 08143626356"
-            {...register('patientId')}
-          />
-
-          <Input
+          <PhoneInputField
+            control={control}
             label="Patient Mobile Number"
-            placeholder="+234 08143626356"
-            {...register('patientPhone', {
-              required: 'Patient Phone Number is required',
-            })}
+            name="patientPhone"
           />
 
           <div className="form-input-label-holder">
@@ -527,7 +527,7 @@ const CreateReportForm = () => {
             })}
           />
 
-          <div className="form-input-label-holder">
+          {/* <div className="form-input-label-holder">
             <label>Procedure category</label>
             <Select
               multiple
@@ -549,7 +549,7 @@ const CreateReportForm = () => {
                 </MenuItem>
               ))}
             </Select>
-          </div>
+          </div> */}
 
           <div className="form-input-label-holder">
             <label>Procedures</label>
@@ -646,7 +646,7 @@ const CreateReportForm = () => {
           type="button"
           className="mt-4 flex items-center gap-1 cursor-pointer"
         >
-          <img src={Assets.Icons.FilledWhitePlus} />{' '}
+          <img src={Assets.Icons.FilledWhitePlus} alt="plus icon" />{' '}
           <span className="text-greenText text-sm">
             Add Rebate to a Procedure
           </span>
@@ -662,7 +662,7 @@ const CreateReportForm = () => {
 
         <div className="grid md:grid-cols-2 gap-5 md:gap-8 mt-8 md:mt-10">
           <Input
-            label="Patient Address"
+            label="Referer Name"
             placeholder="Adepoju Deborah"
             {...register('refererName')}
           />
@@ -679,21 +679,19 @@ const CreateReportForm = () => {
             {...register('refererEmail')}
           />
 
-          <Input
-            label="Referer Phone"
-            placeholder="+234 90292929"
-            {...register('refererPhone')}
+          <PhoneInputField
+            control={control}
+            label="Referer Phone Number"
+            name="refererPhone"
           />
 
-          <div className="form-input-label-holder md:col-span-2">
-            <label>Remarks</label>
-            <textarea
-              className="ce-input"
-              rows={5}
-              {...register('remarks')}
-              placeholder="Leave a message for the diagnostic center"
-            ></textarea>
-          </div>
+          <TextArea
+            label="Remarks"
+            placeholder="Leave a message for the diagnostic center"
+            {...register('remarks')}
+            containerClass="md:col-span-2"
+            rows={5}
+          />
         </div>
 
         <ReportsPriceBreakdown

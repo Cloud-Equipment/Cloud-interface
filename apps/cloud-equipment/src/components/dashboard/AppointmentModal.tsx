@@ -21,6 +21,7 @@ import {
   // TimePicker,
   // TextArea,
   Button,
+  PhoneInputField,
 } from '@cloud-equipment/ui-components';
 import { IAppointmentCreate } from '../../services/queries/appointments/types';
 import medserviceQueries from '../../services/queries/medservices';
@@ -29,6 +30,7 @@ import apppointmentQueries from '../../services/queries/appointments';
 import { IMedservice, IPatient } from '@cloud-equipment/models';
 import { useSelector } from 'react-redux';
 import { IAppState } from '../../Store/store';
+import PhoneInput from 'react-phone-input-2';
 
 const AppointmentModal = ({
   onClose,
@@ -288,10 +290,10 @@ const AppointmentModal = ({
                 })}
               />
 
-              <Input
+              <PhoneInputField
+                control={control}
                 label="Patient Mobile Number"
-                placeholder="+2348138383838"
-                {...register('patientNumber')}
+                name="patientNumber"
               />
 
               <Input
