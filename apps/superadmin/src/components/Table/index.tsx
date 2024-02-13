@@ -14,6 +14,8 @@ interface ReactTableProps<T extends object> {
   loading: boolean;
   tableHeading: string;
   tableHeadingColorClassName?: string;
+  emptyTableLabel?: string;
+  emptyTableLabelSubtitle?: string;
 }
 
 const Table: React.FC<any> = <T extends object>({
@@ -22,6 +24,8 @@ const Table: React.FC<any> = <T extends object>({
   loading = true,
   tableHeading,
   tableHeadingColorClassName = '!bg-ce-lgreen',
+  emptyTableLabel = 'No Data Yet',
+  emptyTableLabelSubtitle,
 }: ReactTableProps<T>) => {
   const table = useReactTable({
     data,
@@ -69,7 +73,10 @@ const Table: React.FC<any> = <T extends object>({
         <tbody className="flex items-center justify-center border py-10 w-full">
           <div className="flex flex-col items-center justify-center w-full">
             <img src={Assets.Icons.NoTableData} alt="" />
-            <h5 className="">No Data Yet</h5>
+            <h5 className="font-dmsans font-medium text-base mt-3">
+              {emptyTableLabel}
+            </h5>
+            {emptyTableLabelSubtitle && <p>{emptyTableLabelSubtitle}</p>}
           </div>
         </tbody>
       )}

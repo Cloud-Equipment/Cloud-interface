@@ -121,11 +121,19 @@ const ManageReportDropdown = ({ id }: { id: string }) => {
       >
         <MenuItem onClick={() => {}}>
           <ListItemIcon></ListItemIcon>
-          <ListItemText>Disable User</ListItemText>
+          <ListItemText>View Report</ListItemText>
         </MenuItem>
         <MenuItem onClick={() => {}}>
           <ListItemIcon></ListItemIcon>
-          <ListItemText>Enable 2FA</ListItemText>
+          <ListItemText>Share Result</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={() => {}}>
+          <ListItemIcon></ListItemIcon>
+          <ListItemText>Confirm Test</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={() => {}}>
+          <ListItemIcon></ListItemIcon>
+          <ListItemText>Upload Result</ListItemText>
         </MenuItem>
       </Menu>
     </div>

@@ -11,17 +11,23 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { useParams } from 'react-router-dom';
 
 import { Table } from '../../../../components';
-import { InviteUserModal, CreateUserModal } from '../../../../Modals';
-import { Button } from '@cloud-equipment/ui-components';
+import {
+  InviteUserModal,
+  CreateUserModal,
+  StaffActionsModal,
+} from '../../../../Modals';
+import { Button, Loader } from '@cloud-equipment/ui-components';
 import * as Assets from '@cloud-equipment/assets';
 import queries from '.././../../../services/queries/manageFacility';
+import { formatDate } from '@cloud-equipment/utils';
 
+type IModalViews = null | 'disableUser' | 'enable2Fa';
 const columnHelper = createColumnHelper<any>();
 
 const columns = [
   columnHelper.accessor('dateTimeAdded', {
     header: 'Date & Time Added',
-    cell: (info) => info.getValue(),
+    cell: (info) => formatDate(info.getValue()),
   }),
   columnHelper.accessor('name', {
     header: 'Name',
@@ -48,19 +54,19 @@ const columns = [
   }),
   columnHelper.accessor('lastLogin', {
     header: 'Last login',
-    cell: (info) => info.getValue(),
+    cell: (info) => formatDate(info.getValue()),
   }),
   columnHelper.accessor('elipsis', {
     cell: ({
       row: {
-        original: { id },
+        original: { id, isActive, ...rest },
       },
     }) => {
       // REFACTOR: is this necessary
       const cb = (e: React.MouseEvent<HTMLButtonElement>) => {
         // console.log('e', e);
       };
-      return <ManageStaffDropDown {...{ cb, id }} />;
+      return <ManageStaffDropDown {...{ cb, id, isActive, ...rest }} />;
     },
     header: '',
   }),
@@ -76,6 +82,7 @@ const ViewFacility = () => {
     '1'
   );
 
+  // REFACTOR:
   const [modalsState, setModalsState] = useState({
     inviteModal: false,
     createModal: false,
@@ -84,7 +91,16 @@ const ViewFacility = () => {
   const memoizedDate = useMemo(() => {
     if (data && data?.resultItem?.length > 0) {
       return data?.resultItem.map(
-        ({ firstName, lastName, role, lastLogin, dateCreated, id }) => ({
+        ({
+          firstName,
+          lastName,
+          role,
+          lastLogin,
+          dateCreated,
+          id,
+          ...rest
+        }) => ({
+          ...rest,
           name: `${firstName} ${lastName}`,
           email: '',
           '2FaStatus': 'Enabled',
@@ -184,10 +200,20 @@ export default ViewFacility;
 const ManageStaffDropDown = ({
   cb,
   id,
+  isActive,
+  rest,
 }: {
   cb: (e: React.MouseEvent<HTMLButtonElement>) => void;
   id: string;
+  isActive: boolean;
+  rest: { [key: string]: any };
 }) => {
+  const { useDisableUser, useEnableUser } = queries;
+  const { mutateFn: disableFn, isLoading: isDisableLoading } = useDisableUser();
+  const { mutateFn: enableFn, isLoading: isEnableLoading } = useEnableUser();
+  // const { mutateFn: updateUserFn, isLoading: isUpdateLoading } =
+  //   useUpdateUser();
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -199,8 +225,36 @@ const ManageStaffDropDown = ({
     setAnchorEl(null);
   };
 
-  const handleMenuAction = () => {};
+  const [modalViews, setModalViews] = useState<{ currentView: IModalViews }>({
+    currentView: null,
+  });
+  const openModal = (view: IModalViews) => {
+    setModalViews({ currentView: view });
+  };
 
+  const closeModal = () => {
+    setModalViews({ currentView: null });
+  };
+
+  const handleMenuAction = () => {
+    if (modalViews.currentView === 'disableUser') {
+      disableFn({ id }, () => {
+        handleMenuClose();
+        setModalViews({ currentView: null });
+      });
+    } else if (modalViews.currentView === 'enable2Fa') {
+      console.log('enable');
+    }
+  };
+
+  // const data = {
+  //   id,
+  //   firstName: rest.firstName,
+  //   lastName: rest.lastName,
+  //   roles: [],
+  //   phoneNumber: null,
+  //   twoFactorEnabled: true,
+  // };
   return (
     <div>
       <button
@@ -219,15 +273,56 @@ const ManageStaffDropDown = ({
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={() => {}}>
-          <ListItemIcon></ListItemIcon>
-          <ListItemText>Disable User</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={() => {}}>
-          <ListItemIcon></ListItemIcon>
+        {isActive ? (
+          <MenuItem
+            onClick={() => setModalViews({ currentView: 'disableUser' })}
+          >
+            <ListItemIcon>
+              {isDisableLoading ? (
+                <Loader />
+              ) : (
+                <img src={Assets.Icons.WhiteCheckmark} alt="" />
+              )}
+            </ListItemIcon>
+            <ListItemText>Disable User</ListItemText>
+          </MenuItem>
+        ) : (
+          <MenuItem onClick={() => enableFn({ id }, handleMenuClose)}>
+            <ListItemIcon>
+              {isEnableLoading ? (
+                <Loader />
+              ) : (
+                <img src={Assets.Icons.WhiteCheckmark} alt="" />
+              )}
+            </ListItemIcon>
+            <ListItemText>Enable User</ListItemText>
+          </MenuItem>
+        )}
+        <MenuItem
+          onClick={() => {
+            // updateUserFn(data, handleMenuClose)
+          }}
+        >
+          <ListItemIcon>
+            {/* {isUpdateLoading ? (
+              <Loader />
+            ) : ( */}
+            <img src={Assets.Icons.WhiteCheckmark} alt="" />
+            {/* )} */}
+          </ListItemIcon>
           <ListItemText>Enable 2FA</ListItemText>
         </MenuItem>
       </Menu>
+
+      <Modal open={!!modalViews.currentView} onClose={closeModal}>
+        <div>
+          <StaffActionsModal
+            currentView={modalViews.currentView}
+            cb={handleMenuAction}
+            onClose={closeModal}
+          />
+        </div>
+      </Modal>
     </div>
   );
 };

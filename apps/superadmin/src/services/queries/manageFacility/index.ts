@@ -90,6 +90,7 @@ const useGetOneFacility = (
     queryKey: hash,
     queryFn: () => apiMethods.get({ url }).then((res: ApiResponse) => res.data),
     enabled: !!facilityId,
+    ...options,
   });
   return { isLoading, data, isSuccess, error };
 };
@@ -209,6 +210,199 @@ const useCreateUser = (options = {}) => {
   };
 };
 
+const useDisableUser = (options = {}) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...options,
+    mutationKey: [keys.create],
+    mutationFn: async (data: any) => {
+      return apiMethods.post({
+        url: `/user-manager/account/user/disableuser?userId=${data?.id}`,
+        body: data,
+        auth: true,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [keys.read] });
+    },
+  });
+  const { mutate, isSuccess, isError, data, isPending } = mutation;
+
+  return {
+    mutateFn: (bodyArg: any, successCb?: () => void) => {
+      return mutate(bodyArg, {
+        onSuccess: (res) => {
+          showToast(res.message || 'User Disabled Successfully', 'success');
+          setTimeout(() => {
+            successCb?.();
+          }, 1500);
+        },
+      });
+    },
+    data,
+    isSuccess,
+    isError,
+    isLoading: isPending,
+  };
+};
+
+const useEnableUser = (options = {}) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...options,
+    mutationKey: [keys.create],
+    mutationFn: async (data: any) => {
+      return apiMethods.post({
+        url: `/user-manager/account/user/enableuser?userId=${data?.id}`,
+        body: data,
+        auth: true,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [keys.read] });
+    },
+  });
+  const { mutate, isSuccess, isError, data, isPending } = mutation;
+
+  return {
+    mutateFn: (bodyArg: any, successCb?: () => void) => {
+      return mutate(bodyArg, {
+        onSuccess: (res) => {
+          showToast(res.message || 'User Enabled Successfully', 'success');
+          setTimeout(() => {
+            successCb?.();
+          }, 1500);
+        },
+      });
+    },
+    data,
+    isSuccess,
+    isError,
+    isLoading: isPending,
+  };
+};
+
+const useDisableEMR = (options = {}) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...options,
+    mutationKey: [keys.create],
+    mutationFn: async (data: any) => {
+      return apiMethods.post({
+        url: `/facility-manager/facility/disablefacilityemr?facilityID=${data?.id}`,
+        body: null,
+        auth: true,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [keys.read] });
+    },
+  });
+  const { mutate, isSuccess, isError, data, isPending } = mutation;
+
+  return {
+    mutateFn: (bodyArg: any, successCb?: () => void) => {
+      return mutate(bodyArg, {
+        onSuccess: (res) => {
+          showToast(
+            res.message || 'Facility EMR Disabled Successfully',
+            'success'
+          );
+          setTimeout(() => {
+            successCb?.();
+          }, 1500);
+        },
+      });
+    },
+    data,
+    isSuccess,
+    isError,
+    isLoading: isPending,
+  };
+};
+
+const useEnableEMR = (options = {}) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...options,
+    mutationKey: [keys.create],
+    mutationFn: async (data: any) => {
+      return apiMethods.post({
+        url: `/facility-manager/facility/enablefacilityemr?facilityID=${data?.id}`,
+        body: data,
+        auth: true,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [keys.read] });
+    },
+  });
+  const { mutate, isSuccess, isError, data, isPending } = mutation;
+
+  return {
+    mutateFn: (bodyArg: any, successCb?: () => void) => {
+      return mutate(bodyArg, {
+        onSuccess: (res) => {
+          showToast(
+            res.message || 'Facility EMR Enabled Successfully',
+            'success'
+          );
+          setTimeout(() => {
+            successCb?.();
+          }, 1500);
+        },
+      });
+    },
+    data,
+    isSuccess,
+    isError,
+    isLoading: isPending,
+  };
+};
+const useBlacklistFacility = (options = {}) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...options,
+    mutationKey: [keys.create],
+    mutationFn: async (data: any) => {
+      return apiMethods.post({
+        url: `/facility-manager/facility/blacklistfacility?facilityID=${data?.id}`,
+        body: null,
+        auth: true,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [keys.readOne] });
+    },
+  });
+  const { mutate, isSuccess, isError, data, isPending } = mutation;
+
+  return {
+    mutateFn: (bodyArg: any, successCb?: () => void) => {
+      return mutate(bodyArg, {
+        onSuccess: (res) => {
+          showToast(
+            res.message || 'Facility EMR Enabled Successfully',
+            'success'
+          );
+          setTimeout(() => {
+            successCb?.();
+          }, 1500);
+        },
+      });
+    },
+    data,
+    isSuccess,
+    isError,
+    isLoading: isPending,
+  };
+};
+
 const queries = {
   useGetFacilities,
   useCreateFacility,
@@ -217,6 +411,11 @@ const queries = {
   useGetOneFacility,
   useGetAllFacilities,
   useGetFacilityTypes,
+  useDisableUser,
+  useEnableUser,
+  useDisableEMR,
+  useEnableEMR,
+  useBlacklistFacility,
 };
 
 export default queries;
