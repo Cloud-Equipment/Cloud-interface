@@ -19,6 +19,7 @@ import {
 import { AddPatientModal } from '../../../Modals';
 import { IAppState } from '../../../Store/store';
 import queries from '../../../services/queries/managePatients';
+import { Gender, MaritalStatus } from '../../../constants';
 
 // Move to it's own file since it is being used in edit and create
 interface FormProps {
@@ -321,14 +322,7 @@ const NewPatient = () => {
                 defaultValue={0}
                 render={({ field }) => (
                   <Select
-                    options={[
-                      {
-                        value: 0,
-                        label: 'hey',
-                        categoryName: 'categoryName',
-                        categoryId: 0,
-                      },
-                    ]}
+                    options={Gender}
                     label="Gender"
                     placeholder="Select Gender"
                     containerClass="flex-1"
@@ -364,14 +358,7 @@ const NewPatient = () => {
                 defaultValue={0}
                 render={({ field }) => (
                   <Select
-                    options={[
-                      {
-                        value: 0,
-                        label: 'hey',
-                        categoryName: 'categoryName',
-                        categoryId: 0,
-                      },
-                    ]}
+                    options={MaritalStatus}
                     label="Marital Status"
                     placeholder="Select Marital Status"
                     {...{ field }}
