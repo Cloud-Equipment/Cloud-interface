@@ -255,7 +255,7 @@ const CreateReportForm = () => {
           item_.rebate = {
             facilityId: facilityId,
             rebatePercent: 5,
-            refererHospital: facilityId,
+            refererHospital: data_.refererHospital,
             refererName: data_.refererName,
             refererEmail: data_.refererEmail,
             refererPhone: data_.refererPhone,
@@ -285,11 +285,11 @@ const CreateReportForm = () => {
         patientAge: Number(data_.patientAge) || 10,
         patientEmail: data_.patientEmail,
         patientPhone: data_.patientPhone,
-        patientGenderId: 0,
+        patientGenderId: data_.patientGenderId,
         aboutPatient: '',
         maritalStatusId: 0,
         address: data_.patientAddress,
-        dateOfBirth: '2024-01-03T08:37:00.151Z',
+        // dateOfBirth: '2024-01-03T08:37:00.151Z',
       };
       dispatch(setLoading());
       axiosInstance
@@ -662,7 +662,7 @@ const CreateReportForm = () => {
 
         <div className="grid md:grid-cols-2 gap-5 md:gap-8 mt-8 md:mt-10">
           <Input
-            label="Patient Address"
+            label="Referer Name"
             placeholder="Adepoju Deborah"
             {...register('refererName')}
           />

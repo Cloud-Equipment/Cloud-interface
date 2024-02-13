@@ -29,6 +29,7 @@ import apppointmentQueries from '../../services/queries/appointments';
 import { IMedservice, IPatient } from '@cloud-equipment/models';
 import { useSelector } from 'react-redux';
 import { IAppState } from '../../Store/store';
+import PhoneInput from 'react-phone-input-2';
 
 const AppointmentModal = ({
   onClose,
