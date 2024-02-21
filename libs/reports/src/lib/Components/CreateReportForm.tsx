@@ -63,7 +63,12 @@ const CreateReportForm = () => {
   const { useGetPatientById, useSearchPatientByName } = patientQueries;
   const { mutateFn: mutateFn_fetchPatientById } = useGetPatientById(patientId);
   const { data: patientsFound, mutateFn: mutateFn_fetchPatientByName } =
-    useSearchPatientByName(patientName);
+    useSearchPatientByName(
+      patientName,
+      accountType === 0
+        ? (selectedFacility?.id as string)
+        : userDetails?.FACILITY_ID
+    );
 
   const [facilityDiscounts, setFacilityDiscounts] = useState<IDiscount[]>([]);
   const [procedureDiscounts, setProcedureDiscounts] = useState<IDiscount[]>([]);
@@ -297,6 +302,7 @@ const CreateReportForm = () => {
         aboutPatient: '',
         maritalStatusId: 0,
         address: data_.patientAddress,
+        facilityId
         // dateOfBirth: '2024-01-03T08:37:00.151Z',
       };
       dispatch(setLoading());
