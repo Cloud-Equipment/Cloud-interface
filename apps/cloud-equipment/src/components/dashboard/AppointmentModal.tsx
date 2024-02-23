@@ -132,7 +132,7 @@ const AppointmentModal = ({
   const { useGetPatientById, useSearchPatientByName } = patientQueries;
   const { mutateFn: mutateFn_fetchPatientById } = useGetPatientById(patientId);
   const { data: patientsFound, mutateFn: mutateFn_fetchPatientByName } =
-    useSearchPatientByName(patientName);
+    useSearchPatientByName(patientName, userDetails?.FACILITY_ID as string);
 
   const handleSelectedPatientFromSearch = (selectedPatient: IPatient) => {
     setValue('patientId', selectedPatient?.patientUniqueID);
