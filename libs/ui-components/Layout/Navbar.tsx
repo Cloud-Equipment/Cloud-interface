@@ -1,35 +1,59 @@
 import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { IAppState } from '../Store/store';
 import { toggleSidebar } from '@cloud-equipment/shared_store';
 import * as Assets from '@cloud-equipment/assets';
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, useEffect } from 'react';
+import React from 'react';
+import { IUser } from 'Models/auth.models';
 
-const Navbar = () => {
+const Navbar = ({
+  userDetails,
+  onLogout,
+  navbarConfig,
+}: {
+  userDetails: IUser | null;
+  onLogout: () => void;
+  navbarConfig: { name: string; path: string }[];
+}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const userDetails = useSelector((state: IAppState) => state.auth.user);
+  const location = useLocation();
 
   const viewProfile = () => {
     handleClose();
   };
 
   const logout = () => {
-    navigate('/auth/login');
+    onLogout();
     handleClose();
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const [currentPageName, setCurrentPageName] = useState('');
+
+  const getPageName = (pathname: string) => {
+    if (pathname === '/') {
+      return 'Dashboard';
+    }
+    console.log(navbarConfig);
+    const route = navbarConfig.find((item) => pathname.startsWith(item.path));
+    return route ? route.name : 'Unknown Page';
+  };
+
+  useEffect(() => {
+    setCurrentPageName(getPageName(location.pathname));
+  }, [location.pathname]);
 
   return (
     <nav className="sticky z-50 bg-[#F6F9F8] top-0 px-5 pt-4 md:px-6 md:pt-6 pb-2 flex justify-between">
@@ -44,7 +68,7 @@ const Navbar = () => {
         </button>
 
         <div className="hidden md:block">
-          <h3 className="text-xl">Dashboard</h3>
+          <h3 className="text-xl">{currentPageName}</h3>
 
           <div className=""></div>
         </div>
@@ -66,6 +90,7 @@ const Navbar = () => {
             <p className="font-bold text-blackText">
               {userDetails?.USER_FULLNAME}
             </p>
+
             <p className="text-greyText text-sm">{userDetails?.userType}</p>
           </div>
 
@@ -75,15 +100,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <Menu
-        //   id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem onClick={() => viewProfile()}>
           <ListItemText>My Profile</ListItemText>
         </MenuItem>

@@ -41,63 +41,6 @@ const Sidebar = () => {
       <div className="mt-2">
         <NavLink
           onClick={handleCloseSidebar}
-          to="/"
-          className="!mt-0 main-icon"
-        >
-          <img src={Assets.Icons.DashboardNav} alt="" />
-          <span>Dashboard</span>
-        </NavLink>
-
-        <NavLink
-          onClick={handleCloseSidebar}
-          to="/reports"
-          className="main-icon"
-        >
-          <img src={Assets.Icons.ReportsNav} alt="" />
-          <span>Reports</span>
-        </NavLink>
-
-        <div className="mt-2 flex items-center justify-between">
-          <NavLink
-            to="/management"
-            className="px-4 py-3 flex items-center space-x-3"
-          >
-            <img src={Assets.Icons.ManagementNav} alt="" />
-            <span>Management</span>
-          </NavLink>
-
-          <button>
-            <img src={Assets.Icons.WhiteArrowUp} alt="" />
-          </button>
-        </div>
-
-        <div className="grid text-[#FFFFFF8F] gap-2 px-[25px] py-2 font-medium subnavs">
-          <NavLink onClick={handleCloseSidebar} to="/management/patients">
-            Patients
-          </NavLink>
-
-          <NavLink onClick={handleCloseSidebar} to="/management/facility">
-            Facilities
-          </NavLink>
-
-          <NavLink
-            onClick={handleCloseSidebar}
-            to="/management/facility/discounts"
-          >
-            Discounts
-          </NavLink>
-
-          <NavLink onClick={handleCloseSidebar} to="/management/medservices">
-            Medservices
-          </NavLink>
-
-          <NavLink onClick={handleCloseSidebar} to="/management/equipment">
-            Equipment
-          </NavLink>
-        </div>
-
-        <NavLink
-          onClick={handleCloseSidebar}
           to="/settings"
           className="main-icon"
         >

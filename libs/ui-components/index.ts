@@ -14,6 +14,7 @@ export { default as FileUploadWithModal } from './FileUploadWithModal';
 export { default as TextArea } from './TextArea';
 export { default as TimePicker } from './TimePicker';
 export { default as PhoneInputField } from './PhoneInputField';
+export { default as Layout } from './Layout';
 
 import { NavTab2 } from './NavTab2';
 
