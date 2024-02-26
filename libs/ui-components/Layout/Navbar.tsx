@@ -1,14 +1,22 @@
 import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { IAppState } from '../Store/store';
 import { toggleSidebar } from '@cloud-equipment/shared_store';
 import * as Assets from '@cloud-equipment/assets';
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, useEffect } from 'react';
+import React from 'react';
+import { IUser } from 'Models/auth.models';
 
-const Navbar = () => {
+const Navbar = ({
+  userDetails,
+  onLogout,
+}: {
+  userDetails: IUser | null;
+  onLogout: () => void;
+}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -16,14 +24,12 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const userDetails = useSelector((state: IAppState) => state.auth.user);
-
   const viewProfile = () => {
     handleClose();
   };
 
   const logout = () => {
-    navigate('/auth/login');
+    onLogout();
     handleClose();
   };
 
@@ -66,6 +72,7 @@ const Navbar = () => {
             <p className="font-bold text-blackText">
               {userDetails?.USER_FULLNAME}
             </p>
+            
             <p className="text-greyText text-sm">{userDetails?.userType}</p>
           </div>
 
@@ -75,15 +82,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <Menu
-        //   id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem onClick={() => viewProfile()}>
           <ListItemText>My Profile</ListItemText>
         </MenuItem>

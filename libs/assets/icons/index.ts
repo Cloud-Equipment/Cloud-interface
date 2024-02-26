@@ -52,6 +52,7 @@ import UploadIconInModal from './uploadIconInModal.svg';
 import WhiteCheckmark from './whiteCheckmark.svg';
 import FilterIcon from './filterIcon.svg';
 import ArrowUpIcon from './arrowUpIcon.svg';
+import LogoutModalIcon from './logout-modal-icon.png';
 
 export {
   ArrowRight,
@@ -108,4 +109,5 @@ export {
   WhiteCheckmark,
   FilterIcon,
   ArrowUpIcon,
+  LogoutModalIcon,
 };

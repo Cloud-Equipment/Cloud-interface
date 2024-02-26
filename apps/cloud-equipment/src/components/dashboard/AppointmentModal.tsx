@@ -30,7 +30,7 @@ import apppointmentQueries from '../../services/queries/appointments';
 import { IMedservice, IPatient } from '@cloud-equipment/models';
 import { useSelector } from 'react-redux';
 import { IAppState } from '../../Store/store';
-import PhoneInput from 'react-phone-input-2';
+import { toast } from 'react-toastify';
 
 const AppointmentModal = ({
   onClose,
@@ -93,7 +93,10 @@ const AppointmentModal = ({
         doctorId: '1',
         takingMeds: JSON.parse(getValues().takingMeds as unknown as string),
       },
-      () => triggerCloseAfterSuccess()
+      () => {
+        toast.success('Appointment Created Successfully');
+        triggerCloseAfterSuccess();
+      }
     );
   };
 
@@ -260,15 +263,14 @@ const AppointmentModal = ({
                 <Controller
                   name="visitReasonId"
                   control={control}
-                  defaultValue={0}
                   render={({ field }) => (
-                    <Select {...field}>
+                    <Select {...field} required>
                       <MenuItem value={0} disabled>
                         Select Reason for Visiting
                       </MenuItem>
-                      <MenuItem value={1}>Run Diagnostics</MenuItem>
-                      <MenuItem value={2}>Result Collection</MenuItem>
-                      <MenuItem value={3}>Others</MenuItem>
+                      <MenuItem value={2}>Run Diagnostics</MenuItem>
+                      <MenuItem value={3}>Result Collection</MenuItem>
+                      <MenuItem value={4}>Others</MenuItem>
                     </Select>
                   )}
                 />
@@ -279,14 +281,6 @@ const AppointmentModal = ({
                 placeholder="AGA/453"
                 {...register('patientId', {
                   required: 'Patient ID is required ',
-                })}
-              />
-
-              <Input
-                label="Patient Name"
-                placeholder="Adepoju Deborah"
-                {...register('patientName', {
-                  required: 'Patient Name is required ',
                 })}
               />
 
