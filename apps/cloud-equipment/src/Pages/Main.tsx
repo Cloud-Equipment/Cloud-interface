@@ -50,6 +50,17 @@ const mainRoutes = [
   },
 ];
 
+const navbarConfig = [
+  //   { path: '/', exact: true, name: 'Dashboard' },
+  { path: '/reports', name: 'Reports' },
+  { path: '/management/patients', name: 'Patients' },
+  { path: '/management/facility', name: 'Facilities' },
+  { path: '/management/users', name: 'Users' },
+  { path: '/management/medservices', name: 'Medservices' },
+  { path: '/management/equipment', name: 'Equipment' },
+  { path: '/settings', name: 'Settings' },
+];
+
 export const Main = () => {
   const userDetails = useSelector((state: IAppState) => state.auth.user);
   const dispatch = useDispatch();
@@ -59,7 +70,12 @@ export const Main = () => {
   };
 
   return (
-    <Layout navlinks={mainRoutes} onLogout={_logout} userDetails={userDetails}>
+    <Layout
+      navbarConfig={navbarConfig}
+      navlinks={mainRoutes}
+      onLogout={_logout}
+      userDetails={userDetails}
+    >
       <MainRouting />
     </Layout>
   );

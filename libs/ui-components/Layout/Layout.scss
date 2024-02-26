@@ -98,7 +98,7 @@ aside {
 }
 
 .minx {
-  @apply w-6 grid grid-cols-2 h-6 border-2 border-[#ffffff8f] border-solid;
+  @apply w-5 grid grid-cols-2 h-5 border-2 border-[#ffffff8f] border-solid;
 
   div:nth-child(2) {
     @apply bg-[#ffffff8f];

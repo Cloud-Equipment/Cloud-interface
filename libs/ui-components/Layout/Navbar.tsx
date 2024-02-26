@@ -1,5 +1,5 @@
 import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleSidebar } from '@cloud-equipment/shared_store';
 import * as Assets from '@cloud-equipment/assets';
@@ -10,9 +10,11 @@ import { IUser } from 'Models/auth.models';
 const Navbar = ({
   userDetails,
   onLogout,
+  navbarConfig,
 }: {
   userDetails: IUser | null;
   onLogout: () => void;
+  navbarConfig: { name: string; path: string }[];
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -23,6 +25,7 @@ const Navbar = ({
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const viewProfile = () => {
     handleClose();
@@ -37,6 +40,21 @@ const Navbar = ({
     setAnchorEl(null);
   };
 
+  const [currentPageName, setCurrentPageName] = useState('');
+
+  const getPageName = (pathname: string) => {
+    if (pathname === '/') {
+      return 'Dashboard';
+    }
+    console.log(navbarConfig);
+    const route = navbarConfig.find((item) => pathname.startsWith(item.path));
+    return route ? route.name : 'Unknown Page';
+  };
+
+  useEffect(() => {
+    setCurrentPageName(getPageName(location.pathname));
+  }, [location.pathname]);
+
   return (
     <nav className="sticky z-50 bg-[#F6F9F8] top-0 px-5 pt-4 md:px-6 md:pt-6 pb-2 flex justify-between">
       <div className="flex">
@@ -50,7 +68,7 @@ const Navbar = ({
         </button>
 
         <div className="hidden md:block">
-          <h3 className="text-xl">Dashboard</h3>
+          <h3 className="text-xl">{currentPageName}</h3>
 
           <div className=""></div>
         </div>
@@ -72,7 +90,7 @@ const Navbar = ({
             <p className="font-bold text-blackText">
               {userDetails?.USER_FULLNAME}
             </p>
-            
+
             <p className="text-greyText text-sm">{userDetails?.userType}</p>
           </div>
 

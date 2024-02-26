@@ -12,11 +12,13 @@ const Layout = ({
   userDetails,
   onLogout,
   navlinks,
+  navbarConfig,
 }: {
   children: JSX.Element;
   userDetails: IUser | null;
   onLogout: () => void;
   navlinks: INavItem[];
+  navbarConfig: { path: string; name: string }[];
 }) => {
   const [sidebarExpanded, setSidebarExpanded] = useState(true);
   const [logoutModalOpen, setLogoutMOdalOpen] = useState(false);
@@ -52,7 +54,11 @@ const Layout = ({
             : 'lg:ml-auto min-w-[calc(100%-70px)]'
         }`}
       >
-        <Navbar onLogout={handleLogout} userDetails={userDetails} />
+        <Navbar
+          onLogout={handleLogout}
+          userDetails={userDetails}
+          navbarConfig={navbarConfig}
+        />
 
         <div className="">{children}</div>
       </main>
