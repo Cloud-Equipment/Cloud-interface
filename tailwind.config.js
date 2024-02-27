@@ -13,7 +13,6 @@ module.exports = {
       fontFamily: {
         manrope: ['Manrope'],
         dmsans: ['DM Sans'],
-        playfair: ['Playfair Display'],
         nunito: ['Nunito Sans'],
       },
       colors: {
