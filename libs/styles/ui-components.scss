@@ -1,0 +1,219 @@
+button.btn-icon {
+  @apply outline-none hover:scale-[1.03];
+}
+
+.ce-btn {
+  @apply text-white outline-none px-4 py-2 rounded-[6px] text-sm  duration-700;
+
+  background-color: #0e5f50;
+}
+
+.ce-btn:hover {
+  background-color: #134138;
+}
+
+.ce-btn-text {
+  @apply text-ce-green outline-none px-4 py-2 rounded-[6px] text-sm;
+}
+
+.ce-btn-outline {
+  @apply text-ce-green border-ce-green border-solid border outline-none px-4 py-2 rounded-[6px] text-sm hover:bg-ce-green hover:text-white;
+}
+
+.ce-heading-2 {
+  @apply font-medium text-lg;
+}
+
+.ce-btn-icon {
+  @apply flex space-x-2 items-center pr-6;
+
+  img {
+    @apply w-5;
+  }
+}
+
+.search-input-container {
+  position: relative;
+
+  input {
+    @apply outline-none focus:border-ce-green bg-[#F8F8FA] rounded-[30px] px-5 py-2.5 w-full;
+  }
+
+  img {
+    @apply absolute right-5 top-[50%] -translate-y-[50%] w-5;
+  }
+}
+
+//===================================== Button starts here =====================================
+.export-btn {
+  @apply bg-[#54D4BD] text-[white] flex items-center text-xs w-fit px-4 py-2 rounded gap-2;
+}
+
+.filter-btn {
+  @apply bg-white text-secondary-100 flex items-center text-xs w-fit px-4 py-2 rounded gap-2 border border-neutral-100;
+}
+
+//===================================== Button ends here =====================================
+// table
+.ce-table-holder {
+  @apply border-[#E5E5E5] border border-solid bg-[#FBFBFB] rounded-[20px] p-[16px];
+  overflow-x: auto;
+
+  .table-heading {
+    @apply font-medium mb-[14px] font-dmsans text-lg text-neutral-200;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+
+    thead {
+      @apply bg-ce-lgreen rounded-lg;
+
+      th {
+        @apply text-[#282828] text-left;
+        white-space: nowrap;
+      }
+    }
+
+    tbody {
+      tr {
+        background-color: white;
+      }
+
+      td {
+        @apply text-[#525252] text-nowrap;
+        border-bottom: 1px solid #e1e1e1;
+      }
+    }
+
+    th,
+    td {
+      padding: 12px;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+    }
+  }
+}
+
+.dashboard-table-holder {
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+
+    thead {
+      @apply bg-[#54D4BD];
+
+      th {
+        @apply text-white text-left;
+        white-space: nowrap;
+      }
+    }
+
+    tbody {
+      td {
+        @apply text-[#525252] text-nowrap;
+        border-bottom: 1px solid #e1e1e1;
+      }
+    }
+
+    th,
+    td {
+      padding: 12px;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+    }
+  }
+}
+
+.sort-container {
+  @apply bg-[#F8F8FA] gap-4 rounded-[20px] flex px-5 py-2.5 items-center;
+
+  .sort-text {
+    @apply text-xs;
+  }
+
+  .sort-value {
+    @apply text-[#2C3647] text-sm;
+  }
+}
+
+// inputs
+.form-input-label-holder {
+  @apply grid gap-2;
+
+  label {
+    @apply font-medium text-sm text-greyText2;
+  }
+}
+
+.ce-input {
+  border: 1px solid rgba(99, 119, 138, 0.5);
+  margin: 2px 0;
+  @apply px-3 rounded-lg py-2.5 focus:border-ce-green outline-none;
+}
+
+.ce-input::placeholder,
+.ce-input::-moz-placeholder {
+  @apply text-sm text-[#42526B];
+}
+
+.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border: 1px solid #0e5f50 !important;
+}
+
+.MuiSelect-select {
+  padding: 10px 12px !important;
+}
+
+.MuiInputBase-root {
+  border-radius: 8px !important;
+}
+
+.SelectListItem .MuiSelect-select {
+  padding: 6px 10px !important;
+  background-color: red !important;
+}
+
+.centered-modal {
+  @apply absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[90%] max-w-[450px];
+}
+.centered-modal-md {
+  @apply absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[90%] max-w-[30%];
+}
+.centered-modal-large {
+  @apply absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[90%] max-w-[65%] rounded-[20px];
+}
+
+.right-modal {
+  @apply absolute top-0 bottom-0 right-0 w-[90%] md:max-w-[650px] 2xl:max-w-[950px];
+}
+
+// autocomplete
+
+.MuiOutlinedInput-root {
+  padding: 0 !important;
+}
+
+.MuiAutocomplete-input {
+  padding: 10px 12px !important;
+}
+
+.MuiMenu-paper {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;
+}
+
+// Mui tabs
+.MuiTab-root.Mui-selected {
+  color: #54d4bd !important;
+}
+
+.MuiTabs-indicator {
+  background-color: #54d4bd !important;
+}
