@@ -1,6 +1,6 @@
-import { IMedService } from '@cloud-equipment/models';
+import { IMedservice } from '@cloud-equipment/models';
 import * as Assets from '@cloud-equipment/assets';
-import { _deletePrice } from '../../../services/procedures.service';
+import { _deletePrice } from '../../../../services/procedures.service';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { clearLoading, setLoading } from '@cloud-equipment/shared_store';
@@ -10,7 +10,7 @@ const DeleteProdecureModal = ({
   procedureToEdit,
 }: {
   onClose: () => void;
-  procedureToEdit: IMedService;
+  procedureToEdit: IMedservice;
 }) => {
   const dispatch = useDispatch();
   const deletePrice = () => {

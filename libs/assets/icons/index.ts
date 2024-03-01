@@ -41,6 +41,7 @@ import PlusIcon from './plusIcon.svg';
 import FacilityWarningIcon from './facilityWarningIcon.svg';
 import EnableEMRIcon from './EnableEMRIcon.svg';
 import * as Dashboard from './dashboard';
+import * as Auth from './auth';
 import FileUpload from './file-upload.svg';
 import NoTableData from './noTableData.svg';
 import ArrowRight from './arrow-right.svg';
@@ -56,6 +57,7 @@ import LogoutModalIcon from './logout-modal-icon.png';
 
 export {
   ArrowRight,
+  Auth,
   BoxCloseIcon,
   Confirm,
   DashboardNav,

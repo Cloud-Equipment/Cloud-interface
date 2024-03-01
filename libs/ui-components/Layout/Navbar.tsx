@@ -46,7 +46,6 @@ const Navbar = ({
     if (pathname === '/') {
       return 'Dashboard';
     }
-    console.log(navbarConfig);
     const route = navbarConfig.find((item) => pathname.startsWith(item.path));
     return route ? route.name : 'Unknown Page';
   };
@@ -67,10 +66,10 @@ const Navbar = ({
           <img src={Assets.Icons.Hamburger} alt="" />
         </button>
 
-        <div className="hidden md:block">
-          <h3 className="text-xl">{currentPageName}</h3>
+        <div className="hidden md:flex items-center">
+          <h3 className="text-xl ml-3">{currentPageName}</h3>
 
-          <div className=""></div>
+          {/* <div className=""></div> */}
         </div>
       </div>
 
