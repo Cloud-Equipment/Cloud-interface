@@ -30,7 +30,7 @@ import apppointmentQueries from '../../services/queries/appointments';
 import { IMedservice, IPatient } from '@cloud-equipment/models';
 import { useSelector } from 'react-redux';
 import { IAppState } from '../../Store/store';
-import PhoneInput from 'react-phone-input-2';
+import { toast } from 'react-toastify';
 
 const AppointmentModal = ({
   onClose,
@@ -90,10 +90,15 @@ const AppointmentModal = ({
         ...getValues(),
         facilityId: userDetails?.FACILITY_ID as string,
         testIds: selectedProcedures,
-        doctorId: '1',
-        takingMeds: JSON.parse(getValues().takingMeds as unknown as string),
+        // this was done because the value comes as a string and I have not idea why
+        takingMeds: JSON.parse(
+          (getValues().takingMeds as unknown as string) ?? 'false'
+        ),
       },
-      () => triggerCloseAfterSuccess()
+      () => {
+        toast.success('Appointment Created Successfully');
+        triggerCloseAfterSuccess();
+      }
     );
   };
 
@@ -132,7 +137,7 @@ const AppointmentModal = ({
   const { useGetPatientById, useSearchPatientByName } = patientQueries;
   const { mutateFn: mutateFn_fetchPatientById } = useGetPatientById(patientId);
   const { data: patientsFound, mutateFn: mutateFn_fetchPatientByName } =
-    useSearchPatientByName(patientName);
+    useSearchPatientByName(patientName, userDetails?.FACILITY_ID as string);
 
   const handleSelectedPatientFromSearch = (selectedPatient: IPatient) => {
     setValue('patientId', selectedPatient?.patientUniqueID);
@@ -195,14 +200,6 @@ const AppointmentModal = ({
               </button>
             </div>
 
-            {/* {Object.keys(getValues()).map(function (key) {
-          return (
-            <div>
-              {key}: {(getValues() as unknown as any)[key]}
-            </div>
-          );
-        })} */}
-
             <form
               className="grid md:grid-cols-2 gap-5 mt-6"
               onSubmit={handleSubmit(onSubmit)}
@@ -245,7 +242,7 @@ const AppointmentModal = ({
                             {option.patientName}
                           </p>
                           <p className="text-xs mt-2">
-                            {option.patientFacilityCode.substr(0, 5)} .{' '}
+                            {option.patientFacilityCode?.substr(0, 5)} .{' '}
                             {option.patientAge} Years
                           </p>
                         </div>
@@ -260,15 +257,14 @@ const AppointmentModal = ({
                 <Controller
                   name="visitReasonId"
                   control={control}
-                  defaultValue={0}
                   render={({ field }) => (
-                    <Select {...field}>
+                    <Select {...field} required>
                       <MenuItem value={0} disabled>
                         Select Reason for Visiting
                       </MenuItem>
-                      <MenuItem value={1}>Run Diagnostics</MenuItem>
-                      <MenuItem value={2}>Result Collection</MenuItem>
-                      <MenuItem value={3}>Others</MenuItem>
+                      <MenuItem value={2}>Run Diagnostics</MenuItem>
+                      <MenuItem value={3}>Result Collection</MenuItem>
+                      <MenuItem value={4}>Others</MenuItem>
                     </Select>
                   )}
                 />
@@ -279,14 +275,6 @@ const AppointmentModal = ({
                 placeholder="AGA/453"
                 {...register('patientId', {
                   required: 'Patient ID is required ',
-                })}
-              />
-
-              <Input
-                label="Patient Name"
-                placeholder="Adepoju Deborah"
-                {...register('patientName', {
-                  required: 'Patient Name is required ',
                 })}
               />
 
@@ -411,7 +399,7 @@ const AppointmentModal = ({
                   name="takingMeds"
                   control={control}
                   render={({ field }) => (
-                    <RadioGroup row {...field}>
+                    <RadioGroup defaultValue={false} row {...field}>
                       <FormControlLabel
                         control={<Radio value={true} />}
                         label="True"

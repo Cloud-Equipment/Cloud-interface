@@ -7,12 +7,36 @@ import {
 } from '@tanstack/react-query';
 
 import { apiClient } from '@cloud-equipment/api';
-import { ApiResponse } from 'Models/api.models';
+import { ApiResponse, PaginationData } from 'Models/api.models';
 import keys from './keys';
-import { environment } from '@cloud-equipment/environments';
 import { IMedservice } from '@cloud-equipment/models';
 
 // url: `/service-manager/medServices/getall`
+const useGetPrices = (
+  url: string,
+  body: any,
+  options: Omit<
+    UseQueryOptions<any, unknown, any, string[]>,
+    'initialData' | 'queryFn' | 'queryKey'
+  > = {},
+  pageNumber: string = '1'
+) => {
+  const hash = [keys.read, 'all', `${pageNumber}`];
+  const {
+    isLoading,
+    data,
+    isSuccess,
+    error,
+  }: UseQueryResult<PaginationData<IMedservice>, unknown> = useQuery({
+    queryKey: hash,
+    queryFn: () =>
+      apiClient
+        .post({ url, body, auth: true })
+        .then((res: ApiResponse<PaginationData<IMedservice>>) => res.data),
+    ...options,
+  });
+  return { isLoading, data, isSuccess, error };
+};
 
 const useGetMedservicesForFacility = (
   url: string,
@@ -33,6 +57,7 @@ const useGetMedservicesForFacility = (
 
 const queries = {
   useGetMedservicesForFacility,
+  useGetPrices
 };
 
 export default queries;

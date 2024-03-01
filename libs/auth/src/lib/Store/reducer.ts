@@ -1,6 +1,6 @@
 import { IUser } from '@cloud-equipment/models';
 import { AuthActionsEnum } from './actions';
-import * as jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 import { IAuthState } from '@cloud-equipment/models';
 
@@ -10,18 +10,20 @@ let user_obj: IUser | null = null;
 
 // Check if the token exists and is valid
 if (token) {
-  try {
-    const decoded = jwtDecode.jwtDecode(token) as unknown as IUser;
+  const decoded = jwtDecode<IUser & { exp: number }>(token);
 
-    user_obj = {
-      ...decoded,
-      userType:
-        decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'],
-    };
-  } catch (error) {
+  // Check if the token is expired
+  const currentTime = Math.floor(Date.now() / 1000); // Get current time in seconds
+  if (decoded.exp < currentTime) {
     localStorage.clear();
     sessionStorage.clear();
+  } else {
+    user_obj = {
+      ...decoded,
+    };
   }
+
+  console.log({ user_obj });
 } else {
   localStorage.clear();
   sessionStorage.clear();

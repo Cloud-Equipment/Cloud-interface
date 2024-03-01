@@ -13,7 +13,11 @@ import keys from './keys';
 import { environment } from '@cloud-equipment/environments';
 import { IPatient } from 'Models/patient.models';
 
-const useSearchPatientByName = (patientName: string, options = {}) => {
+const useSearchPatientByName = (
+  patientName: string,
+  facilityId: string,
+  options = {}
+) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -23,7 +27,7 @@ const useSearchPatientByName = (patientName: string, options = {}) => {
       const response = await apiClient.get({
         url: `${environment.baseUrl}/patient/getpatientbyname`,
         auth: true,
-        params: { patientName },
+        params: { patientName, facilityId },
       });
 
       return response.data;

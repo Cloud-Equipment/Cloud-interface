@@ -41,6 +41,7 @@ import PlusIcon from './plusIcon.svg';
 import FacilityWarningIcon from './facilityWarningIcon.svg';
 import EnableEMRIcon from './EnableEMRIcon.svg';
 import * as Dashboard from './dashboard';
+import * as Auth from './auth';
 import FileUpload from './file-upload.svg';
 import NoTableData from './noTableData.svg';
 import ArrowRight from './arrow-right.svg';
@@ -57,9 +58,11 @@ import ReportConfirmIcon from './reportConfirmIcon.svg';
 import ReportEditIcon from './reportEditIcon.svg';
 import ReportShareIcon from './reportShareIcon.svg';
 import ReportViewProfileIcon from './reportViewProfileIcon.svg';
+import LogoutModalIcon from './logout-modal-icon.png';
 
 export {
   ArrowRight,
+  Auth,
   BoxCloseIcon,
   Confirm,
   DashboardNav,
@@ -118,4 +121,5 @@ export {
   ReportEditIcon,
   ReportShareIcon,
   ReportViewProfileIcon,
+  LogoutModalIcon,
 };

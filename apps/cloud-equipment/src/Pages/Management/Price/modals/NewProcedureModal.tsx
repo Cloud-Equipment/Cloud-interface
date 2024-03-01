@@ -2,14 +2,14 @@ import {
   _createPrice,
   _getAllFacilities,
   _getMedserviceCategories,
-} from '../../../services/procedures.service';
+} from '../../../../services/procedures.service';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { MenuItem, Select } from '@mui/material';
 import {
   ICreateProcedure,
-  IMedService,
+  IMedservice,
   IMedserviceCategory,
   IUser,
 } from '@cloud-equipment/models';
@@ -22,7 +22,7 @@ const NewProcedureModal = ({
   procedureToEdit,
 }: {
   onClose: () => void;
-  procedureToEdit: IMedService | null;
+  procedureToEdit: IMedservice | null;
 }) => {
   const { register, handleSubmit, control, getValues, setValue } = useForm();
   const dispatch = useDispatch();

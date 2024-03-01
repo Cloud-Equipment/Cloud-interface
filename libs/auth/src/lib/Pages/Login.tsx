@@ -79,7 +79,7 @@ const Login = () => {
         <input {...register('password')} type="password" className="ce-input" />
       </div>
 
-      <NavLink to="." className="text-greenText">
+      <NavLink to="/auth/forgot-password" className="text-greenText">
         Forgot Password?
       </NavLink>
 
@@ -89,7 +89,7 @@ const Login = () => {
         Don't have an account?{' '}
         <NavLink to="." className="text-greenText">
           Contact support
-        </NavLink>{' '}
+        </NavLink>
       </p>
     </form>
   );

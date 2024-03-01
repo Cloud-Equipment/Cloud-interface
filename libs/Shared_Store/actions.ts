@@ -35,3 +35,9 @@ export const clearLoading = () => {
     type: SharedActions.CLEAR_LOADING,
   };
 };
+
+export const logout = () => {
+  return {
+    type: 'LOGOUT',
+  };
+};
