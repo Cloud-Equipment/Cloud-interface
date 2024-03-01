@@ -11,6 +11,7 @@ import { IProcedure } from './types';
 import { ApiResponse } from 'Models/api.models';
 import keys from './keys';
 import { environment } from '@cloud-equipment/environments';
+import { showToast } from '@cloud-equipment/utils';
 
 interface TableQueryParams {
   currentPage: number;
@@ -62,9 +63,81 @@ const useGetReportById = (
   return { isLoading, data, isSuccess, error };
 };
 
+const useConfirmTest = (options = {}) => {
+  const mutation = useMutation({
+    ...options,
+    mutationKey: [keys.getAll],
+    mutationFn: async (body: any) => {
+      const response = await apiClient.patch({
+        url: `/service-manager/procedures/validateprocedure`,
+        body: {
+          procedureEntrId: body?.procedureEntrId,
+          procedureNewStatus: body?.procedureNewStatus,
+        },
+      });
+
+      return response;
+    },
+    onSuccess: (res) => {
+      showToast(res?.message, 'success');
+    },
+  });
+  const { mutate, isSuccess, isError, data, isPending } = mutation;
+
+  return {
+    mutateFn: (bodyArg: any, cb: (res: any) => void) => {
+      return mutate(bodyArg, {
+        onSuccess: (res) => {
+          cb?.(res);
+        },
+      });
+    },
+    data,
+    isSuccess,
+    isError,
+    isLoading: isPending,
+  };
+};
+
+const useUploadResult = (options = {}) => {
+  const mutation = useMutation({
+    ...options,
+    mutationKey: [keys.getAll],
+    mutationFn: async (body: any) => {
+      const response = await apiClient.post({
+        url: `/service-manager/procedures/upload-result?procedureEntryId=${body?.procedureEntryId}`,
+        auth: true,
+        body: body,
+      });
+
+      return response;
+    },
+    onSuccess: (res) => {
+      showToast(res?.message, 'success');
+    },
+  });
+  const { mutate, isSuccess, isError, data, isPending } = mutation;
+
+  return {
+    mutateFn: (bodyArg: any, cb: (res: any) => void) => {
+      return mutate(bodyArg, {
+        onSuccess: (res) => {
+          cb?.(res);
+        },
+      });
+    },
+    data,
+    isSuccess,
+    isError,
+    isLoading: isPending,
+  };
+};
+
 const queries = {
   useGetReports,
   useGetReportById,
+  useConfirmTest,
+  useUploadResult,
 };
 
 export default queries;

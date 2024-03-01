@@ -37,6 +37,48 @@ export interface IProcedure {
   rebateId: string;
 }
 
+export interface IProcedure2 {
+  facilityName: string;
+  procedureEntryId: number;
+  medServiceName: string;
+  categoryName: string;
+  patientAge: number;
+  patientName: string;
+  patientGender?: any;
+  address: string;
+  procedureCategory?: any;
+  referrersName?: string;
+  patientPhone: string;
+  patientFacilityCode: string;
+  patientEmail: string;
+  facilityDiscountPercent?: number;
+  facilityDiscountCodeName?: string;
+  fprocedureDiscountPercent?: number;
+  procedurediscountCodeName?: string;
+  totalAfterDisc: number;
+  procedureEntryStatus: string;
+  rebatePercent?: number;
+  refererName?: string;
+  rebatePaid: number;
+  refererHospital?: string;
+  refererEmail?: string;
+  refererPhone?: string;
+  discountPercent?: number;
+  patientId: string;
+  medServiceId: number;
+  quantity: number;
+  amount: number;
+  subotal: number;
+  facilityId: string;
+  remarks: string;
+  faclityDiscountId: number;
+  procedureDiscountId: number;
+  entryUserId: string;
+  trackId: string;
+  date: string;
+  rebateId?: string;
+}
+
 export interface IMedService {
   medServiceId: number;
   medServiceCategoryId: number;

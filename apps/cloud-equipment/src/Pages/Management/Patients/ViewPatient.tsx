@@ -55,6 +55,13 @@ const ViewPatient = () => {
     { enabled: !!params.id }
   );
 
+  if (isLoading)
+    return (
+      <section className="ce-px ce-py">
+        <h2>Loading...</h2>;
+      </section>
+    );
+
   return (
     <>
       <section className="ce-px ce-py">

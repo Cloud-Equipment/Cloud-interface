@@ -2,6 +2,7 @@ export interface ApiResponse<T = any> {
   success: boolean;
   data: T;
   msg: string;
+  message?: string;
   statusCode: number;
 }
 
@@ -12,4 +13,3 @@ export interface PaginationData<T = any> {
   pageSize: number;
   resultItem: T[];
 }
-

@@ -79,7 +79,7 @@ const UserManagement = () => {
 
   const { useGetUsers } = queries;
   const { isLoading, data: userData } = useGetUsers(
-    '/user-manager/account/user/getallusersfacility?currentPage=1&startIndex=1&pageSize=10',
+    `/user-manager/account/user/getallusersfacility?facilityId=${user?.FACILITY_ID}&currentPage=1&startIndex=1&pageSize=10`,
     { facilityId: user ? user.FACILITY_ID : '' },
     { enabled: !!user?.FACILITY_ID },
     '1'

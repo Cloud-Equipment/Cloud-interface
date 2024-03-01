@@ -135,7 +135,7 @@ const TableMenuDropdown = ({
   patientData: any;
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     cb(event);
@@ -147,7 +147,7 @@ const TableMenuDropdown = ({
   };
 
   const viewPatient = () => {
-    // navigate(`/management/patients/view/${patientData.patientUniqueID}`);
+    navigate(`/management/patient/${patientData.patientUniqueID}`);
   };
 
   return (
