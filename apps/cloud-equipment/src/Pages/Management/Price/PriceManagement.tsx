@@ -13,9 +13,9 @@ import * as Assets from '@cloud-equipment/assets';
 import moment from 'moment';
 import numeral from 'numeral';
 import { NavTab } from '@cloud-equipment/ui-components';
-import NewProcedureModal from './NewProcedureModal';
-import DeleteProdecureModal from './DeleteProdecureModal';
-import ApprovePriceModal from './ApprovePriceModal';
+import NewProcedureModal from './modals/NewProcedureModal';
+import DeleteProdecureModal from './modals/DeleteProdecureModal';
+import ApprovePriceModal from './modals/ApprovePriceModal';
 
 const PriceManagement = () => {
   // table
@@ -109,6 +109,7 @@ const PriceManagement = () => {
           }
         </div>
       </Modal>
+
       <Modal open={deleteModalOpen} onClose={closeDeleteModal}>
         <div>
           {
@@ -119,6 +120,7 @@ const PriceManagement = () => {
           }
         </div>
       </Modal>
+
       <Modal open={approveModalOpen}>
         <div>
           {
@@ -132,7 +134,6 @@ const PriceManagement = () => {
 
       <section className="ce-px ce-py">
         <div className="flex justify-end gap-4 flex-wrap mt-5">
-          {priceModalOpen}
           <button onClick={openPriceModal} className="ce-btn">
             New Price/ Test
           </button>
@@ -246,3 +247,61 @@ const PriceManagement = () => {
 };
 
 export default PriceManagement;
+
+const TableMenuDropdown = ({
+  cb,
+  patientData,
+}: {
+  cb: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  // patientData: IPatient;
+  patientData: any;
+}) => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  // const navigate = useNavigate();
+
+  const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    cb(event);
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const viewPatient = () => {
+    // navigate(`/management/patients/view/${patientData.patientUniqueID}`);
+  };
+
+  return (
+    <div>
+      <button
+        onClick={(e) => {
+          handleActionClick(e);
+        }}
+        className="w-6"
+      >
+        <img src={Assets.Icons.Menudots} alt="" />
+      </button>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem
+          onClick={() => {
+            viewPatient();
+            handleMenuClose();
+          }}
+        >
+          <ListItemIcon>
+            <img src={Assets.Icons.EditPrice} alt="" />
+          </ListItemIcon>
+          <ListItemText>View Patient</ListItemText>
+        </MenuItem>
+      </Menu>
+    </div>
+  );
+};

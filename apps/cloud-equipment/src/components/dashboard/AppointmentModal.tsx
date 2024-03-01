@@ -90,8 +90,10 @@ const AppointmentModal = ({
         ...getValues(),
         facilityId: userDetails?.FACILITY_ID as string,
         testIds: selectedProcedures,
-        doctorId: '1',
-        takingMeds: JSON.parse(getValues().takingMeds as unknown as string),
+        // this was done because the value comes as a string and I have not idea why
+        takingMeds: JSON.parse(
+          (getValues().takingMeds as unknown as string) ?? 'false'
+        ),
       },
       () => {
         toast.success('Appointment Created Successfully');
@@ -198,14 +200,6 @@ const AppointmentModal = ({
               </button>
             </div>
 
-            {/* {Object.keys(getValues()).map(function (key) {
-          return (
-            <div>
-              {key}: {(getValues() as unknown as any)[key]}
-            </div>
-          );
-        })} */}
-
             <form
               className="grid md:grid-cols-2 gap-5 mt-6"
               onSubmit={handleSubmit(onSubmit)}
@@ -248,7 +242,7 @@ const AppointmentModal = ({
                             {option.patientName}
                           </p>
                           <p className="text-xs mt-2">
-                            {option.patientFacilityCode.substr(0, 5)} .{' '}
+                            {option.patientFacilityCode?.substr(0, 5)} .{' '}
                             {option.patientAge} Years
                           </p>
                         </div>
@@ -405,7 +399,7 @@ const AppointmentModal = ({
                   name="takingMeds"
                   control={control}
                   render={({ field }) => (
-                    <RadioGroup row {...field}>
+                    <RadioGroup defaultValue={false} row {...field}>
                       <FormControlLabel
                         control={<Radio value={true} />}
                         label="True"
