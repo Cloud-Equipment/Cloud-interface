@@ -93,10 +93,9 @@ const Dashboard = () => {
             </Menu>
           </div>
           {userDetails?.userType === UserTypeEnum.FACILITY_ADMIN ? (
-            <ReceptionistDashboardSub />
-          ) : (
             <FacilityAdminDashboardSub />
-            // <ReceptionistDashboardSub />
+          ) : (
+            <ReceptionistDashboardSub />
           )}
         </div>
 

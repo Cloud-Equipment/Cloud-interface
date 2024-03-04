@@ -180,7 +180,7 @@ const PriceManagement = () => {
                   <th>Procedure Category</th>
                   <th>Price</th>
                   <th>Status</th>
-                  <th>Action</th>
+                  {/* <th>Action</th> */}
                 </tr>
               </thead>
 
@@ -194,7 +194,7 @@ const PriceManagement = () => {
                     <td>{item.medServiceCategoryId}</td>
                     <td>₦{numeral(item.price).format('0,0.00')}</td>
                     <td>{'Enabled'}</td>
-                    <td>
+                    {/* <td>
                       <div>
                         <button
                           onClick={(e) => handleActionClick(e, item)}
@@ -210,12 +210,12 @@ const PriceManagement = () => {
                             'aria-labelledby': 'basic-button',
                           }}
                         >
-                          <MenuItem onClick={handleEditClick}>
+                           <MenuItem onClick={handleEditClick}>
                             <ListItemIcon>
                               <img src={Assets.Icons.EditPrice} alt="" />
                             </ListItemIcon>
                             <ListItemText>Edit Price</ListItemText>
-                          </MenuItem>
+                          </MenuItem> 
                           <MenuItem onClick={handleDeleteClick}>
                             <ListItemIcon>
                               <img src={Assets.Icons.Delete} alt="" />
@@ -224,7 +224,7 @@ const PriceManagement = () => {
                           </MenuItem>
                         </Menu>
                       </div>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>

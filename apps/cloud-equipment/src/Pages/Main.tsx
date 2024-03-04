@@ -4,6 +4,25 @@ import { IAppState } from '../Store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@cloud-equipment/shared_store';
 import * as Assets from '@cloud-equipment/assets';
+import { UserTypeEnum } from '@cloud-equipment/models';
+
+const receptionistRoutes = [
+  {
+    name: 'Dashboard',
+    img: Assets.Icons.DashboardNav,
+    route: '/',
+  },
+  {
+    name: 'Reports',
+    img: Assets.Icons.ReportsNav,
+    route: '/reports',
+  },
+  {
+    name: 'Settings',
+    img: Assets.Icons.Settings,
+    route: '/settings',
+  },
+];
 
 const mainRoutes = [
   {
@@ -41,7 +60,7 @@ const mainRoutes = [
   {
     name: 'Equipment Management',
     img: Assets.Icons.Settings,
-    route: '.',
+    route: '/equipment',
   },
   {
     name: 'Settings',
@@ -72,7 +91,11 @@ export const Main = () => {
   return (
     <Layout
       navbarConfig={navbarConfig}
-      navlinks={mainRoutes}
+      navlinks={
+        userDetails?.userType === UserTypeEnum.FACILITY_ADMIN
+          ? mainRoutes
+          : receptionistRoutes
+      }
       onLogout={_logout}
       userDetails={userDetails}
     >
