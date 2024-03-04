@@ -94,6 +94,7 @@ const AppointmentModal = ({
         takingMeds: JSON.parse(
           (getValues().takingMeds as unknown as string) ?? 'false'
         ),
+        appointmentDate: new Date(),
       },
       () => {
         toast.success('Appointment Created Successfully');
