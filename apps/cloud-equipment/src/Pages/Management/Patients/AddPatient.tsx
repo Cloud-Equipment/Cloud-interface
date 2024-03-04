@@ -121,6 +121,7 @@ const NewPatient = () => {
       additionalNotes,
       registrationDate,
       patientFacilityCode: user?.FACILITY_ID || '',
+      facilityId: user?.FACILITY_ID || '',
       /**
        * end point is expecting these but they are not in the UI
        */
@@ -215,7 +216,7 @@ const NewPatient = () => {
                   uploadIcon={Assets.Icons.UploadIcon1}
                   containerClass="w-6/12"
                   uploadLabel="Click to Upload Image"
-                  // onChange={}
+                  // setFile={()=>{}}
                 />
               </div>
               <Input

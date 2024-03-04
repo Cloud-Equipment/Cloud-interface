@@ -53,6 +53,11 @@ import UploadIconInModal from './uploadIconInModal.svg';
 import WhiteCheckmark from './whiteCheckmark.svg';
 import FilterIcon from './filterIcon.svg';
 import ArrowUpIcon from './arrowUpIcon.svg';
+import ReportUploadIcon from './reportUploadIcon.svg';
+import ReportConfirmIcon from './reportConfirmIcon.svg';
+import ReportEditIcon from './reportEditIcon.svg';
+import ReportShareIcon from './reportShareIcon.svg';
+import ReportViewProfileIcon from './reportViewProfileIcon.svg';
 import LogoutModalIcon from './logout-modal-icon.png';
 
 export {
@@ -111,5 +116,10 @@ export {
   WhiteCheckmark,
   FilterIcon,
   ArrowUpIcon,
+  ReportUploadIcon,
+  ReportConfirmIcon,
+  ReportEditIcon,
+  ReportShareIcon,
+  ReportViewProfileIcon,
   LogoutModalIcon,
 };

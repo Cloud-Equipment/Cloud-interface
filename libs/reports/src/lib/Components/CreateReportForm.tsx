@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
-import { environment } from '@cloud-equipment/environments';
-import { axiosInstance } from '@cloud-equipment/api';
+import {
+  Autocomplete,
+  MenuItem,
+  TextField,
+  Checkbox,
+  ListItemText,
+} from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Autocomplete, MenuItem, TextField } from '@mui/material';
-import { Checkbox, ListItemText } from '@mui/material';
+
 import {
   IPatient,
   IDiscount,
@@ -12,12 +19,11 @@ import {
   IFacility,
   IMedservice,
 } from '@cloud-equipment/models';
+import { environment } from '@cloud-equipment/environments';
+import { axiosInstance } from '@cloud-equipment/api';
 import { setLoading, clearLoading } from '@cloud-equipment/shared_store';
 import { ReportsPriceBreakdown } from './ReportsPriceBreakdown';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
 import * as Assets from '@cloud-equipment/assets';
-import { useNavigate } from 'react-router-dom';
 import patientQueries from '../queries/patients';
 import facilityQueries from '../queries/facilities';
 import categoriesQueries from '../queries/categories';

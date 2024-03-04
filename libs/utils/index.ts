@@ -20,7 +20,7 @@ export function copyToClipboard(str: string, cb?: () => void) {
  * @returns date - in this format: 8:58 PM, Jun 7, 2023
  */
 export function formatDate(
-  dateString?: string | Dayjs | null,
+  dateString?: string | Dayjs | null | Date,
   returnIsToday: boolean = true
 ) {
   if (!dateString || typeof dateString !== 'string') return '-';

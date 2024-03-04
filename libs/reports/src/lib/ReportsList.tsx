@@ -1,59 +1,72 @@
 import { useState } from 'react';
+
 import { Link, useNavigate } from 'react-router-dom';
-import { ListItemIcon, ListItemText, TablePagination } from '@mui/material';
+import {
+  ListItemIcon,
+  ListItemText,
+  TablePagination,
+  Modal,
+} from '@mui/material';
+import { createColumnHelper } from '@tanstack/react-table';
+import { usePapaParse } from 'react-papaparse';
+
 import { IProcedure } from '@cloud-equipment/models';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import * as Assets from '@cloud-equipment/assets';
 import queries from './queries/reports';
-import { createColumnHelper } from '@tanstack/react-table';
 import { Table } from '@cloud-equipment/ui-components';
-import moment from 'moment';
+import { formatDate } from '@cloud-equipment/utils';
+import { UploadReportModal } from '../index';
 
 export type ActionType =
   | null
   | 'view'
   | 'shareResult'
   | 'confirmTest'
-  | 'uploadResult';
+  | 'uploadResult'
+  | 'edit';
 type ReportTableColumns = IProcedure & { elipsis: 'elipsis' };
 
 const columnHelper = createColumnHelper<ReportTableColumns>();
 
-const columns = (handleActions: (view: ActionType) => void) => [
+const columns = [
   columnHelper.accessor('date', {
     header: 'Date and Time',
-    cell: (info) => moment(info.getValue()).format('DD-MM-YYYY . HH:mm:ss'),
+    cell: (info) => formatDate(info.getValue()),
   }),
   columnHelper.accessor('medServiceName', {
     header: 'Procedure/Test Ordered',
-    cell: (info) => info.getValue(),
-  }),
-
-  // columnHelper.accessor('referrerName', {
-  //   header: "Referrer's Name",
-  //   cell: (info) => info.getValue(),
-  // }),
-  // columnHelper.accessor('refererHospital', {
-  //   header: "Referrer's Hospital",
-  //   cell: (info) => info.getValue(),
-  // }),
-  columnHelper.accessor('patientName', {
-    header: 'Patient Name',
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor('patientAge', {
     header: 'Age of Patient',
     cell: (info) => info.getValue(),
   }),
+  columnHelper.accessor('referrersName', {
+    header: "Referrer's Name",
+    cell: (info) => info.getValue() || '-',
+  }),
+  columnHelper.accessor('refererHospital', {
+    header: "Referrer's Hospital",
+    cell: (info) => info.getValue() || '-',
+  }),
+  // columnHelper.accessor('patientName', {
+  //   header: 'Patient Name',
+  //   cell: (info) => info.getValue(),
+  // }),
   columnHelper.accessor('patientPhone', {
     header: 'Phone Number',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('subotal', {
+    header: 'Amount',
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor('elipsis', {
     cell: ({
       row: {
-        original: { procedureEntryId },
+        original: { procedureEntryId, ...rest },
       },
     }) => {
       // REFACTOR: is this necessary
@@ -65,7 +78,7 @@ const columns = (handleActions: (view: ActionType) => void) => [
           {...{
             cb,
             procedureEntryId: procedureEntryId.toString(),
-            handleActions,
+            data: { ...rest, procedureEntryId },
           }}
         />
       );
@@ -97,10 +110,6 @@ const ReportsList = () => {
   const handleChangeRowsPerPage = (event: any) => {
     setCurrentPage(0);
     setPageSize(parseInt(event.target.value, 10));
-  };
-
-  const handleActionsClick = (view: ActionType) => {
-    console.log(view);
   };
 
   const navigate = useNavigate();
@@ -150,9 +159,8 @@ const ReportsList = () => {
         <Table
           loading={isLoading}
           data={data || []}
-          columns={columns(handleActionsClick)}
+          columns={columns}
           tableHeading="All Reports"
-          tableHeadingColorClassName="!bg-secondary-150"
         />
       </div>
     </section>
@@ -161,17 +169,33 @@ const ReportsList = () => {
 
 export default ReportsList;
 
+const TransformObject = (data: { [key: string]: any }): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    resolve(
+      Object.keys(data).forEach((key) => {
+        if ([null, ''].includes(data[key])) data[key] = '-';
+      })
+    );
+  });
+};
+
 const ReportsListDropdown = ({
   cb,
   procedureEntryId,
-  handleActions,
+  data,
 }: {
   cb: (e: React.MouseEvent<HTMLButtonElement>) => void;
   procedureEntryId: string;
-  handleActions: (view: ActionType) => void;
+  data: any;
 }) => {
   const navigate = useNavigate();
+  const { jsonToCSV } = usePapaParse();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const [showUploadModal, setShowUploadModal] = useState(false);
+
+  const { useConfirmTest } = queries;
+  const { mutateFn } = useConfirmTest();
 
   const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     cb(event);
@@ -182,45 +206,84 @@ const ReportsListDropdown = ({
     setAnchorEl(null);
   };
 
+  const onClose = () => setShowUploadModal(false);
+
+  const handleActionsClick = async (view: ActionType) => {
+    if (view === 'shareResult') {
+      // console.log('data', TransformObject(data));
+      await TransformObject(data);
+      console.log(jsonToCSV([data]));
+    } else if (view === 'confirmTest') {
+      mutateFn(
+        {
+          procedureEntrId: data?.procedureEntryId,
+          procedureNewStatus: 1,
+        },
+        () => {}
+      );
+    } else if (view === 'uploadResult') {
+      setShowUploadModal(true);
+    }
+  };
+
   const handleMenuAction = () => {
     navigate(`/reports/view/${procedureEntryId}`);
   };
 
   return (
-    <div>
-      <button
-        onClick={(e) => {
-          handleActionClick(e);
-        }}
-        className="w-6"
-      >
-        <img src={Assets.Icons.Menudots} alt="" />
-      </button>
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem onClick={handleMenuAction}>
-          <ListItemIcon></ListItemIcon>
-          <ListItemText>View </ListItemText>
-        </MenuItem>
-        <MenuItem onClick={() => handleActions('shareResult')}>
-          <ListItemIcon></ListItemIcon>
-          <ListItemText>Share Result</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={() => handleActions('confirmTest')}>
-          <ListItemIcon></ListItemIcon>
-          <ListItemText>Confirm Test</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={() => handleActions('uploadResult')}>
-          <ListItemIcon></ListItemIcon>
-          <ListItemText>Upload Result</ListItemText>
-        </MenuItem>
-      </Menu>
-    </div>
+    <>
+      <div>
+        <button
+          onClick={(e) => {
+            handleActionClick(e);
+          }}
+          className="w-6"
+        >
+          <img src={Assets.Icons.Menudots} alt="" />
+        </button>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          <MenuItem onClick={() => handleActionsClick('edit')}>
+            <ListItemIcon>
+              <img src={Assets.Icons.ReportEditIcon} alt="" />
+            </ListItemIcon>
+            <ListItemText>Edit Test</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={handleMenuAction}>
+            <ListItemIcon>
+              <img src={Assets.Icons.ReportViewProfileIcon} alt="" />
+            </ListItemIcon>
+            <ListItemText>View Profile</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={() => handleActionsClick('shareResult')}>
+            <ListItemIcon>
+              <img src={Assets.Icons.ReportShareIcon} alt="" />
+            </ListItemIcon>
+            <ListItemText>Share Result</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={() => handleActionsClick('confirmTest')}>
+            <ListItemIcon>
+              <img src={Assets.Icons.ReportConfirmIcon} alt="" />
+            </ListItemIcon>
+            <ListItemText>Confirm Test</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={() => handleActionsClick('uploadResult')}>
+            <ListItemIcon>
+              <img src={Assets.Icons.ReportUploadIcon} alt="" />
+            </ListItemIcon>
+            <ListItemText>Upload Result</ListItemText>
+          </MenuItem>
+        </Menu>
+      </div>
+      <Modal open={showUploadModal} onClose={onClose}>
+        <UploadReportModal onClose={onClose} />
+      </Modal>
+    </>
   );
 };

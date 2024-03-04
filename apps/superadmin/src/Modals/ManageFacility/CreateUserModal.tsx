@@ -134,11 +134,11 @@ const CreateUserModal = ({
                 options={[
                   {
                     categoryName: 'Male',
-                    categoryId: 'Male',
+                    categoryId: 1,
                   },
                   {
                     categoryName: 'Female',
-                    categoryId: 'Female',
+                    categoryId: 2,
                   },
                 ]}
                 label="Gender"

@@ -199,10 +199,16 @@ const NewPatient = () => {
                   <Select
                     options={[
                       {
-                        value: 0,
-                        label: 'hey',
-                        categoryName: 'categoryName',
-                        categoryId: 0,
+                        value: 1,
+                        label: 'Male',
+                        categoryName: 'Male',
+                        categoryId: 1,
+                      },
+                      {
+                        value: 2,
+                        label: 'Female',
+                        categoryName: 'Female',
+                        categoryId: 2,
                       },
                     ]}
                     label="Gender"

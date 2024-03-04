@@ -38,6 +38,42 @@ const useGetUsers = (
   return { isLoading, data, isSuccess, error };
 };
 
+const useInviteUser = (options = {}) => {
+  const mutation = useMutation({
+    ...options,
+    mutationKey: [keys.create],
+    mutationFn: async (data: any) => {
+      return apiMethods.post({
+        url: `/user-manager/account/user/register`,
+        body: data,
+        auth: false,
+      });
+    },
+    onSuccess: () => {},
+    onError: (res) => {
+      showToast(res.message, 'error');
+    },
+  });
+  const { mutate, isSuccess, isError, data, isPending } = mutation;
+
+  return {
+    mutateFn: (bodyArg: any, successCb?: () => void) => {
+      return mutate(bodyArg, {
+        onSuccess: (res) => {
+          showToast(res.message || 'User invited Successfully', 'success');
+          setTimeout(() => {
+            successCb?.();
+          }, 1500);
+        },
+      });
+    },
+    data,
+    isSuccess,
+    isError,
+    isLoading: isPending,
+  };
+};
+
 const useDisableUser = (options = {}) => {
   const queryClient = useQueryClient();
 
@@ -157,6 +193,7 @@ const queries = {
   useUpdateUser,
   useDisableUser,
   useEnableUser,
+  useInviteUser,
 };
 
 export default queries;

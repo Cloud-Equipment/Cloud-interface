@@ -1,36 +1,29 @@
-import axios from 'axios';
 import { Controller, useForm } from 'react-hook-form';
-import { environment } from '@cloud-equipment/environments';
-import { toast } from 'react-toastify';
 import { MenuItem, Select } from '@mui/material';
-import { UserTypeEnum } from '@cloud-equipment/models';
 import { useSelector } from 'react-redux';
+
+import { UserTypeEnum } from '@cloud-equipment/models';
 import { IAppState } from '../../../Store/store';
+import queries from '../../../services/queries/manageUsers';
+import { Button } from '@cloud-equipment/ui-components';
 
 export const InviteUserModal = ({ onClose }: any) => {
   const { register, handleSubmit, control } = useForm();
 
   const userDetails = useSelector((state: IAppState) => state.auth.user);
 
+  const { useInviteUser } = queries;
+  const { mutateFn, isLoading } = useInviteUser();
+
   const onSubmit = (data: any) => {
-    axios
-      .post(`${environment.baseUrl}/user-manager/account/register`, {
-        ...data,
-        roles: [data.roles],
-        password: 'Qwerty1!',
-        firstName: 'Paul',
-        lastName: 'Peter',
-        facilityId: userDetails?.FACILITY_ID,
-      })
-      .then((response) => {
-        if (response.data.success) {
-          toast.success(response.data.msg);
-          onClose();
-        } else {
-          toast.error(response.data.msg);
-        }
-      })
-      .catch(() => {});
+    mutateFn({
+      ...data,
+      roles: [data.roles],
+      password: '',
+      firstName: '',
+      lastName: '',
+      facilityId: userDetails?.FACILITY_ID,
+    });
   };
 
   return (
@@ -71,9 +64,7 @@ export const InviteUserModal = ({ onClose }: any) => {
         />
       </div>
 
-      <button className="ce-btn bg-greenText mt-3 py-3">
-        Invite Team Member
-      </button>
+      <Button loading={isLoading} label="Invite Team Member" />
     </form>
   );
 };
