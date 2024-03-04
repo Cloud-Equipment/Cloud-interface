@@ -60,7 +60,7 @@ const mainRoutes = [
   {
     name: 'Equipment Management',
     img: Assets.Icons.Settings,
-    route: '.',
+    route: '/equipment',
   },
   {
     name: 'Settings',
