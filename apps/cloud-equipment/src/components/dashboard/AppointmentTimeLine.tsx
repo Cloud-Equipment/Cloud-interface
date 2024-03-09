@@ -7,14 +7,9 @@ import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import * as Assets from '@cloud-equipment/assets';
 import moment from 'moment';
-import { PaginationData } from 'Models/api.models';
 import { IAppointment } from '../../services/queries/appointments/types';
 
-const AppointmentTimeLine = ({
-  data,
-}: {
-  data?: PaginationData<IAppointment>;
-}) => {
+const AppointmentTimeLine = ({ data }: { data?: any[] }) => {
   return (
     <div className="border-t border-borderLine border-solid">
       <h3 className="mt-4 pl-2 text-blackText">Upcoming Appointment</h3>
@@ -27,7 +22,7 @@ const AppointmentTimeLine = ({
           },
         }}
       >
-        {data?.resultItem.map((item) => (
+        {data?.map((item) => (
           <TimelineItem>
             <TimelineSeparator>
               <TimelineDot />
@@ -41,14 +36,12 @@ const AppointmentTimeLine = ({
                 </p>
 
                 <p className="mt-3 text-blackText">
-                  {item.tests.map((x) => (
-                    <>{x.medServiceId}</>
-                  ))}
+                  {item.medServiceName}
                 </p>
 
                 <div className="flex items-center justify-between">
                   <p className="mt-1 text-greyText">
-                    {item.patient?.patientName}
+                    {item.patientName}
                   </p>
 
                   <button className="btn-icon">

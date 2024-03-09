@@ -9,7 +9,6 @@ import { apiClient } from '@cloud-equipment/api';
 import keys from './keys';
 import { ApiResponse, PaginationData } from 'Models/api.models';
 import { IAppointment } from './types';
-import dayjs from 'dayjs';
 
 const useCreateAppointment = (options = {}) => {
   const queryClient = useQueryClient();
@@ -19,7 +18,7 @@ const useCreateAppointment = (options = {}) => {
     mutationKey: [keys.create],
     mutationFn: async (data: any) => {
       return apiClient.post({
-        url: '/facility-manager/facility/createappointment',
+        url: '/service-manager/procedures/create',
         body: data,
         auth: true,
       });
@@ -27,7 +26,6 @@ const useCreateAppointment = (options = {}) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [keys.read] });
       queryClient.invalidateQueries({ queryKey: [`${keys.read}calendar`] });
-      queryClient.invalidateQueries({ queryKey: [`${keys.read}upcoming`] });
     },
   });
   const { mutate, isSuccess, isError, data, isPending } = mutation;
@@ -49,8 +47,7 @@ const useCreateAppointment = (options = {}) => {
 };
 
 const useGetAppointmentsDaily = (
-  url: string,
-
+  params: { [key: string]: string | number },
   options: Omit<
     UseQueryOptions<any, unknown, any, string[]>,
     'initialData' | 'queryFn' | 'queryKey'
@@ -62,78 +59,83 @@ const useGetAppointmentsDaily = (
     data,
     isSuccess,
     error,
-  }: UseQueryResult<PaginationData<IAppointment>> = useQuery({
+  }: UseQueryResult<PaginationData<any>> = useQuery({
     queryKey: hash,
     queryFn: () =>
       apiClient
-        .get({ url })
+        .get({
+          url: '/service-manager/procedures/getallbyfacility',
+          params: { ...params },
+        })
         .then((res: ApiResponse<PaginationData<IAppointment>>) => res.data),
   });
   return { isLoading, data, isSuccess, error };
 };
 
 const useGetUpcomingAppointments = (
-  url: string,
-  date: string,
+  params: { [key: string]: string | number },
   options: Omit<
     UseQueryOptions<any, unknown, any, string[]>,
     'initialData' | 'queryFn' | 'queryKey'
   > = {}
 ) => {
-  const hash = [`${keys.read}_upcoming`, date];
-  const {
-    isLoading,
-    data,
-    isSuccess,
-    error,
-  }: UseQueryResult<PaginationData<IAppointment>> = useQuery({
-    queryKey: hash,
-    queryFn: () => {
-      return apiClient
-        .get({ url, params: { startDate: date, endDate: date } })
-        .then((res: ApiResponse<PaginationData<IAppointment>>) => res.data);
-    },
-  });
-  return { isLoading, data, isSuccess, error };
-};
-
-const useGetCalendarAppointments = (
-  url: string,
-  options: Omit<
-    UseQueryOptions<any, unknown, any, string[]>,
-    'initialData' | 'queryFn' | 'queryKey'
-  > = {}
-) => {
-  const hash = [`${keys.read}calendar`];
-  const {
-    isLoading,
-    isSuccess,
-    error,
-    data,
-  }: UseQueryResult<{ _data: IAppointment[]; highlightedDays: number[] }> =
-    useQuery({
+  const hash = [`${keys.read}_upcoming`, params];
+  const { isLoading, data, isSuccess, error }: UseQueryResult<any[]> = useQuery(
+    {
       queryKey: hash,
-      queryFn: () =>
-        apiClient
-          .get({ url })
-          .then((res: ApiResponse<PaginationData<IAppointment>>) => {
-            //
-            const highlightedDays: number[] = [];
-            res.data.resultItem.forEach((x) => {
-              highlightedDays.push(dayjs(x.appointmentDate).date());
-            });
-
-            return { _data: res.data.resultItem, highlightedDays };
-          }),
-    });
+      queryFn: () => {
+        return apiClient
+          .get({
+            url: '/service-manager/procedures/getallbyfacility',
+            params: { ...params },
+          })
+          .then(
+            (res: ApiResponse<PaginationData<IAppointment>>) =>
+              res.data?.resultItem ?? []
+          );
+      },
+    }
+  );
   return { isLoading, data, isSuccess, error };
 };
+
+// const useGetCalendarAppointments = (
+//   url: string,
+//   options: Omit<
+//     UseQueryOptions<any, unknown, any, string[]>,
+//     'initialData' | 'queryFn' | 'queryKey'
+//   > = {}
+// ) => {
+//   const hash = [`${keys.read}calendar`];
+//   const {
+//     isLoading,
+//     isSuccess,
+//     error,
+//     data,
+//   }: UseQueryResult<{ _data: IAppointment[]; highlightedDays: number[] }> =
+//     useQuery({
+//       queryKey: hash,
+//       queryFn: () =>
+//         apiClient
+//           .get({ url })
+//           .then((res: ApiResponse<PaginationData<IAppointment>>) => {
+//             //
+//             const highlightedDays: number[] = [];
+//             res.data.resultItem.forEach((x) => {
+//               highlightedDays.push(dayjs(x.appointmentDate).date());
+//             });
+
+//             return { _data: res.data.resultItem, highlightedDays };
+//           }),
+//     });
+//   return { isLoading, data, isSuccess, error };
+// };
 
 const queries = {
   useCreateAppointment,
   useGetAppointmentsDaily,
   useGetUpcomingAppointments,
-  useGetCalendarAppointments,
+  // useGetCalendarAppointments,
 };
 
 export default queries;
