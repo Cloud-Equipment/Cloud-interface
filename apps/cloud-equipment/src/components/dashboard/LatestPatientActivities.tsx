@@ -57,8 +57,8 @@ const LatestPatientActivities = () => {
                   </div>
                 </td>
                 <td>
-                  {item.tests.map((test) => (
-                    <p>{test.medServiceId}</p>
+                  {item.tests.map((test, idex) => (
+                    <p key={`${index}test`}>{test.medServiceId}</p>
                   ))}
                 </td>
                 <td>
@@ -67,7 +67,7 @@ const LatestPatientActivities = () => {
                     <span className="text-greenText">Confirmed</span>
                   </div>
                 </td>
-                <td>{' '}</td>
+                <td> </td>
               </tr>
             ))}
           </tbody>

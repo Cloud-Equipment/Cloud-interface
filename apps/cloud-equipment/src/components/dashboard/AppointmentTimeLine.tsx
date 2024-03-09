@@ -6,22 +6,15 @@ import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import * as Assets from '@cloud-equipment/assets';
-import queries from '../../services/queries/appointments';
-import { useSelector } from 'react-redux';
-import { IAppState } from '../../Store/store';
 import moment from 'moment';
+import { PaginationData } from 'Models/api.models';
+import { IAppointment } from '../../services/queries/appointments/types';
 
-const AppointmentTimeLine = () => {
-  const userDetails = useSelector((state: IAppState) => state.auth.user);
-
-  const { isLoading, data } = queries.useGetUpcomingAppointments(
-    `/facility-manager/facility/getfacilityappointmentdayily?facilityId=${
-      userDetails?.FACILITY_ID
-    }&startDate=${moment().format(
-      'YYYY-MM-DD'
-    )}&currentPage=1&startIndex=0&pageSize=10`
-  );
-
+const AppointmentTimeLine = ({
+  data,
+}: {
+  data?: PaginationData<IAppointment>;
+}) => {
   return (
     <div className="border-t border-borderLine border-solid">
       <h3 className="mt-4 pl-2 text-blackText">Upcoming Appointment</h3>

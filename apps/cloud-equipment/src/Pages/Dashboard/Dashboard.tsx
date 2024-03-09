@@ -2,7 +2,7 @@ import DashboardCalendar from '../../components/dashboard/DashboardCalendar';
 import AppointmentTimeLine from '../../components/dashboard/AppointmentTimeLine';
 import { useSelector } from 'react-redux';
 import { IAppState } from '../../Store/store';
-import queries from '../../services/queries/dashboard';
+import appointmentQueries from '../../services/queries/appointments';
 import { UserTypeEnum } from '@cloud-equipment/models';
 import ReceptionistDashboardSub from '../../components/dashboard/ReceptionistDashboardSub';
 import { Menu, MenuItem, ListItemText, Modal } from '@mui/material';
@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { Button } from '@cloud-equipment/ui-components';
 import FacilityAdminDashboardSub from '../../components/dashboard/FacilityAdminDashboardSub';
 import AppointmentModal from '../../components/dashboard/AppointmentModal';
+import dayjs, { Dayjs } from 'dayjs';
 
 const Dashboard = () => {
   const userDetails = useSelector((state: IAppState) => state.auth.user);
@@ -34,6 +35,14 @@ const Dashboard = () => {
 
   const closeAppointmentModal = () => setAppointmentModalOpen(false);
 
+  const [date, setDate] = useState<Dayjs>(dayjs());
+
+  const { data: appointmentData } =
+    appointmentQueries.useGetUpcomingAppointments(
+      `/facility-manager/facility/getfacilityappointmentdayily?facilityId=${userDetails?.FACILITY_ID}&currentPage=1&startIndex=0&pageSize=10`,
+      dayjs(date).format('YYYY-MM-DD')
+    );
+
   return (
     <>
       <Modal open={appointmentModalOpen} onClose={closeAppointmentModal}>
@@ -55,7 +64,7 @@ const Dashboard = () => {
 
             <Button
               variant="primary"
-              className="!bg-ce-green"
+              className="!bg-ce-green [z-index:2]"
               onClick={(e) => handleActionClick(e)}
               label="New"
               icon={Assets.Icons.WhitePlus}
@@ -100,8 +109,13 @@ const Dashboard = () => {
         </div>
 
         <div className="bg-white rounded-[20px] px-3 grid gap-x-5 md:grid-cols-2 xl:grid-cols-[unset] xl:block">
-          <DashboardCalendar />
-          <AppointmentTimeLine />
+          <DashboardCalendar
+            date={date}
+            onDateChange={(value) => {
+              setDate(value);
+            }}
+          />
+          <AppointmentTimeLine data={appointmentData} />
         </div>
       </section>
     </>
