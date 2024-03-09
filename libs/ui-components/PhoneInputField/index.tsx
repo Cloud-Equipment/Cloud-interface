@@ -11,6 +11,7 @@ interface PhoneInputProps {
   defaultValue?: string;
   label?: string;
   containerClass?: string;
+  readonly?: boolean;
 }
 
 const PhoneInputField = ({
@@ -19,6 +20,7 @@ const PhoneInputField = ({
   defaultValue,
   label,
   containerClass,
+  readonly = false,
 }: PhoneInputProps) => {
   return (
     <div
@@ -40,11 +42,12 @@ const PhoneInputField = ({
         control={control}
         name={name}
         defaultValue={defaultValue}
+        disabled={readonly}
         render={({ field }) => (
           <PhoneInput
             {...field}
             country={'ng'}
-            placeholder='+23492929292'
+            placeholder="+23492929292"
             inputProps={{
               name: name,
               required: true,

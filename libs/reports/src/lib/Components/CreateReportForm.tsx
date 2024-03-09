@@ -308,7 +308,7 @@ const CreateReportForm = () => {
         aboutPatient: '',
         maritalStatusId: 0,
         address: data_.patientAddress,
-        facilityId
+        facilityId,
         // dateOfBirth: '2024-01-03T08:37:00.151Z',
       };
       dispatch(setLoading());

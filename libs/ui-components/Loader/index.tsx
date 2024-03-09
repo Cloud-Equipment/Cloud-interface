@@ -10,7 +10,7 @@ const Loader = () => {
       width="20px"
       height="20px"
       viewBox="0 0 40 40"
-      enable-background="new 0 0 40 40"
+      enableBackground="new 0 0 40 40"
       xmlSpace="preserve"
     >
       <path

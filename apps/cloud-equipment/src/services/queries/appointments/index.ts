@@ -50,6 +50,7 @@ const useCreateAppointment = (options = {}) => {
 
 const useGetAppointmentsDaily = (
   url: string,
+
   options: Omit<
     UseQueryOptions<any, unknown, any, string[]>,
     'initialData' | 'queryFn' | 'queryKey'
@@ -73,12 +74,13 @@ const useGetAppointmentsDaily = (
 
 const useGetUpcomingAppointments = (
   url: string,
+  date: string,
   options: Omit<
     UseQueryOptions<any, unknown, any, string[]>,
     'initialData' | 'queryFn' | 'queryKey'
   > = {}
 ) => {
-  const hash = [`${keys.read}upcoming`];
+  const hash = [`${keys.read}_upcoming`, date];
   const {
     isLoading,
     data,
@@ -86,10 +88,11 @@ const useGetUpcomingAppointments = (
     error,
   }: UseQueryResult<PaginationData<IAppointment>> = useQuery({
     queryKey: hash,
-    queryFn: () =>
-      apiClient
-        .get({ url })
-        .then((res: ApiResponse<PaginationData<IAppointment>>) => res.data),
+    queryFn: () => {
+      return apiClient
+        .get({ url, params: { startDate: date, endDate: date } })
+        .then((res: ApiResponse<PaginationData<IAppointment>>) => res.data);
+    },
   });
   return { isLoading, data, isSuccess, error };
 };

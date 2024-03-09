@@ -15,6 +15,20 @@ export interface IAppointmentCreate {
   isHonored: true;
   isLocked: true;
   isCanceled: true;
+  patientName: string;
+  patientNumber: string;
+  patientEmail: string;
+  patientGenderId: number;
+  patientAge: number;
+  maritalStatusId: number;
+  patientBloodGroup: number;
+  pulse: string;
+  bloodPressure: string;
+
+  refererHospital: string;
+  refererEmail: string;
+  refererPhone: string;
+  remarks: string;
 }
 
 export interface IAppointment {
