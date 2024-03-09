@@ -25,6 +25,7 @@ export interface IAppointmentCreate {
   pulse: string;
   bloodPressure: string;
 
+  refererName: string;
   refererHospital: string;
   refererEmail: string;
   refererPhone: string;

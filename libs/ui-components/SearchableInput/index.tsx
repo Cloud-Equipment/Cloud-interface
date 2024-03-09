@@ -10,6 +10,7 @@ interface SearchableInputProps {
   onInputChange: (value: string) => void; // emit event to parent when the user types into the field
   onOptionSelect: (selectedOption: any) => void; // emit to parent when user selects an option from dropdown
   optionLabelKey: string; // property to check for as the displayed value of an option
+  isDoctor?: boolean; // very temporal,, we should pass an element ref instead, to render the option label
 }
 
 const SearchableInput = ({
@@ -20,6 +21,7 @@ const SearchableInput = ({
   onOptionSelect,
   optionLabelKey,
   containerClass,
+  isDoctor,
 }: SearchableInputProps) => {
   return (
     <div className={`form-input-label-holder ${containerClass}`}>
@@ -63,10 +65,21 @@ const SearchableInput = ({
                 <p className="font-semibold text-sm">
                   {option[optionLabelKey]}
                 </p>
-                <p className="text-xs mt-2">
-                  {option.patientFacilityCode?.substr(0, 5)} .{' '}
-                  {option.patientAge} Years
-                </p>
+                {isDoctor ? (
+                  <>
+                    <p className="text-xs">
+                      {option.doctorEmail}
+                    </p>
+                    <p className="text-xs font-semibold">
+                      {option.doctorHospital}
+                    </p>
+                  </>
+                ) : (
+                  <p className="text-xs mt-2">
+                    {option.patientFacilityCode?.substr(0, 5)} .{' '}
+                    {option.patientAge} Years
+                  </p>
+                )}
               </div>
             </div>
           </MenuItem>

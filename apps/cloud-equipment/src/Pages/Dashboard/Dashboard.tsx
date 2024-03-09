@@ -38,10 +38,14 @@ const Dashboard = () => {
   const [date, setDate] = useState<Dayjs>(dayjs());
 
   const { data: appointmentData } =
-    appointmentQueries.useGetUpcomingAppointments(
-      `/facility-manager/facility/getfacilityappointmentdayily?facilityId=${userDetails?.FACILITY_ID}&currentPage=1&startIndex=0&pageSize=10`,
-      dayjs(date).format('YYYY-MM-DD')
-    );
+    appointmentQueries.useGetUpcomingAppointments({
+      facilityId: userDetails?.FACILITY_ID as string,
+      currentPage: 1,
+      startIndex: 0,
+      pageSize: 20,
+      // apponitmentFrom: dayjs(date).format('YYYY-MM-DD'),
+      // apponitmentTo: dayjs(date).format('YYYY-MM-DD'),
+    });
 
   return (
     <>
@@ -49,7 +53,7 @@ const Dashboard = () => {
         <div>{<AppointmentModal onClose={closeAppointmentModal} />}</div>
       </Modal>
 
-      <section className="ce-px ce-py grid xl:grid-cols-[1fr_auto] gap-5">
+      <section className="ce-px ce-py grid xl:grid-cols-[1fr_auto] xl:items-start gap-5">
         <div className="grid grid-cols-1">
           <div className="md:flex justify-between md:items-center gap-4">
             <div>
