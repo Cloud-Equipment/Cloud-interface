@@ -80,7 +80,7 @@ const ForgotPassword = () => {
 
           <p className="text-center mt-5">
             I have remembered my password?{' '}
-            <NavLink to="." className="text-greenText">
+            <NavLink to="/auth/login" className="text-greenText">
               Login
             </NavLink>
           </p>

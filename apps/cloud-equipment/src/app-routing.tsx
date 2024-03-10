@@ -18,9 +18,9 @@ export const AppRouting = () => {
 
   useEffect(() => {
     if (isFetching) {
-      dispatch(setLoading());
+      // dispatch(setLoading());
     } else {
-      dispatch(clearLoading());
+      // dispatch(clearLoading());
     }
   }, [isFetching]);
 

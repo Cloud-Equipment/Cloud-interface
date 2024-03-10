@@ -308,7 +308,7 @@ const CreateReportForm = () => {
         aboutPatient: '',
         maritalStatusId: 0,
         address: data_.patientAddress,
-        facilityId
+        facilityId,
         // dateOfBirth: '2024-01-03T08:37:00.151Z',
       };
       dispatch(setLoading());
@@ -595,7 +595,7 @@ const CreateReportForm = () => {
         <div className="border-b-[2px] pb-1 mt-6 md:mt-10 border-b-solid border-borderLine">
           <h4 className="font-bold text-xl">Rebate</h4>
           <p className="text-sm text-greyText2 mt-1">
-            Click the add button to add rebate to various procedure
+            Click the add button to add rebate to various procedures
           </p>
         </div>
 

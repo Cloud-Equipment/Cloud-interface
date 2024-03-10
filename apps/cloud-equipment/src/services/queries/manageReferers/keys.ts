@@ -1,6 +1,6 @@
 import { getQueryKeys } from '@cloud-equipment/api';
 
-const namespace = 'patients';
+const namespace = 'referers';
 
 export default {
   ...getQueryKeys(namespace),

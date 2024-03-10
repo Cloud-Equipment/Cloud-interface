@@ -1,4 +1,4 @@
-import { getQueryKeys } from '../../helper';
+import { getQueryKeys } from '@cloud-equipment/api';
 
 const namespace = 'patients';
 

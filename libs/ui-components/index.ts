@@ -15,6 +15,8 @@ export { default as TextArea } from './TextArea';
 export { default as TimePicker } from './TimePicker';
 export { default as PhoneInputField } from './PhoneInputField';
 export { default as Layout } from './Layout';
+export { default as SearchableInput } from './SearchableInput';
+export { default as MultiSelectWithCheckbox } from './MultiSelectWithCheckbox';
 
 import { NavTab2 } from './NavTab2';
 
