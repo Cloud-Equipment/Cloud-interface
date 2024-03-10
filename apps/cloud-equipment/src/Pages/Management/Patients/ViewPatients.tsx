@@ -64,7 +64,7 @@ const ViewPatients = () => {
 
   const { user } = useSelector((state: IAppState) => state.auth);
 
-  const { isLoading, data } = useGetPatients(
+  const { data } = useGetPatients(
     `/patient/getpatientbyhospitalid/${user?.FACILITY_ID}`,
     { enabled: !!user?.FACILITY_ID }
   );

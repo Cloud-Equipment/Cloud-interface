@@ -59,6 +59,7 @@ import ReportEditIcon from './reportEditIcon.svg';
 import ReportShareIcon from './reportShareIcon.svg';
 import ReportViewProfileIcon from './reportViewProfileIcon.svg';
 import LogoutModalIcon from './logout-modal-icon.png';
+import WhiteDropdownIcon from './whiteDropdownIcon.svg';
 
 export {
   ArrowRight,
@@ -122,4 +123,5 @@ export {
   ReportShareIcon,
   ReportViewProfileIcon,
   LogoutModalIcon,
+  WhiteDropdownIcon,
 };

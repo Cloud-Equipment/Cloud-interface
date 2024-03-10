@@ -44,7 +44,7 @@ const SelectDropdown: React.FC<any> = <T extends string>({
         inputProps={{ 'aria-label': 'Without label' }}
         {...field}
       >
-        <MenuItem value={''}>{label}</MenuItem>
+        {/* <MenuItem value={0}>{label}</MenuItem> */}
         {options.map((x, i) => (
           // REFACTOR: Change this to value and label
           <MenuItem key={i} value={x.categoryId}>

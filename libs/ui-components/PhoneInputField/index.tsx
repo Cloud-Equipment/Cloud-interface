@@ -44,7 +44,7 @@ const PhoneInputField = ({
           <PhoneInput
             {...field}
             country={'ng'}
-            placeholder='+23492929292'
+            placeholder="+23492929292"
             inputProps={{
               name: name,
               required: true,

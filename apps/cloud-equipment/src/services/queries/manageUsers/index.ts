@@ -39,6 +39,7 @@ const useGetUsers = (
 };
 
 const useInviteUser = (options = {}) => {
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     ...options,
     mutationKey: [keys.create],
@@ -60,7 +61,8 @@ const useInviteUser = (options = {}) => {
     mutateFn: (bodyArg: any, successCb?: () => void) => {
       return mutate(bodyArg, {
         onSuccess: (res) => {
-          showToast(res.message || 'User invited Successfully', 'success');
+          queryClient.invalidateQueries({ queryKey: [keys.read] });
+          showToast(res.msg || 'User Created Successfully', 'success');
           setTimeout(() => {
             successCb?.();
           }, 1500);
