@@ -27,9 +27,9 @@ const useSearchRefererByName = (
           return null;
         }
         return apiClient
-          .post({
-            url: '/api/v1/doctor-manager/search-referer',
-            body: { refererDoctorName: name },
+          .get({
+            url: '/api/v1/doctor-manager/search-referer-byname',
+            params: { referername: name },
             auth: true,
           })
           .then((res: ApiResponse<IReferer[]>) => {

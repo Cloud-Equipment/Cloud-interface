@@ -7,52 +7,83 @@ import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import * as Assets from '@cloud-equipment/assets';
 import moment from 'moment';
-import { IAppointment } from '../../services/queries/appointments/types';
+import dayjs, { Dayjs } from 'dayjs';
+import { BallTriangle } from 'react-loader-spinner';
 
-const AppointmentTimeLine = ({ data }: { data?: any[] }) => {
+const AppointmentTimeLine = ({
+  data,
+  date,
+  loading = false,
+}: {
+  data?: any[];
+  date: Dayjs;
+  loading?: boolean;
+}) => {
   return (
-    <div className="border-t border-borderLine border-solid">
-      <h3 className="mt-4 pl-2 text-blackText">Upcoming Appointment</h3>
+    <div className="border-t border-borderLine border-solid xl:min-h-[500px]">
+      <h3 className="mt-4 pl-2 text-blackText">
+        {dayjs().isSame(date, 'day') ? 'Upcoming Appointment' : 'Appointments'}
+      </h3>
 
-      <Timeline
-        sx={{
-          [`& .${timelineItemClasses.root}:before`]: {
-            flex: 0,
-            padding: 0,
-          },
-        }}
-      >
-        {data?.map((item) => (
-          <TimelineItem>
-            <TimelineSeparator>
-              <TimelineDot />
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>
-              <div>
-                <p className="text-greyText">
-                  {formatDate(item.appointmentDate)},{' '}
-                  {moment(item.appointmentDate).format('h:mm A')}
-                </p>
-
-                <p className="mt-3 text-blackText">
-                  {item.medServiceName}
-                </p>
-
-                <div className="flex items-center justify-between">
-                  <p className="mt-1 text-greyText">
-                    {item.patientName}
+      {loading ? (
+        <div
+          style={{
+            width: '100%',
+            zIndex: 9999,
+          }}
+          className="grid place-items-center mt-10"
+        >
+          <BallTriangle
+            height={100}
+            width={100}
+            radius={5}
+            // color="#4fa94d"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+        </div>
+      ) : data?.length ? (
+        <Timeline
+          sx={{
+            [`& .${timelineItemClasses.root}:before`]: {
+              flex: 0,
+              padding: 0,
+            },
+          }}
+        >
+          {data?.map((item) => (
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot />
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent>
+                <div>
+                  <p className="text-greyText">
+                    {formatDate(item.appointmentDate)},{' '}
+                    {moment(item.appointmentDate).format('h:mm A')}
                   </p>
 
-                  <button className="btn-icon">
-                    <img src={Assets.Icons.ArrowRight} alt="" />
-                  </button>
+                  <p className="mt-3 text-blackText">{item.medServiceName}</p>
+
+                  <div className="flex items-center justify-between">
+                    <p className="mt-1 text-greyText">{item.patientName}</p>
+
+                    <button className="btn-icon">
+                      <img src={Assets.Icons.ArrowRight} alt="" />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </TimelineContent>
-          </TimelineItem>
-        ))}
-      </Timeline>
+              </TimelineContent>
+            </TimelineItem>
+          ))}
+        </Timeline>
+      ) : (
+        <div className="py-6">
+          <p>No appointments for {dayjs(date).format('YYYY-MM-DD')}</p>
+        </div>
+      )}
     </div>
   );
 };
