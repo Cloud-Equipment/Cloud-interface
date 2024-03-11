@@ -25,6 +25,7 @@ module.exports = {
         greyText2: '#667085',
         borderLine: '#EAECF0',
         greyBg: '#F7F7F7',
+        pending: '#FFD029',
         primary: {
           100: '#0D5F50',
           150: '#54D4BD',
