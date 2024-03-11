@@ -32,7 +32,7 @@ const LatestPatientActivities = () => {
               <th className="!pl-8">Name</th>
               <th>Diagnostics</th>
               <th>Status</th>
-              <th>Action</th>
+              {/* <th>Action</th> */}
             </tr>
           </thead>
 
@@ -58,8 +58,22 @@ const LatestPatientActivities = () => {
                 <td>{item.medServiceName}</td>
                 <td>
                   <div className="flex items-center gap-2">
-                    <div className="block w-2 h-2 rounded-full bg-greenText"></div>
-                    <span className="text-greenText">Confirmed</span>
+                    <div
+                      className={`block w-2 h-2 rounded-full ${
+                        item.procedureEntryStatus?.toLowerCase() === 'approved'
+                          ? ' bg-greenText'
+                          : ' bg-pending'
+                      }`}
+                    ></div>
+                    <span
+                      className={`${
+                        item.procedureEntryStatus?.toLowerCase() === 'approved'
+                          ? ' text-greenText'
+                          : ' text-pending'
+                      }`}
+                    >
+                      {item.procedureEntryStatus}
+                    </span>
                   </div>
                 </td>
                 <td> </td>
