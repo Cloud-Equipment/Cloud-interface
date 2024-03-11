@@ -13,6 +13,7 @@ import {
 import { createColumnHelper } from '@tanstack/react-table';
 
 import { InviteUserModal } from './InviteUserModal';
+import { CreateUserModal } from './CreateUserModal';
 import { Enable2FAModal } from './Enforce2FaModal';
 import * as Assets from '@cloud-equipment/assets';
 import { Button, Table, Loader } from '@cloud-equipment/ui-components';
@@ -20,7 +21,7 @@ import queries from '../../../services/queries/manageUsers';
 import { IAppState } from '../../../Store/store';
 import { formatDate } from '@cloud-equipment/utils';
 
-type IModalViews = null | 'inviteUser' | 'enable2Fa';
+type IModalViews = null | 'inviteUser' | 'enable2Fa' | 'createUser';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -39,20 +40,26 @@ const columns = [
     header: 'Email Address',
     cell: (info) => info.getValue() || '-',
   }),
-  columnHelper.accessor('2FaStatus', {
+  columnHelper.accessor('twoFactorEnabled', {
     header: '2FA Status',
     cell: (info) => {
       return (
         <span className="flex gap-1 items-center">
-          <div className="w-[5px] h-[5px] bg-primary-300 rounded-full"></div>{' '}
-          {info.getValue()}
+          {info.getValue() ? (
+            <>
+              <div className="w-[5px] h-[5px] bg-primary-300 rounded-full"></div>{' '}
+              Yes
+            </>
+          ) : (
+            <>No</>
+          )}
         </span>
       );
     },
   }),
-  columnHelper.accessor('role', {
+  columnHelper.accessor('roles', {
     header: 'Role',
-    cell: (info) => info.getValue(),
+    cell: (info) => info.getValue()?.[0] || '-',
   }),
   columnHelper.accessor('lastLogin', {
     header: 'Last login',
@@ -106,50 +113,13 @@ const UserManagement = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const [modalViews, setModalViews] = useState<{ currentView: IModalViews }>({
-    currentView: null,
-  });
-  const openModal = (view: IModalViews) => {
-    setModalViews({ currentView: view });
-  };
-
-  const closeModal = () => {
-    setModalViews({ currentView: null });
-  };
-
   return (
     <>
-      <Modal
-        open={modalViews.currentView === 'inviteUser'}
-        onClose={closeModal}
-      >
-        <div>
-          <InviteUserModal onClose={closeModal} />
-        </div>
-      </Modal>
-      <Modal open={modalViews.currentView === 'enable2Fa'} onClose={closeModal}>
-        <div>
-          <Enable2FAModal onClose={closeModal} />
-        </div>
-      </Modal>
-
       {/* Enable 2Fa Modal */}
 
       <section className="ce-px ce-py">
-        <div className="flex justify-end gap-4 flex-wrap mt-5">
-          <Button
-            label="Invite User"
-            className="!bg-primary-100 hover:!bg-primary-100"
-            onClick={() => openModal('inviteUser')}
-          />
-          <Button variant="neutral" label="Manage Roles" className="" />
-          <button
-            onClick={() => openModal('enable2Fa')}
-            className="ce-btn-text"
-          >
-            Enforce 2FA
-          </button>
+        <div className="flex justify-end">
+          <SelectActionDropDown />
         </div>
 
         <div className="p-[16px] bg-[white] mt-[20px] rounded-[20px]">
@@ -289,5 +259,104 @@ const ManageStaffDropDown = ({
         </MenuItem>
       </Menu>
     </div>
+  );
+};
+
+const SelectActionDropDown = () => {
+  const [modalViews, setModalViews] = useState<{ currentView: IModalViews }>({
+    currentView: null,
+  });
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMenuAction = () => {};
+
+  const openModal = (view: IModalViews) => {
+    setModalViews({ currentView: view });
+  };
+
+  const closeModal = () => {
+    setModalViews({ currentView: null });
+  };
+
+  return (
+    <>
+      <Modal
+        open={modalViews.currentView === 'createUser'}
+        onClose={closeModal}
+      >
+        <div>
+          <CreateUserModal onClose={closeModal} />
+        </div>
+      </Modal>
+      <Modal
+        open={modalViews.currentView === 'inviteUser'}
+        onClose={closeModal}
+      >
+        <div>
+          <InviteUserModal
+            onClose={closeModal}
+            openCreateModalFn={() => openModal('createUser')}
+          />
+        </div>
+      </Modal>
+      <Modal open={modalViews.currentView === 'enable2Fa'} onClose={closeModal}>
+        <div>
+          <Enable2FAModal onClose={closeModal} />
+        </div>
+      </Modal>
+      <div>
+        <Button
+          label="Select Action"
+          // TODO: Change this icon
+          iconAfter={Assets.Icons.WhiteDropdownIcon}
+          onClick={(e) => {
+            handleActionClick(e);
+          }}
+          className="!bg-primary-100 hover:!bg-primary-100"
+        />
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          <MenuItem onClick={() => openModal('inviteUser')}>
+            <ListItemIcon>
+              <img src={Assets.Icons.WhiteCheckmark} alt="" />
+            </ListItemIcon>
+            <ListItemText>Invite User</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={() => openModal('createUser')}>
+            <ListItemIcon>
+              <img src={Assets.Icons.WhiteCheckmark} alt="" />
+            </ListItemIcon>
+            <ListItemText>Create User</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={() => {}}>
+            <ListItemIcon>
+              <img src={Assets.Icons.WhiteCheckmark} alt="" />
+            </ListItemIcon>
+            <ListItemText>Manage Roles</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={() => openModal('enable2Fa')}>
+            <ListItemIcon>
+              <img src={Assets.Icons.WhiteCheckmark} alt="" />
+            </ListItemIcon>
+            <ListItemText>Enforce 2FA</ListItemText>
+          </MenuItem>
+        </Menu>
+      </div>
+    </>
   );
 };
