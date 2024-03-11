@@ -36,8 +36,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
 
-const today = dayjs();
-
 const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
   const userDetails = useSelector((state: IAppState) => state.auth.user);
 
@@ -327,6 +325,17 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
     setTotalDiscount(_totalDiscount);
   }, [selectedProcedures, proceduresWithRebate]);
 
+  // remove selected rebate when procedure is unselected
+  useEffect(() => {
+    for (const rebateId of proceduresWithRebate) {
+      if (!selectedProcedures.find((id) => id === rebateId)) {
+        setProceduresWithRebate(
+          proceduresWithRebate.filter((r) => r !== rebateId)
+        );
+      }
+    }
+  }, [selectedProcedures]);
+
   return (
     <>
       <div className="bg-white px-6 py-10 rounded-tl-[20px] rounded-bl-[20px] right-modal overflow-y-auto">
@@ -358,26 +367,6 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
                 }
                 optionLabelKey="patientName"
               />
-
-              <>
-                {/* <div className="form-input-label-holder">
-                <label>Reason for Visiting</label>
-                <Controller
-                  name="visitReasonId"
-                  control={control}
-                  render={({ field }) => (
-                    <Select {...field} required>
-                      <MenuItem value={0} disabled>
-                        Select Reason for Visiting
-                      </MenuItem>
-                      <MenuItem value={2}>Run Diagnostics</MenuItem>
-                      <MenuItem value={3}>Result Collection</MenuItem>
-                      <MenuItem value={4}>Others</MenuItem>
-                    </Select>
-                  )}
-                />
-              </div> */}
-              </>
 
               <PhoneInputField
                 control={control}
@@ -582,6 +571,7 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
                     </div>
 
                     <button
+                      type="button"
                       onClick={() => {
                         deleteRebateForProcedure(procedureId);
                       }}
