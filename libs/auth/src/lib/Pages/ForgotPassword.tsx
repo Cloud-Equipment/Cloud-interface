@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import ForgotPasswordOptionsButton from '../Components/ForgotPasswordOptionsButton';
 import { PasswordResetOptionEnum } from '../Models';
 import { useForm } from 'react-hook-form';
-import * as Assets from '@cloud-equipment/assets';
-import { Input, PhoneInputField } from '@cloud-equipment/ui-components';
+import { Input } from '@cloud-equipment/ui-components';
 import queries from '../services';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearLoading, setLoading } from '@cloud-equipment/shared_store';
 
 enum PageView {
   OPTIONS,
@@ -14,11 +14,12 @@ enum PageView {
 }
 
 const ForgotPassword = () => {
+  const dispatch = useDispatch();
   const accountType = useSelector(
     (state: { account: { accountType: 0 | 1 } }) => state.account.accountType
   );
   const { register, handleSubmit, getValues } = useForm();
-  const { mutateFn } = queries.useForgotPassword(accountType);
+  const { mutateFn, isLoading } = queries.useForgotPassword(accountType);
 
   const [view, setView] = useState<PageView>(PageView.OPTIONS);
 
@@ -31,14 +32,20 @@ const ForgotPassword = () => {
     setView(PageView.FORM);
   };
 
+  useEffect(() => {
+    if (isLoading) {
+      dispatch(setLoading());
+    } else {
+      dispatch(clearLoading());
+    }
+  }, [isLoading]);
+
   const onSubmit = () => {
     mutateFn(
       option === PasswordResetOptionEnum.EMAIL
         ? { email: getValues().email }
         : { phone: getValues().phone },
-      () => {
-        
-      }
+      () => {}
     );
   };
 
