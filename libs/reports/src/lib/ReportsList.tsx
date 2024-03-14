@@ -10,7 +10,7 @@ import {
 import { createColumnHelper } from '@tanstack/react-table';
 import { usePapaParse } from 'react-papaparse';
 
-import { IProcedure } from '@cloud-equipment/models';
+import { IProcedure, IUser } from '@cloud-equipment/models';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import * as Assets from '@cloud-equipment/assets';
@@ -89,7 +89,9 @@ const columns = [
 ];
 
 const ReportsList = () => {
-  const userDetails = useSelector((state: IAppState) => state.auth.user);
+  const userDetails = useSelector(
+    (state: { auth: { user: IUser } }) => state.auth.user
+  );
 
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
