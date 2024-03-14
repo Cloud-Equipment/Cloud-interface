@@ -52,8 +52,8 @@ const AppointmentTimeLine = ({
             },
           }}
         >
-          {data?.map((item) => (
-            <TimelineItem>
+          {data?.map((item, index) => (
+            <TimelineItem key={index}>
               <TimelineSeparator>
                 <TimelineDot />
                 <TimelineConnector />

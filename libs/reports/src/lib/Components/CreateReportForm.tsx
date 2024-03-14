@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
@@ -9,9 +8,9 @@ import {
   TextField,
   Checkbox,
   ListItemText,
+  Select as MatSelect,
+  SelectChangeEvent,
 } from '@mui/material';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-
 import {
   IPatient,
   IDiscount,
@@ -29,13 +28,18 @@ import facilityQueries from '../queries/facilities';
 import medserviceQueries from '../queries/medservices';
 import discountQueries from '../queries/discounts';
 import refererQueries from '../queries/referers';
+import reportQueries from '../queries/reports';
 import {
   Input,
+  Select,
   PhoneInputField,
-  TextArea,
-  MultiSelectWithCheckbox,
   SearchableInput,
+  MultiSelectWithCheckbox,
+  TextArea,
 } from '@cloud-equipment/ui-components';
+import { Gender } from '../constants';
+import dayjs from 'dayjs';
+import { toast } from 'react-toastify';
 
 const CreateReportForm = () => {
   const userDetails = useSelector(
@@ -45,6 +49,8 @@ const CreateReportForm = () => {
   const accountType = useSelector(
     (state: { account: { accountType: 0 | 1 } }) => state.account.accountType
   );
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // if its superadmin
   const [selectedFacility, setSelectedFacility] = useState<IFacility | null>(
@@ -61,22 +67,23 @@ const CreateReportForm = () => {
     }
   }, []);
 
-  const { register, handleSubmit, watch, setValue, control } = useForm();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { register, handleSubmit, watch, setValue, control, getValues } =
+    useForm();
 
-  const patientId = watch('patientId');
   const [patientName, setPatientName] = useState('');
+  const [existingPatientId, setExistingPatientId] = useState<string | null>(
+    null
+  );
 
-  const { useGetPatientById, useSearchPatientByName } = patientQueries;
-  const { mutateFn: mutateFn_fetchPatientById } = useGetPatientById(patientId);
-  const { data: patientsFound, mutateFn: mutateFn_fetchPatientByName } =
-    useSearchPatientByName(
-      patientName,
-      accountType === 0
-        ? (selectedFacility?.id as string)
-        : userDetails?.FACILITY_ID
-    );
+  const { useSearchPatientByName, useCreatePatient } = patientQueries;
+  const { data: patientsFound } = useSearchPatientByName(
+    patientName,
+    accountType === 0
+      ? (selectedFacility?.id as string)
+      : userDetails?.FACILITY_ID
+  );
+  const { mutateFn: mutateFn_CreatePatient, isLoading: isCreatingPatient } =
+    useCreatePatient();
 
   const [facilityDiscounts, setFacilityDiscounts] = useState<IDiscount[]>([]);
   const [procedureDiscounts, setProcedureDiscounts] = useState<IDiscount[]>([]);
@@ -84,14 +91,6 @@ const CreateReportForm = () => {
   const [subTotal, setSubTotal] = useState(0);
   const [totalDiscount, setTotalDiscount] = useState(0);
   const [total, setTotal] = useState(0);
-
-  const handlePatientFound = (patient: IPatient) => {
-    setValue('patientPhone', patient.patientPhone);
-    setValue('patientAge', patient.patientAge);
-    // setValue('patientAddress', patient.patientAddress);
-    setValue('patientGenderId', patient.patientGenderId);
-    setValue('patientEmail', patient.patientEmail);
-  };
 
   const clearPatientFound = () => {
     setValue('patientPhone', '');
@@ -109,23 +108,9 @@ const CreateReportForm = () => {
     setValue('patientAddress', selectedPatient?.address);
     setValue('patientGenderId', selectedPatient?.patientGenderId);
     setValue('patientEmail', selectedPatient?.patientEmail);
-  };
 
-  useEffect(() => {
-    if (patientId && !patientName) {
-      mutateFn_fetchPatientById({}, (res) => {
-        if (res.data) {
-          handlePatientFound(res.data);
-        } else {
-          clearPatientFound();
-        }
-      });
-    } else {
-      if (patientName) {
-        mutateFn_fetchPatientByName({}, (res) => {});
-      }
-    }
-  }, [patientId, patientName]);
+    setExistingPatientId(selectedPatient?.patientUniqueID);
+  };
 
   //   doctors , search doctors and create doctors related data and functions
   const [refererName, setRefererName] = useState('');
@@ -221,11 +206,17 @@ const CreateReportForm = () => {
     );
   };
 
-  const onSubmit = (data_: any) => {
+  const { useCreateReport } = reportQueries;
+  const { mutateFn: mutateFn_CreateReport, isLoading: isCreatingReport } =
+    useCreateReport();
+
+  const onSubmit = () => {
     const facilityId =
       accountType === 0 ? selectedFacility?.id : userDetails.FACILITY_ID;
-    const createProcedure = (patientId: number) => {
+
+    const createReport = (patientId: string, refererId: string | null) => {
       const proceduresToSubmit: any[] = [];
+      const data_ = getValues();
       selectedProcedures.forEach((x) => {
         const rebateInfo = proceduresWithRebate.find((y) => y === x);
         const item_: any = {
@@ -240,64 +231,145 @@ const CreateReportForm = () => {
           remarks: data_?.remarks,
           entryUserId: userDetails?.USER_ID,
           facilityId: facilityId,
-          procedureDiscountId: 0,
-          faclityDiscountId: 0,
+          appointmentDate: dayjs().toISOString(),
         };
         if (rebateInfo) {
           item_.rebate = {
             facilityId: facilityId,
-            rebatePercent: 5,
+            doctorId: refererId,
+            rebatePercent: userDetails?.FACILITY_REBATE_PERCENTAGE,
             refererHospital: data_.refererHospital,
-            refererName: data_.refererName,
-            refererEmail: data_.refererEmail,
-            refererPhone: data_.refererPhone,
+            referer: {
+              doctorName: data_.refererName,
+              doctorEmail: data_.refererEmail,
+              doctorPhone: data_.refererPhone,
+              doctorHospital: data_.refererHospital,
+              doctorId: refererId,
+            },
           };
         }
         proceduresToSubmit.push(item_);
       });
-      dispatch(setLoading());
-
-      axiosInstance
-        .post(
-          `${environment.baseUrl}/service-manager/procedures/create`,
-          proceduresToSubmit
-        )
-        .then((response) => {
-          navigate('/reports');
-        })
-        .catch((err) => {})
-        .finally(() => dispatch(clearLoading()));
+      mutateFn_CreateReport(proceduresToSubmit, () => {
+        toast.success('Report Created Successfully');
+        dispatch(clearLoading());
+        navigate('/reports');
+      });
     };
 
-    // eslint-disable-next-line no-constant-condition
-    if (!data_.patientId) {
-      const data = {
-        patientFacilityCode: facilityId,
-        patientName: patientName,
-        patientAge: Number(data_.patientAge) || 10,
-        patientEmail: data_.patientEmail,
-        patientPhone: data_.patientPhone,
-        patientGenderId: data_.patientGenderId,
-        aboutPatient: '',
-        maritalStatusId: 0,
-        address: data_.patientAddress,
-        facilityId,
-        // dateOfBirth: '2024-01-03T08:37:00.151Z',
-      };
-      dispatch(setLoading());
-      axiosInstance
-        .post(`${environment.baseUrl}/patient/createpatient`, data)
-        .then((response) => {
-          if (response) {
-            createProcedure(response.data.data.patientUniqueID);
+    if (existingPatientId && existingRefererId) {
+      // create appointment straight
+      createReport(existingPatientId, existingRefererId);
+    } else if (existingPatientId && !existingRefererId) {
+      // create referer first
+      if (!proceduresWithRebate.length) {
+        createReport(existingPatientId, null);
+      } else {
+        const { refererEmail, refererHospital, refererPhone } = getValues();
+
+        const data = {
+          doctorEmail: refererEmail,
+          doctorHospital: refererHospital,
+          doctorName: refererName,
+          doctorPhone: refererPhone,
+        };
+        mutateFn_CreateReferer(data, (res) => {
+          if (res.doctorId) {
+            setExistingRefererId(res.doctorId);
+            createReport(existingPatientId, res.doctorId);
           }
-        })
-        .catch((err) => {})
-        .finally(() => dispatch(clearLoading()));
+        });
+      }
+    } else if (
+      (!existingPatientId && existingRefererId) ||
+      (!existingPatientId && !proceduresWithRebate.length)
+    ) {
+      // create patient first
+      const {
+        patientAge,
+        patientEmail,
+        patientGenderId,
+        patientNumber,
+        maritalStatusId,
+      } = getValues();
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const data: any = {
+        patientName: `${patientName}`,
+        patientAge,
+        patientEmail,
+        patientPhone: patientNumber,
+        patientGenderId,
+        maritalStatusId,
+        takingMedication: JSON.parse(
+          (getValues().takingMeds as unknown as string) ?? 'false'
+        ),
+        patientFacilityCode: facilityId,
+        facilityId: facilityId,
+        isActive: false,
+      };
+      mutateFn_CreatePatient(data, (res) => {
+        if (res.data?.patientUniqueID) {
+          setExistingPatientId(res.data.patientUniqueID);
+          createReport(res.data.patientUniqueID, existingRefererId);
+        }
+      });
     } else {
-      createProcedure(data_.patientId);
+      const {
+        refererEmail,
+        refererHospital,
+        refererPhone,
+        patientAge,
+        patientEmail,
+        patientGenderId,
+        patientNumber,
+        maritalStatusId,
+      } = getValues();
+
+      const data = {
+        doctorEmail: refererEmail,
+        doctorHospital: refererHospital,
+        doctorName: refererName,
+        doctorPhone: refererPhone,
+      };
+
+      mutateFn_CreateReferer(data, (res) => {
+        if (res.doctorId) {
+          setExistingRefererId(res.doctorId);
+
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const data: any = {
+            patientName: `${patientName}`,
+            patientAge,
+            patientEmail,
+            patientPhone: patientNumber,
+            patientGenderId,
+            maritalStatusId,
+            takingMedication: JSON.parse(
+              (getValues().takingMeds as unknown as string) ?? 'false'
+            ),
+            patientFacilityCode: facilityId,
+            facilityId: facilityId,
+            isActive: false,
+          };
+          mutateFn_CreatePatient(data, (res2) => {
+            if (res2.data?.patientUniqueID) {
+              setExistingPatientId(res2.data.patientUniqueID);
+              createReport(res2.data.patientUniqueID, res.doctorId);
+            }
+          });
+        }
+      });
     }
   };
+
+  useEffect(() => {
+    if (isCreatingPatient || isCreatingReferer || isCreatingReport) {
+      dispatch(setLoading());
+    } else {
+      dispatch(clearLoading());
+    }
+  }, [isCreatingPatient, isCreatingReferer, isCreatingReport]);
 
   //   mathematics
   useEffect(() => {
@@ -417,23 +489,20 @@ const CreateReportForm = () => {
             name="patientPhone"
           />
 
-          <div className="form-input-label-holder">
-            <label>Gender</label>
-            <Controller
-              name="patientGender"
-              control={control}
-              defaultValue={0}
-              render={({ field }) => (
-                <Select {...field}>
-                  <MenuItem value={0} disabled>
-                    Select Gender
-                  </MenuItem>
-                  <MenuItem value={1}>Male</MenuItem>
-                  <MenuItem value={2}>Female</MenuItem>
-                </Select>
-              )}
-            />
-          </div>
+          <Controller
+            name="patientGenderId"
+            control={control}
+            defaultValue={0}
+            render={({ field }) => (
+              <Select
+                options={Gender}
+                label="Gender"
+                placeholder="Select Gender"
+                containerClass="flex-1"
+                {...{ field }}
+              />
+            )}
+          />
 
           <Input
             label="Age of the Patient"
@@ -487,7 +556,7 @@ const CreateReportForm = () => {
           >
             <div className="form-input-label-holder">
               <label>Procedure for Rebate</label>
-              <Select
+              <MatSelect
                 value={proceduresWithRebate[index]}
                 onChange={handleRebateSelectionFromDropdown}
               >
@@ -505,7 +574,7 @@ const CreateReportForm = () => {
                     </ListItemText>
                   </MenuItem>
                 ))}
-              </Select>
+              </MatSelect>
             </div>
 
             <div className="flex gap-3 items-center">

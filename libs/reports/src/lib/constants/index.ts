@@ -1,4 +1,4 @@
-import { GENDER, MARITAL_STATUS, PAYMENT_TYPE } from './Types';
+import { GENDER, MARITAL_STATUS, PAYMENT_TYPE } from './types';
 
 export const Gender = [
   {

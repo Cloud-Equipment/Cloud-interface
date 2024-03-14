@@ -18,6 +18,7 @@ import queries from './queries/reports';
 import { Table } from '@cloud-equipment/ui-components';
 import { formatDate } from '@cloud-equipment/utils';
 import { UploadReportModal } from '../index';
+import { useSelector } from 'react-redux';
 
 export type ActionType =
   | null
@@ -88,6 +89,8 @@ const columns = [
 ];
 
 const ReportsList = () => {
+  const userDetails = useSelector((state: IAppState) => state.auth.user);
+
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
@@ -117,7 +120,8 @@ const ReportsList = () => {
   return (
     <section className="ce-px ce-py">
       <h4 className="text-ce-green font-bold text-2xl">
-        <span className="font-normal">Hello</span> , Emma Taylor
+        <span className="font-normal">Hello</span> ,{' '}
+        {userDetails?.USER_FULLNAME}
       </h4>
 
       <p className="text-greyText2 text-sm">

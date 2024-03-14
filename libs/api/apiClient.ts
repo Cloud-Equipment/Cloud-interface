@@ -27,10 +27,10 @@ const get = async ({ url = '', auth = true, params }: GET_REQ) => {
   ).data;
 };
 
-const post = async ({ url, body, auth = true }: Request) => {
+const post = async ({ url, body, auth = true, params }: Request) => {
   return (
     await (auth
-      ? axiosInstance.post(url, body)
+      ? axiosInstance.post(url, body, { params })
       : axios.post(baseUrl + url, body))
   ).data;
 };

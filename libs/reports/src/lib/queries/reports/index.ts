@@ -19,6 +19,42 @@ interface TableQueryParams {
   pageSize: number;
 }
 
+const useCreateReport = (options = {}) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...options,
+    mutationKey: [keys.create],
+    mutationFn: async (data: any) => {
+      return apiClient.post({
+        url: '/service-manager/procedures/create',
+        body: data,
+        auth: true,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [keys.read] });
+      queryClient.invalidateQueries({ queryKey: [`${keys.read}_upcoming`] });
+    },
+  });
+  const { mutate, isSuccess, isError, data, isPending } = mutation;
+
+  return {
+    mutateFn: (bodyArg: any, cb: () => void) => {
+      return mutate(bodyArg, {
+        onSuccess: () => {
+          // console.log('sdnfsdfsdfsdfsdfsd')
+          cb?.();
+        },
+      });
+    },
+    data,
+    isSuccess,
+    isError,
+    isLoading: isPending,
+  };
+};
+
 const useGetReports = (
   _params: TableQueryParams,
   options: Omit<
@@ -138,6 +174,7 @@ const queries = {
   useGetReportById,
   useConfirmTest,
   useUploadResult,
+  useCreateReport
 };
 
 export default queries;
