@@ -11,7 +11,7 @@ const PasswordReset = () => {
   );
 
   // Read query parameters
-  const email = searchParams.get('email');
+  const email = searchParams.get('username');
   const token = searchParams.get('token');
 
   const { useValidateToken } = queries;
