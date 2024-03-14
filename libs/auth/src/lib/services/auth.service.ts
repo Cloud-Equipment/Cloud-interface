@@ -3,7 +3,7 @@ import { environment } from '@cloud-equipment/environments';
 
 export const _login = (payload: any) => {
   return axiosInstance.post(
-    `${environment.baseUrl}/user-manager/account/user/login`,
+    `${environment.baseUrl}/user-manager/account/user/auth/login`,
     payload
   );
 };

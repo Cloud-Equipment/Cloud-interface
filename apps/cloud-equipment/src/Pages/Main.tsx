@@ -46,7 +46,7 @@ const mainRoutes = [
         img: Assets.Icons.DashboardNav,
       },
       {
-        name: 'Medservices',
+        name: 'Procedures',
         route: '/management/medservices',
         img: Assets.Icons.DashboardNav,
       },
