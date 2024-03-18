@@ -28,10 +28,6 @@ const NewProcedureModal = ({
   const dispatch = useDispatch();
   const [view, setView] = useState<'form' | 'confirm'>('form');
 
-  const accountType = useSelector(
-    (state: { account: { accountType: 0 | 1 } }) => state.account.accountType
-  );
-
   const userDetails = useSelector(
     (state: { auth: { user: IUser } }) => state.auth.user
   );
@@ -50,14 +46,12 @@ const NewProcedureModal = ({
     dispatch(setLoading());
 
     const payload = { ...(getValues() as ICreateProcedure) };
-    if (accountType === 1) {
-      payload.facilityId = userDetails?.FACILITY_ID;
-    }
+    payload.facilityId = userDetails?.FACILITY_ID;
 
     _createPrice(payload)
       .then((response) => {
         if (response.data.success) {
-          toast.error(response.data.msg);
+          toast.success(response.data.msg);
           onClose();
         } else {
           toast.error(response.data.msg);
@@ -79,21 +73,8 @@ const NewProcedureModal = ({
       .catch(() => {});
   };
 
-  const getAllFacilities = () => {
-    _getAllFacilities()
-      .then((res: any) => {
-        if (res.data.success) {
-          setCategoriesList(res.data.data);
-        }
-      })
-      .catch(() => {});
-  };
-
   useEffect(() => {
     getAllCategories();
-    if (accountType === 0) {
-      getAllFacilities();
-    }
 
     if (procedureToEdit) {
       setValue('medServiceCategoryId', procedureToEdit.medServiceCategoryId);
@@ -107,31 +88,6 @@ const NewProcedureModal = ({
       {view === 'form' ? (
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-5">
           <h4>Add New Price/Procedure</h4>
-
-          {accountType === 0 ? (
-            <div className="form-input-label-holder">
-              <label className="px-5">Facility</label>
-              <Controller
-                name="facilityId"
-                control={control}
-                defaultValue={0}
-                render={({ field }) => (
-                  <Select {...field}>
-                    <MenuItem value={0} disabled>
-                      Choose Facility
-                    </MenuItem>
-                    {facilitiesList.map((x, i) => (
-                      <MenuItem key={i} value={x.id}>
-                        {x.facilityName}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                )}
-              />
-            </div>
-          ) : (
-            <></>
-          )}
 
           <div className="form-input-label-holder">
             <label className="px-5">Medservice Category</label>
