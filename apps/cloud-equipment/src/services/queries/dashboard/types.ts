@@ -5,8 +5,8 @@ export interface IDashboardSummary {
   referredPatientMetric: number;
   inpatient: number;
   inpatientMetric: number;
-  totalStaffToday: number;
-  totalStaffMetric: number;
+  earningToday: number;
+  totalEarningMetric: number;
 }
 
 export interface IReceptionistDashboardSummary {
