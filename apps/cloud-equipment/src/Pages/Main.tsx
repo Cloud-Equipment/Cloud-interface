@@ -75,7 +75,7 @@ const navbarConfig = [
   { path: '/management/patients', name: 'Patients' },
   { path: '/management/facility', name: 'Facilities' },
   { path: '/management/users', name: 'Users' },
-  { path: '/management/medservices', name: 'Medservices' },
+  { path: '/management/medservices', name: 'Procedures' },
   { path: '/management/equipment', name: 'Equipment' },
   { path: '/settings', name: 'Settings' },
 ];

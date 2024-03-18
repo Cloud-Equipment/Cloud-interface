@@ -55,7 +55,6 @@ const PriceManagement = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
-  const [pricesList, setPricesList] = useState<IMedservice[] | null>(null);
 
   const { useGetMedservicesForFacility } = medserviceQueries;
   const { data: paginatedResponse, isLoading } = useGetMedservicesForFacility({
@@ -86,16 +85,6 @@ const PriceManagement = () => {
     setPageSize(parseInt(event.target.value, 10));
   };
 
-  const getPrices = () => {
-    _getPrices(currentPage, 0, pageSize)
-      .then((res) => {
-        if (res.data.success) {
-          setPricesList(res.data.data);
-        }
-      })
-      .catch((err) => {});
-  };
-
   //   menu
   const handleActionClick = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -119,6 +108,7 @@ const PriceManagement = () => {
     handleMenuClose();
     setDeleteMOdalOpen(true);
   };
+  
   const handleApproveClick = () => {
     handleMenuClose();
     setApproveMOdalOpen(true);
@@ -133,11 +123,6 @@ const PriceManagement = () => {
   const closePriceModal = () => setPriceMOdalOpen(false);
   const closeDeleteModal = () => setDeleteMOdalOpen(false);
   const closeApproveModal = () => setApproveMOdalOpen(false);
-
-  useEffect(() => {
-    getPrices();
-  }, [pageSize, currentPage]);
-  //   tabs
 
   return (
     <>
@@ -184,7 +169,7 @@ const PriceManagement = () => {
         <div className="p-[16px] bg-[white] mt-[20px] rounded-[20px]">
           <div className="grid  gap-5 grid-cols-[1fr_1fr] lg:flex items-center lg:justify-between">
             <div className="col-span-2 lg:col-span-[unset] lg:w-[50%] search-input-container">
-              <input placeholder="Search for Patient Name" />
+              <input placeholder="Search for Procedure" />
               <img src={Assets.Icons.Search} alt="Search Icon" />
             </div>
 
@@ -202,20 +187,20 @@ const PriceManagement = () => {
             </button>
           </div>
 
-          <NavTab
+          {/* <NavTab
             links={[
               { label: 'All Prices', href: '/management/medservices' },
               { label: 'Approved Prices', href: '.' },
               { label: 'Pending Prices', href: '.' },
             ]}
             wrapperClass="mt-6"
-          />
+          /> */}
 
           <Table
             loading={false}
             data={paginatedResponse?.resultItem ?? []}
             columns={columns}
-            tableHeading="All Report"
+            tableHeading="All Procedures"
           />
         </div>
       </section>

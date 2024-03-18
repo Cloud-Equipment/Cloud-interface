@@ -7,52 +7,56 @@ import {
 } from '@tanstack/react-query';
 
 import { apiClient } from '@cloud-equipment/api';
-import { ApiResponse } from 'Models/api.models';
+import { ApiResponse, PaginationData } from 'Models/api.models';
 import keys from './keys';
 import { environment } from '@cloud-equipment/environments';
 import { IMedservice } from '@cloud-equipment/models';
 
-const useGetMedservicesForFacility = (facilityId: string, options = {}) => {
-  const mutation = useMutation({
-    ...options,
-    mutationKey: [keys.getAll],
-    mutationFn: async () => {
-      const response = await apiClient.get({
-        url: `/service-manager/medServices/getall`,
-        auth: true,
-      });
-
-      return response.data;
-    },
-    // mutationFn: async () => {
-    //   const response = await apiClient.post({
-    //     url: `/service-manager/medServices/getallbyfacilitypaged?facilityId=${facilityId}`,
-    //     auth: true,
-    //     body: {
-    //       currentPage: 1,
-    //       startIndex: 1,
-    //       pageSize: 200,
-    //     },
-    //   });
-    //   return response.data;
-    // },
-    onSuccess: () => {},
-  });
-  const { mutate, isSuccess, isError, data, isPending } = mutation;
-
-  return {
-    mutateFn: (bodyArg: any, cb: (res: any) => void) => {
-      return mutate(bodyArg, {
-        onSuccess: (res) => {
-          cb?.(res);
-        },
-      });
-    },
+const useGetMedservicesForFacility = (
+  body: {
+    facilityId: string;
+    download: boolean;
+    currentPage: number;
+    startIndex: number;
+    pageSize: number;
+  },
+  options: Omit<
+    UseQueryOptions<any, unknown, any, string[]>,
+    'initialData' | 'queryFn' | 'queryKey'
+  > = {}
+) => {
+  const { facilityId, download, currentPage, startIndex, pageSize } = body;
+  const hash = [
+    keys.read,
+    facilityId,
+    download,
+    currentPage,
+    startIndex,
+    pageSize,
+  ];
+  const {
+    isLoading,
     data,
     isSuccess,
-    isError,
-    isLoading: isPending,
-  };
+    error,
+  }: UseQueryResult<PaginationData<IMedservice>> = useQuery({
+    queryKey: hash,
+    queryFn: () =>
+      apiClient
+        .post({
+          url: `${environment.baseUrl}/service-manager/medServices/getallbyfacilitypaged`,
+          params: { facilityId },
+          body: {
+            download,
+            currentPage,
+            startIndex,
+            pageSize,
+          },
+          auth: true,
+        })
+        .then((res: ApiResponse) => res.data),
+  });
+  return { isLoading, data, isSuccess, error };
 };
 
 const queries = {

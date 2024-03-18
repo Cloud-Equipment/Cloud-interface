@@ -9,6 +9,7 @@ export interface IUser {
   FACILITY_REBATE_PERCENTAGE: string;
   USER_FULLNAME: string;
   USER_ROLE?: string[]; //TODO: Change this to appropriate type
+  FACILITY_NAME?: string;
 }
 
 export enum UserTypeEnum {

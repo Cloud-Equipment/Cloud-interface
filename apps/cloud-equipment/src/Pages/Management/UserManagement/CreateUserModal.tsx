@@ -56,6 +56,19 @@ export const CreateUserModal = ({ onClose }: any) => {
 
             <div className="flex flex-col gap-5">
               <Input
+                label="Email Address"
+                placeholder="mail@company.com"
+                className="ce-input"
+                {...register('email')}
+              />
+
+              <PhoneInputField
+                containerClass="h-[76px]"
+                control={control}
+                label="Phone Number"
+                name="phoneNumber"
+              />
+              <Input
                 label="First Name"
                 placeholder="Enter First Name"
                 className="ce-input"
