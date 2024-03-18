@@ -88,11 +88,15 @@ export const Main = () => {
     dispatch(logout());
   };
 
+  console.log('userDetails?.USER_ROLE', userDetails?.USER_ROLE);
+
   return (
     <Layout
       navbarConfig={navbarConfig}
       navlinks={
-        userDetails?.userType === UserTypeEnum.FACILITY_ADMIN
+        (userDetails?.USER_ROLE ?? []).filter(
+          (role) => role === UserTypeEnum.FACILITY_ADMIN
+        ).length > 0
           ? mainRoutes
           : receptionistRoutes
       }
