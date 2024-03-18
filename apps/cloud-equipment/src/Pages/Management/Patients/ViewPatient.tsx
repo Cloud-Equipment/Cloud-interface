@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { createColumnHelper } from '@tanstack/react-table';
+import { useSelector } from 'react-redux';
 
 import * as Assets from '@cloud-equipment/assets';
 import {
@@ -8,8 +9,10 @@ import {
   Table,
 } from '@cloud-equipment/ui-components';
 import { formatDate } from '@cloud-equipment/utils';
+import { IAppState } from '../../../Store/store';
 
 import queries from '../../../services/queries/managePatients';
+import { GenderMapping } from '../../../constants';
 
 type PatientTableColumns = { [key: string]: string } & {
   lastLogin: string;
@@ -48,17 +51,18 @@ const columns = [
 const ViewPatient = () => {
   const navigate = useNavigate();
   const params = useParams();
+  const userDetails = useSelector((state: IAppState) => state.auth.user);
 
   const { useGetPatientById } = queries;
   const { data, isLoading } = useGetPatientById(
-    `/patient/getpatientbyuniqueid/${params.id}`,
+    `/patient/getpatientbyuniqueid?patientUniqueId=${params.id}?facilityId=${userDetails?.FACILITY_ID}`,
     { enabled: !!params.id }
   );
 
   if (isLoading)
     return (
       <section className="ce-px ce-py">
-        <h2>Loading...</h2>;
+        <h2>Loading...</h2>
       </section>
     );
 
@@ -129,7 +133,7 @@ const ViewPatient = () => {
 
             <TitleSubtitle
               title="Gender"
-              subtitle={`${data?.patientGenderId || '-'}`}
+              subtitle={`${GenderMapping[`${data?.patientGenderId}`] || '-'}`}
             />
 
             <TitleSubtitle
@@ -212,7 +216,7 @@ const TitleSubtitle = ({
   return (
     <div className={className}>
       <p className="text-base font-medium">{title}</p>
-      <p className="text-greyText2">{subtitle || '-'}</p>
+      <p className="text-greyText2 whitespace-pre-wrap">{subtitle || '-'}</p>
     </div>
   );
 };

@@ -24,7 +24,7 @@ const DatePickerComponent: React.FC<IDatePickerProps> = ({
         ''
       )}
     >
-      <label className="block font-manrope text-[1rem] capitalize font-normal leading-[1.25rem] text-secondary-500">
+      <label className="block font-manrope text-sm capitalize font-medium leading-[1.25rem] text-secondary-500">
         {label}
       </label>
       <DatePicker

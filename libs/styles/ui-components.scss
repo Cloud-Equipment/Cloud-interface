@@ -188,7 +188,7 @@ button.btn-icon {
   @apply absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[90%] max-w-[30%];
 }
 .centered-modal-large {
-  @apply absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[90%] max-w-[65%] rounded-[20px];
+  @apply absolute top-[80%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[90%] max-w-[65%] rounded-[20px] overflow-y-auto;
 }
 
 .right-modal {

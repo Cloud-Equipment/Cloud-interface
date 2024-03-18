@@ -18,6 +18,7 @@ import queries from './queries/reports';
 import { Table } from '@cloud-equipment/ui-components';
 import { formatDate } from '@cloud-equipment/utils';
 import { UploadReportModal } from '../index';
+import { EditReportModal } from './modals';
 
 export type ActionType =
   | null
@@ -112,8 +113,6 @@ const ReportsList = () => {
     setPageSize(parseInt(event.target.value, 10));
   };
 
-  const navigate = useNavigate();
-
   return (
     <section className="ce-px ce-py">
       <h4 className="text-ce-green font-bold text-2xl">
@@ -170,7 +169,7 @@ const ReportsList = () => {
 export default ReportsList;
 
 const TransformObject = (data: { [key: string]: any }): Promise<any> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     resolve(
       Object.keys(data).forEach((key) => {
         if ([null, ''].includes(data[key])) data[key] = '-';
@@ -193,6 +192,7 @@ const ReportsListDropdown = ({
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const { useConfirmTest } = queries;
   const { mutateFn } = useConfirmTest();
@@ -207,6 +207,7 @@ const ReportsListDropdown = ({
   };
 
   const onClose = () => setShowUploadModal(false);
+  const onClose2 = () => setShowEditModal(false);
 
   const handleActionsClick = async (view: ActionType) => {
     if (view === 'shareResult') {
@@ -223,6 +224,8 @@ const ReportsListDropdown = ({
       );
     } else if (view === 'uploadResult') {
       setShowUploadModal(true);
+    } else if (view === 'edit') {
+      setShowEditModal(true);
     }
   };
 
@@ -261,12 +264,7 @@ const ReportsListDropdown = ({
             </ListItemIcon>
             <ListItemText>View Profile</ListItemText>
           </MenuItem>
-          <MenuItem onClick={() => handleActionsClick('shareResult')}>
-            <ListItemIcon>
-              <img src={Assets.Icons.ReportShareIcon} alt="" />
-            </ListItemIcon>
-            <ListItemText>Share Result</ListItemText>
-          </MenuItem>
+
           <MenuItem onClick={() => handleActionsClick('confirmTest')}>
             <ListItemIcon>
               <img src={Assets.Icons.ReportConfirmIcon} alt="" />
@@ -279,10 +277,23 @@ const ReportsListDropdown = ({
             </ListItemIcon>
             <ListItemText>Upload Result</ListItemText>
           </MenuItem>
+          <MenuItem onClick={() => handleActionsClick('shareResult')}>
+            <ListItemIcon>
+              <img src={Assets.Icons.ReportShareIcon} alt="" />
+            </ListItemIcon>
+            <ListItemText>Share Result</ListItemText>
+          </MenuItem>
         </Menu>
       </div>
       <Modal open={showUploadModal} onClose={onClose}>
         <UploadReportModal onClose={onClose} />
+      </Modal>
+      <Modal
+        open={showEditModal}
+        onClose={onClose2}
+        style={{ overflow: 'auto' }}
+      >
+        <EditReportModal onClose={onClose2} />
       </Modal>
     </>
   );

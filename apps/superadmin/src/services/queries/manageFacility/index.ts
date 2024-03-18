@@ -181,7 +181,7 @@ const useCreateUser = (options = {}) => {
     mutationKey: [keys.create],
     mutationFn: async (data: any) => {
       return apiMethods.post({
-        url: '/user-manager/account/user/register',
+        url: '/user-manager/account/user/auth/register',
         body: data,
         auth: true,
       });

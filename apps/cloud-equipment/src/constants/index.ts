@@ -15,6 +15,11 @@ export const Gender = [
   },
 ];
 
+export const GenderMapping: { [key: string]: 'Male' | 'Female' } = {
+  1: 'Male',
+  2: 'Female',
+};
+
 export const MaritalStatus = [
   {
     value: MARITAL_STATUS.SINGLE,

@@ -10,6 +10,7 @@ import {
   Input,
   PhoneInputField,
   Select,
+  DatePicker,
 } from '@cloud-equipment/ui-components';
 import * as Assets from '@cloud-equipment/assets';
 
@@ -22,8 +23,8 @@ export const CreateUserModal = ({ onClose }: any) => {
 
   const userDetails = useSelector((state: IAppState) => state.auth.user);
 
-  const { useInviteUser } = queries;
-  const { mutateFn, isLoading } = useInviteUser();
+  const { useCreateUser } = queries;
+  const { mutateFn, isLoading } = useCreateUser();
 
   const createUser = () => {
     const data = getValues();
@@ -55,18 +56,6 @@ export const CreateUserModal = ({ onClose }: any) => {
 
             <div className="flex flex-col gap-5">
               <Input
-                label="Email Address"
-                placeholder="mail@company.com"
-                className="ce-input"
-                {...register('email')}
-              />
-
-              <PhoneInputField
-                control={control}
-                label="Phone Number"
-                name="phoneNumber"
-              />
-              <Input
                 label="First Name"
                 placeholder="Enter First Name"
                 className="ce-input"
@@ -77,6 +66,33 @@ export const CreateUserModal = ({ onClose }: any) => {
                 placeholder="Enter Last Name"
                 className="ce-input"
                 {...register('lastName')}
+              />
+              <Input
+                label="Email"
+                placeholder="Enter Email Address"
+                className="ce-input"
+                {...register('email')}
+              />
+              <PhoneInputField
+                control={control}
+                label="Phone Number"
+                name="phoneNumber"
+              />
+              <Controller
+                name="dateOfHire"
+                control={control}
+                // defaultValue={0}
+                rules={{ required: 'Date of Hire is required' }}
+                render={({ field: { onChange, value, ref } }) => (
+                  <DatePicker
+                    label="Registration Date"
+                    containerClass="flex-1"
+                    onChange={onChange}
+                    onAccept={onChange}
+                    value={value}
+                    inputRef={ref}
+                  />
+                )}
               />
               <Controller
                 name="roles"
@@ -98,7 +114,7 @@ export const CreateUserModal = ({ onClose }: any) => {
                         categoryName: 'Receptionist',
                       },
                     ]}
-                    label="Choose Role"
+                    label="Role"
                     placeholder="Select Role"
                     containerClass="flex-1"
                     {...{ field }}
@@ -107,11 +123,13 @@ export const CreateUserModal = ({ onClose }: any) => {
               />
             </div>
 
-            <Button
-              loading={isLoading}
-              className="mt-4"
-              label="Create Team Member"
-            />
+            <div className="flex justify-center">
+              <Button
+                loading={isLoading}
+                className="mt-4"
+                label="Create Team Member"
+              />
+            </div>
           </>
         </form>
       ) : (

@@ -230,7 +230,7 @@ const NewPatient = () => {
         <div className="mx-auto xl:w-[90%] 2xl:w-[80%]">
           <div className="flex justify-between items-center">
             <p className="font-medium font-manrope text-2xl leading-[36px] text-neutral-350">
-              Add a Patient Information
+              Edit a Patient Information
             </p>
             <Button
               variant="tertiary"
@@ -484,7 +484,7 @@ const NewPatient = () => {
             <Button
               loading={isLoading}
               className="my-4"
-              label="Create Patient Record"
+              label="Update Patient Record"
             />
           </form>
         </div>

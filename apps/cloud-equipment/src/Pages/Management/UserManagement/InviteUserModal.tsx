@@ -13,7 +13,7 @@ import * as Assets from '@cloud-equipment/assets';
 import { useDebounce } from '@cloud-equipment/hooks';
 
 export const InviteUserModal = ({ onClose, openCreateModalFn }: any) => {
-  const { register, handleSubmit, control, watch } = useForm();
+  const { register, handleSubmit, control, watch, setValue } = useForm();
 
   const [email, setEmail] = useState('');
   const debouncedSearch = useDebounce(email, 1000);
@@ -30,33 +30,31 @@ export const InviteUserModal = ({ onClose, openCreateModalFn }: any) => {
   );
 
   const onSubmit = (data: any) => {
-    mutateFn({
-      ...data,
-      roles: [data.roles],
-      password: '',
-      facilityId: userDetails?.FACILITY_ID,
-    });
+    if (data.email) {
+      mutateFn(
+        {
+          ...data,
+        },
+        () => {
+          onClose();
+        }
+      );
+    }
   };
 
   const handleSelectedEmailFromSearch = (selectedEmail: any) => {
-    console.log('selected email', selectedEmail);
+    setValue('email', selectedEmail?.email);
   };
-
-  useEffect(() => {
-    if (email) {
-      console.log('');
-    }
-  }, [email]);
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="bg-white p-10 lg:p-14 grid gap-5 centered-modal"
     >
-      <h4>Invite Team Members</h4>
+      <h4>Invite Patient</h4>
 
       <div className="form-input-label-holder">
-        <label>Patient Name</label>
+        <label>Patient Email</label>
         <Autocomplete
           freeSolo
           placeholder="Type email to search for user"

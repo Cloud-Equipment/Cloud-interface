@@ -11,7 +11,6 @@ let user_obj: IUser | null = null;
 // Check if the token exists and is valid
 if (token) {
   const decoded = jwtDecode<IUser & { exp: number }>(token);
-
   // Check if the token is expired
   const currentTime = Math.floor(Date.now() / 1000); // Get current time in seconds
   if (decoded.exp < currentTime) {

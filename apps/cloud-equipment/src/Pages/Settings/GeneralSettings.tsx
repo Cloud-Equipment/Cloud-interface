@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import { Switch, Modal } from '@mui/material';
 
-import { Button, Input } from '@cloud-equipment/ui-components';
+import { Button, Input, PhoneInputField } from '@cloud-equipment/ui-components';
 import * as Assets from '@cloud-equipment/assets';
 import { SettingsModal } from '../../Modals';
 import { IAppState } from '../../Store/store';
@@ -21,8 +21,6 @@ const GeneralSettings = () => {
     user ? `${user.USER_ID}` : '',
     { enabled: !!user?.USER_ID }
   );
-
-  // console.log('data', data);
 
   const {
     register,
@@ -79,6 +77,13 @@ const GeneralSettings = () => {
           className="block mt-6 md:mt-10 w-[100px] h-[100px] rounded-full md:w-[140px] md:h-[140px]"
         />
 
+        <PhoneInputField
+          control={control}
+          label="Patient Mobile Number"
+          name="patientNumber"
+          containerClass="h-[76px]"
+          // readonly={}
+        />
         <div className="mt-4 2xl:mt-6 grid gap-5 2xl:gap-7 md:grid-cols-2">
           <Input
             className="active:border-primary-100 focus:outline-primary-100"

@@ -29,6 +29,7 @@ const Navbar = ({
 
   const viewProfile = () => {
     handleClose();
+    navigate('/settings/general');
   };
 
   const logout = () => {

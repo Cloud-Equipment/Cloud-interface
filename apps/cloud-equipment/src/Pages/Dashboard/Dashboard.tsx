@@ -1,20 +1,40 @@
+import { useState, useEffect } from 'react';
+
+import { useSelector } from 'react-redux';
+import dayjs, { Dayjs } from 'dayjs';
+import { Menu, MenuItem, ListItemText, Modal } from '@mui/material';
+import { useLocation, useNavigate } from 'react-router-dom';
+import queryString from 'query-string';
+
 import DashboardCalendar from '../../components/dashboard/DashboardCalendar';
 import AppointmentTimeLine from '../../components/dashboard/AppointmentTimeLine';
-import { useSelector } from 'react-redux';
 import { IAppState } from '../../Store/store';
 import appointmentQueries from '../../services/queries/appointments';
 import { UserTypeEnum } from '@cloud-equipment/models';
 import ReceptionistDashboardSub from '../../components/dashboard/ReceptionistDashboardSub';
-import { Menu, MenuItem, ListItemText, Modal } from '@mui/material';
 import * as Assets from '@cloud-equipment/assets';
-import { useState } from 'react';
 import { Button } from '@cloud-equipment/ui-components';
 import FacilityAdminDashboardSub from '../../components/dashboard/FacilityAdminDashboardSub';
 import AppointmentModal from '../../components/dashboard/AppointmentModal';
-import dayjs, { Dayjs } from 'dayjs';
+import { useEffectOnce } from '@cloud-equipment/hooks';
 
 const Dashboard = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryParams = queryString.parse(location.search);
+
   const userDetails = useSelector((state: IAppState) => state.auth.user);
+
+  useEffectOnce(() => {
+    if (queryParams?.openModal === 'appointment') {
+      openAppointmentModal();
+      setTimeout(() => {
+        navigate('/', { replace: true });
+      }, 300);
+    }
+    return () => {};
+  });
+
   //   menu
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 

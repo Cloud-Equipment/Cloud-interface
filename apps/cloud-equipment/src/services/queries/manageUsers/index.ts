@@ -44,8 +44,47 @@ const useInviteUser = (options = {}) => {
     ...options,
     mutationKey: [keys.create],
     mutationFn: async (data: any) => {
+      const { email } = data;
       return apiMethods.post({
-        url: `/user-manager/account/user/register`,
+        url: `/user-manager/account/user/invite?email=${email}`,
+        body: data,
+        auth: false,
+      });
+    },
+    onSuccess: () => {},
+    onError: (res) => {
+      showToast(res.message, 'error');
+    },
+  });
+  const { mutate, isSuccess, isError, data, isPending } = mutation;
+
+  return {
+    mutateFn: (bodyArg: any, successCb?: () => void) => {
+      return mutate(bodyArg, {
+        onSuccess: (res) => {
+          queryClient.invalidateQueries({ queryKey: [keys.read] });
+          showToast(res.msg || 'User Invited Successfully', 'success');
+          setTimeout(() => {
+            successCb?.();
+          }, 1500);
+        },
+      });
+    },
+    data,
+    isSuccess,
+    isError,
+    isLoading: isPending,
+  };
+};
+
+const useCreateUser = (options = {}) => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    ...options,
+    mutationKey: [keys.create],
+    mutationFn: async (data: any) => {
+      return apiMethods.post({
+        url: `/user-manager/account/user/auth/register`,
         body: data,
         auth: false,
       });
@@ -196,6 +235,7 @@ const queries = {
   useDisableUser,
   useEnableUser,
   useInviteUser,
+  useCreateUser,
 };
 
 export default queries;

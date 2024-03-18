@@ -16,6 +16,7 @@ import { Table, Button } from '@cloud-equipment/ui-components';
 import * as Assets from '@cloud-equipment/assets';
 import queries from '../../../services/queries/managePatients';
 import { IAppState } from '../../../Store/store';
+import { GenderMapping } from '../../../constants';
 
 // type PatientTableColumns = IPatient & { lastLogin: string; elipsis: 'elipsis' };
 type PatientTableColumns = any & { lastLogin: string; elipsis: 'elipsis' };
@@ -23,8 +24,8 @@ type PatientTableColumns = any & { lastLogin: string; elipsis: 'elipsis' };
 const columnHelper = createColumnHelper<PatientTableColumns>();
 
 const columns = [
-  columnHelper.accessor('patientUniqueID', {
-    header: 'User ID',
+  columnHelper.accessor('patientFacilityCode', {
+    header: 'Patient Code',
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor('patientName', {
@@ -41,7 +42,7 @@ const columns = [
   }),
   columnHelper.accessor('patientGenderId', {
     header: 'Gender',
-    cell: (info) => info.getValue(),
+    cell: (info) => GenderMapping[info.getValue()] || '-',
   }),
   columnHelper.accessor('lastLogin', {
     header: 'Last Login',
@@ -65,7 +66,7 @@ const ViewPatients = () => {
   const { user } = useSelector((state: IAppState) => state.auth);
 
   const { data } = useGetPatients(
-    `/patient/getpatientbyhospitalid/${user?.FACILITY_ID}`,
+    `/patient/getpatientbyhospitalid?facilityId=${user?.FACILITY_ID}`,
     { enabled: !!user?.FACILITY_ID }
   );
 
@@ -104,7 +105,7 @@ const ViewPatients = () => {
 
           <Table
             loading={false}
-            data={data || []}
+            data={data?.resultItem || []}
             columns={columns}
             tableHeading="Patients List"
           />
@@ -202,7 +203,7 @@ const AddActionsDropdown = () => {
     if (action === 'new patient') {
       navigate('/management/add-patient');
     } else if (action === 'new appointment') {
-      navigate('');
+      navigate('/?openModal=appointment');
     } else if (action === 'new report') {
       navigate('/reports');
     }
