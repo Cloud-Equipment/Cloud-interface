@@ -164,16 +164,15 @@ const CreateReportForm = () => {
 
   // medservices with query
   const { useGetMedservicesForFacility } = medserviceQueries;
-  const { data: proceduresList, mutateFn: mutateFn_GetMedservicesForFacility } =
-    useGetMedservicesForFacility(
-      (accountType === 0
-        ? selectedFacility?.id ?? ''
-        : userDetails?.FACILITY_ID ?? '') as string
-    );
-
-  useEffect(() => {
-    mutateFn_GetMedservicesForFacility({}, () => {});
-  }, [selectedFacility]);
+  const { data: proceduresList, isLoading } = useGetMedservicesForFacility({
+    facilityId: (accountType === 0
+      ? selectedFacility?.id ?? ''
+      : userDetails?.FACILITY_ID ?? '') as string,
+    download: false,
+    currentPage: 1,
+    startIndex: 0,
+    pageSize: 1000,
+  });
 
   const [selectedProcedures, setSelectedProcedures] = useState<number[]>([]);
 
@@ -223,9 +222,10 @@ const CreateReportForm = () => {
           patientId: patientId,
           medServiceId: x,
           quantity: 1,
-          amount: proceduresList?.find((y: IMedservice) => x === y.medServiceId)
-            ?.price,
-          subotal: proceduresList?.find(
+          amount: proceduresList?.resultItem?.find(
+            (y: IMedservice) => x === y.medServiceId
+          )?.price,
+          subotal: proceduresList?.resultItem?.find(
             (y: IMedservice) => x === y.medServiceId
           )?.price,
           remarks: data_?.remarks,
@@ -391,7 +391,7 @@ const CreateReportForm = () => {
 
     for (const procedureId of selectedProcedures) {
       // get the price of the procedureId
-      let price = proceduresList?.find(
+      let price = proceduresList?.resultItem?.find(
         (x: IMedservice) => x.medServiceId === procedureId
       )?.price;
       price = Number(price) || 0;
@@ -530,7 +530,7 @@ const CreateReportForm = () => {
           <MultiSelectWithCheckbox
             label="Procedures"
             options={
-              proceduresList?.map((x: any) => ({
+              proceduresList?.resultItem?.map((x: any) => ({
                 id: x.medServiceId.toString(),
                 name: x.medServiceName,
                 price: x.price.toString(),
@@ -563,11 +563,11 @@ const CreateReportForm = () => {
                 {selectedProcedures.map((rxt) => (
                   <MenuItem key={rxt} value={rxt}>
                     <ListItemText>
-                      {proceduresList?.find(
+                      {proceduresList?.resultItem?.find(
                         (x: IMedservice) => x.medServiceId === rxt
                       )?.medServiceName +
                         ' (₦' +
-                        proceduresList?.find(
+                        proceduresList?.resultItem?.find(
                           (x: IMedservice) => x.medServiceId === rxt
                         )?.price +
                         ')'}
@@ -583,7 +583,7 @@ const CreateReportForm = () => {
                 <input
                   className="ce-input"
                   value={
-                    (proceduresList?.find(
+                    (proceduresList?.resultItem?.find(
                       (x: IMedservice) =>
                         x.medServiceId === proceduresWithRebate[index]
                     )?.price ?? 0) *

@@ -93,16 +93,23 @@ const ReportsList = () => {
     (state: { auth: { user: IUser } }) => state.auth.user
   );
 
+  const accountType = useSelector(
+    (state: { account: { accountType: 0 | 1 } }) => state.account.accountType
+  );
+
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
 
   const { useGetReports } = queries;
-  const { isLoading, data } = useGetReports({
-    pageSize,
-    currentPage,
-    startIndex: 1,
-  });
+  const { isLoading, data } = useGetReports(
+    {
+      pageSize,
+      currentPage,
+      startIndex: 1,
+    },
+    accountType === 0 ? null : (userDetails?.FACILITY_ID as string)
+  );
 
   const [selectedProcedure, setSelectedProcedure] = useState<null | IProcedure>(
     null

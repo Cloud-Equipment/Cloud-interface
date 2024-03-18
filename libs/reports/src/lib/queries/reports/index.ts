@@ -57,6 +57,7 @@ const useCreateReport = (options = {}) => {
 
 const useGetReports = (
   _params: TableQueryParams,
+  facilityId: string | null,
   options: Omit<
     UseQueryOptions<any, unknown, any, string[]>,
     'initialData' | 'queryFn' | 'queryKey'
@@ -64,14 +65,19 @@ const useGetReports = (
   pageNumber: string = '1'
 ) => {
   const hash = [keys.read, `${pageNumber}`];
-  const url = `${environment.baseUrl}/service-manager/procedures/getAllPaged`;
+  let url = '';
+  if (!facilityId) {
+    url = `${environment.baseUrl}/service-manager/procedures/getAllPaged`;
+  } else {
+    url = '/service-manager/procedures/getallbyfacility';
+  }
 
   const { isLoading, data, isSuccess, error }: UseQueryResult<IProcedure[]> =
     useQuery({
       queryKey: hash,
       queryFn: () =>
         apiClient
-          .get({ url, params: _params })
+          .get({ url, params: { facilityId, ..._params } })
           .then((res: ApiResponse) => res.data.resultItem),
     });
 
@@ -174,7 +180,7 @@ const queries = {
   useGetReportById,
   useConfirmTest,
   useUploadResult,
-  useCreateReport
+  useCreateReport,
 };
 
 export default queries;

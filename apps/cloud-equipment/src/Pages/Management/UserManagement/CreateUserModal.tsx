@@ -62,6 +62,7 @@ export const CreateUserModal = ({ onClose }: any) => {
               />
 
               <PhoneInputField
+                containerClass="h-[76px]"
                 control={control}
                 label="Phone Number"
                 name="phoneNumber"
