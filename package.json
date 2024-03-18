@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "one": "npx nx serve cloud-equipment",
-    "two": "npx nx serve superadmin"
+    "one": "npx nx serve cloud-equipment --port=4000",
+    "two": "npx nx serve superadmin --port=4001"
   },
   "private": true,
   "dependencies": {
