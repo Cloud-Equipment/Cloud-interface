@@ -130,8 +130,9 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
           patientId: patientId,
           medServiceId: x,
           quantity: 1,
-          amount: proceduresList?.resultItem?.find((y: IMedservice) => x === y.medServiceId)
-            ?.price,
+          amount: proceduresList?.resultItem?.find(
+            (y: IMedservice) => x === y.medServiceId
+          )?.price,
           subotal: proceduresList?.resultItem?.find(
             (y: IMedservice) => x === y.medServiceId
           )?.price,
@@ -180,9 +181,9 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
           doctorPhone: refererPhone,
         };
         mutateFn_CreateReferer(data, (res) => {
-          if (res.doctorId) {
-            setExistingRefererId(res.doctorId);
-            createAppointment(existingPatientId, res.doctorId);
+          if (res?.data?.doctorId) {
+            setExistingRefererId(res?.data?.doctorId);
+            createAppointment(existingPatientId, res?.data?.doctorId);
           }
         });
       }
@@ -240,8 +241,8 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
       };
 
       mutateFn_CreateReferer(data, (res) => {
-        if (res.doctorId) {
-          setExistingRefererId(res.doctorId);
+        if (res?.data?.doctorId) {
+          setExistingRefererId(res?.data?.doctorId);
 
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const data: any = {
@@ -261,7 +262,7 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
           mutateFn_CreatePatient(data, (res2) => {
             if (res2.data?.patientUniqueID) {
               setExistingPatientId(res2.data.patientUniqueID);
-              createAppointment(res2.data.patientUniqueID, res.doctorId);
+              createAppointment(res2.data.patientUniqueID, res?.data?.doctorId);
             }
           });
         }
@@ -339,7 +340,7 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
       // and change the price
       const rebateInfo = proceduresWithRebate?.find((x) => x === procedureId);
       if (rebateInfo) {
-        price = price - facilityRebate * price;
+        price = price - (facilityRebate / 100) * price;
       }
 
       // check if there's procedure based discount
@@ -594,11 +595,12 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
                       <input
                         className="ce-input"
                         value={
-                          (proceduresList?.resultItem?.find(
+                          ((proceduresList?.resultItem?.find(
                             (x: IMedservice) =>
                               x.medServiceId === proceduresWithRebate[index]
                           )?.price ?? 0) *
-                          Number(userDetails!.FACILITY_REBATE_PERCENTAGE)
+                            Number(userDetails!.FACILITY_REBATE_PERCENTAGE)) /
+                          100
                         }
                         readOnly
                       />
