@@ -18,6 +18,7 @@ const SelectDropdown: React.FC<any> = <T extends string>({
   options = [],
   field,
   placeholder,
+  disabled,
 }: SelectProps<T>) => {
   return (
     <div
@@ -42,6 +43,7 @@ const SelectDropdown: React.FC<any> = <T extends string>({
           className
         )}
         inputProps={{ 'aria-label': 'Without label' }}
+        disabled={disabled}
         {...field}
       >
         <MenuItem disabled value={0}>

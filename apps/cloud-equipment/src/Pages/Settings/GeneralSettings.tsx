@@ -16,7 +16,7 @@ const GeneralSettings = () => {
   const { user } = useSelector((state: IAppState) => state.auth);
 
   const { useGetSettings, useUpdateUserSettings } = queries;
-  const { isLoading, data } = useGetSettings(
+  const { data } = useGetSettings(
     '/user-manager/account/user/getuserbyid',
     user ? `${user.USER_ID}` : '',
     { enabled: !!user?.USER_ID }
@@ -58,6 +58,7 @@ const GeneralSettings = () => {
     });
   }, [data]);
 
+  // TODO: Change from any to right type
   const onSubmit = (data: any) => {
     delete data.email;
     data.roles = [''];
@@ -75,14 +76,6 @@ const GeneralSettings = () => {
           src={Assets.Images.Temp.DummyUserIcon3}
           alt="Profile"
           className="block mt-6 md:mt-10 w-[100px] h-[100px] rounded-full md:w-[140px] md:h-[140px]"
-        />
-
-        <PhoneInputField
-          control={control}
-          label="Patient Mobile Number"
-          name="patientNumber"
-          containerClass="h-[76px]"
-          // readonly={}
         />
         <div className="mt-4 2xl:mt-6 grid gap-5 2xl:gap-7 md:grid-cols-2">
           <Input
@@ -126,7 +119,7 @@ const GeneralSettings = () => {
         <div className="my-5 2xl:my-8 grid grid-cols-[auto_auto] justify-between gap-x-3 md:gap-x-2 gap-y-5 xl:gap-y-5 md:w-fit 2xl:w-[55%]">
           <p className="font-medium">Admin Position</p>
           <p className="font-semibold text-sm text-center text-greyText2 bg-greyBg rounded-xl px-3 py-2">
-            {'userDetails?.roles[0]'}
+            {user?.USER_ROLE?.[0] || '-'}
           </p>
           <p className="font-medium">Password</p>
           <button

@@ -53,11 +53,16 @@ const ViewPatient = () => {
   const params = useParams();
   const userDetails = useSelector((state: IAppState) => state.auth.user);
 
-  const { useGetPatientById } = queries;
+  const { useGetPatientById, useGetPatientReport } = queries;
   const { data, isLoading } = useGetPatientById(
-    `/patient/getpatientbyuniqueid?patientUniqueId=${params.id}?facilityId=${userDetails?.FACILITY_ID}`,
+    `/patient/getpatientbyuniqueid?patientUniqueId=${params.id}&facilityId=${userDetails?.FACILITY_ID}`,
     { enabled: !!params.id }
   );
+  const { data: patientReport, isLoading: patientReportLoading } =
+    useGetPatientReport(
+      `/patient/getpatientreport?patientId=${params.id}&facilityId=${userDetails?.FACILITY_ID}`,
+      { enabled: !!params.id }
+    );
 
   if (isLoading)
     return (
@@ -90,7 +95,7 @@ const ViewPatient = () => {
             />
 
             <p className="text-greyText2 mt-3">
-              User ID: {data?.patientUniqueID || '-'}
+              User ID: {data?.patientFacilityCode || '-'}
             </p>
             <p className="font-semibold text-lg">{data?.patientName || '-'}</p>
 
@@ -118,7 +123,7 @@ const ViewPatient = () => {
 
             <TitleSubtitle
               title="Patient ID"
-              subtitle={`${data?.patientUniqueID || '-'}`}
+              subtitle={`${data?.patientFacilityCode || '-'}`}
             />
 
             <TitleSubtitle
@@ -192,8 +197,8 @@ const ViewPatient = () => {
           </div>
 
           <Table
-            loading={false}
-            data={[]}
+            loading={patientReportLoading}
+            data={patientReport?.resultItem || []}
             columns={columns}
             tableHeading="All Report"
           />

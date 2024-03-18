@@ -75,6 +75,7 @@ const useCreatePatient = (options = {}) => {
     isLoading: isPending,
   };
 };
+
 const useEditPatient = (options = {}) => {
   const queryClient = useQueryClient();
 
@@ -137,6 +138,30 @@ const useGetPatientById = (
   return { isLoading, data, isSuccess, error };
 };
 
+const useGetPatientReport = (
+  url: string,
+  options: Omit<
+    UseQueryOptions<any, unknown, any, string[]>,
+    'initialData' | 'queryFn' | 'queryKey'
+  > = {}
+) => {
+  const hash = [keys.customkey('report', 'read')];
+  const {
+    isLoading,
+    data,
+    isSuccess,
+    error,
+  }: UseQueryResult<PaginationData<IPatient>, unknown> = useQuery({
+    queryKey: hash,
+    queryFn: () =>
+      apiMethods
+        .get({ url, auth: true })
+        .then((res: ApiResponse<PaginationData<IPatient>>) => res.data),
+    ...options,
+  });
+  return { isLoading, data, isSuccess, error };
+};
+
 const useSearchPatientByName = (
   patientName: string,
   facilityId: string,
@@ -174,6 +199,7 @@ const queries = {
   useGetPatientById,
   useEditPatient,
   useSearchPatientByName,
+  useGetPatientReport,
 };
 
 export default queries;

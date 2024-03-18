@@ -7,5 +7,7 @@ export const getQueryKeys = (namespace: string) => ({
   put: `${namespace}/put`,
   delete: `${namespace}/delete`,
   getAll: `${namespace}/getAll`, // for dropdowns that should have all (non-pagiated)
-  searchCustom: `${namespace}/searchCustom`, // for dropdowns that should have all (non-pagiated)
+  searchCustom: `${namespace}/searchCustom`, // for dropdowns that should have all (non-pagiated),
+  customkey: (customKey: string, action: string = 'readOne') =>
+    `${namespace}-${customKey}/${action}`,
 });

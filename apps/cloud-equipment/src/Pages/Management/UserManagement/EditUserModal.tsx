@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
@@ -14,23 +14,49 @@ import {
 } from '@cloud-equipment/ui-components';
 import * as Assets from '@cloud-equipment/assets';
 
-export const CreateUserModal = ({ onClose }: any) => {
+export const EditUserModal = ({ onClose, data }: any) => {
   const [activeModal, setActiveModal] = useState<
-    'createUser' | 'confirmCreateUser'
-  >('createUser');
+    'editModal' | 'confirmEditUser'
+  >('editModal');
 
-  const { register, handleSubmit, control, getValues } = useForm();
+  const { register, handleSubmit, control, getValues, reset } = useForm<any>({
+    defaultValues: useMemo(() => {
+      return {
+        id: data?.id,
+        firstName: data?.firstName,
+        lastName: data?.lastName,
+        email: data?.email,
+        phoneNumber: data?.phoneNumber,
+        roles: data?.roles?.[0],
+        dateOfHire: data?.dateOfHire,
+      };
+    }, [data]),
+  });
+
+  useEffect(() => {
+    reset({
+      id: data?.id,
+      firstName: data?.firstName,
+      lastName: data?.lastName,
+      twoFactorEnabled: data?.twoFactorEnabled || false,
+      phoneNumber: data?.phoneNumber,
+      email: data?.email,
+      roles: data?.roles?.[0],
+      dateOfHire: data?.dateOfHire,
+    });
+  }, [data]);
 
   const userDetails = useSelector((state: IAppState) => state.auth.user);
 
-  const { useCreateUser } = queries;
-  const { mutateFn, isLoading } = useCreateUser();
+  const { useUpdateUser } = queries;
+  const { mutateFn, isLoading } = useUpdateUser();
 
-  const createUser = () => {
+  const EditUser = () => {
     const data = getValues();
     mutateFn(
       {
         ...data,
+        id: data?.id,
         facilityId: userDetails?.FACILITY_ID,
         roles: [data.roles],
       },
@@ -39,12 +65,12 @@ export const CreateUserModal = ({ onClose }: any) => {
   };
 
   const onSubmit = () => {
-    setActiveModal('confirmCreateUser');
+    setActiveModal('confirmEditUser');
   };
 
   return (
     <>
-      {activeModal === 'createUser' ? (
+      {activeModal === 'editModal' ? (
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="bg-white p-10 centered-modal-md"
@@ -83,7 +109,7 @@ export const CreateUserModal = ({ onClose }: any) => {
                 name="dateOfHire"
                 control={control}
                 // defaultValue={0}
-                rules={{ required: 'Date of Hire is required' }}
+                // rules={{ required: 'Date of Hire is required' }}
                 render={({ field: { onChange, value, ref } }) => (
                   <DatePicker
                     label="Registration Date"
@@ -92,6 +118,7 @@ export const CreateUserModal = ({ onClose }: any) => {
                     onAccept={onChange}
                     value={value}
                     inputRef={ref}
+                    disabled
                   />
                 )}
               />
@@ -118,6 +145,7 @@ export const CreateUserModal = ({ onClose }: any) => {
                     label="Role"
                     placeholder="Select Role"
                     containerClass="flex-1"
+                    disabled={true}
                     {...{ field }}
                   />
                 )}
@@ -128,7 +156,7 @@ export const CreateUserModal = ({ onClose }: any) => {
               <Button
                 loading={isLoading}
                 className="mt-4"
-                label="Create Team Member"
+                label="Edit Team Member"
               />
             </div>
           </>
@@ -142,7 +170,7 @@ export const CreateUserModal = ({ onClose }: any) => {
               src={Assets.Icons.EnableEMRIcon}
             />
             <p className="text-center">
-              Are you sure you want to Create a new user
+              Are you sure you want to Edit the user
             </p>
 
             <div className="flex gap-3 justify-center">
@@ -156,7 +184,7 @@ export const CreateUserModal = ({ onClose }: any) => {
                 variant="neutral"
                 label="Yes"
                 className="border-primary-150 hover:border-primary-150 text-primary-150 hover:text-primary-150"
-                onClick={createUser}
+                onClick={EditUser}
               />
             </div>
           </div>

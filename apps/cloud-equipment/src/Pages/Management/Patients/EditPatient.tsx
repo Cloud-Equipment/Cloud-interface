@@ -64,7 +64,7 @@ const NewPatient = () => {
   const { useEditPatient, useGetPatientById } = queries;
 
   const { data, isLoading: getPatientLoading } = useGetPatientById(
-    `/patient/getpatientbyuniqueid/${params?.id}`
+    `/patient/getpatientbyuniqueid?patientUniqueId=${params.id}&facilityId=${user?.FACILITY_ID}`
   );
 
   const { mutateFn, isLoading } = useEditPatient();

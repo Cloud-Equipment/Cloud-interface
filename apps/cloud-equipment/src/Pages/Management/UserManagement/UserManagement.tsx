@@ -14,6 +14,7 @@ import { createColumnHelper } from '@tanstack/react-table';
 
 import { InviteUserModal } from './InviteUserModal';
 import { CreateUserModal } from './CreateUserModal';
+import { EditUserModal } from './EditUserModal';
 import { Enable2FAModal } from './Enforce2FaModal';
 import * as Assets from '@cloud-equipment/assets';
 import { Button, Table, Loader } from '@cloud-equipment/ui-components';
@@ -21,7 +22,12 @@ import queries from '../../../services/queries/manageUsers';
 import { IAppState } from '../../../Store/store';
 import { formatDate } from '@cloud-equipment/utils';
 
-type IModalViews = null | 'inviteUser' | 'enable2Fa' | 'createUser';
+type IModalViews =
+  | null
+  | 'inviteUser'
+  | 'enable2Fa'
+  | 'createUser'
+  | 'editUser';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -146,7 +152,7 @@ const UserManagement = () => {
           </div>
 
           <Table
-            loading={false}
+            loading={isLoading}
             data={userData?.resultItem || []}
             columns={columns}
             tableHeading={`Team members - 5`}
@@ -186,6 +192,17 @@ const ManageStaffDropDown = ({
     useUpdateUser();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [modalViews, setModalViews] = useState<{ currentView: IModalViews }>({
+    currentView: null,
+  });
+
+  const openModal = (view: IModalViews) => {
+    setModalViews({ currentView: view });
+  };
+
+  const closeModal = () => {
+    setModalViews({ currentView: null });
+  };
 
   const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     cb(event);
@@ -208,6 +225,11 @@ const ManageStaffDropDown = ({
   };
   return (
     <div>
+      <Modal open={modalViews.currentView === 'editUser'} onClose={closeModal}>
+        <div>
+          <EditUserModal data={{ ...rest, id }} onClose={closeModal} />
+        </div>
+      </Modal>
       <button
         onClick={(e) => {
           handleActionClick(e);
@@ -257,6 +279,12 @@ const ManageStaffDropDown = ({
           </ListItemIcon>
           <ListItemText>Enable 2FA</ListItemText>
         </MenuItem>
+        <MenuItem onClick={() => openModal('editUser')}>
+          <ListItemIcon>
+            <img src={Assets.Icons.WhiteCheckmark} alt="" />
+          </ListItemIcon>
+          <ListItemText>Edit User</ListItemText>
+        </MenuItem>
       </Menu>
     </div>
   );
@@ -297,6 +325,7 @@ const SelectActionDropDown = () => {
           <CreateUserModal onClose={closeModal} />
         </div>
       </Modal>
+
       <Modal
         open={modalViews.currentView === 'inviteUser'}
         onClose={closeModal}
