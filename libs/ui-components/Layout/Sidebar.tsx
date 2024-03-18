@@ -25,6 +25,9 @@ const Sidebar = ({
   const sidebarOpen = useSelector(
     (state: IAppState) => state.shared.sidebarOpen
   );
+  const accountType = useSelector(
+    (state: { account: { accountType: 0 | 1 } }) => state.account.accountType
+  );
 
   const accountType = useSelector(
     (state: { account: { accountType: 0 | 1 } }) => state.account.accountType
