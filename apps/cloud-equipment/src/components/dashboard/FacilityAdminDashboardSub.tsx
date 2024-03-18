@@ -39,9 +39,9 @@ const FacilityAdminDashboardSub = () => {
         />
         <DashboardCard
           icon={Assets.Icons.Dashboard.Procedure}
-          text="Total staff"
-          figure={data?.totalStaffToday ?? 0}
-          metric={Number(data?.totalStaffMetric) || 0}
+          text="Earnings Today"
+          figure={data?.earningToday ?? 0}
+          metric={Number(data?.totalEarningMetric) || 0}
         />
       </div>
 

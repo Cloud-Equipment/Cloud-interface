@@ -20,15 +20,15 @@ const ReceptionistDashboardSub = () => {
         <h2 className="font-bold text-4xl">{data?.visitsToday}</h2>
         <div className="grid gap-4 mt-10 sm:flex">
           <div className="bg-[#FFFFFF8C] rounded-[18px] p-3 sm:min-w-[200px]">
-            <p>New Patients</p>
+            <p>New Patients Today</p>
             <h3 className="font-medium mt-2 text-3xl">
               {Number(data?.newPatientToday) || 0}
             </h3>
           </div>
           <div className="bg-[#FFFFFF8C] rounded-[18px] p-3 sm:min-w-[200px]">
-            <p>Old Patients</p>
+            <p>Visits Today</p>
             <h3 className="font-medium mt-2 text-3xl">
-              {Number(data?.oldPatientToday) || 0}
+              {Number(data?.visitsToday) || 0}
             </h3>
           </div>
         </div>
