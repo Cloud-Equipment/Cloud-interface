@@ -1,4 +1,4 @@
-import { GENDER, MARITAL_STATUS, PAYMENT_TYPE } from './Types';
+import { GENDER, MARITAL_STATUS, PAYMENT_TYPE } from './types';
 
 export const Gender = [
   {
@@ -14,11 +14,6 @@ export const Gender = [
     categoryName: 'Female',
   },
 ];
-
-export const GenderMapping: { [key: string]: 'Male' | 'Female' } = {
-  1: 'Male',
-  2: 'Female',
-};
 
 export const MaritalStatus = [
   {

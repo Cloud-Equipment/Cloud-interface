@@ -7,14 +7,14 @@ import {
   MenuItem,
   Radio,
   RadioGroup,
-  Select,
   SelectChangeEvent,
+  Select as MatSelect,
 } from '@mui/material';
 import * as Assets from '@cloud-equipment/assets';
 import {
   // DatePicker,
   Input,
-  // Select,
+  Select,
   // TimePicker,
   // TextArea,
   Button,
@@ -35,8 +35,7 @@ import { ReportsPriceBreakdown } from './ReportsPriceBreakdown';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
-
-const today = dayjs();
+import { Gender, MaritalStatus } from '../../constants';
 
 const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
   const userDetails = useSelector((state: IAppState) => state.auth.user);
@@ -48,8 +47,10 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
   );
 
   const { useSearchPatientByName, useCreatePatient } = patientQueries;
-  const { data: patientsFound, mutateFn: mutateFn_fetchPatientByName } =
-    useSearchPatientByName(patientName, userDetails?.FACILITY_ID as string);
+  const { data: patientsFound } = useSearchPatientByName(
+    patientName,
+    userDetails?.FACILITY_ID as string
+  );
 
   const { mutateFn: mutateFn_CreatePatient, isLoading: isCreatingPatient } =
     useCreatePatient();
@@ -74,16 +75,6 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
 
     setExistingPatientId(null);
   };
-
-  useEffect(() => {
-    if (patientName) {
-      mutateFn_fetchPatientByName({}, (res) => {
-        if (!res?.length) {
-          setExistingPatientId(null);
-        }
-      });
-    }
-  }, [patientName]);
 
   //   doctors , search doctors and create doctors related data and functions
   const [refererName, setRefererName] = useState('');
@@ -110,9 +101,13 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
   const { mutateFn: mutateFn_CreateAppointment } = useCreateAppointment();
 
   const { useGetMedservicesForFacility } = medserviceQueries;
-  const { data: proceduresList, isLoading } = useGetMedservicesForFacility(
-    '/service-manager/medServices/getall'
-  );
+  const { data: proceduresList, isLoading } = useGetMedservicesForFacility({
+    facilityId: userDetails?.FACILITY_ID as string,
+    download: false,
+    currentPage: 1,
+    startIndex: 0,
+    pageSize: 1000,
+  });
 
   const [createPromptIsOpen, setCreatePromptIsOpen] = useState(false);
 
@@ -135,9 +130,9 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
           patientId: patientId,
           medServiceId: x,
           quantity: 1,
-          amount: proceduresList?.find((y: IMedservice) => x === y.medServiceId)
+          amount: proceduresList?.resultItem?.find((y: IMedservice) => x === y.medServiceId)
             ?.price,
-          subotal: proceduresList?.find(
+          subotal: proceduresList?.resultItem?.find(
             (y: IMedservice) => x === y.medServiceId
           )?.price,
           remarks: data_?.remarks,
@@ -162,7 +157,6 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
         }
         proceduresToSubmit.push(item_);
       });
-      console.log({ proceduresToSubmit });
       mutateFn_CreateAppointment(proceduresToSubmit, () => {
         toast.success('Appointment Created Successfully');
         triggerCloseAfterSuccess();
@@ -227,12 +221,51 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
         }
       });
     } else {
-      // if both  do not exist and we need to create both (referer and patient)
-      // createAppointment(
-      //   createdPatient.data.patientUniqueID,
-      //   createdReferer.doctorId
-      // );
-      console.log('coming soon');
+      const {
+        refererEmail,
+        refererHospital,
+        refererPhone,
+        patientAge,
+        patientEmail,
+        patientGenderId,
+        patientNumber,
+        maritalStatusId,
+      } = getValues();
+
+      const data = {
+        doctorEmail: refererEmail,
+        doctorHospital: refererHospital,
+        doctorName: refererName,
+        doctorPhone: refererPhone,
+      };
+
+      mutateFn_CreateReferer(data, (res) => {
+        if (res.doctorId) {
+          setExistingRefererId(res.doctorId);
+
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const data: any = {
+            patientName: `${patientName}`,
+            patientAge,
+            patientEmail,
+            patientPhone: patientNumber,
+            patientGenderId,
+            maritalStatusId,
+            takingMedication: JSON.parse(
+              (getValues().takingMeds as unknown as string) ?? 'false'
+            ),
+            patientFacilityCode: userDetails?.FACILITY_ID as string,
+            facilityId: userDetails?.FACILITY_ID as string,
+            isActive: false,
+          };
+          mutateFn_CreatePatient(data, (res2) => {
+            if (res2.data?.patientUniqueID) {
+              setExistingPatientId(res2.data.patientUniqueID);
+              createAppointment(res2.data.patientUniqueID, res.doctorId);
+            }
+          });
+        }
+      });
     }
   };
 
@@ -272,6 +305,10 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
     );
   };
 
+  useEffect(() => {
+    console.log({ selectedProcedures });
+  }, [selectedProcedures]);
+
   //  Discounts and total
   // const { useGetAllDiscountsForFacility } = discountQueries;
   // const { mutateFn: mutateFn_GetDiscountsForFacility, data: allDiscounts } =
@@ -293,7 +330,7 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
 
     for (const procedureId of selectedProcedures) {
       // get the price of the procedureId
-      let price = proceduresList?.find(
+      let price = proceduresList?.resultItem?.find(
         (x: IMedservice) => x.medServiceId === procedureId
       )?.price;
       price = Number(price) || 0;
@@ -327,6 +364,17 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
     setTotalDiscount(_totalDiscount);
   }, [selectedProcedures, proceduresWithRebate]);
 
+  // remove selected rebate when procedure is unselected
+  useEffect(() => {
+    for (const rebateId of proceduresWithRebate) {
+      if (!selectedProcedures.find((id) => id === rebateId)) {
+        setProceduresWithRebate(
+          proceduresWithRebate.filter((r) => r !== rebateId)
+        );
+      }
+    }
+  }, [selectedProcedures]);
+
   return (
     <>
       <div className="bg-white px-6 py-10 rounded-tl-[20px] rounded-bl-[20px] right-modal overflow-y-auto">
@@ -359,26 +407,6 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
                 optionLabelKey="patientName"
               />
 
-              <>
-                {/* <div className="form-input-label-holder">
-                <label>Reason for Visiting</label>
-                <Controller
-                  name="visitReasonId"
-                  control={control}
-                  render={({ field }) => (
-                    <Select {...field} required>
-                      <MenuItem value={0} disabled>
-                        Select Reason for Visiting
-                      </MenuItem>
-                      <MenuItem value={2}>Run Diagnostics</MenuItem>
-                      <MenuItem value={3}>Result Collection</MenuItem>
-                      <MenuItem value={4}>Others</MenuItem>
-                    </Select>
-                  )}
-                />
-              </div> */}
-              </>
-
               <PhoneInputField
                 control={control}
                 label="Patient Mobile Number"
@@ -393,24 +421,20 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
                 {...register('patientEmail')}
               />
 
-              <div className="form-input-label-holder">
-                <label>Gender</label>
-                <Controller
-                  name="patientGenderId"
-                  control={control}
-                  render={({ field }) => (
-                    <Select
-                      readOnly={!!existingPatientId}
-                      placeholder="Select Gender"
-                      {...field}
-                    >
-                      <MenuItem value={''}>Select Gender</MenuItem>
-                      <MenuItem value={1}>Male</MenuItem>
-                      <MenuItem value={2}>Female</MenuItem>
-                    </Select>
-                  )}
-                />
-              </div>
+              <Controller
+                name="patientGenderId"
+                control={control}
+                defaultValue={0}
+                render={({ field }) => (
+                  <Select
+                    options={Gender}
+                    label="Gender"
+                    placeholder="Select Gender"
+                    containerClass="flex-1"
+                    {...{ field }}
+                  />
+                )}
+              />
 
               <Input
                 label="Age of the Patient"
@@ -422,28 +446,24 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
                 })}
               />
 
-              <div className="form-input-label-holder">
-                <label>Marital Status</label>
-                <Controller
-                  name="maritalStatusId"
-                  control={control}
-                  defaultValue={0}
-                  render={({ field }) => (
-                    <Select readOnly={!!existingPatientId} {...field}>
-                      <MenuItem value={0} disabled>
-                        Select Marital Status
-                      </MenuItem>
-                      <MenuItem value={1}>Single</MenuItem>
-                      <MenuItem value={2}>Married</MenuItem>
-                    </Select>
-                  )}
-                />
-              </div>
+              <Controller
+                name="maritalStatusId"
+                control={control}
+                defaultValue={0}
+                render={({ field }) => (
+                  <Select
+                    options={MaritalStatus}
+                    label="Marital Status"
+                    placeholder="Select Marital Status"
+                    {...{ field }}
+                  />
+                )}
+              />
 
               <MultiSelectWithCheckbox
                 label="Procedures"
                 options={
-                  proceduresList?.map((x) => ({
+                  proceduresList?.resultItem?.map((x) => ({
                     id: x.medServiceId.toString(),
                     name: x.medServiceName,
                     price: x.price.toString(),
@@ -454,27 +474,33 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
                 }}
               />
 
-              <div className="form-input-label-holder">
-                <label>Patient Blood Group</label>
-                <Controller
-                  name="patientBloodGroup"
-                  control={control}
-                  defaultValue={0}
-                  render={({ field }) => (
-                    <Select
-                      readOnly={!!existingPatientId}
-                      placeholder="Select Blood Group"
-                      {...field}
-                    >
-                      <MenuItem value={0} disabled>
-                        Select Blood Group
-                      </MenuItem>
-                      <MenuItem value={1}>A</MenuItem>
-                      <MenuItem value={2}>AB</MenuItem>
-                    </Select>
-                  )}
-                />
-              </div>
+              <Controller
+                name="patientBloodGroup"
+                control={control}
+                defaultValue={0}
+                render={({ field }) => (
+                  <Select
+                    options={[
+                      {
+                        value: 'A',
+                        label: 'A',
+                        categoryId: 'A',
+                        categoryName: 'A',
+                      },
+                      {
+                        value: 'AB',
+                        label: 'AB',
+                        categoryId: 'AB',
+                        categoryName: 'AB',
+                      },
+                    ]}
+                    label="Patient Blood Group"
+                    placeholder="Select Blood Group"
+                    containerClass="flex-1"
+                    {...{ field }}
+                  />
+                )}
+              />
 
               <Input
                 label="Blood Pressure"
@@ -515,21 +541,18 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
                 />
               </div>
 
-              <div className="md:col-span-2">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DateTimePicker
-                    label="Appointment Date"
-                    value={appointmentDate}
-                    minDateTime={dayjs()}
-                    onChange={(newValue) => {
-                      setAppointmentDate(newValue);
-                    }}
-                  />{' '}
-                </LocalizationProvider>
-              </div>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                  label="Appointment Date"
+                  value={appointmentDate}
+                  minDateTime={dayjs()}
+                  onChange={(newValue) => {
+                    setAppointmentDate(newValue);
+                  }}
+                />{' '}
+              </LocalizationProvider>
 
               {/* Rebates Section */}
-
               <div className="md:col-span-2 border-b-[2px] pb-1 mt-6 md:mt-10 border-b-solid border-borderLine">
                 <h4 className="font-bold text-xl">Rebate</h4>
                 <p className="text-sm text-greyText2 mt-1">
@@ -544,25 +567,25 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
                 >
                   <div className="form-input-label-holder">
                     <label>Procedure for Rebate</label>
-                    <Select
+                    <MatSelect
                       value={proceduresWithRebate[index]}
                       onChange={handleRebateSelectionFromDropdown}
                     >
                       {selectedProcedures.map((rxt) => (
                         <MenuItem key={rxt} value={rxt}>
                           <ListItemText>
-                            {proceduresList?.find(
+                            {proceduresList?.resultItem?.find(
                               (x: IMedservice) => x.medServiceId === rxt
                             )?.medServiceName +
                               ' (₦' +
-                              proceduresList?.find(
+                              proceduresList?.resultItem?.find(
                                 (x: IMedservice) => x.medServiceId === rxt
                               )?.price +
                               ')'}
                           </ListItemText>
                         </MenuItem>
                       ))}
-                    </Select>
+                    </MatSelect>
                   </div>
 
                   <div className="flex gap-3 items-center">
@@ -571,7 +594,7 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
                       <input
                         className="ce-input"
                         value={
-                          (proceduresList?.find(
+                          (proceduresList?.resultItem?.find(
                             (x: IMedservice) =>
                               x.medServiceId === proceduresWithRebate[index]
                           )?.price ?? 0) *
@@ -582,6 +605,7 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
                     </div>
 
                     <button
+                      type="button"
                       onClick={() => {
                         deleteRebateForProcedure(procedureId);
                       }}

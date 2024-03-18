@@ -25,7 +25,7 @@ const useCreateAppointment = (options = {}) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [keys.read] });
-      queryClient.invalidateQueries({ queryKey: [`${keys.read}calendar`] });
+      queryClient.invalidateQueries({ queryKey: [`${keys.read}_upcoming`] });
     },
   });
   const { mutate, isSuccess, isError, data, isPending } = mutation;

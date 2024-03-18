@@ -12,17 +12,59 @@ import React, { useEffect, useState } from 'react';
 import * as Assets from '@cloud-equipment/assets';
 import moment from 'moment';
 import numeral from 'numeral';
-import { NavTab } from '@cloud-equipment/ui-components';
+import medserviceQueries from '../../../services/queries/medservices';
+import { NavTab, Table } from '@cloud-equipment/ui-components';
 import NewProcedureModal from './modals/NewProcedureModal';
 import DeleteProdecureModal from './modals/DeleteProdecureModal';
 import ApprovePriceModal from './modals/ApprovePriceModal';
+import { createColumnHelper } from '@tanstack/react-table';
+import { useSelector } from 'react-redux';
+import { IAppState } from '../../../Store/store';
+
+type TableColumns = { [key: string]: string };
+
+const columnHelper = createColumnHelper<TableColumns>();
+
+const columns = [
+  columnHelper.accessor('dateCreated', {
+    header: 'Date & Time Added',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('medServiceName', {
+    header: 'Procedure Name',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('medServiceCategoryId', {
+    header: 'Procedure Category',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('price', {
+    header: 'Price',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('status', {
+    header: 'Status',
+    cell: (info) => info.getValue(),
+  }),
+];
 
 const PriceManagement = () => {
+  const userDetails = useSelector((state: IAppState) => state.auth.user);
+
   // table
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
   const [pricesList, setPricesList] = useState<IMedservice[] | null>(null);
+
+  const { useGetMedservicesForFacility } = medserviceQueries;
+  const { data: paginatedResponse, isLoading } = useGetMedservicesForFacility({
+    facilityId: userDetails?.FACILITY_ID as string,
+    download: false,
+    currentPage,
+    startIndex: 0,
+    pageSize,
+  });
 
   //   menu
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -169,77 +211,12 @@ const PriceManagement = () => {
             wrapperClass="mt-6"
           />
 
-          <div className="mt-10 ce-table-holder">
-            <h5 className="table-heading">Team members- 5</h5>
-
-            <table>
-              <thead>
-                <tr>
-                  <th>Date & Time Added</th>
-                  <th>Procedure Name</th>
-                  <th>Procedure Category</th>
-                  <th>Price</th>
-                  <th>Status</th>
-                  {/* <th>Action</th> */}
-                </tr>
-              </thead>
-
-              <tbody>
-                {pricesList?.map((item, index) => (
-                  <tr key={index}>
-                    <td>
-                      {moment(item.dateCreated).format('DD-MM-YYYY . HH:mm:ss')}
-                    </td>
-                    <td>{item.medServiceName}</td>
-                    <td>{item.medServiceCategoryId}</td>
-                    <td>₦{numeral(item.price).format('0,0.00')}</td>
-                    <td>{'Enabled'}</td>
-                    {/* <td>
-                      <div>
-                        <button
-                          onClick={(e) => handleActionClick(e, item)}
-                          className="w-6"
-                        >
-                          <img src={Assets.Icons.Menudots} alt="" />
-                        </button>
-                        <Menu
-                          anchorEl={anchorEl}
-                          open={Boolean(anchorEl)}
-                          onClose={handleMenuClose}
-                          MenuListProps={{
-                            'aria-labelledby': 'basic-button',
-                          }}
-                        >
-                           <MenuItem onClick={handleEditClick}>
-                            <ListItemIcon>
-                              <img src={Assets.Icons.EditPrice} alt="" />
-                            </ListItemIcon>
-                            <ListItemText>Edit Price</ListItemText>
-                          </MenuItem> 
-                          <MenuItem onClick={handleDeleteClick}>
-                            <ListItemIcon>
-                              <img src={Assets.Icons.Delete} alt="" />
-                            </ListItemIcon>
-                            <ListItemText>Delete Procedure</ListItemText>
-                          </MenuItem>
-                        </Menu>
-                      </div>
-                    </td> */}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            <TablePagination
-              component="div"
-              count={total}
-              page={currentPage}
-              labelRowsPerPage="Items per page"
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              rowsPerPage={pageSize}
-            />
-          </div>
+          <Table
+            loading={false}
+            data={paginatedResponse?.resultItem ?? []}
+            columns={columns}
+            tableHeading="All Report"
+          />
         </div>
       </section>
     </>

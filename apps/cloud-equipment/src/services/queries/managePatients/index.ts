@@ -140,41 +140,32 @@ const useGetPatientById = (
 const useSearchPatientByName = (
   patientName: string,
   facilityId: string,
-  options = {}
+  options: Omit<
+    UseQueryOptions<any, unknown, any, string[]>,
+    'initialData' | 'queryFn' | 'queryKey'
+  > = {}
 ) => {
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation({
-    ...options,
-    mutationKey: [keys.searchCustom],
-    mutationFn: async () => {
-      const response = await apiClient.get({
-        url: `${environment.baseUrl}/patient/getpatientbyname`,
-        auth: true,
-        params: { patientName, facilityId },
-      });
-
-      return response.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [keys.searchCustom] });
-    },
-  });
-  const { mutate, isSuccess, isError, data, isPending } = mutation;
-
-  return {
-    mutateFn: (bodyArg: any, cb: (res: any) => void) => {
-      return mutate(bodyArg, {
-        onSuccess: (res) => {
-          cb?.(res);
-        },
-      });
-    },
-    data,
-    isSuccess,
-    isError,
-    isLoading: isPending,
-  };
+  const hash = [`${keys.searchCustom}`, patientName];
+  const { isLoading, data, isSuccess, error }: UseQueryResult<any[]> = useQuery(
+    {
+      queryKey: hash,
+      queryFn: () => {
+        if (!patientName) {
+          return null;
+        }
+        return apiClient
+          .get({
+            url: `${environment.baseUrl}/patient/getpatientbyname`,
+            auth: true,
+            params: { patientName, facilityId },
+          })
+          .then((res: ApiResponse<any[]>) => {
+            return res.data;
+          });
+      },
+    }
+  );
+  return { isLoading, data, isSuccess, error };
 };
 
 const queries = {
