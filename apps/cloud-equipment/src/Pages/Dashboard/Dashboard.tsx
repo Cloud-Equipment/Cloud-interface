@@ -127,7 +127,7 @@ const Dashboard = () => {
               </MenuItem>
             </Menu>
           </div>
-          {userDetails?.userType === UserTypeEnum.FACILITY_ADMIN ? (
+          {userDetails?.USER_ROLE?.includes(UserTypeEnum.FACILITY_ADMIN) ? (
             <FacilityAdminDashboardSub />
           ) : (
             <ReceptionistDashboardSub />
