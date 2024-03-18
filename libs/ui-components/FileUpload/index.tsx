@@ -43,8 +43,8 @@ const rejectStyle = {
 
 const thumbsContainer = {
   display: 'flex',
-  flexDirection: 'row',
-  flexWrap: 'wrap',
+  // flexDirection: 'row',
+  // flexWrap: 'wrap',
   marginTop: 16,
 };
 
