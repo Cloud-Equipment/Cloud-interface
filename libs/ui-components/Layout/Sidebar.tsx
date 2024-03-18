@@ -26,6 +26,10 @@ const Sidebar = ({
     (state: IAppState) => state.shared.sidebarOpen
   );
 
+  const accountType = useSelector(
+    (state: { account: { accountType: 0 | 1 } }) => state.account.accountType
+  );
+
   const dispatch = useDispatch();
 
   const handleCloseSidebar = () => {
@@ -63,7 +67,9 @@ const Sidebar = ({
       <div className="logoAndName">
         <img src={Assets.Images.Temp.DummyLogo} alt="Facility Logo" />
         <p className={`font-medium leading-5 collapse-hideText`}>
-          AGAPE DIAGNOSTIC CENTER
+          {accountType === 0
+            ? 'Cloud Equipment Superadmin'
+            : userDetails?.FACILITY_NAME?.toUpperCase()}
         </p>
       </div>
 
@@ -95,7 +101,11 @@ const Sidebar = ({
                         to={item.route}
                       >
                         <span className="collapse-hideText">{item.name}</span>
-                        <img className="hidden collapse-show" src={item.img} alt="" />
+                        <img
+                          className="hidden collapse-show"
+                          src={item.img}
+                          alt=""
+                        />
                       </NavLink>
                     ))}
                   </div>
