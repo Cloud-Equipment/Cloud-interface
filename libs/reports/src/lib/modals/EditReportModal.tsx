@@ -68,13 +68,12 @@ const EditReportModal = ({ onClose }: { onClose: () => void }) => {
 
   const { useGetPatientById, useSearchPatientByName } = patientQueries;
   const { mutateFn: mutateFn_fetchPatientById } = useGetPatientById(patientId);
-  const { data: patientsFound, mutateFn: mutateFn_fetchPatientByName } =
-    useSearchPatientByName(
-      patientName,
-      accountType === 0
-        ? (selectedFacility?.id as string)
-        : userDetails?.FACILITY_ID
-    );
+  const { data: patientsFound } = useSearchPatientByName(
+    patientName,
+    accountType === 0
+      ? (selectedFacility?.id as string)
+      : userDetails?.FACILITY_ID
+  );
 
   const [facilityDiscounts, setFacilityDiscounts] = useState<IDiscount[]>([]);
   const [procedureDiscounts, setProcedureDiscounts] = useState<IDiscount[]>([]);
@@ -118,10 +117,6 @@ const EditReportModal = ({ onClose }: { onClose: () => void }) => {
           clearPatientFound();
         }
       });
-    } else {
-      if (patientName) {
-        mutateFn_fetchPatientByName({}, (res) => {});
-      }
     }
   }, [patientId, patientName]);
 
@@ -161,16 +156,15 @@ const EditReportModal = ({ onClose }: { onClose: () => void }) => {
   );
 
   const { useGetMedservicesForFacility } = medserviceQueries;
-  const { data: proceduresList, mutateFn: mutateFn_GetMedservicesForFacility } =
-    useGetMedservicesForFacility(
-      (accountType === 0
-        ? selectedFacility?.id ?? ''
-        : userDetails?.FACILITY_ID ?? '') as string
-    );
-
-  useEffect(() => {
-    mutateFn_GetMedservicesForFacility({}, () => {});
-  }, [selectedFacility]);
+  const { data: proceduresList, isLoading } = useGetMedservicesForFacility({
+    facilityId: (accountType === 0
+      ? selectedFacility?.id ?? ''
+      : userDetails?.FACILITY_ID ?? '') as string,
+    download: false,
+    currentPage: 1,
+    startIndex: 0,
+    pageSize: 1000,
+  });
 
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
 
@@ -191,8 +185,9 @@ const EditReportModal = ({ onClose }: { onClose: () => void }) => {
       ans =
         ans +
         (index ? ', ' : '') +
-        proceduresList?.find((r: IMedservice) => r.medServiceId === x)
-          ?.medServiceName;
+        proceduresList?.resultItem?.find(
+          (r: IMedservice) => r.medServiceId === x
+        )?.medServiceName;
     });
     return ans;
   };
@@ -259,9 +254,10 @@ const EditReportModal = ({ onClose }: { onClose: () => void }) => {
           patientId: patientId,
           medServiceId: x,
           quantity: 1,
-          amount: proceduresList?.find((y: IMedservice) => x === y.medServiceId)
-            ?.price,
-          subotal: proceduresList?.find(
+          amount: proceduresList?.resultItem?.find(
+            (y: IMedservice) => x === y.medServiceId
+          )?.price,
+          subotal: proceduresList?.resultItem?.find(
             (y: IMedservice) => x === y.medServiceId
           )?.price,
           remarks: data_?.remarks,
@@ -346,7 +342,7 @@ const EditReportModal = ({ onClose }: { onClose: () => void }) => {
 
     for (const procedureId of selectedProcedures) {
       // get the price of the procedureId
-      let price = proceduresList?.find(
+      let price = proceduresList?.resultItem?.find(
         (x: IMedservice) => x.medServiceId === procedureId
       )?.price;
       price = Number(price) || 0;
@@ -541,7 +537,7 @@ const EditReportModal = ({ onClose }: { onClose: () => void }) => {
             onChange={(val) => handleChange_procedures(val)}
             renderValue={renderSelectedProcedures}
           >
-            {proceduresList?.map((medservice: IMedservice) => (
+            {proceduresList?.resultItem?.map((medservice: IMedservice) => (
               <MenuItem
                 key={medservice.medServiceId}
                 value={medservice.medServiceId}
@@ -583,7 +579,7 @@ const EditReportModal = ({ onClose }: { onClose: () => void }) => {
                 <MenuItem key={rxt} value={rxt}>
                   <ListItemText>
                     {
-                      proceduresList?.find(
+                      proceduresList?.resultItem?.find(
                         (x: IMedservice) => x.medServiceId === rxt
                       )?.medServiceName
                     }
@@ -591,7 +587,7 @@ const EditReportModal = ({ onClose }: { onClose: () => void }) => {
                   <span>
                     ₦
                     {
-                      proceduresList?.find(
+                      proceduresList?.resultItem?.find(
                         (x: IMedservice) => x.medServiceId === rxt
                       )?.price
                     }
@@ -606,7 +602,7 @@ const EditReportModal = ({ onClose }: { onClose: () => void }) => {
             <input
               className="ce-input"
               value={
-                (proceduresList?.find(
+                (proceduresList?.resultItem?.find(
                   (x: IMedservice) =>
                     x.medServiceId === proceduresWithRebate[index]
                 )?.price ?? 0) *
