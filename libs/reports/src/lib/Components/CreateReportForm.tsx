@@ -400,7 +400,7 @@ const CreateReportForm = () => {
       // and change the price
       const rebateInfo = proceduresWithRebate?.find((x) => x === procedureId);
       if (rebateInfo) {
-        price = price - facilityRebate * price;
+        price = price - (facilityRebate / 100) * price;
       }
 
       // check if there's procedure based discount
@@ -587,7 +587,7 @@ const CreateReportForm = () => {
                       (x: IMedservice) =>
                         x.medServiceId === proceduresWithRebate[index]
                     )?.price ?? 0) *
-                    Number(userDetails!.FACILITY_REBATE_PERCENTAGE)
+                    (Number(userDetails!.FACILITY_REBATE_PERCENTAGE) / 100)
                   }
                   readOnly
                 />
