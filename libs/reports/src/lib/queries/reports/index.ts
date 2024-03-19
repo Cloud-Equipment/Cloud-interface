@@ -56,7 +56,7 @@ const useCreateReport = (options = {}) => {
 };
 
 const useGetReports = (
-  _params: TableQueryParams,
+  _params: TableQueryParams & { download: boolean },
   facilityId: string | null,
   options: Omit<
     UseQueryOptions<any, unknown, any, string[]>,
@@ -64,7 +64,7 @@ const useGetReports = (
   > = {},
   pageNumber: string = '1'
 ) => {
-  const hash = [keys.read, `${pageNumber}`];
+  const hash = [keys.read, `${pageNumber}`, _params];
   let url = '';
   if (!facilityId) {
     url = `${environment.baseUrl}/service-manager/procedures/getAllPaged`;

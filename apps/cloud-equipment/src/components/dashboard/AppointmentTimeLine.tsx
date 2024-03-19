@@ -44,41 +44,17 @@ const AppointmentTimeLine = ({
           />
         </div>
       ) : data?.length ? (
-        <Timeline
-          sx={{
-            [`& .${timelineItemClasses.root}:before`]: {
-              flex: 0,
-              padding: 0,
-            },
-          }}
-        >
-          {data?.map((item, index) => (
-            <TimelineItem key={index}>
-              <TimelineSeparator>
-                <TimelineDot />
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent>
-                <div>
-                  <p className="text-greyText">
-                    {formatDate(item.appointmentDate)},{' '}
-                    {moment(item.appointmentDate).format('h:mm A')}
-                  </p>
-
-                  <p className="mt-3 text-blackText">{item.medServiceName}</p>
-
-                  <div className="flex items-center justify-between">
-                    <p className="mt-1 text-greyText">{item.patientName}</p>
-
-                    <button className="btn-icon">
-                      <img src={Assets.Icons.ArrowRight} alt="" />
-                    </button>
-                  </div>
-                </div>
-              </TimelineContent>
-            </TimelineItem>
-          ))}
-        </Timeline>
+        <>
+          {dayjs().isSame(date, 'day') ? (
+            <Tl
+              data={data.filter((x) =>
+                dayjs().isBefore(dayjs(x.appointmentDate))
+              )}
+            />
+          ) : (
+            <Tl data={data} />
+          )}
+        </>
       ) : (
         <div className="py-6">
           <p>No appointments for {dayjs(date).format('YYYY-MM-DD')}</p>
@@ -110,3 +86,43 @@ function formatDate(date: string) {
     return moment(date).format('YYYY-MM-DD');
   }
 }
+
+const Tl = ({ data }: { data: any[] }) => {
+  return (
+    <Timeline
+      sx={{
+        [`& .${timelineItemClasses.root}:before`]: {
+          flex: 0,
+          padding: 0,
+        },
+      }}
+    >
+      {data?.map((item, index) => (
+        <TimelineItem key={index}>
+          <TimelineSeparator>
+            <TimelineDot />
+            <TimelineConnector />
+          </TimelineSeparator>
+          <TimelineContent>
+            <div>
+              <p className="text-greyText">
+                {formatDate(item.appointmentDate)},{' '}
+                {moment(item.appointmentDate).format('h:mm A')}
+              </p>
+
+              <p className="mt-3 text-blackText">{item.medServiceName}</p>
+
+              <div className="flex items-center justify-between">
+                <p className="mt-1 text-greyText">{item.patientName}</p>
+
+                <button className="btn-icon">
+                  <img src={Assets.Icons.ArrowRight} alt="" />
+                </button>
+              </div>
+            </div>
+          </TimelineContent>
+        </TimelineItem>
+      ))}
+    </Timeline>
+  );
+};
