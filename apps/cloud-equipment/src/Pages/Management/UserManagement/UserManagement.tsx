@@ -65,6 +65,26 @@ const columns = [
       );
     },
   }),
+  columnHelper.accessor('isActive', {
+    header: 'Status',
+    cell: (info) => {
+      return (
+        <span className="flex gap-1 items-center">
+          {info.getValue() ? (
+            <>
+              <div className="w-[5px] h-[5px] bg-primary-300 rounded-full"></div>{' '}
+              Active
+            </>
+          ) : (
+            <>
+              <div className="w-[5px] h-[5px] bg-red-600 rounded-full"></div>{' '}
+              Not-Active
+            </>
+          )}
+        </span>
+      );
+    },
+  }),
   columnHelper.accessor('roles', {
     header: 'Role',
     cell: (info) => info.getValue()?.[0] || '-',
