@@ -64,7 +64,7 @@ const useGetAppointmentsDaily = (
     queryKey: hash,
     queryFn: () => {
       let url = '';
-      if (!isReceptionist) {
+      if (isReceptionist) {
         url = '/service-manager/procedures/getdailyentry';
       } else {
         url = '/service-manager/procedures/getallbyfacility';
