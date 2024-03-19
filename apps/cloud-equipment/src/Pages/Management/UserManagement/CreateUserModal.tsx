@@ -62,12 +62,6 @@ export const CreateUserModal = ({ onClose }: any) => {
                 {...register('email')}
               />
 
-              <PhoneInputField
-                containerClass="h-[76px]"
-                control={control}
-                label="Phone Number"
-                name="phoneNumber"
-              />
               <Input
                 label="First Name"
                 placeholder="Enter First Name"
@@ -79,12 +73,6 @@ export const CreateUserModal = ({ onClose }: any) => {
                 placeholder="Enter Last Name"
                 className="ce-input"
                 {...register('lastName')}
-              />
-              <Input
-                label="Email"
-                placeholder="Enter Email Address"
-                className="ce-input"
-                {...register('email')}
               />
               <PhoneInputField
                 control={control}

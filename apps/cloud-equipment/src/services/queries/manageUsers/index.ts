@@ -19,9 +19,14 @@ const useGetUsers = (
     UseQueryOptions<any, unknown, any, string[]>,
     'initialData' | 'queryFn' | 'queryKey'
   > = {},
-  pageNumber: string = '1'
+  pageNumber = { currentPage: 1, pageSize: 10 }
 ) => {
-  const hash = [keys.read, 'users', `${pageNumber}`];
+  const hash = [
+    keys.read,
+    'users',
+    `${pageNumber.currentPage}`,
+    `${pageNumber.pageSize}`,
+  ];
   const {
     isLoading,
     data,

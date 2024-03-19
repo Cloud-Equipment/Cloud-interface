@@ -73,6 +73,7 @@ const navbarConfig = [
   //   { path: '/', exact: true, name: 'Dashboard' },
   { path: '/reports', name: 'Reports' },
   { path: '/management/patients', name: 'Patients' },
+  { path: '/management/patient', name: 'Patient' },
   { path: '/management/facility', name: 'Facilities' },
   { path: '/management/users', name: 'Users' },
   { path: '/management/medservices', name: 'Procedures' },
@@ -87,8 +88,6 @@ export const Main = () => {
   const _logout = () => {
     dispatch(logout());
   };
-
-  console.log('userDetails?.USER_ROLE', userDetails?.USER_ROLE);
 
   return (
     <Layout

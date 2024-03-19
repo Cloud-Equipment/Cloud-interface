@@ -20,9 +20,13 @@ const useGetPatients = (
     UseQueryOptions<any, unknown, any, string[]>,
     'initialData' | 'queryFn' | 'queryKey'
   > = {},
-  pageNumber: string = '1'
+  pageNumber = { currentPage: 1, pageSize: 10 }
 ) => {
-  const hash = [keys.read, `${pageNumber}`];
+  const hash = [
+    keys.read,
+    `${pageNumber.currentPage}`,
+    `${pageNumber.pageSize}`,
+  ];
   const {
     isLoading,
     data,

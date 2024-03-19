@@ -12,7 +12,7 @@ import { formatDate } from '@cloud-equipment/utils';
 import { IAppState } from '../../../Store/store';
 
 import queries from '../../../services/queries/managePatients';
-import { GenderMapping } from '../../../constants';
+import { GenderMapping, MaritalStatus } from '../../../constants';
 
 type PatientTableColumns = { [key: string]: string } & {
   lastLogin: string;
@@ -153,7 +153,11 @@ const ViewPatient = () => {
 
             <TitleSubtitle
               title="Marital Status"
-              subtitle={data?.maritalStatusId || `-`}
+              subtitle={
+                MaritalStatus.find(
+                  (status) => status.value === data?.maritalStatusId
+                )?.label || `-`
+              }
             />
 
             <TitleSubtitle
@@ -185,7 +189,7 @@ const ViewPatient = () => {
             />
 
             <TitleSubtitle
-              title="Taken Drugs"
+              title="Taking Drugs"
               subtitle={`${data?.takingMedication ? 'Yes' : 'No' || '-'}`}
             />
 

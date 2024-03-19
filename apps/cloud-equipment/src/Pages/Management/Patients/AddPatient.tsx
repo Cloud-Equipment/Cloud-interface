@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Controller, useForm } from 'react-hook-form';
 import { Modal } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import dayjs from 'dayjs';
 
 import * as Assets from '@cloud-equipment/assets';
 import {
@@ -45,7 +46,7 @@ interface FormProps {
   reasonForRegistration: string;
   takingMedication: string;
   additionalNotes: string;
-  registrationDate: string;
+  // registrationDate: string;
   patientUniqueID: string;
   //
   // registrationTime: any;
@@ -62,7 +63,7 @@ const NewPatient = () => {
   const { useCreatePatient } = queries;
   const { mutateFn, isLoading } = useCreatePatient();
 
-  const { register, handleSubmit, control, getValues, setValue } =
+  const { register, handleSubmit, control, getValues, watch, setValue } =
     useForm<FormProps>();
 
   const [createPatientModalPromptIsOpen, setCreatePatientModalPromptIsOpen] =
@@ -97,7 +98,7 @@ const NewPatient = () => {
       reasonForRegistration,
       takingMedication,
       additionalNotes,
-      registrationDate,
+      // registrationDate,
     } = getValues();
 
     const data = {
@@ -119,7 +120,7 @@ const NewPatient = () => {
       reasonForRegistration,
       takingMedication: takingMedication === 'no' ? false : true,
       additionalNotes,
-      registrationDate,
+      // registrationDate,
       patientFacilityCode: user?.FACILITY_ID || '',
       facilityId: user?.FACILITY_ID || '',
       /**
@@ -148,6 +149,20 @@ const NewPatient = () => {
     });
   };
 
+  const calculateAge = (date: string) => {
+    const selectedDate = dayjs(date);
+    const currentDate = dayjs();
+    const age = currentDate.diff(selectedDate, 'year');
+    return age;
+  };
+
+  useEffect(() => {
+    if (watch('dateOfBirth')) {
+      const age = `${calculateAge(watch('dateOfBirth'))} years old`;
+      setValue('patientAge', Number(age));
+    }
+  }, [watch('dateOfBirth')]);
+
   return (
     <>
       <Modal open={createPatientModalPromptIsOpen} onClose={onClose}>
@@ -171,39 +186,7 @@ const NewPatient = () => {
             className="bg-white mt-4 lg:mt-6 px-4 pb-6 md:px-6 md:pb-8 pt-2 rounded-[20px]"
             onSubmit={handleSubmit(onSubmit1)}
           >
-            <div className="max-w-[1000px] mx-auto grid md:grid-cols-2 gap-3 md:gap-6">
-              <Controller
-                name="registrationDate"
-                control={control}
-                // defaultValue={0}
-                rules={{ required: 'Registration Date is required' }}
-                render={({ field: { onChange, value, ref } }) => (
-                  <DatePicker
-                    label="Registration Date "
-                    containerClass="flex-1"
-                    onChange={onChange}
-                    onAccept={onChange}
-                    value={value}
-                    inputRef={ref}
-                  />
-                )}
-              />
-              <Controller
-                name="registrationTime"
-                control={control}
-                rules={{ required: 'Registration Time is required' }}
-                render={({ field: { onChange, value, ref } }) => (
-                  <TimePicker
-                    label="Registration Time "
-                    containerClass="flex-1"
-                    // REFACTOR:
-                    onChange={onChange}
-                    onAccept={onChange}
-                    value={value}
-                    inputRef={ref}
-                  />
-                )}
-              />
+            <div className="max-w-[1000px] mx-auto pt-10 grid md:grid-cols-2 gap-3 md:gap-6">
               <Input
                 label="Patient ID *"
                 placeholder="AGA/453|"
@@ -220,13 +203,13 @@ const NewPatient = () => {
                 />
               </div>
               <Input
-                label="Patitent First Name"
+                label="Patient First Name"
                 {...register('firstName', {
                   required: 'Patient First Name is required ',
                 })}
               />
               <Input
-                label="Patitent Last Name"
+                label="Patient Last Name"
                 {...register('lastName', {
                   required: 'Patient Last Name is required ',
                 })}
@@ -273,6 +256,7 @@ const NewPatient = () => {
               />
               <Input
                 label="Age"
+                disabled
                 placeholder="19 years"
                 {...register('patientAge', {
                   required: 'Age is required ',
