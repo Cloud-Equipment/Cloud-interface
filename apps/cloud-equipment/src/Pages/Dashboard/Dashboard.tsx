@@ -58,14 +58,20 @@ const Dashboard = () => {
   const [date, setDate] = useState<Dayjs>(dayjs());
 
   const { data: appointmentData, isLoading: apponintmentTimelineLoading } =
-    appointmentQueries.useGetUpcomingAppointments({
-      facilityId: userDetails?.FACILITY_ID as string,
-      currentPage: 1,
-      startIndex: 0,
-      pageSize: 20,
-      apponitmentFrom: dayjs(date).format('YYYY-MM-DD') + ' 00:00',
-      apponitmentTo: dayjs(date).format('YYYY-MM-DD') + ' 23:59',
-    });
+    appointmentQueries.useGetUpcomingAppointments(
+      {
+        facilityId: userDetails?.FACILITY_ID as string,
+        userId: userDetails?.USER_ID as string,
+        currentPage: 1,
+        startIndex: 0,
+        pageSize: 20,
+        apponitmentFrom: dayjs(date).format('YYYY-MM-DD') + ' 00:00',
+        apponitmentTo: dayjs(date).format('YYYY-MM-DD') + ' 23:59',
+      },
+      userDetails?.USER_ROLE?.includes(UserTypeEnum.FACILITY_ADMIN)
+        ? false
+        : true
+    );
 
   return (
     <>

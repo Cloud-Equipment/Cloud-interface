@@ -101,6 +101,7 @@ const ReportsList = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
+  const [shouldDownload, setShouldDownload] = useState(false);
 
   const { useGetReports } = queries;
   const { isLoading, data } = useGetReports(
@@ -108,6 +109,7 @@ const ReportsList = () => {
       pageSize,
       currentPage,
       startIndex: 1,
+      download: shouldDownload,
     },
     accountType === 0 ? null : (userDetails?.FACILITY_ID as string)
   );
@@ -162,7 +164,12 @@ const ReportsList = () => {
             <img src={Assets.Icons.SolidArrowDown} alt="" />
           </div>
 
-          <button className="export-btn">
+          <button
+            onClick={() => {
+              setShouldDownload(true);
+            }}
+            className="export-btn"
+          >
             <img src={Assets.Icons.ExportIcon} alt="" />
             <span>Export</span>
           </button>

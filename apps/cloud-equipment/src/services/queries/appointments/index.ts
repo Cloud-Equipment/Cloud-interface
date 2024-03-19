@@ -48,6 +48,7 @@ const useCreateAppointment = (options = {}) => {
 
 const useGetAppointmentsDaily = (
   params: { [key: string]: string | number },
+  isReceptionist: boolean,
   options: Omit<
     UseQueryOptions<any, unknown, any, string[]>,
     'initialData' | 'queryFn' | 'queryKey'
@@ -61,19 +62,27 @@ const useGetAppointmentsDaily = (
     error,
   }: UseQueryResult<PaginationData<any>> = useQuery({
     queryKey: hash,
-    queryFn: () =>
-      apiClient
+    queryFn: () => {
+      let url = '';
+      if (!isReceptionist) {
+        url = '/service-manager/procedures/getdailyentry';
+      } else {
+        url = '/service-manager/procedures/getallbyfacility';
+      }
+      return apiClient
         .get({
-          url: '/service-manager/procedures/getallbyfacility',
+          url,
           params: { ...params },
         })
-        .then((res: ApiResponse<PaginationData<IAppointment>>) => res.data),
+        .then((res: ApiResponse<PaginationData<IAppointment>>) => res.data);
+    },
   });
   return { isLoading, data, isSuccess, error };
 };
 
 const useGetUpcomingAppointments = (
   params: { [key: string]: string | number },
+  isReceptionist: boolean,
   options: Omit<
     UseQueryOptions<any, unknown, any, string[]>,
     'initialData' | 'queryFn' | 'queryKey'
@@ -84,9 +93,15 @@ const useGetUpcomingAppointments = (
     {
       queryKey: hash,
       queryFn: () => {
+        let url = '';
+        if (isReceptionist) {
+          url = '/service-manager/procedures/getdailyentry';
+        } else {
+          url = '/service-manager/procedures/getallbyfacility';
+        }
         return apiClient
           .get({
-            url: '/service-manager/procedures/getallbyfacility',
+            url,
             params: { ...params },
           })
           .then(
