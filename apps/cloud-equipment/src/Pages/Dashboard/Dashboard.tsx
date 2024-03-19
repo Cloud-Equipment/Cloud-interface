@@ -109,6 +109,7 @@ const Dashboard = () => {
             >
               <MenuItem
                 onClick={() => {
+                  navigate('/management/add-patient');
                   handleMenuClose();
                 }}
               >
@@ -124,6 +125,7 @@ const Dashboard = () => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
+                  navigate('/reports/new');
                   handleMenuClose();
                 }}
               >

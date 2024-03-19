@@ -274,10 +274,14 @@ const CreateReportForm = () => {
           doctorPhone: refererPhone,
         };
         mutateFn_CreateReferer(data, (res) => {
-          if (res.doctorId) {
-            setExistingRefererId(res.doctorId);
-            createReport(existingPatientId, res.doctorId);
+          if (res?.data?.doctorId) {
+            setExistingRefererId(res?.data?.doctorId);
+            createReport(existingPatientId, res?.data?.doctorId);
           }
+          setTimeout(() => {
+            dispatch(clearLoading());
+            navigate('/reports');
+          }, 400);
         });
       }
     } else if (
@@ -334,8 +338,8 @@ const CreateReportForm = () => {
       };
 
       mutateFn_CreateReferer(data, (res) => {
-        if (res.doctorId) {
-          setExistingRefererId(res.doctorId);
+        if (res?.data?.doctorId) {
+          setExistingRefererId(res?.data?.doctorId);
 
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const data: any = {
@@ -355,7 +359,7 @@ const CreateReportForm = () => {
           mutateFn_CreatePatient(data, (res2) => {
             if (res2.data?.patientUniqueID) {
               setExistingPatientId(res2.data.patientUniqueID);
-              createReport(res2.data.patientUniqueID, res.doctorId);
+              createReport(res2.data.patientUniqueID, res?.data?.doctorId);
             }
           });
         }
@@ -400,7 +404,7 @@ const CreateReportForm = () => {
       // and change the price
       const rebateInfo = proceduresWithRebate?.find((x) => x === procedureId);
       if (rebateInfo) {
-        price = price - facilityRebate * price;
+        price = price - (facilityRebate / 100) * price;
       }
 
       // check if there's procedure based discount
@@ -587,7 +591,7 @@ const CreateReportForm = () => {
                       (x: IMedservice) =>
                         x.medServiceId === proceduresWithRebate[index]
                     )?.price ?? 0) *
-                    Number(userDetails!.FACILITY_REBATE_PERCENTAGE)
+                    (Number(userDetails!.FACILITY_REBATE_PERCENTAGE) / 100)
                   }
                   readOnly
                 />
