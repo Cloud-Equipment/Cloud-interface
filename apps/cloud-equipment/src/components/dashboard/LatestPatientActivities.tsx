@@ -5,18 +5,23 @@ import * as Assets from '@cloud-equipment/assets';
 import appointmentQueries from '../../services/queries/appointments';
 import { useSelector } from 'react-redux';
 import { IAppState } from '../../Store/store';
+import { UserTypeEnum } from '@cloud-equipment/models';
 
 const LatestPatientActivities = () => {
   const userDetails = useSelector((state: IAppState) => state.auth.user);
 
-  const { data } = appointmentQueries.useGetAppointmentsDaily({
-    facilityId: userDetails?.FACILITY_ID as string,
-    currentPage: 1,
-    startIndex: 0,
-    pageSize: 20,
-    // apponitmentFrom: dayjs(date).format('YYYY-MM-DD'),
-    // apponitmentTo: dayjs(date).format('YYYY-MM-DD'),
-  });
+  const { data } = appointmentQueries.useGetAppointmentsDaily(
+    {
+      facilityId: userDetails?.FACILITY_ID as string,
+      currentPage: 1,
+      startIndex: 0,
+      pageSize: 20,
+      userId: userDetails?.USER_ID as string,
+      // apponitmentFrom: dayjs(date).format('YYYY-MM-DD'),
+      // apponitmentTo: dayjs(date).format('YYYY-MM-DD'),
+    },
+    userDetails?.USER_ROLE?.includes(UserTypeEnum.FACILITY_ADMIN) ? false : true
+  );
 
   return (
     <div className="mt-5 bg-white p-5 rounded-[20px]">
