@@ -51,6 +51,7 @@ interface FormProps {
   //
   // registrationTime: any;
   // registrationDate: any;
+  profilePhoto: File;
   [key: string]: any;
 }
 
@@ -98,10 +99,11 @@ const NewPatient = () => {
       reasonForRegistration,
       takingMedication,
       additionalNotes,
+      profilePhoto,
       // registrationDate,
     } = getValues();
 
-    const data = {
+    const data: { [key: string]: any } = {
       patientName: `${firstName} ${lastName}`,
       patientAge,
       patientEmail,
@@ -120,30 +122,20 @@ const NewPatient = () => {
       reasonForRegistration,
       takingMedication: takingMedication === 'no' ? false : true,
       additionalNotes,
-      // registrationDate,
       patientFacilityCode: user?.FACILITY_ID || '',
       facilityId: user?.FACILITY_ID || '',
-      /**
-       * end point is expecting these but they are not in the UI
-       */
       bloodGroupId: 0,
-      // dateOfDeath: '2024-01-28T16:37:55.340Z',
-      // dateOfDeath: '',
       isActive: false,
-      imagePath: '',
-      /**
-       * end point is expecting these but they are not in the UI
-       */
-
-      /**
-       * endpoint is not expecting these but they are in the UI
-       */
-      // registrationTime
-      /**
-       * endpoint is not expecting these but they are in the UI
-       */
+      imagePath: null,
+      profilePhoto,
     };
-    mutateFn(data, (res) => {
+
+    const formData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+    mutateFn(formData, (res) => {
       onClose();
       navigate(`/management/patient/${res.data.patientUniqueID}`);
     });
@@ -158,10 +150,11 @@ const NewPatient = () => {
 
   useEffect(() => {
     if (watch('dateOfBirth')) {
-      const age = `${calculateAge(watch('dateOfBirth'))} years old`;
-      setValue('patientAge', Number(age));
+      const age = calculateAge(watch('dateOfBirth'));
+      setValue('patientAge', age);
     }
   }, [watch('dateOfBirth')]);
+  console.log(watch('profilePhoto'));
 
   return (
     <>
@@ -199,7 +192,7 @@ const NewPatient = () => {
                   uploadIcon={Assets.Icons.UploadIcon1}
                   containerClass="w-6/12"
                   uploadLabel="Click to Upload Image"
-                  // setFile={()=>{}}
+                  setFile={(file) => setValue('profilePhoto', file)}
                 />
               </div>
               <Input
@@ -387,7 +380,7 @@ const NewPatient = () => {
                 label="Additional Notes"
                 placeholder="Leave a Note"
                 containerClass="md:col-span-2"
-                {...register('aboutPatient', {
+                {...register('additionalNotes', {
                   required: 'Notes is required ',
                 })}
               />

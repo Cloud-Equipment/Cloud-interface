@@ -49,7 +49,7 @@ const useCreatePatient = (options = {}) => {
   const mutation = useMutation({
     ...options,
     mutationKey: [keys.create],
-    mutationFn: async (data: IPatient) => {
+    mutationFn: async (data: any | IPatient) => {
       return apiMethods.post({
         url: `/patient/createpatient`,
         body: data,
@@ -63,7 +63,7 @@ const useCreatePatient = (options = {}) => {
   const { mutate, isSuccess, isError, data, isPending } = mutation;
 
   return {
-    mutateFn: (bodyArg: IPatient, successCb: (res: any) => void) => {
+    mutateFn: (bodyArg: any | IPatient, successCb: (res: any) => void) => {
       return mutate(bodyArg, {
         onSuccess: (res) => {
           showToast(res.message || 'Patient Created Successfully', 'success');
