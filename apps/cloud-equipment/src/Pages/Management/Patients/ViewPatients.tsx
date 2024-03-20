@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useSelector } from 'react-redux';
 import {
@@ -6,7 +6,6 @@ import {
   ListItemText,
   Menu,
   MenuItem,
-  Modal,
   TablePagination,
 } from '@mui/material';
 import { createColumnHelper } from '@tanstack/react-table';
@@ -17,8 +16,9 @@ import * as Assets from '@cloud-equipment/assets';
 import queries from '../../../services/queries/managePatients';
 import { IAppState } from '../../../Store/store';
 import { GenderMapping } from '../../../constants';
+import { useFilters } from '@cloud-equipment/hooks';
+import { environment } from '@cloud-equipment/environments';
 
-// type PatientTableColumns = IPatient & { lastLogin: string; elipsis: 'elipsis' };
 type PatientTableColumns = any & { lastLogin: string; elipsis: 'elipsis' };
 
 const columnHelper = createColumnHelper<PatientTableColumns>();
@@ -65,10 +65,32 @@ const ViewPatients = () => {
 
   const { user } = useSelector((state: IAppState) => state.auth);
 
-  const { data } = useGetPatients(
-    `/patient/getpatientbyhospitalid?facilityId=${user?.FACILITY_ID}`,
-    { enabled: !!user?.FACILITY_ID }
+  const {
+    url,
+    filters: { currentPage, pageSize },
+    setFilters,
+  } = useFilters(environment.baseUrl, '/patient/getpatientbyhospitalid');
+  const { data, isLoading } = useGetPatients(
+    `${url.href}&facilityId=${user?.FACILITY_ID}`,
+    { enabled: !!user?.FACILITY_ID },
+    { currentPage, pageSize }
   );
+
+  const total = data?.totalCount || 0;
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+    page: number
+  ) => {
+    setFilters((prev: Params) => ({ ...prev, currentPage: page }));
+  };
+  const handleChangeRowsPerPage = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFilters((prev: Params) => ({
+      ...prev,
+      pageSize: Number(e.target.value),
+    }));
+  };
 
   return (
     <>
@@ -104,21 +126,21 @@ const ViewPatients = () => {
           </div>
 
           <Table
-            loading={false}
+            loading={isLoading}
             data={data?.resultItem || []}
             columns={columns}
-            tableHeading="Patients List"
+            tableHeading={`Patients List - ${total}`}
           />
 
-          {/* <TablePagination
-              component="div"
-              count={total}
-              page={currentPage}
-              labelRowsPerPage="Items per page"
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              rowsPerPage={pageSize}
-            /> */}
+          <TablePagination
+            component="div"
+            count={total}
+            page={currentPage}
+            labelRowsPerPage="Items per page"
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            rowsPerPage={pageSize}
+          />
         </div>
       </section>
     </>

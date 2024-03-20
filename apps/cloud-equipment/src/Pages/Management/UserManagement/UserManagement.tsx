@@ -21,6 +21,8 @@ import { Button, Table, Loader } from '@cloud-equipment/ui-components';
 import queries from '../../../services/queries/manageUsers';
 import { IAppState } from '../../../Store/store';
 import { formatDate } from '@cloud-equipment/utils';
+import { useFilters } from '@cloud-equipment/hooks';
+import { environment } from '@cloud-equipment/environments';
 
 type IModalViews =
   | null
@@ -63,6 +65,26 @@ const columns = [
       );
     },
   }),
+  columnHelper.accessor('isActive', {
+    header: 'Status',
+    cell: (info) => {
+      return (
+        <span className="flex gap-1 items-center">
+          {info.getValue() ? (
+            <>
+              <div className="w-[5px] h-[5px] bg-primary-300 rounded-full"></div>{' '}
+              Active
+            </>
+          ) : (
+            <>
+              <div className="w-[5px] h-[5px] bg-red-600 rounded-full"></div>{' '}
+              Not-Active
+            </>
+          )}
+        </span>
+      );
+    },
+  }),
   columnHelper.accessor('roles', {
     header: 'Role',
     cell: (info) => info.getValue()?.[0] || '-',
@@ -91,24 +113,37 @@ const UserManagement = () => {
   const { user } = useSelector((state: IAppState) => state.auth);
 
   const { useGetUsers } = queries;
-  const { isLoading, data: userData } = useGetUsers(
-    `/user-manager/account/user/getallusersfacility?facilityId=${user?.FACILITY_ID}&currentPage=1&startIndex=1&pageSize=10`,
-    { facilityId: user ? user.FACILITY_ID : '' },
-    { enabled: !!user?.FACILITY_ID },
-    '1'
+
+  const {
+    url,
+    filters: { currentPage, pageSize },
+    setFilters,
+  } = useFilters(
+    environment.baseUrl,
+    '/user-manager/account/user/getallusersfacility'
   );
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-  const [total, setTotal] = useState(0);
+  const { isLoading, data: userData } = useGetUsers(
+    `${url.href}&facilityId=${user?.FACILITY_ID}&currentPage=1&startIndex=1&pageSize=10`,
+    { facilityId: user ? user.FACILITY_ID : '' },
+    { enabled: !!user?.FACILITY_ID },
+    { currentPage, pageSize }
+  );
 
-  const handleChangePage = (event: any, newPage: number) => {
-    setCurrentPage(newPage);
+  const total = userData?.totalCount || 0;
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+    page: number
+  ) => {
+    setFilters((prev: Params) => ({ ...prev, currentPage: page }));
   };
-
-  const handleChangeRowsPerPage = (event: any) => {
-    setCurrentPage(0);
-    setPageSize(parseInt(event.target.value, 10));
+  const handleChangeRowsPerPage = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFilters((prev: Params) => ({
+      ...prev,
+      pageSize: Number(e.target.value),
+    }));
   };
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -155,7 +190,7 @@ const UserManagement = () => {
             loading={isLoading}
             data={userData?.resultItem || []}
             columns={columns}
-            tableHeading={`Team members - 5`}
+            tableHeading={`Team members - ${total}`}
           />
           <TablePagination
             component="div"

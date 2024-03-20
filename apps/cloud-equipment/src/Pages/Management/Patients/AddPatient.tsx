@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Controller, useForm } from 'react-hook-form';
 import { Modal } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import dayjs from 'dayjs';
 
 import * as Assets from '@cloud-equipment/assets';
 import {
@@ -45,11 +46,12 @@ interface FormProps {
   reasonForRegistration: string;
   takingMedication: string;
   additionalNotes: string;
-  registrationDate: string;
+  // registrationDate: string;
   patientUniqueID: string;
   //
   // registrationTime: any;
   // registrationDate: any;
+  profilePhoto: File;
   [key: string]: any;
 }
 
@@ -62,7 +64,7 @@ const NewPatient = () => {
   const { useCreatePatient } = queries;
   const { mutateFn, isLoading } = useCreatePatient();
 
-  const { register, handleSubmit, control, getValues, setValue } =
+  const { register, handleSubmit, control, getValues, watch, setValue } =
     useForm<FormProps>();
 
   const [createPatientModalPromptIsOpen, setCreatePatientModalPromptIsOpen] =
@@ -97,10 +99,11 @@ const NewPatient = () => {
       reasonForRegistration,
       takingMedication,
       additionalNotes,
-      registrationDate,
+      profilePhoto,
+      // registrationDate,
     } = getValues();
 
-    const data = {
+    const data: { [key: string]: any } = {
       patientName: `${firstName} ${lastName}`,
       patientAge,
       patientEmail,
@@ -119,34 +122,39 @@ const NewPatient = () => {
       reasonForRegistration,
       takingMedication: takingMedication === 'no' ? false : true,
       additionalNotes,
-      registrationDate,
       patientFacilityCode: user?.FACILITY_ID || '',
       facilityId: user?.FACILITY_ID || '',
-      /**
-       * end point is expecting these but they are not in the UI
-       */
       bloodGroupId: 0,
-      // dateOfDeath: '2024-01-28T16:37:55.340Z',
-      // dateOfDeath: '',
       isActive: false,
-      imagePath: '',
-      /**
-       * end point is expecting these but they are not in the UI
-       */
-
-      /**
-       * endpoint is not expecting these but they are in the UI
-       */
-      // registrationTime
-      /**
-       * endpoint is not expecting these but they are in the UI
-       */
+      imagePath: null,
+      profilePhoto,
     };
-    mutateFn(data, (res) => {
+
+    const formData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+    mutateFn(formData, (res) => {
       onClose();
       navigate(`/management/patient/${res.data.patientUniqueID}`);
     });
   };
+
+  const calculateAge = (date: string) => {
+    const selectedDate = dayjs(date);
+    const currentDate = dayjs();
+    const age = currentDate.diff(selectedDate, 'year');
+    return age;
+  };
+
+  useEffect(() => {
+    if (watch('dateOfBirth')) {
+      const age = calculateAge(watch('dateOfBirth'));
+      setValue('patientAge', age);
+    }
+  }, [watch('dateOfBirth')]);
+  console.log(watch('profilePhoto'));
 
   return (
     <>
@@ -171,39 +179,7 @@ const NewPatient = () => {
             className="bg-white mt-4 lg:mt-6 px-4 pb-6 md:px-6 md:pb-8 pt-2 rounded-[20px]"
             onSubmit={handleSubmit(onSubmit1)}
           >
-            <div className="max-w-[1000px] mx-auto grid md:grid-cols-2 gap-3 md:gap-6">
-              <Controller
-                name="registrationDate"
-                control={control}
-                // defaultValue={0}
-                rules={{ required: 'Registration Date is required' }}
-                render={({ field: { onChange, value, ref } }) => (
-                  <DatePicker
-                    label="Registration Date "
-                    containerClass="flex-1"
-                    onChange={onChange}
-                    onAccept={onChange}
-                    value={value}
-                    inputRef={ref}
-                  />
-                )}
-              />
-              <Controller
-                name="registrationTime"
-                control={control}
-                rules={{ required: 'Registration Time is required' }}
-                render={({ field: { onChange, value, ref } }) => (
-                  <TimePicker
-                    label="Registration Time "
-                    containerClass="flex-1"
-                    // REFACTOR:
-                    onChange={onChange}
-                    onAccept={onChange}
-                    value={value}
-                    inputRef={ref}
-                  />
-                )}
-              />
+            <div className="max-w-[1000px] mx-auto pt-10 grid md:grid-cols-2 gap-3 md:gap-6">
               <Input
                 label="Patient ID *"
                 placeholder="AGA/453|"
@@ -216,17 +192,17 @@ const NewPatient = () => {
                   uploadIcon={Assets.Icons.UploadIcon1}
                   containerClass="w-6/12"
                   uploadLabel="Click to Upload Image"
-                  // setFile={()=>{}}
+                  setFile={(file) => setValue('profilePhoto', file)}
                 />
               </div>
               <Input
-                label="Patitent First Name"
+                label="Patient First Name"
                 {...register('firstName', {
                   required: 'Patient First Name is required ',
                 })}
               />
               <Input
-                label="Patitent Last Name"
+                label="Patient Last Name"
                 {...register('lastName', {
                   required: 'Patient Last Name is required ',
                 })}
@@ -273,6 +249,7 @@ const NewPatient = () => {
               />
               <Input
                 label="Age"
+                disabled
                 placeholder="19 years"
                 {...register('patientAge', {
                   required: 'Age is required ',
@@ -403,7 +380,7 @@ const NewPatient = () => {
                 label="Additional Notes"
                 placeholder="Leave a Note"
                 containerClass="md:col-span-2"
-                {...register('aboutPatient', {
+                {...register('additionalNotes', {
                   required: 'Notes is required ',
                 })}
               />

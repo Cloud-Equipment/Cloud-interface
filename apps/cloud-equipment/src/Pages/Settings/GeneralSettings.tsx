@@ -73,7 +73,7 @@ const GeneralSettings = () => {
     <div>
       <form className="" onSubmit={handleSubmit(onSubmit)}>
         <img
-          src={Assets.Images.Temp.DummyUserIcon3}
+          src={Assets.Images.Temp.DummyUserIcon2}
           alt="Profile"
           className="block mt-6 md:mt-10 w-[100px] h-[100px] rounded-full md:w-[140px] md:h-[140px]"
         />

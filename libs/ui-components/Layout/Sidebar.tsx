@@ -6,7 +6,6 @@ import { closeSidebar } from '@cloud-equipment/shared_store';
 import * as Assets from '@cloud-equipment/assets';
 import { IAppState } from 'apps/cloud-equipment/src/Store/store';
 import { INavItem } from './types';
-import { useState } from 'react';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 
 const Sidebar = ({

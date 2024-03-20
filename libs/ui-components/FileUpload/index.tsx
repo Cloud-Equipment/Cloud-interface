@@ -13,6 +13,7 @@ const baseStyle = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   flexDirection: 'column' as any,
   alignItems: 'center',
+  justifyContent: 'center',
   padding: '15px',
   borderWidth: borderWidth,
   borderRadius: 4,
@@ -54,8 +55,8 @@ const thumb = {
   border: '1px solid #eaeaea',
   marginBottom: 8,
   marginRight: 8,
-  width: 150,
-  height: 150,
+  width: 100,
+  height: 100,
   padding: 4,
   // boxSizing: 'border-box',
 };

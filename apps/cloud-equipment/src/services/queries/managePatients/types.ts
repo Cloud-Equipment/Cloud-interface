@@ -23,6 +23,6 @@ export interface IPatient {
   reasonForRegistration: string;
   takingMedication: boolean;
   additionalNotes: string;
-  registrationDate: string | Dayjs | null;
+  registrationDate?: string | Dayjs | null;
   patientUniqueID?: string;
 }
