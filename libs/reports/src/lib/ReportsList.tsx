@@ -20,6 +20,7 @@ import { Table } from '@cloud-equipment/ui-components';
 import { formatDate } from '@cloud-equipment/utils';
 import { UploadReportModal } from '../index';
 import { EditReportModal } from './modals';
+import numeral from 'numeral';
 // import { useFilters } from '@cloud-equipment/hooks';
 // import { environment } from '@cloud-equipment/environments';
 
@@ -30,7 +31,7 @@ export type ActionType =
   | 'confirmTest'
   | 'uploadResult'
   | 'edit';
-type ReportTableColumns = IProcedure & { elipsis: 'elipsis' };
+type ReportTableColumns = IProcedure & { elipsis: 'elipsis'; isRebate: string };
 
 const columnHelper = createColumnHelper<ReportTableColumns>();
 
@@ -43,28 +44,24 @@ const columns = [
     header: 'Procedure/Test Ordered',
     cell: (info) => info.getValue(),
   }),
+  columnHelper.accessor('patientName', {
+    header: 'Patient Name',
+    cell: (info) => info.getValue(),
+  }),
   columnHelper.accessor('patientAge', {
     header: 'Age of Patient',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('referrersName', {
-    header: "Referrer's Name",
-    cell: (info) => info.getValue() || '-',
-  }),
-  columnHelper.accessor('refererHospital', {
-    header: "Referrer's Hospital",
-    cell: (info) => info.getValue() || '-',
-  }),
-  // columnHelper.accessor('patientName', {
-  //   header: 'Patient Name',
-  //   cell: (info) => info.getValue(),
-  // }),
   columnHelper.accessor('patientPhone', {
     header: 'Phone Number',
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor('subotal', {
     header: 'Amount',
+    cell: (info) => `₦ ${numeral(info.getValue()).format('0,0.00')}`,
+  }),
+  columnHelper.accessor('isRebate', {
+    header: 'Has Rebate',
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor('elipsis', {
