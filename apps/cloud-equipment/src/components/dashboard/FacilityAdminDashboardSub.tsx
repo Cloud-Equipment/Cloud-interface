@@ -22,7 +22,7 @@ const FacilityAdminDashboardSub = () => {
         <DashboardCard
           icon={Assets.Icons.Dashboard.Calendar}
           text="Appointments"
-          figure={data?.referredPatient ?? 0}
+          figure={data?.appointments ?? 0}
           metric={Number(data?.appointmentsMetric) || 0}
         />
         <DashboardCard

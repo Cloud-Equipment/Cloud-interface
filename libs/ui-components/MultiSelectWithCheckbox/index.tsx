@@ -67,7 +67,7 @@ const MultiSelectWithCheckbox = ({
               }
             />
             <ListItemText>{option.name}</ListItemText>
-            <span>₦{option.price}</span>
+            <span>{option.price}</span>
           </MenuItem>
         ))}
       </Select>
