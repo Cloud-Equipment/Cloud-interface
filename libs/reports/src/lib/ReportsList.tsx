@@ -107,7 +107,6 @@ const ReportsList = () => {
 
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-  const [total, setTotal] = useState(0);
   const [shouldDownload, setShouldDownload] = useState(false);
 
   const { useGetReports } = queries;
@@ -184,9 +183,19 @@ const ReportsList = () => {
 
         <Table
           loading={isLoading}
-          data={data || []}
+          data={data?.resultItem || []}
           columns={columns}
           tableHeading="All Reports"
+        />
+
+        <TablePagination
+          component="div"
+          count={data?.totalCount ?? 0}
+          page={currentPage}
+          labelRowsPerPage="Items per page"
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          rowsPerPage={pageSize}
         />
       </div>
     </section>

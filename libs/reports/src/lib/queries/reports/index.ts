@@ -8,7 +8,7 @@ import {
 
 import { apiClient } from '@cloud-equipment/api';
 import { IProcedure } from './types';
-import { ApiResponse } from 'Models/api.models';
+import { ApiResponse, PaginationData } from 'Models/api.models';
 import keys from './keys';
 import { environment } from '@cloud-equipment/environments';
 import { showToast } from '@cloud-equipment/utils';
@@ -72,14 +72,18 @@ const useGetReports = (
     url = '/service-manager/procedures/getallbyfacility';
   }
 
-  const { isLoading, data, isSuccess, error }: UseQueryResult<IProcedure[]> =
-    useQuery({
-      queryKey: hash,
-      queryFn: () =>
-        apiClient
-          .get({ url, params: { facilityId, ..._params } })
-          .then((res: ApiResponse) => res.data.resultItem),
-    });
+  const {
+    isLoading,
+    data,
+    isSuccess,
+    error,
+  }: UseQueryResult<PaginationData<IProcedure[]>> = useQuery({
+    queryKey: hash,
+    queryFn: () =>
+      apiClient
+        .get({ url, params: { facilityId, ..._params } })
+        .then((res: ApiResponse) => res.data),
+  });
 
   return { isLoading, data, isSuccess, error };
 };
