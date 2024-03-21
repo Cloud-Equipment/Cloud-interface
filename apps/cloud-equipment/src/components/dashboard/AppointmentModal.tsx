@@ -36,6 +36,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
 import { Gender, MaritalStatus } from '../../constants';
+import numeral from 'numeral';
 
 const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
   const userDetails = useSelector((state: IAppState) => state.auth.user);
@@ -467,7 +468,7 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
                   proceduresList?.resultItem?.map((x) => ({
                     id: x.medServiceId.toString(),
                     name: x.medServiceName,
-                    price: x.price.toString(),
+                    price: `₦ ${numeral(x.price).format('0,0.00')}`,
                   })) ?? []
                 }
                 onSelectionChange={(x) => {
@@ -578,11 +579,11 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
                             {proceduresList?.resultItem?.find(
                               (x: IMedservice) => x.medServiceId === rxt
                             )?.medServiceName +
-                              ' (₦' +
-                              proceduresList?.resultItem?.find(
-                                (x: IMedservice) => x.medServiceId === rxt
-                              )?.price +
-                              ')'}
+                              ` (₦ ${numeral(
+                                proceduresList?.resultItem?.find(
+                                  (x: IMedservice) => x.medServiceId === rxt
+                                )?.price ?? 0
+                              ).format('0,0.00')})`}
                           </ListItemText>
                         </MenuItem>
                       ))}
@@ -595,12 +596,22 @@ const AppointmentModal = ({ onClose }: { onClose: () => void }) => {
                       <input
                         className="ce-input"
                         value={
-                          ((proceduresList?.resultItem?.find(
+                          proceduresList?.resultItem?.find(
                             (x: IMedservice) =>
                               x.medServiceId === proceduresWithRebate[index]
-                          )?.price ?? 0) *
-                            Number(userDetails!.FACILITY_REBATE_PERCENTAGE)) /
-                          100
+                          )?.price
+                            ? `₦ ${numeral(
+                                (proceduresList?.resultItem?.find(
+                                  (x: IMedservice) =>
+                                    x.medServiceId ===
+                                    proceduresWithRebate[index]
+                                )?.price ?? 0) *
+                                  (Number(
+                                    userDetails!.FACILITY_REBATE_PERCENTAGE
+                                  ) /
+                                    100)
+                              ).format('0,0.00')}`
+                            : ''
                         }
                         readOnly
                       />

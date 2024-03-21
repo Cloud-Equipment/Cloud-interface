@@ -48,18 +48,18 @@ const columns = [
     header: 'Procedure/Test Ordered',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('patientName', {
-    header: 'Patient Name',
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor('patientAge', {
-    header: 'Age of Patient',
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor('patientPhone', {
-    header: 'Phone Number',
-    cell: (info) => info.getValue(),
-  }),
+  // columnHelper.accessor('patientName', {
+  //   header: 'Patient Name',
+  //   cell: (info) => info.getValue(),
+  // }),
+  // columnHelper.accessor('patientAge', {
+  //   header: 'Age of Patient',
+  //   cell: (info) => info.getValue(),
+  // }),
+  // columnHelper.accessor('patientPhone', {
+  //   header: 'Phone Number',
+  //   cell: (info) => info.getValue(),
+  // }),
   columnHelper.accessor('subotal', {
     header: 'Amount',
     cell: (info) => `₦ ${numeral(info.getValue()).format('0,0.00')}`,
@@ -71,6 +71,14 @@ const columns = [
   columnHelper.accessor('rebatePercent', {
     header: 'Rebate Percent',
     cell: (info) => `${info.getValue() ? info.getValue() + '%' : '-'}`,
+  }),
+  columnHelper.accessor('rebatePaid', {
+    header: 'Rebate Amount',
+    cell: (info) => `₦ ${numeral(info.getValue()).format('0,0.00')}`,
+  }),
+  columnHelper.accessor('totalAfterDisc', {
+    header: 'Amount After Deduction',
+    cell: (info) => `₦ ${numeral(info.getValue()).format('0,0.00')}`,
   }),
   columnHelper.accessor('elipsis', {
     cell: ({
