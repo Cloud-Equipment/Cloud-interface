@@ -31,7 +31,11 @@ export type ActionType =
   | 'confirmTest'
   | 'uploadResult'
   | 'edit';
-type ReportTableColumns = IProcedure & { elipsis: 'elipsis'; isRebate: string };
+type ReportTableColumns = IProcedure & {
+  elipsis: 'elipsis';
+  isRebate: string;
+  rebatePercent: string;
+};
 
 const columnHelper = createColumnHelper<ReportTableColumns>();
 
@@ -63,6 +67,10 @@ const columns = [
   columnHelper.accessor('isRebate', {
     header: 'Has Rebate',
     cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('rebatePercent', {
+    header: 'Rebate Percent',
+    cell: (info) => `${info.getValue() ? info.getValue() + '%' : '-'}`,
   }),
   columnHelper.accessor('elipsis', {
     cell: ({
