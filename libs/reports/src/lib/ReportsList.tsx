@@ -255,7 +255,6 @@ const ReportsListDropdown = ({
 
   const handleActionsClick = async (view: ActionType) => {
     if (view === 'shareResult') {
-      // console.log('data', TransformObject(data));
       await TransformObject(data);
       console.log(jsonToCSV([data]));
     } else if (view === 'confirmTest') {

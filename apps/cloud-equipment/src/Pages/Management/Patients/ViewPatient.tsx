@@ -100,7 +100,10 @@ const ViewPatient = () => {
             <p className="font-semibold text-lg">{data?.patientName || '-'}</p>
 
             <div className="mt-10 flex items-center gap-3 flex-wrap">
-              <Button label="New Appointment" onClick={() => {}} />
+              <Button
+                label="New Appointment"
+                onClick={() => navigate('/?openModal=appointment')}
+              />
               <Button variant="tertiary" label="Refer Patient" className="" />
               <Button
                 label="Edit Profile"
