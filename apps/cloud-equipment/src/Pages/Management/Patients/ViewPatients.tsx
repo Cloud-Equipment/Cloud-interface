@@ -76,13 +76,18 @@ const ViewPatients = () => {
     { currentPage, pageSize }
   );
 
-  const total = data?.totalCount || 0;
+  const total = data?.totalCount || 1;
+
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
     page: number
   ) => {
-    setFilters((prev: Params) => ({ ...prev, currentPage: page }));
+    setFilters((prev: Params) => ({
+      ...prev,
+      currentPage: page + 1,
+    }));
   };
+
   const handleChangeRowsPerPage = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -135,7 +140,7 @@ const ViewPatients = () => {
           <TablePagination
             component="div"
             count={total}
-            page={currentPage}
+            page={currentPage - 1} //NOTE: it is indexed at position 0
             labelRowsPerPage="Items per page"
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
