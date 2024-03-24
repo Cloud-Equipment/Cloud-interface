@@ -55,8 +55,44 @@ const useCreateReport = (options = {}) => {
   };
 };
 
+const useExportReports = (facilityId: string | null, options = {}) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...options,
+    mutationFn: async (body: any) => {
+      let url = '';
+      if (!facilityId) {
+        url = `${environment.baseUrl}/service-manager/procedures/getAllPaged`;
+      } else {
+        url = '/service-manager/procedures/getallbyfacility';
+      }
+
+      return apiClient.get({ url, params: { facilityId, download: true } });
+      // return apiClient.get({ url, params: { facilityId, ..._params } });
+    },
+    onSuccess: () => {},
+  });
+  const { mutate, isSuccess, isError, data, isPending } = mutation;
+
+  return {
+    mutateFn: (bodyArg: any, cb: (res: any) => void) => {
+      return mutate(bodyArg, {
+        onSuccess: (res) => {
+          // console.log('sdnfsdfsdfsdfsdfsd')
+          cb?.(res);
+        },
+      });
+    },
+    data,
+    isSuccess,
+    isError,
+    isLoading: isPending,
+  };
+};
+
 const useGetReports = (
-  _params: TableQueryParams & { download: boolean },
+  _params: TableQueryParams,
   facilityId: string | null,
   options: Omit<
     UseQueryOptions<any, unknown, any, string[]>,
@@ -181,6 +217,7 @@ const useUploadResult = (options = {}) => {
 
 const queries = {
   useGetReports,
+  useExportReports,
   useGetReportById,
   useConfirmTest,
   useUploadResult,
