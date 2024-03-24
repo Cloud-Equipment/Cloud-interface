@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Controller, useForm } from 'react-hook-form';
 import { Modal } from '@mui/material';
@@ -47,7 +47,6 @@ interface FormProps {
   logoPath: File;
 
   isActive: boolean;
-  dateCreated: string | Date;
   // [key: string]: any; //TODO: Remove this when all fields have been done on the backend
   numberOfUsers: number;
 }
@@ -61,8 +60,8 @@ const AddNewFacility = () => {
     '/facility-manager/facility-types/getall'
   );
 
-  // console.log('data', data);
-  const { register, handleSubmit, control, setValue } = useForm<FormProps>();
+  const { register, handleSubmit, control, setValue, watch, getValues } =
+    useForm<FormProps>();
 
   const onSubmit = (data: FormProps) => {
     const {
@@ -94,7 +93,6 @@ const AddNewFacility = () => {
       logoPath,
 
       isActive,
-      dateCreated,
       numberOfUsers,
     } = data;
 
@@ -129,6 +127,59 @@ const AddNewFacility = () => {
     mutateFn(dataToSubmit, () => {
       navigate('/management/facility');
     });
+  };
+
+  function isValidWord(word: string) {
+    // This regex matches a string that consists only of letters a-z, case-insensitive
+    const regex = /^[A-Za-z\s'-]*$/;
+    // Test the word against the regex
+    // If the word matches the regex, it consists only of valid letters A-Z or a-z
+    // If not, it contains invalid characters
+    return regex.test(word);
+  }
+
+  // watches the facility name changes so as to create a facility code
+  useEffect(() => {
+    // NOTE: facility code length should be atleast 3 letters and at most 4
+    if (getValues('facilityName').length >= 3)
+      setValue(
+        'facilityCECode',
+        `${generateFacilityCodeFacility(getValues('facilityName'))}`
+      );
+    if (getValues('facilityName').length === 0) {
+      setValue('facilityCECode', '');
+    }
+  }, [watch('facilityName')]);
+
+  /**
+   *
+   * @param facilityName
+   * @returns facility code suggestions based on facility name
+   */
+  const generateFacilityCodeFacility = (facilityName: string) => {
+    const capitalizedFacility = facilityName.toLocaleUpperCase();
+    // if one word
+    const splitWords = capitalizedFacility.split(' ');
+    const len = splitWords.length;
+    if (len <= 4) {
+      if (len <= 2 || (len === 3 && splitWords[2] === '')) {
+        //if two words
+        if ([2, 3].includes(len) && splitWords[len - 1] !== '') {
+          return `${splitWords[0][0]}${splitWords[0][1]}${splitWords[1][0]}`.toLocaleUpperCase();
+        }
+        // for one word
+        if (capitalizedFacility.length < 3) {
+          return '';
+        }
+        return capitalizedFacility.slice(0, 3);
+      }
+      const firstLetterOfSplitWords = splitWords
+        .filter((word) => word !== '')
+        .map((val) => val?.[0]?.toLocaleUpperCase())
+        .join('');
+      return firstLetterOfSplitWords;
+    }
+    return getValues('facilityCECode');
   };
 
   return (
@@ -167,20 +218,30 @@ const AddNewFacility = () => {
                       // onChange={}
                     />
                   </div>
-
-                  {/* <Input
-                    label="Facility ID"
-                    containerClass="flex-1"
-                    {...register('facilityTypeId', {
-                      required: 'Facility ID is required',
-                    })}
-                  /> */}
                 </div>
                 <Input
                   label="Name of Facility"
                   containerClass="flex-1"
                   {...register('facilityName', {
                     required: 'Facility Name is required ',
+                  })}
+                  onChange={(e) => {
+                    const { value } = e.target;
+                    const wordValue = getValues('facilityName');
+                    if (isValidWord(value)) {
+                      setValue('facilityName', value, { shouldValidate: true });
+                    } else {
+                      setValue('facilityName', wordValue || '', {
+                        shouldValidate: true,
+                      });
+                    }
+                  }}
+                />
+                <Input
+                  label="Facility CE Code"
+                  // containerClass="flex-1"
+                  {...register('facilityCECode', {
+                    required: 'Facility code is required',
                   })}
                 />
                 <TextArea
@@ -203,19 +264,6 @@ const AddNewFacility = () => {
                 />
                 <div className="flex gap-24 my-4">
                   <Controller
-                    name="dateCreated"
-                    control={control}
-                    // defaultValue={0}
-                    render={({ field }) => (
-                      <DatePicker
-                        label="Registration Date "
-                        containerClass="flex-1"
-                        {...{ field }}
-                      />
-                    )}
-                  />
-
-                  <Controller
                     name="countryId"
                     control={control}
                     defaultValue={0}
@@ -231,7 +279,7 @@ const AddNewFacility = () => {
                         ]}
                         label="Country "
                         placeholder="Select Country"
-                        containerClass="flex-1"
+                        containerClass="flex-1 w-[50%]"
                         {...{ field }}
                       />
                     )}

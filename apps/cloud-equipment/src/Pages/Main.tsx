@@ -93,6 +93,7 @@ export const Main = () => {
   return (
     <Layout
       navbarConfig={navbarConfig}
+      // TODO: Make this condition more dynamic
       navlinks={
         (userDetails?.USER_ROLE ?? []).filter(
           (role) => role === UserTypeEnum.FACILITY_ADMIN
