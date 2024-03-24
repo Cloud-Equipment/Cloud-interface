@@ -71,15 +71,6 @@ const NewPatient = () => {
     useState(false);
 
   useEffect(() => {
-    if (user?.FACILITY_NAME) {
-      setValue(
-        'patientUniqueID',
-        `${generateFacilityCodeFacility(user?.FACILITY_NAME)}/`
-      );
-    }
-  }, [user]);
-
-  useEffect(() => {
     if (watch('dateOfBirth')) {
       const age = calculateAge(watch('dateOfBirth'));
       setValue('patientAge', age);
@@ -162,29 +153,6 @@ const NewPatient = () => {
     const currentDate = dayjs();
     const age = currentDate.diff(selectedDate, 'year');
     return age;
-  };
-
-  /**
-   *
-   * @param facilityName
-   * @returns facility code suggestions based on facility name
-   */
-  const generateFacilityCodeFacility = (facilityName: string) => {
-    const capitalizedFacility = facilityName.toLocaleUpperCase();
-    // if one word
-    const splitWords = capitalizedFacility.split(' ');
-    const len = splitWords.length;
-    if (len <= 2) {
-      //if two words
-      if (len === 2) {
-        return `${splitWords[0][0]}${splitWords[0][1]}${splitWords[1][0]}`.toLocaleUpperCase();
-      }
-      return capitalizedFacility.slice(0, 3);
-    }
-    const firstLetterOfSplitWords = splitWords
-      .map((val) => val[0].toLocaleUpperCase())
-      .join('');
-    return firstLetterOfSplitWords;
   };
 
   return (
