@@ -16,3 +16,8 @@ export interface IReceptionistDashboardSummary {
   newPatientYesterday: number;
   oldPatientYesterday: number;
 }
+
+export interface IChartResponse {
+  patientActivity: { months: string; visits: number }[];
+  montlyEarning: { months: string; earnings: number }[];
+}

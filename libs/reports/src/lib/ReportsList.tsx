@@ -113,18 +113,22 @@ const ReportsList = () => {
     (state: { account: { accountType: 0 | 1 } }) => state.account.accountType
   );
 
+  const { jsonToCSV } = usePapaParse();
+
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-  const [shouldDownload, setShouldDownload] = useState(false);
 
-  const { useGetReports } = queries;
+  const { useGetReports, useExportReports } = queries;
   const { isLoading, data } = useGetReports(
     {
       pageSize,
       currentPage,
       startIndex: 1,
-      download: shouldDownload,
     },
+    accountType === 0 ? null : (userDetails?.FACILITY_ID as string)
+  );
+
+  const { mutateFn: mutateFn_exportCsv } = useExportReports(
     accountType === 0 ? null : (userDetails?.FACILITY_ID as string)
   );
 
@@ -139,6 +143,18 @@ const ReportsList = () => {
   const handleChangeRowsPerPage = (event: any) => {
     setCurrentPage(0);
     setPageSize(parseInt(event.target.value, 10));
+  };
+
+  const exportCsv = () => {
+    mutateFn_exportCsv({}, async (data: any) => {
+      await TransformObject(data?.data?.resultItem);
+      console.log(jsonToCSV([data?.data?.resultItem]));
+
+      // Usage example with your data
+      // const _data =
+      //   'circus,Kidney Test 2,-,19,Olatunde Afolayan,-,"20b u.s umoh crescent, abuleegba. lagos",-,-,09023638048,-,tunderoxyafolayan@gmail.com,-,-,-,-,2000,PENDING,-,-,0,-,-,-,-,No,00426fb5-6087-46fd-8382-a700e6a45252,6,1,2000,2000,0038b80a-57f0-451e-9ab5-4cdfe3e2a841,-,-,-,a19cafa9-dae0-41af-b0de-2acc39cca893,bce4892d-031d-4ece-a467-4241b0e3694c,2024-03-18T17:10:53.6545652,-,2024-03-18T17:10:52.993,57';
+      //  downloadDataAsCSV(jsonToCSV([data?.data?.resultItem]), 'reports.csv');
+    });
   };
 
   return (
@@ -178,12 +194,7 @@ const ReportsList = () => {
             <img src={Assets.Icons.SolidArrowDown} alt="" />
           </div>
 
-          <button
-            onClick={() => {
-              setShouldDownload(true);
-            }}
-            className="export-btn"
-          >
+          <button onClick={exportCsv} className="export-btn">
             <img src={Assets.Icons.ExportIcon} alt="" />
             <span>Export</span>
           </button>
@@ -341,3 +352,36 @@ const ReportsListDropdown = ({
     </>
   );
 };
+
+function downloadDataAsCSV(data: any, filename: string) {
+  // Convert the data to a CSV string
+  const csvString = [
+    // CSV header
+    'facilityName,medServiceName,categoryName,patientName,address,procedureCategory,referrersName,patientEmail,totalAfterDisc,procedureEntryStatus,rebatePercent,refererName,rebatePaid,refererHospital,refererEmail,refererPhone,discountPercent,isRebate,patientId,medServiceId,quantity,amount,subotal,facilityId,remarks,faclityDiscountId,procedureDiscountId,entryUserId,trackId,date,rebateId,appointmentDate,procedureEntryId',
+    // CSV row
+    data,
+  ].join('\n');
+
+  // Create a Blob from the CSV string
+  const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+
+  // Create a URL for the Blob
+  const url = URL.createObjectURL(blob);
+
+  // Create an anchor element and set its href attribute to the Blob URL
+  const link = document.createElement('a');
+  link.href = url;
+
+  // Set the download attribute to specify the filename
+  link.download = filename;
+
+  // Append the anchor to the document
+  document.body.appendChild(link);
+
+  // Simulate a click on the anchor
+  link.click();
+
+  // Clean up by removing the anchor and revoking the Blob URL
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}

@@ -11,7 +11,10 @@ import { IAppState } from '../../Store/store';
 const FacilityAdminDashboardSub = () => {
   const userDetails = useSelector((state: IAppState) => state.auth.user);
 
-  const { useGetDashboardSummary_FacilityAdmin } = queries;
+  const {
+    useGetDashboardSummary_FacilityAdmin,
+    useGetDashboardCharts_FacilityAdmin,
+  } = queries;
   const { isLoading, data } = useGetDashboardSummary_FacilityAdmin(
     `/dashboard-manager/facilityAdmin/cards?facilityId=${userDetails?.FACILITY_ID}`
   );
