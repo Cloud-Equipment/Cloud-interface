@@ -123,6 +123,7 @@ const AddNewFacility = () => {
       },
       roles: [roles],
       logoPath: '',
+      faclitySelfCode: facilityCECode,
     };
     mutateFn(dataToSubmit, () => {
       navigate('/management/facility');
