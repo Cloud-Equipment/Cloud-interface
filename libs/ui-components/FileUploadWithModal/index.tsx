@@ -52,7 +52,7 @@ interface FileUploadProps {
   uploadRestrictionText?: string;
   borderWidth?: number;
   color?: string;
-  setFile?: (file: File) => void;
+  setFile?: (file: File | null) => void;
   onClick: (cb: () => void) => void;
 }
 const FileUploadWithModal = ({
@@ -104,7 +104,7 @@ const FileUploadWithModal = ({
     setAddMoreDocumentModalIsOpen(false);
   };
 
-  const onSubmit = (file: File) => {
+  const onSubmit = (file: File | null) => {
     setFile(file);
   };
 

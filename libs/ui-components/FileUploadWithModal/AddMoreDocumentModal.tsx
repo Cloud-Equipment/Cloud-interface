@@ -8,7 +8,7 @@ const AddMoreDocumentModal = ({
   onSubmit,
 }: {
   onClose: () => void;
-  onSubmit: (file: File) => void;
+  onSubmit: (file: File | null) => void;
 }) => {
   return (
     <>
