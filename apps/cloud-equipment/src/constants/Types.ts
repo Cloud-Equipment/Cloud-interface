@@ -11,4 +11,5 @@ export enum MARITAL_STATUS {
 export enum PAYMENT_TYPE {
   CASH = 1,
   CARD,
+  TRANSFER,
 }

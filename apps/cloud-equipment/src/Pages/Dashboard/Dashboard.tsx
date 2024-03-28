@@ -25,6 +25,9 @@ const Dashboard = () => {
 
   const userDetails = useSelector((state: IAppState) => state.auth.user);
 
+  // NOTE:(WIP:?🤔) There is a new appointment button on the patient's page
+  // when users click on it, we want to bring them to the dashboard and open the
+  // appointment modal
   useEffectOnce(() => {
     if (queryParams?.openModal === 'appointment') {
       openAppointmentModal();
