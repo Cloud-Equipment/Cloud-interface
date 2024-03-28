@@ -33,21 +33,70 @@ export const MaritalStatus = [
     categoryId: MARITAL_STATUS.MARRIED,
     categoryName: 'Married',
   },
-  {
-    value: MARITAL_STATUS.DIVORCED,
-    label: 'Divorced',
-    categoryId: MARITAL_STATUS.DIVORCED,
-    categoryName: 'Divorced',
-  },
-  {
-    value: MARITAL_STATUS.ENGAGED,
-    label: 'Engaged',
-    categoryId: MARITAL_STATUS.ENGAGED,
-    categoryName: 'Engaged',
-  },
+  // {
+  //   value: MARITAL_STATUS.DIVORCED,
+  //   label: 'Divorced',
+  //   categoryId: MARITAL_STATUS.DIVORCED,
+  //   categoryName: 'Divorced',
+  // },
+  // {
+  //   value: MARITAL_STATUS.ENGAGED,
+  //   label: 'Engaged',
+  //   categoryId: MARITAL_STATUS.ENGAGED,
+  //   categoryName: 'Engaged',
+  // },
 ];
 
 export const PaymentMethod = [
-  { value: PAYMENT_TYPE.CASH, label: 'Cash', categoryId: '', categoryName: '' },
-  { value: PAYMENT_TYPE.CARD, label: 'Card', categoryId: '', categoryName: '' },
+  {
+    value: PAYMENT_TYPE.CASH,
+    label: 'Cash-Deposit',
+    categoryId: PAYMENT_TYPE.CASH,
+    categoryName: 'Cash-Deposit',
+  },
+  {
+    value: PAYMENT_TYPE.CARD,
+    label: 'Card',
+    categoryId: PAYMENT_TYPE.CARD,
+    categoryName: 'Card',
+  },
+  {
+    value: PAYMENT_TYPE.TRANSFER,
+    label: 'Transfer',
+    categoryId: PAYMENT_TYPE.TRANSFER,
+    categoryName: 'Transfer',
+  },
+];
+
+export const Relationship = [
+  {
+    value: 'father',
+    label: 'Father',
+    categoryId: 'father',
+    categoryName: 'Father',
+  },
+  {
+    value: 'mother',
+    label: 'Mother',
+    categoryId: 'mother',
+    categoryName: 'Mother',
+  },
+  {
+    value: 'spouse',
+    label: 'Spouse',
+    categoryId: 'spouse',
+    categoryName: 'Spouse',
+  },
+  {
+    value: 'sibling',
+    label: 'Sibling',
+    categoryId: 'sibling',
+    categoryName: 'Sibling',
+  },
+  {
+    value: 'other',
+    label: 'Other',
+    categoryId: 'other',
+    categoryName: 'Other',
+  },
 ];
