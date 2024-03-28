@@ -12,7 +12,7 @@ interface FormTextAreaProps<T extends object>
 }
 
 const TextArea = forwardRef<HTMLTextAreaElement, FormTextAreaProps<any>>(
-  ({ className, label, id, containerClass, ...rest }, ref) => {
+  ({ className, label, id, containerClass, error, ...rest }, ref) => {
     return (
       <div
         className={cx(
@@ -34,11 +34,13 @@ const TextArea = forwardRef<HTMLTextAreaElement, FormTextAreaProps<any>>(
           rows={5}
           className={cx(
             'py-2.5 pr-2 pl-3 rounded-lg focus:outline-none w-full h-12 border',
-            className
+            className,
+            { 'outline-red-500 border border-red-500': error }
           )}
           id={id}
           {...rest}
         />
+        {!!error && <p className="text-red-500 text-sm">{error?.message}</p>}
       </div>
     );
   }

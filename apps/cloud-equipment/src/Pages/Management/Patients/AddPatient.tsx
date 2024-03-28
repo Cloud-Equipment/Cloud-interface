@@ -14,12 +14,17 @@ import {
   DatePicker,
   FileUpload,
   Select,
-  TimePicker,
+  PhoneInputField,
 } from '@cloud-equipment/ui-components';
 import { AddPatientModal } from '../../../Modals';
 import { IAppState } from '../../../Store/store';
 import queries from '../../../services/queries/managePatients';
-import { Gender, MaritalStatus } from '../../../constants';
+import {
+  Gender,
+  MaritalStatus,
+  PaymentMethod,
+  Relationship,
+} from '../../../constants';
 
 interface FormProps {
   patientFacilityCode: string;
@@ -42,6 +47,7 @@ interface FormProps {
   emergencyContactLastName: string;
   emergencyContactNumber: string;
   emergencyContactRelationship: string;
+  emergencyContactRelationshipManual?: string;
   paymentType: string;
   reasonForRegistration: string;
   takingMedication: string;
@@ -51,7 +57,7 @@ interface FormProps {
   //
   // registrationTime: any;
   // registrationDate: any;
-  profilePhoto: File;
+  profilePhoto: File | null;
   [key: string]: any;
 }
 
@@ -64,8 +70,15 @@ const NewPatient = () => {
   const { useCreatePatient } = queries;
   const { mutateFn, isLoading } = useCreatePatient();
 
-  const { register, handleSubmit, control, getValues, watch, setValue } =
-    useForm<FormProps>();
+  const {
+    register,
+    handleSubmit,
+    control,
+    getValues,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<FormProps>();
 
   const [createPatientModalPromptIsOpen, setCreatePatientModalPromptIsOpen] =
     useState(false);
@@ -102,6 +115,7 @@ const NewPatient = () => {
       emergencyContactLastName,
       emergencyContactNumber,
       emergencyContactRelationship,
+      emergencyContactRelationshipManual,
       paymentType,
       reasonForRegistration,
       takingMedication,
@@ -124,7 +138,8 @@ const NewPatient = () => {
       emergencyContactFirstname,
       emergencyContactLastName,
       emergencyContactNumber,
-      emergencyContactRelationship,
+      emergencyContactRelationship:
+        emergencyContactRelationshipManual || emergencyContactRelationship,
       paymentType,
       reasonForRegistration,
       takingMedication: takingMedication === 'no' ? false : true,
@@ -154,6 +169,8 @@ const NewPatient = () => {
     const age = currentDate.diff(selectedDate, 'year');
     return age;
   };
+
+  console.log('errors', errors);
 
   return (
     <>
@@ -185,6 +202,7 @@ const NewPatient = () => {
                 {...register('patientUniqueID', {
                   required: 'Patient ID is required ',
                 })}
+                error={errors?.patientUniqueID}
               />
               <div>
                 <FileUpload
@@ -199,24 +217,34 @@ const NewPatient = () => {
                 {...register('firstName', {
                   required: 'Patient First Name is required ',
                 })}
+                error={errors?.firstName}
               />
               <Input
                 label="Patient Last Name"
                 {...register('lastName', {
                   required: 'Patient Last Name is required ',
                 })}
+                error={errors?.lastName}
               />
               <Input
                 label="Email Address"
                 {...register('patientEmail', {
                   required: 'Email Address is required ',
                 })}
+                error={errors?.patientEmail}
               />
-              <Input
+              {/* <Input
                 label="Mobile Number"
                 {...register('patientPhone', {
                   required: 'Mobile Number is required ',
                 })}
+              /> */}
+              <PhoneInputField
+                control={control}
+                label="Mobile Number"
+                name="patientPhone"
+                containerClass="h-[74px]"
+                error={errors?.patientPhone}
               />
               <Controller
                 name="patientGenderId"
@@ -253,6 +281,7 @@ const NewPatient = () => {
                 {...register('patientAge', {
                   required: 'Age is required ',
                 })}
+                error={errors?.patientAge}
               />
 
               <Controller
@@ -276,54 +305,15 @@ const NewPatient = () => {
                 {...register('address', {
                   required: 'Address is required ',
                 })}
-              />
-
-              <div className="md:col-span-2 border-b-[2px] pb-1 mt-4 border-b-solid border-borderLine">
-                <h4 className="font-bold text-xl">Emergency Contact</h4>
-                <p className="text-sm text-greyText2 mt-1">
-                  You are to populate the Rebate Amount to efficiency calculate
-                  a deduction
-                </p>
-              </div>
-
-              <Input
-                label="Emergency Contact First Name"
-                {...register('emergencyContactFirstname', {
-                  required: 'Emergency Contact First Name is required ',
-                })}
-              />
-              <Input
-                label="Last Name"
-                {...register('emergencyContactLastName', {
-                  required: 'Last Name is required ',
-                })}
-              />
-              <Input
-                label="Contact Number"
-                {...register('emergencyContactNumber', {
-                  required: 'Contact Number is required ',
-                })}
-              />
-              <Input
-                label="Relationship"
-                {...register('emergencyContactRelationship', {
-                  required: 'Emergency Contact is required ',
-                })}
+                error={errors?.address}
               />
               <Controller
                 name="paymentType"
                 control={control}
-                defaultValue={'Card'}
+                defaultValue={'0'}
                 render={({ field }) => (
                   <Select
-                    options={[
-                      {
-                        value: 'Card',
-                        label: 'Card',
-                        categoryName: 'Card',
-                        categoryId: 'Card',
-                      },
-                    ]}
+                    options={PaymentMethod}
                     label="Payment Type"
                     placeholder="Select Payment Type"
                     {...{ field }}
@@ -332,7 +322,7 @@ const NewPatient = () => {
               />
 
               <div className="md:col-span-2 border-b-[2px] pb-1 mt-4 border-b-solid border-borderLine">
-                <h4 className="font-bold text-xl">Health History</h4>
+                <h4 className="font-bold text-xl">NEXT OF KIN</h4>
                 <p className="text-sm text-greyText2 mt-1">
                   You are to populate the Rebate Amount to efficiency calculate
                   a deduction
@@ -340,11 +330,63 @@ const NewPatient = () => {
               </div>
 
               <Input
-                label="Reason for Registration"
+                label="First Name"
+                {...register('emergencyContactFirstname', {
+                  required: 'Emergency First Name is required ',
+                })}
+                error={errors?.emergencyContactFirstname}
+              />
+              <Input
+                label="Last Name"
+                {...register('emergencyContactLastName', {
+                  required: 'Emergency Last Name is required ',
+                })}
+                error={errors?.emergencyContactLastName}
+              />
+              <Input
+                label="Contact Number"
+                {...register('emergencyContactNumber', {
+                  required: 'Emergency Contact Number is required ',
+                })}
+                error={errors?.emergencyContactNumber}
+              />
+              <Controller
+                name="emergencyContactRelationship"
+                control={control}
+                defaultValue={'0'}
+                render={({ field }) => (
+                  <Select
+                    options={Relationship}
+                    label="Relationship"
+                    placeholder="Select Relationship"
+                    {...{ field }}
+                  />
+                )}
+              />
+
+              {/* TODO: Write logic for the validation, we only want to validate this
+              when other is selected */}
+              {watch('emergencyContactRelationship') === 'other' && (
+                <Input
+                  label="Relationship with Next of Kin"
+                  {...register('emergencyContactRelationshipManual', {
+                    required: 'Emergency Contact Relationship is required ',
+                  })}
+                  error={errors?.emergencyContactRelationshipManual}
+                />
+              )}
+
+              <div className="md:col-span-2 border-b-[2px] pb-1 mt-4 border-b-solid border-borderLine">
+                <h4 className="font-bold text-xl">Health History</h4>
+              </div>
+
+              <Input
+                label="Diagnosis"
                 containerClass="col-span-2"
                 {...register('reasonForRegistration', {
-                  required: 'Reason for Registration is required ',
+                  // required: 'Reason for Registration is required ',
                 })}
+                error={errors?.reasonForRegistration}
               />
 
               <div className="col-span-2 flex flex-col gap-2">
@@ -380,8 +422,9 @@ const NewPatient = () => {
                 placeholder="Leave a Note"
                 containerClass="md:col-span-2"
                 {...register('additionalNotes', {
-                  required: 'Notes is required ',
+                  // required: 'Notes is required ',
                 })}
+                error={errors?.additionalNotes}
               />
             </div>
             <Button

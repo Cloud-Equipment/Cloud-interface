@@ -32,6 +32,7 @@ const DatePickerComponent: React.FC<IDatePickerProps> = ({
           'py-2.5 pr-2 pl-3 rounded-lg focus:outline-none w-full border h-12 [&_input]:h-4',
           className
         )}
+        format="DD/MM/YYYY"
         {...rest}
       />
     </div>

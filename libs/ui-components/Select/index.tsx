@@ -23,7 +23,7 @@ const SelectDropdown: React.FC<any> = <T extends string>({
   return (
     <div
       className={cx(
-        { 'flex flex-col gap-1 justify-between': !!label },
+        { 'flex flex-col gap-1': !!label },
         { [`${containerClass}`]: !!containerClass }
         // 'mt-3'
       )}
