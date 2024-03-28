@@ -82,8 +82,9 @@ interface FileUploadProps {
   uploadRestrictionText?: string;
   borderWidth?: number;
   color?: string;
-  setFile?: (file: File) => void;
+  setFile?: (file: File | null) => void;
 }
+
 const FileUpload = ({
   containerClass,
   borderColor = '#54D4BD',
@@ -121,6 +122,12 @@ const FileUpload = ({
     maxFiles: 1,
   });
 
+  const handleDelete = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setFiles([]);
+    setFile(null);
+    e.stopPropagation();
+  };
+
   const style = useMemo(
     () => ({
       ...baseStyle(borderColor, borderStyle, borderWidth, color),
@@ -132,8 +139,15 @@ const FileUpload = ({
   );
 
   const thumbs = files.map((file: File & any) => (
-    <div style={thumb} key={file.name}>
-      <div style={thumbInner}>
+    <div style={thumb} key={file.name} className="relative">
+      <div style={thumbInner} className="">
+        <button
+          className="absolute text-sm text-red-600 top-0 right-0 z-10 border bg-white p-0.5 rounded"
+          onClick={handleDelete}
+          title="delete image"
+        >
+          X
+        </button>
         <img
           src={file.preview}
           style={img}
